@@ -1,26 +1,53 @@
 @import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  /* Brand colors */
+  --color-sunset: #FF4C00;
+  --color-lime: #00FF66;
+  --color-sky: #00CFFF;
+  --color-gold: #FFD700;
+  /* Neutrals */
+  --color-charcoal: #1A1A1A;
+  --color-slate: #2E2A25;
+  --color-ash: #EFEFEB;
+  --color-sand: #CAC0A3;
+  /* Accents */
+  --color-crimson: #D72638;
+  --color-electric: #1B9AAA;
+  /* Backgrounds */
+  --color-background-light: #EFEFEB;
+  --color-background-dark: #1A1A1A;
+  --color-background-card-light: #FFFFFF;
+  --color-background-card-dark: #2E2A25;
+  --color-background-secondary-light: #CAC0A3;
+  --color-background-secondary-dark: #2E2A25;
+  /* Text */
+  --color-text-light: #2E2A25;
+  --color-text-dark: #CAC0A3;
+  --color-text-heading-light: #1A1A1A;
+  --color-text-heading-dark: #EFEFEB;
+  /* Buttons */
+  --color-button-primary-light: #FF4C00;
+  --color-button-primary-dark: #FF4C00;
+  --color-button-secondary-light: transparent;
+  --color-button-secondary-dark: transparent;
+  /* Links */
+  --color-link-light: #00CFFF;
+  --color-link-dark: #FFD700;
+  /* Icons */
+  --color-icon-light: #00FF66;
+  --color-icon-dark: #1B9AAA;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+/*
+  Use Tailwind utility classes for theming in your components, e.g.:
+    <div class="bg-sunset text-slate">...</div>
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
+  If you need to use a theme color in custom CSS, use Tailwind's generated CSS variables, e.g.:
+    .custom-underline {
+      text-decoration-color: var(--tw-color-sunset);
+    }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
-}
+  See: https://tailwindcss.com/docs/theme#default-theme-variable-reference
+*/
