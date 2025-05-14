@@ -41,7 +41,11 @@ export function NavMain({
 						pathname === item.url ? true : pathname === "/" && item.url === "/";
 					return (
 						<SidebarMenuItem key={item.title}>
-							<SidebarMenuButton asChild tooltip={item.title} isActive={isActive}>
+							<SidebarMenuButton
+								asChild
+								tooltip={item.title}
+								className={isActive ? "bg-red-300 dark:bg-red-800" : undefined}
+							>
 								<Link
 									href={item.url}
 									className={isActive ? "font-semibold text-primary" : undefined}
