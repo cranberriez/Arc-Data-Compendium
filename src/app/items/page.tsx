@@ -2,7 +2,6 @@
 
 import { ItemCard } from "@/components/items/item";
 import { useItems } from "@/contexts/ItemContext";
-import { ItemProvider } from "@/contexts/ItemContext";
 
 function ItemList() {
 	const { filteredItems } = useItems();
@@ -32,11 +31,7 @@ function ItemList() {
 }
 
 function ItemPage() {
-	return (
-		<ItemProvider>
-			<ItemList />
-		</ItemProvider>
-	);
+	return <ItemList />;
 }
 
 export default ItemPage;

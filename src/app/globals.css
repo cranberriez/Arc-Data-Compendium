@@ -2,9 +2,6 @@
 @import "tw-animate-css";
 @custom-variant dark (&:where(.dark, .dark *));
 
-@theme {
-}
-
 /*
   Use Tailwind utility classes for theming in your components, e.g.:
     <div class="bg-sunset text-slate">...</div>
@@ -88,6 +85,13 @@
 	--sidebar-accent-foreground: oklch(0.205 0 0);
 	--sidebar-border: oklch(0.922 0 0);
 	--sidebar-ring: oklch(0.708 0 0);
+
+	/* Rarity Colors */
+	--color-rarity-common: oklch(0.7 0.03 250);
+	--color-rarity-uncommon: oklch(0.7 0.2 160);
+	--color-rarity-rare: oklch(0.7 0.25 250);
+	--color-rarity-epic: oklch(0.7 0.25 320);
+	--color-rarity-legendary: oklch(0.8 0.2 80);
 }
 
 .dark {

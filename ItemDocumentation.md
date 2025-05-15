@@ -90,6 +90,48 @@ Defines what an item breaks down into:
 
 ## Utilities
 
+### Item Dialog Context (`ItemDialogProvider`)
+
+A React context that provides a global dialog for displaying detailed item information.
+
+**Features:**
+
+-   Global access to item details from anywhere in the app
+-   Consistent dialog behavior and styling
+-   Automatic state management for open/close
+-   Clean integration with the existing item system
+
+**Usage:**
+
+1. **Setup**: Wrap your app with `ItemDialogProvider` (already done in `AppProviders`)
+
+    ```tsx
+    <ItemDialogProvider>{/* Your app content */}</ItemDialogProvider>
+    ```
+
+2. **Opening the Dialog**: Use the `useItemDialog` hook in any component
+
+    ```tsx
+    const { openDialog } = useItemDialog();
+
+    // Later in your component:
+    <button onClick={() => openDialog(item)}>View Item Details</button>;
+    ```
+
+**API:**
+
+```typescript
+interface ItemDialogContextType {
+	isOpen: boolean; // Current dialog visibility state
+	item: Item | null; // Currently displayed item
+	openDialog: (item: Item) => void; // Function to open dialog with an item
+	closeDialog: () => void; // Function to close the dialog
+}
+
+// Hook to access the dialog context
+function useItemDialog(): ItemDialogContextType;
+```
+
 ### Item Provider (`ItemProvider`)
 
 A React context provider that manages item state, filtering, and sorting.

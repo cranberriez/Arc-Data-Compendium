@@ -57,40 +57,14 @@ export interface Item {
 	recycling?: Recycling[]; // Recycling information, if applicable
 }
 
-// Helper function to get rarity color
-export const getRarityColor = (rarity: string) => {
-	switch (rarity.toLowerCase()) {
-		case "common":
-			return "text-slate-500";
-		case "uncommon":
-			return "text-emerald-500";
-		case "rare":
-			return "text-blue-500";
-		case "epic":
-			return "text-purple-500";
-		case "legendary":
-			return "text-amber-500";
-		default:
-			return "text-slate-500";
-	}
-};
+// Helper function to get rarity class names
+export const getRarityColor = (rarity: string): string => {
+	const normalizedRarity = rarity.toLowerCase() as Rarity;
+	const validRarities: Rarity[] = ["common", "uncommon", "rare", "epic", "legendary"];
+	const safeRarity = validRarities.includes(normalizedRarity) ? normalizedRarity : "common";
 
-// Helper function to get rarity border
-export const getRarityBorder = (rarity: string) => {
-	switch (rarity.toLowerCase()) {
-		case "common":
-			return "border-slate-500";
-		case "uncommon":
-			return "border-emerald-500";
-		case "rare":
-			return "border-blue-500";
-		case "epic":
-			return "border-purple-500";
-		case "legendary":
-			return "border-amber-500";
-		default:
-			return "border-slate-500";
-	}
+	// Return the appropriate CSS variable
+	return `var(--color-rarity-${safeRarity})`;
 };
 
 // Helper function to get type icon
