@@ -12,8 +12,10 @@ import {
 	Layers,
 } from "lucide-react";
 import { Item } from "./types";
+import { getItemSources, getRecycleSources, invalidateRecycleCache } from "./itemUtils";
 
-export const items: Item[] = [
+// Export the raw items array
+export const itemsData: Item[] = [
 	{
 		id: "healing_stim",
 		display_name: "Healing Stim",
@@ -60,9 +62,7 @@ export const items: Item[] = [
 		recipe: null,
 		sources: [],
 		value: 0,
-		recycling: {
-			outputs: [{ id: "arc_alloys", count: 7 }],
-		},
+		recycling: [{ id: "arc_alloys", count: 7 }],
 	},
 	{
 		id: "damaged_wasp_drive",
@@ -129,9 +129,7 @@ export const items: Item[] = [
 		recipe: null,
 		sources: [],
 		value: 0,
-		recycling: {
-			outputs: [{ id: "arc_alloys", count: 4 }],
-		},
+		recycling: [{ id: "arc_alloys", count: 4 }],
 	},
 	{
 		id: "arc_alloys",
@@ -145,3 +143,18 @@ export const items: Item[] = [
 		value: 0,
 	},
 ];
+
+// Process items to include dynamic sources
+const processedItems = itemsData.map((item: Item) => ({
+  ...item,
+  // This will be called when the item is accessed
+  get sources() {
+    return getItemSources(item.id, itemsData);
+  }
+}));
+
+// Export the processed items with dynamic sources
+export const items: readonly Item[] = Object.freeze(processedItems);
+
+// Export utility functions
+export { getItemSources, getRecycleSources, invalidateRecycleCache };

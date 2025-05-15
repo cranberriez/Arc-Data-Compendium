@@ -14,7 +14,7 @@ import {
 } from "lucide-react";
 
 // Types for item classification
-type ItemType =
+export type ItemType =
 	| "quick_use"
 	| "recyclable"
 	| "crafting_material"
@@ -22,32 +22,25 @@ type ItemType =
 	| "weapon"
 	| "gear"
 	| "quest_item"
-	| "consumable"
-	| "material";
+	| "consumable";
 
-type Rarity = "common" | "uncommon" | "rare" | "epic" | "legendary";
+export type Rarity = "common" | "uncommon" | "rare" | "epic" | "legendary";
 
-type SourceType = "drop" | "buy" | "quest" | "found" | "event" | "craft";
+export type SourceType = "drop" | "buy" | "quest" | "found" | "event" | "craft";
 
 // Source information
 export interface ItemSource {
 	type: SourceType;
 	location: string;
-	count?: number; // For 'buy' type
+	count?: number; // For 'buy' or 'recycle' type
 	value?: number; // Buy price, if applicable
+	itemId?: string; // For reverse lookup of recycling sources
 }
 
-// Recycling output structure
-export interface RecycleOutput {
-	id: string; // ID of the resulting item
-	count: number;
-}
-
-// Recycling details
+// Recycling structure
 export interface Recycling {
-	outputs: RecycleOutput[]; // Items obtained from recycling
-	required_tool?: string; // Optional: specific tool needed for recycling
-	efficiency?: number; // Optional: efficiency percentage (e.g., 0.75 for 75%)
+	id: string; // ID of the resulting item item_id
+	count: number;
 }
 
 // Main item interface
@@ -61,7 +54,7 @@ export interface Item {
 	recipe: string | null; // Recipe ID if craftable
 	sources: ItemSource[]; // Where/how the item is obtained
 	value: number; // Sell value
-	recycling?: Recycling; // Recycling information, if applicable
+	recycling?: Recycling[]; // Recycling information, if applicable
 }
 
 // Helper function to get rarity color
