@@ -14,7 +14,6 @@ export function ItemCard({ item }: ItemCardProps) {
 	const { openDialog } = useItemDialog();
 	// Use the provided item or fallback to the first item in the datastore
 	const displayItem = item || placeholderItem;
-	const rarityColor = getRarityColor(displayItem.rarity);
 
 	const handleClick = () => {
 		openDialog(displayItem);
@@ -27,16 +26,14 @@ export function ItemCard({ item }: ItemCardProps) {
 		>
 			{/* Item Icon */}
 			<div
-				className={cn("flex items-center justify-center rounded-md h-full border-2 p-2")}
-				style={{
-					borderColor: `var(--color-rarity-${displayItem.rarity})`,
-					color: `var(--color-rarity-${displayItem.rarity})`,
-				}}
+				className={cn(
+					"flex items-center justify-center rounded-md h-full border-2 p-2",
+					getRarityColor(displayItem.rarity, "border")
+				)}
 			>
 				{displayItem.icon && (
 					<displayItem.icon
-						className="w-full h-full"
-						style={{ color: "currentColor" }}
+						className={cn("w-full h-full", getRarityColor(displayItem.rarity, "text"))}
 					/>
 				)}
 			</div>

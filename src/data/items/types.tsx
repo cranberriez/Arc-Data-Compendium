@@ -57,14 +57,40 @@ export interface Item {
 	recycling?: Recycling[]; // Recycling information, if applicable
 }
 
+const rarityClasses = {
+	common: {
+		border: "border-common",
+		text: "text-common",
+		bg: "bg-common",
+	},
+	uncommon: {
+		border: "border-uncommon",
+		text: "text-uncommon",
+		bg: "bg-uncommon",
+	},
+	rare: {
+		border: "border-rare",
+		text: "text-rare",
+		bg: "bg-rare",
+	},
+	epic: {
+		border: "border-epic",
+		text: "text-epic",
+		bg: "bg-epic",
+	},
+	legendary: {
+		border: "border-legendary",
+		text: "text-legendary",
+		bg: "bg-legendary",
+	},
+};
+
 // Helper function to get rarity class names
-export const getRarityColor = (rarity: string): string => {
+export const getRarityColor = (rarity: string, type: "border" | "text" | "bg"): string => {
 	const normalizedRarity = rarity.toLowerCase() as Rarity;
 	const validRarities: Rarity[] = ["common", "uncommon", "rare", "epic", "legendary"];
 	const safeRarity = validRarities.includes(normalizedRarity) ? normalizedRarity : "common";
-
-	// Return the appropriate CSS variable
-	return `var(--color-rarity-${safeRarity})`;
+	return rarityClasses[safeRarity][type];
 };
 
 // Helper function to get type icon
