@@ -21,10 +21,7 @@ export function NavMain({
 		url: string;
 		icon?: LucideIcon;
 		isActive?: boolean;
-		items?: {
-			title: string;
-			url: string;
-		}[];
+		enabled?: boolean;
 	}[];
 	category: string;
 }) {
@@ -39,16 +36,26 @@ export function NavMain({
 						// set active, or default to false if no pathnam (first load)
 						// if no pathname then we set only the "/" item to active because its first load
 						pathname === item.url ? true : pathname === "/" && item.url === "/";
+
+					const isDisabled = !item.enabled;
+					const activeButton =
+						"bg-arc-copper hover:bg-arc-copper/90 hover:dark:bg-arc-copper/90 focus:bg-arc-copper focus:dark:bg-arc-copper focus:outline-none focus:ring-1 focus:ring-arc-copper focus:ring-offset-1";
+					const disabledButton =
+						"text-neutral-500 dark:text-neutral-500/80 cursor-not-allowed";
+
 					return (
 						<SidebarMenuItem key={item.title}>
 							<SidebarMenuButton
 								asChild
 								tooltip={item.title}
-								className={isActive ? "bg-red-300 dark:bg-red-800" : undefined}
+								className={
+									isActive ? activeButton : isDisabled ? disabledButton : ""
+								}
+								disabled={isDisabled}
 							>
 								<Link
-									href={item.url}
-									className={isActive ? "font-semibold text-primary" : undefined}
+									href={isDisabled ? "#" : item.url}
+									className={isActive ? "font-semibold text-primary" : ""}
 								>
 									{item.icon && <item.icon />}
 									<span>{item.title}</span>

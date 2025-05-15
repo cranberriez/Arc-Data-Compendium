@@ -1,8 +1,9 @@
 "use client";
 
 import { BadgeCheck, Hammer, Heart, Info, MapPin, ShoppingCart, Sparkles, Zap } from "lucide-react";
+import { LucideIcon } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
 
@@ -20,6 +21,7 @@ interface Item {
 	id: string;
 	display_name: string;
 	type: string;
+	icon?: LucideIcon;
 	rarity: string;
 	craftable: boolean;
 	recipe?: string;
@@ -31,17 +33,17 @@ interface Item {
 const getRarityColor = (rarity: string) => {
 	switch (rarity.toLowerCase()) {
 		case "common":
-			return "slate-500";
+			return "text-slate-500";
 		case "uncommon":
-			return "emerald-500";
+			return "text-emerald-500";
 		case "rare":
-			return "blue-500";
+			return "text-blue-500";
 		case "epic":
-			return "purple-500";
+			return "text-purple-500";
 		case "legendary":
-			return "amber-500";
+			return "text-amber-500";
 		default:
-			return "slate-500";
+			return "text-slate-500";
 	}
 };
 
@@ -49,17 +51,17 @@ const getRarityColor = (rarity: string) => {
 const getRarityBorder = (rarity: string) => {
 	switch (rarity.toLowerCase()) {
 		case "common":
-			return "border-x-slate-500";
+			return "border-slate-500";
 		case "uncommon":
-			return "border-x-emerald-500";
+			return "border-emerald-500";
 		case "rare":
-			return "border-x-blue-500";
+			return "border-blue-500";
 		case "epic":
-			return "border-x-purple-500";
+			return "border-purple-500";
 		case "legendary":
-			return "border-x-amber-500";
+			return "border-amber-500";
 		default:
-			return "border-x-slate-500";
+			return "border-slate-500";
 	}
 };
 
@@ -97,14 +99,24 @@ const getSourceIcon = (type: SourceType) => {
 	}
 };
 
-type ItemCardProps = { item: Item; variant?: "default" | "slim" };
+// Helper function for converting underscore case to readable name
+const formatName = (type: string) => {
+	// "quick_use" -> "Quick Use"
+	return type
+		.split("_")
+		.map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+		.join(" ");
+};
 
-function ItemCard({ item, variant = "default" }: ItemCardProps) {
+type ItemCardProps = { item?: Item };
+
+function ItemCard({ item }: ItemCardProps) {
 	// For demo purposes, we'll use the provided example
 	const healingStim: Item = {
 		id: "healing_stim",
 		display_name: "Healing Stim",
 		type: "quick_use",
+		icon: Heart,
 		rarity: "uncommon",
 		craftable: true,
 		recipe: "healing_stim_recipe",
@@ -130,95 +142,61 @@ function ItemCard({ item, variant = "default" }: ItemCardProps) {
 
 	return (
 		<Card
-			className={`flex flex-row items-center gap-3 p-2 rounded-lg  ${
-				variant === "slim" ? "w-min min-h-[72px] h-[112px]" : "w-full max-w-md min-h-[72px]"
-			} bg-transparent border-zinc-700 shadow-md`}
+			className={`flex flex-row items-center gap-2 p-1 pr-2 rounded-lg w-full h-full md:max-w-[300px] max-w-[400px] bg-transparent border-zinc-700`}
 		>
 			{/* Item Icon */}
-			<div className="flex items-center justify-center rounded-lg h-24 w-24 aspect-square bg-zinc-800">
-				{getTypeIcon(displayItem.type)}
+			<div
+				className={cn(
+					"flex items-center justify-center rounded-sm h-full aspect-square bg-zinc-800 border-1",
+					rarityBorder
+				)}
+			>
+				{displayItem.icon && <displayItem.icon className={rarityColor} />}
 			</div>
-			{/* Bubbles */}
-			<div className="flex flex-col gap-1">
-				{/* Bubble 1 */}
-				<TooltipProvider>
-					<Tooltip>
-						<TooltipTrigger asChild>
-							<div className="flex items-center justify-center rounded-full h-7 w-7 bg-cyan-400 hover:scale-105 transition">
-								<Sparkles className="h-4 w-4 text-cyan-900" />
-							</div>
-						</TooltipTrigger>
-						<TooltipContent side="right">
-							<span>Dropped by enemies</span>
-						</TooltipContent>
-					</Tooltip>
-				</TooltipProvider>
-				{/* Bubble 2 */}
-				<TooltipProvider>
-					<Tooltip>
-						<TooltipTrigger asChild>
-							<div className="flex items-center justify-center rounded-full h-7 w-7 bg-amber-300 hover:scale-105 transition">
-								<ShoppingCart className="h-4 w-4 text-amber-900" />
-							</div>
-						</TooltipTrigger>
-						<TooltipContent side="right">
-							<span>Available for purchase</span>
-						</TooltipContent>
-					</Tooltip>
-				</TooltipProvider>
-				{/* Bubble 3 */}
-				<TooltipProvider>
-					<Tooltip>
-						<TooltipTrigger asChild>
-							<div className="flex items-center justify-center rounded-full h-7 w-7 bg-emerald-400 hover:scale-105 transition">
-								<Hammer className="h-4 w-4 text-emerald-900" />
-							</div>
-						</TooltipTrigger>
-						<TooltipContent side="right">
-							<span>Craftable item</span>
-						</TooltipContent>
-					</Tooltip>
-				</TooltipProvider>
-			</div>
-			{/* Item Name */}
-			{variant !== "slim" && (
-				<div className="flex-1">
-					<span className="block text-2xl text-wrap text-white">
+			<div className="flex flex-col flex-1 w-full h-full">
+				<div className="min-w-fit flex flex-1 flex-row items-center justify-between">
+					<div className="text-nowrap truncate max-w-[180px]">
 						{displayItem.display_name}
-					</span>
+					</div>
+					{/* <div>{getTypeIcon(displayItem.type)}</div> */}
+					<TooltipProvider>
+						<Tooltip>
+							<TooltipTrigger>{getTypeIcon(displayItem.type)}</TooltipTrigger>
+							<TooltipContent>
+								<span>{formatName(displayItem.type)}</span>
+							</TooltipContent>
+						</Tooltip>
+					</TooltipProvider>
 				</div>
-			)}
+				<div className="min-w-fit flex flex-1 flex-row items-center justify-between">
+					<div>{displayItem.rarity}</div>
+					{/* <div>{getTypeIcon(displayItem.type)}</div> */}
+					<TooltipProvider>
+						<Tooltip>
+							<TooltipTrigger>{getTypeIcon(displayItem.type)}</TooltipTrigger>
+							<TooltipContent>
+								<span>{formatName(displayItem.type)}</span>
+							</TooltipContent>
+						</Tooltip>
+					</TooltipProvider>
+				</div>
+			</div>
 		</Card>
 	);
 }
 
 function ItemPage() {
-	const item: Item = {
-		id: "healing_stim",
-		display_name: "Healing Stim",
-		type: "quick_use",
-		rarity: "uncommon",
-		craftable: true,
-		recipe: "healing_stim_recipe",
-		sources: [
-			{
-				type: "drop",
-				location: "Outpost Ambushers",
-			},
-			{
-				type: "buy",
-				location: "Med Vendor",
-				count: 1,
-				value: 45,
-			},
-		],
-		value: 20,
-	};
-
 	return (
-		<main className="grid grid-cols-3 gap-x-6 gap-y-8 min-h-screen w-full items-center justify-center py-8">
-			<ItemCard item={item} variant="slim" />
-			<ItemCard item={item} />
+		<main className="grid grid-cols-[repeat(auto-fit,_minmax(300px,_1fr))] gap-x-6 gap-y-8 min-h-full w-full py-8 px-4">
+			<ItemCard />
+			{Array.from({ length: 100 }).map((_, i) => (
+				<div
+					key={i}
+					className="flex items-center justify-center rounded-md border-2 border-dashed border-muted p-6 text-muted-foreground w-full h-full md:max-w-[300px] max-w-[400px]"
+				>
+					<span className="text-sm">Placeholder {i + 1}</span>
+				</div>
+			))}
 		</main>
 	);
 }

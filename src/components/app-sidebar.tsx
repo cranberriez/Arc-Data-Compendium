@@ -22,7 +22,13 @@ import {
 
 import { NavMain } from "@/components/nav-main";
 import { NavSettings } from "@/components/nav-settings";
-import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarRail } from "@/components/ui/sidebar";
+import {
+	Sidebar,
+	SidebarContent,
+	SidebarFooter,
+	SidebarHeader,
+	SidebarRail,
+} from "@/components/ui/sidebar";
 
 // This is sample data.
 const data = {
@@ -33,6 +39,7 @@ const data = {
 				title: "Dashboard",
 				url: "/",
 				icon: LayoutDashboard,
+				enabled: true,
 			},
 		],
 	},
@@ -44,16 +51,19 @@ const data = {
 				title: "All Items",
 				url: "/items",
 				icon: Package,
+				enabled: true,
 			},
 			{
 				title: "Valuables",
 				url: "/valuables",
 				icon: Coins,
+				enabled: false,
 			},
 			{
 				title: "Recyclables",
 				url: "/recycling",
 				icon: Recycle,
+				enabled: false,
 			},
 		],
 	},
@@ -65,11 +75,13 @@ const data = {
 				title: "Workbench Recipes",
 				url: "/crafting",
 				icon: Hammer,
+				enabled: false,
 			},
 			{
 				title: "Workbench Info",
 				url: "/workbenches",
 				icon: FlaskConical,
+				enabled: false,
 			},
 		],
 	},
@@ -81,16 +93,19 @@ const data = {
 				title: "Weapons",
 				url: "/weapons",
 				icon: Swords,
+				enabled: false,
 			},
 			{
 				title: "Armor",
 				url: "/gear",
 				icon: Shield,
+				enabled: false,
 			},
 			{
 				title: "Quick Use",
 				url: "/quickuse",
 				icon: Zap,
+				enabled: false,
 			},
 		],
 	},
@@ -102,11 +117,13 @@ const data = {
 				title: "Quests",
 				url: "/quests",
 				icon: BookMarked,
+				enabled: false,
 			},
 			{
 				title: "Store",
 				url: "/store",
 				icon: BadgeCent,
+				enabled: false,
 			},
 		],
 	},
@@ -118,11 +135,13 @@ const data = {
 				title: "Locations",
 				url: "/locations",
 				icon: Map,
+				enabled: false,
 			},
 			{
 				title: "Events",
 				url: "/events",
 				icon: CalendarClock,
+				enabled: false,
 			},
 		],
 	},
@@ -146,11 +165,19 @@ const data = {
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 	return (
-		<Sidebar collapsible="icon" {...props} variant="inset">
+		<Sidebar
+			collapsible="icon"
+			{...props}
+			variant="inset"
+		>
 			<SidebarHeader>{/* <TeamSwitcher teams={data.teams} /> */}</SidebarHeader>
 			<SidebarContent>
 				{Object.values(data).map((category) => (
-					<NavMain key={category.category} items={category.items} category={category.category} />
+					<NavMain
+						key={category.category}
+						items={category.items}
+						category={category.category}
+					/>
 				))}
 			</SidebarContent>
 			<SidebarFooter>
