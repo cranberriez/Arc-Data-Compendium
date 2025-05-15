@@ -4,6 +4,7 @@ import * as React from "react";
 import { Card } from "@/components/ui/card";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
+import { Book } from "lucide-react";
 import {
 	Item,
 	getRarityColor,
@@ -24,12 +25,12 @@ export function ItemCard({ item }: ItemCardProps) {
 
 	return (
 		<Card
-			className={`flex flex-row items-center gap-2 p-1 pr-2 rounded-lg w-full h-16 md:max-w-[300px] max-w-[400px] bg-transparent border-zinc-700`}
+			className={`flex flex-row items-center gap-2 p-1 pr-2 rounded-lg w-full h-16 md:max-w-[300px] max-w-[400px] bg-transparent border-zinc-700 cursor-pointer hover:bg-zinc-100 dark:hover:bg-zinc-800`}
 		>
 			{/* Item Icon */}
 			<div
 				className={cn(
-					"flex items-center justify-center rounded-sm h-full aspect-square bg-zinc-800 border-1",
+					"flex items-center justify-center rounded-sm h-full aspect-square border-2",
 					rarityBorder
 				)}
 			>
@@ -43,22 +44,28 @@ export function ItemCard({ item }: ItemCardProps) {
 					<TooltipProvider>
 						<Tooltip>
 							<TooltipTrigger>{itemTypeIcon}</TooltipTrigger>
-							<TooltipContent>
+							<TooltipContent side="right">
 								<span>{formatName(displayItem.type)}</span>
 							</TooltipContent>
 						</Tooltip>
 					</TooltipProvider>
 				</div>
 				<div className="min-w-fit flex flex-1 flex-row items-center justify-between">
-					<div>{displayItem.rarity}</div>
-					<TooltipProvider>
-						<Tooltip>
-							<TooltipTrigger>{itemTypeIcon}</TooltipTrigger>
-							<TooltipContent>
-								<span>{formatName(displayItem.type)}</span>
-							</TooltipContent>
-						</Tooltip>
-					</TooltipProvider>
+					<div className="text-sm text-muted-foreground">
+						{formatName(displayItem.rarity)}
+					</div>
+					{displayItem.craftable && (
+						<TooltipProvider>
+							<Tooltip>
+								<TooltipTrigger className="w-4 h-4 flex items-center justify-center">
+									<Book className="w-3 h-3" />
+								</TooltipTrigger>
+								<TooltipContent side="right">
+									<span>Craftable</span>
+								</TooltipContent>
+							</Tooltip>
+						</TooltipProvider>
+					)}
 				</div>
 			</div>
 		</Card>

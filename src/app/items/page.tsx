@@ -1,19 +1,24 @@
 "use client";
 
-import { items } from "@/data/items/items";
 import { ItemCard } from "@/components/items/item";
+import { useItems } from "@/contexts/ItemContext";
+import { ItemProvider } from "@/contexts/ItemContext";
 
-function ItemPage() {
+function ItemList() {
+	const { filteredItems } = useItems();
 	return (
 		<main className="grid grid-cols-[repeat(auto-fit,_minmax(300px,_1fr))] gap-x-6 gap-y-8 min-h-full w-full py-8 px-4">
+			{/* Example placeholder item */}
 			<ItemCard />
 			{/* <ItemCard item={items[0]} /> */}
-			{items.map((item) => (
+			{filteredItems.map((item) => (
 				<ItemCard
 					key={item.id}
 					item={item}
 				/>
 			))}
+
+			{/* A bunch of empty slots */}
 			{Array.from({ length: 100 }).map((_, i) => (
 				<div
 					key={i}
@@ -23,6 +28,14 @@ function ItemPage() {
 				</div>
 			))}
 		</main>
+	);
+}
+
+function ItemPage() {
+	return (
+		<ItemProvider>
+			<ItemList />
+		</ItemProvider>
 	);
 }
 

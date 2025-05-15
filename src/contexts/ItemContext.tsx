@@ -2,6 +2,7 @@
 
 import { createContext, ReactNode, useCallback, useMemo, useState, useContext } from "react";
 import { Item } from "@/data/items/types";
+import { items } from "@/data/items/itemHandler";
 
 type SortOrder = "asc" | "desc" | "none";
 type SortField = "name" | "rarity" | "type" | "value" | "none";
@@ -33,13 +34,19 @@ const defaultFilterState: FilterState = {
 
 const ItemContext = createContext<ItemContextType | undefined>(undefined);
 
-export function ItemProvider({ children, items }: { children: ReactNode; items: Item[] }) {
+export function ItemProvider({
+	children,
+	itemsSubset,
+}: {
+	children: ReactNode;
+	itemsSubset?: Item[];
+}) {
 	const [filterState, setFilterState] = useState<FilterState>(defaultFilterState);
-	const [sortField, setSortField] = useState<SortField>("name");
-	const [sortOrder, setSortOrder] = useState<SortOrder>("asc");
+	const [sortField, setSortField] = useState<SortField>("none");
+	const [sortOrder, setSortOrder] = useState<SortOrder>("none");
 
 	const filteredItems = useMemo(() => {
-		let result = [...items];
+		let result = [...(itemsSubset || items)];
 
 		// Apply filters
 		if (filterState.searchQuery) {
@@ -59,24 +66,39 @@ export function ItemProvider({ children, items }: { children: ReactNode; items: 
 			result = result.filter((item) => filterState.types.includes(item.type));
 		}
 
+		// Define rarity order for sorting
+		const rarityOrder: Record<string, number> = {
+			common: 1,
+			uncommon: 2,
+			rare: 3,
+			epic: 4,
+			legendary: 5,
+		};
+
 		// Apply sorting
-		if (sortField !== "none" && sortOrder !== "none") {
-			result.sort((a, b) => {
-				let aValue: any, bValue: any;
+		result.sort((a, b) => {
+			// If sort is set to 'none', sort by rarity then name
+			if (sortField === "none" || sortOrder === "none") {
+				const rarityCompare = rarityOrder[a.rarity] - rarityOrder[b.rarity];
+				if (rarityCompare !== 0) return rarityCompare;
+				return a.display_name.localeCompare(b.display_name);
+			}
 
-				if (sortField === "name") {
-					aValue = a.display_name.toLowerCase();
-					bValue = b.display_name.toLowerCase();
-				} else {
-					aValue = a[sortField as keyof Item];
-					bValue = b[sortField as keyof Item];
-				}
+			// Original sorting logic for other sort fields
+			let aValue: any, bValue: any;
 
-				if (aValue < bValue) return sortOrder === "asc" ? -1 : 1;
-				if (aValue > bValue) return sortOrder === "asc" ? 1 : -1;
-				return 0;
-			});
-		}
+			if (sortField === "name") {
+				aValue = a.display_name.toLowerCase();
+				bValue = b.display_name.toLowerCase();
+			} else {
+				aValue = a[sortField as keyof Item];
+				bValue = b[sortField as keyof Item];
+			}
+
+			if (aValue < bValue) return sortOrder === "asc" ? -1 : 1;
+			if (aValue > bValue) return sortOrder === "asc" ? 1 : -1;
+			return 0;
+		});
 
 		return result;
 	}, [items, filterState, sortField, sortOrder]);

@@ -45,7 +45,7 @@ export default function RootLayout({
 								</div>
 							</header>
 
-							<ScrollArea className="flex-1 overflow-auto h-full relative">
+							<ScrollArea className="flex-1 overflow-auto h-full mb-2 relative">
 								{children}
 							</ScrollArea>
 						</SidebarInset>
