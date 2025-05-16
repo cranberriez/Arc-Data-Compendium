@@ -1,160 +1,18 @@
-import {
-	Heart,
-	BatteryFull,
-	FlaskConical,
-	Rocket,
-	Cog,
-	Wrench,
-	Package,
-	Circle,
-	ScanSearch,
-	Shirt,
-	Layers,
-} from "lucide-react";
 import { Item } from "./types";
 import { getItemSources, getRecycleSources, invalidateRecycleCache } from "./itemUtils";
-
-// Export the raw items array
-export const itemsData: Item[] = [
-	{
-		id: "healing_stim",
-		display_name: "Healing Stim",
-		type: "quick_use",
-		icon: Heart,
-		rarity: "uncommon",
-		craftable: true,
-		recipe: "healing_stim_recipe",
-		sources: [
-			{ type: "drop", location: "Outpost Ambushers" },
-			{ type: "buy", location: "Med Vendor", count: 1, value: 45 },
-		],
-		value: 20,
-	},
-	{
-		id: "arc_powercells",
-		display_name: "ARC Powercells",
-		type: "recyclable",
-		icon: BatteryFull,
-		rarity: "common",
-		craftable: false,
-		recipe: null,
-		sources: [],
-		value: 0,
-	},
-	{
-		id: "chemicals",
-		display_name: "Chemicals",
-		type: "crafting_material",
-		icon: FlaskConical,
-		rarity: "common",
-		craftable: false,
-		recipe: null,
-		sources: [],
-		value: 0,
-	},
-	{
-		id: "damaged_rocketeer_part",
-		display_name: "Damaged Rocketeer Part",
-		type: "recyclable",
-		icon: Rocket,
-		rarity: "common",
-		craftable: false,
-		recipe: null,
-		sources: [],
-		value: 0,
-		recycling: [{ id: "arc_alloys", count: 7 }],
-	},
-	{
-		id: "damaged_wasp_drive",
-		display_name: "Damaged Wasp Drive",
-		type: "recyclable",
-		icon: Cog,
-		rarity: "common",
-		craftable: false,
-		recipe: null,
-		sources: [],
-		value: 0,
-	},
-	{
-		id: "fabric",
-		display_name: "Fabric",
-		type: "crafting_material",
-		icon: Shirt,
-		rarity: "common",
-		craftable: false,
-		recipe: null,
-		sources: [],
-		value: 0,
-	},
-	{
-		id: "metal_parts",
-		display_name: "Metal Parts",
-		type: "crafting_material",
-		icon: Wrench,
-		rarity: "common",
-		craftable: false,
-		recipe: null,
-		sources: [],
-		value: 0,
-	},
-	{
-		id: "plastic_parts",
-		display_name: "Plastic Parts",
-		type: "crafting_material",
-		icon: Package,
-		rarity: "common",
-		craftable: false,
-		recipe: null,
-		sources: [],
-		value: 0,
-	},
-	{
-		id: "rubber_parts",
-		display_name: "Rubber Parts",
-		type: "crafting_material",
-		icon: Circle,
-		rarity: "common",
-		craftable: false,
-		recipe: null,
-		sources: [],
-		value: 0,
-	},
-	{
-		id: "snitch_scanner",
-		display_name: "Snitch Scanner",
-		type: "recyclable",
-		icon: ScanSearch,
-		rarity: "common",
-		craftable: false,
-		recipe: null,
-		sources: [],
-		value: 0,
-		recycling: [{ id: "arc_alloys", count: 4 }],
-	},
-	{
-		id: "arc_alloys",
-		display_name: "ARC Alloys",
-		type: "crafting_material",
-		icon: Layers,
-		rarity: "uncommon",
-		craftable: false,
-		recipe: null,
-		sources: [],
-		value: 0,
-	},
-];
+import { itemsData } from "./itemData";
 
 // Process items to include dynamic sources
 const processedItems = itemsData.map((item: Item) => ({
-  ...item,
-  // This will be called when the item is accessed
-  get sources() {
-    return getItemSources(item.id, itemsData);
-  }
+	...item,
+	// This will be called when the item is accessed
+	get sources() {
+		return getItemSources(item.id, itemsData);
+	},
 }));
 
 // Export the processed items with dynamic sources
-export const items: readonly Item[] = Object.freeze(processedItems);
+export const items: Item[] = processedItems;
 
 // Export utility functions
 export { getItemSources, getRecycleSources, invalidateRecycleCache };

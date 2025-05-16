@@ -12,6 +12,7 @@ import { formatName, getRarityColor, getTypeIcon } from "@/data/items/types";
 import { useItemDialog } from "./item-dialog-context";
 import { cn } from "@/lib/utils";
 import { Book } from "lucide-react";
+import { ScrollArea } from "@radix-ui/react-scroll-area";
 
 export function ItemDialog() {
 	const { isOpen, item, closeDialog } = useItemDialog();
@@ -24,12 +25,14 @@ export function ItemDialog() {
 			open={isOpen}
 			onOpenChange={(open) => !open && closeDialog()}
 		>
-			<DialogContent className="w-[95vw] max-w-md">
+			<DialogContent className="w-[95vw] max-w-lg max-h-[95vh] overflow-y-scroll">
+				{/* Screen Reader Stuff */}
 				<DialogDescription className="sr-only">
 					Details for {item.display_name}, {formatName(item.rarity)}{" "}
 					{formatName(item.type)}
 					{item.craftable ? ", Craftable" : ""}
 				</DialogDescription>
+				{/* Dialog Header */}
 				<DialogHeader className="flex flex-row items-center gap-4">
 					<div
 						className={cn(
@@ -40,8 +43,10 @@ export function ItemDialog() {
 					>
 						{ItemIcon && <ItemIcon className="w-10 h-10" />}
 					</div>
-					<DialogTitle className="text-2xl font-mono font-light whitespace-nowrap">
-						{item.display_name}
+					<div className="flex flex-col items-start">
+						<DialogTitle className="text-2xl font-mono font-light">
+							{item.display_name}
+						</DialogTitle>
 						<div className="space-y-4">
 							<div className="flex items-center gap-4">
 								<div className="flex items-center gap-1">
@@ -74,8 +79,18 @@ export function ItemDialog() {
 								)}
 							</div>
 						</div>
-					</DialogTitle>
+					</div>
 				</DialogHeader>
+
+				{/* TODO: Add Sell Value, Buy Value, Recycle Value */}
+				{/* TODO: Add Sources */}
+				{/* TODO: Add Recycling if applicable */}
+				{/* TODO: Add Recipe if applicable */}
+
+				{/* TODO: Add raw item data for debugging */}
+				<div className="max-h-[200px] overflow-y-scroll">
+					<pre>{JSON.stringify(item, null, 2)}</pre>
+				</div>
 			</DialogContent>
 		</Dialog>
 	);
