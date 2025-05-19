@@ -31,19 +31,31 @@ export type WeaponType =
 
 export type TraderName = "Tian Wen" | "Lance" | "Apollo" | "Shani";
 
-export interface ItemSource {
-	type: ItemSourceType;
-	location: string;
-	level?: string;
-	chance?: number;
-	questId?: string;
-	enemyType?: string;
-	value?: number;
-	trader?: TraderName;
-}
+export type ItemSource =
+	| {
+			type: "buy";
+			trader: TraderName;
+			value: number;
+			count?: number;
+	  }
+	| {
+			type: "recycle";
+			fromItemId: string; // The item being recycled to produce this item
+			count: number;
+	  };
 
 export interface RecipeRequirement {
 	itemId: string;
+	count: number;
+}
+
+/**
+ * Recycling structure for items that can be recycled into other items
+ */
+export interface Recycling {
+	/** ID of the resulting item (item_id) */
+	id: string;
+	/** Number of items produced */
 	count: number;
 }
 

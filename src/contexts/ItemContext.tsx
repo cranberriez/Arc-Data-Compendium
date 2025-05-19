@@ -1,27 +1,27 @@
 "use client";
 
 import { createContext, ReactNode, useCallback, useMemo, useState, useContext } from "react";
-import { Item } from "@/data/items/types";
+import { BaseItem } from "@/types/items/base";
 import { items } from "@/data/items/itemHandler";
 
 type SortOrder = "asc" | "desc" | "none";
-type SortField = "name" | "rarity" | "type" | "value" | "none";
+type SortField = "name" | "rarity" | "category" | "value" | "none"; // 'category' replaces 'type' from legacy Item
 
 interface FilterState {
 	searchQuery: string;
 	rarities: string[];
-	types: string[];
+	categories: string[]; // replaces 'types' from legacy Item
 }
 
 interface ItemContextType {
-	items: Item[];
-	filteredItems: Item[];
+	items: BaseItem[];
+	filteredItems: BaseItem[];
 	filterState: FilterState;
 	sortField: SortField;
 	sortOrder: SortOrder;
 	setSearchQuery: (query: string) => void;
 	toggleRarity: (rarity: string) => void;
-	toggleType: (type: string) => void;
+	toggleCategory: (category: string) => void; // replaces toggleType
 	setSort: (field: SortField, order: SortOrder) => void;
 	resetFilters: () => void;
 }
@@ -29,7 +29,7 @@ interface ItemContextType {
 const defaultFilterState: FilterState = {
 	searchQuery: "",
 	rarities: [],
-	types: [],
+	categories: [],
 };
 
 const ItemContext = createContext<ItemContextType | undefined>(undefined);
@@ -39,7 +39,7 @@ export function ItemProvider({
 	itemsSubset,
 }: {
 	children: ReactNode;
-	itemsSubset?: Item[];
+	itemsSubset?: BaseItem[];
 }) {
 	const [filterState, setFilterState] = useState<FilterState>(defaultFilterState);
 	const [sortField, setSortField] = useState<SortField>("none");
@@ -48,22 +48,23 @@ export function ItemProvider({
 	const filteredItems = useMemo(() => {
 		let result = [...(itemsSubset || items)];
 
-		// Apply filters
+		// Apply search filter
 		if (filterState.searchQuery) {
 			const query = filterState.searchQuery.toLowerCase();
 			result = result.filter(
 				(item) =>
-					item.display_name.toLowerCase().includes(query) ||
-					item.id.toLowerCase().includes(query)
+					item.name.toLowerCase().includes(query) || item.id.toLowerCase().includes(query)
 			);
 		}
 
+		// Filter by rarity
 		if (filterState.rarities.length > 0) {
 			result = result.filter((item) => filterState.rarities.includes(item.rarity));
 		}
 
-		if (filterState.types.length > 0) {
-			result = result.filter((item) => filterState.types.includes(item.type));
+		// Filter by category (was 'type')
+		if (filterState.categories.length > 0) {
+			result = result.filter((item) => filterState.categories.includes(item.category));
 		}
 
 		// Define rarity order for sorting
@@ -77,22 +78,24 @@ export function ItemProvider({
 
 		// Apply sorting
 		result.sort((a, b) => {
-			// If sort is set to 'none', sort by rarity then name
+			// Default: sort by rarity then name
 			if (sortField === "none" || sortOrder === "none") {
 				const rarityCompare = rarityOrder[a.rarity] - rarityOrder[b.rarity];
 				if (rarityCompare !== 0) return rarityCompare;
-				return a.display_name.localeCompare(b.display_name);
+				return a.name.localeCompare(b.name);
 			}
 
-			// Original sorting logic for other sort fields
 			let aValue: any, bValue: any;
 
 			if (sortField === "name") {
-				aValue = a.display_name.toLowerCase();
-				bValue = b.display_name.toLowerCase();
+				aValue = a.name.toLowerCase();
+				bValue = b.name.toLowerCase();
+			} else if (sortField === "category") {
+				aValue = a.category;
+				bValue = b.category;
 			} else {
-				aValue = a[sortField as keyof Item];
-				bValue = b[sortField as keyof Item];
+				aValue = a[sortField as keyof BaseItem];
+				bValue = b[sortField as keyof BaseItem];
 			}
 
 			if (aValue < bValue) return sortOrder === "asc" ? -1 : 1;
@@ -101,7 +104,7 @@ export function ItemProvider({
 		});
 
 		return result;
-	}, [items, filterState, sortField, sortOrder]);
+	}, [items, itemsSubset, filterState, sortField, sortOrder]);
 
 	const setSearchQuery = useCallback((query: string) => {
 		setFilterState((prev) => ({ ...prev, searchQuery: query }));
@@ -116,12 +119,12 @@ export function ItemProvider({
 		});
 	}, []);
 
-	const toggleType = useCallback((type: string) => {
+	const toggleCategory = useCallback((category: string) => {
 		setFilterState((prev) => {
-			const newTypes = prev.types.includes(type)
-				? prev.types.filter((t) => t !== type)
-				: [...prev.types, type];
-			return { ...prev, types: newTypes };
+			const newCategories = prev.categories.includes(category)
+				? prev.categories.filter((c) => c !== category)
+				: [...prev.categories, category];
+			return { ...prev, categories: newCategories };
 		});
 	}, []);
 
@@ -145,7 +148,7 @@ export function ItemProvider({
 			sortOrder,
 			setSearchQuery,
 			toggleRarity,
-			toggleType,
+			toggleCategory,
 			setSort,
 			resetFilters,
 		}),
@@ -156,7 +159,7 @@ export function ItemProvider({
 			sortOrder,
 			setSearchQuery,
 			toggleRarity,
-			toggleType,
+			toggleCategory,
 			setSort,
 			resetFilters,
 			items,

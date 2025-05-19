@@ -1,4 +1,19 @@
-import { Item, ItemSource, SourceType } from "./types";
+import { BaseItem } from "@/types/items/base";
+import { ItemSource } from "@/types/items/types";
+import {
+	Cog,
+	Hammer,
+	Heart,
+	Info,
+	LucideIcon as LucideIconType,
+	MapPin,
+	Shield,
+	ShoppingCart,
+	Sparkles,
+	Sword,
+	Wrench,
+	Zap,
+} from "lucide-react";
 
 // Cache for reverse lookup of recycle sources
 let recycleSourceCache: Map<string, ItemSource[]> | null = null;
@@ -8,7 +23,7 @@ let recycleSourceCache: Map<string, ItemSource[]> | null = null;
  * @param items Array of all items
  * @returns Map where key is item ID and value is array of sources that can be recycled into it
  */
-function buildRecycleSourceMap(items: Item[]): Map<string, ItemSource[]> {
+function buildRecycleSourceMap(items: BaseItem[]): Map<string, ItemSource[]> {
 	const sourceMap = new Map<string, ItemSource[]>();
 
 	items.forEach((item) => {
@@ -19,10 +34,9 @@ function buildRecycleSourceMap(items: Item[]): Map<string, ItemSource[]> {
 				}
 
 				sourceMap.get(recycle.id)?.push({
-					type: "recycle" as SourceType,
-					location: item.display_name,
+					type: "recycle",
+					fromItemId: item.id,
 					count: recycle.count,
-					itemId: item.id, // Store the source item ID for reference
 				});
 			});
 		}
@@ -37,7 +51,7 @@ function buildRecycleSourceMap(items: Item[]): Map<string, ItemSource[]> {
  * @param items Array of all items
  * @returns Array of all sources for the item
  */
-export function getItemSources(itemId: string, items: Item[]): ItemSource[] {
+export function getItemSources(itemId: string, items: BaseItem[]): ItemSource[] {
 	// Find the item
 	const item = items.find((i) => i.id === itemId);
 	if (!item) return [];
@@ -47,8 +61,21 @@ export function getItemSources(itemId: string, items: Item[]): ItemSource[] {
 		recycleSourceCache = buildRecycleSourceMap(items);
 	}
 
-	// Get the original sources
-	const sources = [...(item.sources || [])];
+	// Get the original sources (buy only, now)
+	const sources: ItemSource[] = [];
+	if (item.sources) {
+		for (const src of item.sources) {
+			if (src.type === "buy") {
+				// Only push buy sources, matching the new structure
+				sources.push({
+					type: "buy",
+					trader: src.trader,
+					value: src.value,
+					count: src.count,
+				});
+			}
+		}
+	}
 
 	// Add recycling sources if any
 	const recycleSources = recycleSourceCache.get(itemId) || [];
@@ -63,7 +90,7 @@ export function getItemSources(itemId: string, items: Item[]): ItemSource[] {
  * @param items Array of all items
  * @returns Array of items that can be recycled into the specified item
  */
-export function getRecycleSources(itemId: string, items: Item[]): ItemSource[] {
+export function getRecycleSources(itemId: string, items: BaseItem[]): ItemSource[] {
 	if (!recycleSourceCache) {
 		recycleSourceCache = buildRecycleSourceMap(items);
 	}
@@ -77,3 +104,67 @@ export function getRecycleSources(itemId: string, items: Item[]): ItemSource[] {
 export function invalidateRecycleCache(): void {
 	recycleSourceCache = null;
 }
+
+import { LucideIcon } from "lucide-react";
+import { Rarity, ItemCategory } from "@/types/items/types";
+
+const rarityClasses = {
+	common: {
+		border: "border-common",
+		text: "text-common",
+		bg: "bg-common",
+	},
+	uncommon: {
+		border: "border-uncommon",
+		text: "text-uncommon",
+		bg: "bg-uncommon",
+	},
+	rare: {
+		border: "border-rare",
+		text: "text-rare",
+		bg: "bg-rare",
+	},
+	epic: {
+		border: "border-epic",
+		text: "text-epic",
+		bg: "bg-epic",
+	},
+	legendary: {
+		border: "border-legendary",
+		text: "text-legendary",
+		bg: "bg-legendary",
+	},
+};
+
+export const getRarityColor = (rarity: string, type: "border" | "text" | "bg"): string => {
+	const normalizedRarity = rarity.toLowerCase() as Rarity;
+	const validRarities: Rarity[] = ["common", "uncommon", "rare", "epic", "legendary"];
+	const safeRarity = validRarities.includes(normalizedRarity) ? normalizedRarity : "common";
+	return rarityClasses[safeRarity][type];
+};
+
+export const getTypeIcon = (category: string): LucideIconType => {
+	switch (category.toLowerCase()) {
+		case "quick_use":
+			return Zap;
+		case "weapon":
+			return Sword;
+		case "gear":
+			return Shield;
+		case "consumable":
+			return Heart;
+		case "recyclable":
+			return Wrench;
+		case "crafting_material":
+			return Cog;
+		default:
+			return Info;
+	}
+};
+
+export const formatName = (type: string) => {
+	return type
+		.split("_")
+		.map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+		.join(" ");
+};

@@ -8,11 +8,10 @@ import {
 	DialogHeader,
 	DialogTitle,
 } from "@/components/ui/dialog";
-import { formatName, getRarityColor, getTypeIcon } from "@/data/items/types";
+import { formatName, getRarityColor, getTypeIcon } from "@/data/items/itemUtils";
 import { useItemDialog } from "./item-dialog-context";
 import { cn } from "@/lib/utils";
 import { Book } from "lucide-react";
-import { ScrollArea } from "@radix-ui/react-scroll-area";
 
 export function ItemDialog() {
 	const { isOpen, item, closeDialog } = useItemDialog();
@@ -28,9 +27,8 @@ export function ItemDialog() {
 			<DialogContent className="w-[95vw] max-w-lg max-h-[95vh] overflow-y-scroll">
 				{/* Screen Reader Stuff */}
 				<DialogDescription className="sr-only">
-					Details for {item.display_name}, {formatName(item.rarity)}{" "}
-					{formatName(item.type)}
-					{item.craftable ? ", Craftable" : ""}
+					Details for {item.name}, {formatName(item.rarity)} {formatName(item.category)}
+					{item.recipe ? ", Recipe" : ""}
 				</DialogDescription>
 				{/* Dialog Header */}
 				<DialogHeader className="flex flex-row items-center gap-4">
@@ -45,16 +43,18 @@ export function ItemDialog() {
 					</div>
 					<div className="flex flex-col items-start">
 						<DialogTitle className="text-2xl font-mono font-light">
-							{item.display_name}
+							{item.name}
 						</DialogTitle>
 						<div className="space-y-4">
 							<div className="flex items-center gap-4">
 								<div className="flex items-center gap-1">
 									<div className="w-fit h-fit">
-										{getTypeIcon(item.type, { size: 12 })}
+										{React.createElement(getTypeIcon(item.category), {
+											size: 12,
+										})}
 									</div>
 									<p className="text-sm text-muted-foreground">
-										{formatName(item.type)}
+										{formatName(item.category)}
 									</p>
 								</div>
 								<div className="flex items-center gap-1">
@@ -69,7 +69,7 @@ export function ItemDialog() {
 									</p>
 								</div>
 
-								{item.craftable && (
+								{item.recipe && (
 									<div className="flex items-center gap-1">
 										<div className="w-fit h-fit">
 											<Book size={12} />

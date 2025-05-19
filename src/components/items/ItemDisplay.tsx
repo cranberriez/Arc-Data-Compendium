@@ -4,16 +4,18 @@ import * as React from "react";
 import { Card } from "@/components/ui/card";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { Book } from "lucide-react";
-import { Item, formatName, getRarityColor, getTypeIcon, placeholderItem } from "@/data/items/types";
+import { BaseItem } from "@/types/items/base";
+import { formatName, getRarityColor, getTypeIcon } from "@/data/items/itemUtils";
 import { useItemDialog } from "./item-dialog-context";
 import { cn } from "@/lib/utils";
 
-type ItemCardProps = { item?: Item };
+type ItemCardProps = { item?: BaseItem };
 
 export function ItemCard({ item }: ItemCardProps) {
 	const { openDialog } = useItemDialog();
 	// Use the provided item or fallback to the first item in the datastore
-	const displayItem = item || placeholderItem;
+	const displayItem = item;
+	if (!displayItem) return null;
 
 	const handleClick = () => {
 		openDialog(displayItem);
@@ -39,14 +41,16 @@ export function ItemCard({ item }: ItemCardProps) {
 			</div>
 			<div className="flex flex-col flex-1 w-full h-full">
 				<div className="min-w-fit flex flex-1 flex-row items-center justify-between">
-					<div className="text-nowrap truncate max-w-[180px]">
-						{displayItem.display_name}
-					</div>
+					<div className="text-nowrap truncate max-w-[180px]">{displayItem.name}</div>
 					<TooltipProvider>
 						<Tooltip>
-							<TooltipTrigger>{getTypeIcon(displayItem.type)}</TooltipTrigger>
+							<TooltipTrigger>
+								{React.createElement(getTypeIcon(item.category), {
+									size: 12,
+								})}
+							</TooltipTrigger>
 							<TooltipContent side="right">
-								<span>{formatName(displayItem.type)}</span>
+								<span>{formatName(item.category)}</span>
 							</TooltipContent>
 						</Tooltip>
 					</TooltipProvider>
@@ -55,7 +59,7 @@ export function ItemCard({ item }: ItemCardProps) {
 					<div className="text-sm text-muted-foreground">
 						{formatName(displayItem.rarity)}
 					</div>
-					{displayItem.craftable && (
+					{displayItem.recipe && (
 						<TooltipProvider>
 							<Tooltip>
 								<TooltipTrigger className="w-4 h-4 flex items-center justify-center">

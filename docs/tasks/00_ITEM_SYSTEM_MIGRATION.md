@@ -18,14 +18,14 @@ This document outlines the tasks required to migrate the current item system to 
 
 ### 2. Update Item Handler
 
--   [ ] Modify `src/data/items/itemHandler.ts` to work with new BaseItem type
+-   [x] Modify `src/data/items/itemHandler.ts` to work with new BaseItem type
 -   [ ] Implement validation for required fields
 -   [ ] Add type conversion for existing items
 
 ### 3. Update Item Context
 
--   [ ] Update `src/contexts/ItemContext.tsx` to handle new item types
--   [ ] Add filtering and sorting for new item properties
+-   [x] Update `src/contexts/ItemContext.tsx` to handle new item types
+-   [x] Add filtering and sorting for new item properties
 -   [ ] Implement type-safe item retrieval
 
 ### 4. Generalize Item Display Components

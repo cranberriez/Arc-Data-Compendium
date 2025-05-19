@@ -1,13 +1,13 @@
 "use client";
 
 import * as React from "react";
-import type { Item } from "@/data/items/types";
+import type { BaseItem } from "@/types/items/base";
 import { ItemDialog } from "./item-dialog";
 
 interface ItemDialogContextType {
 	isOpen: boolean;
-	item: Item | null;
-	openDialog: (item: Item) => void;
+	item: BaseItem | null;
+	openDialog: (item: BaseItem) => void;
 	closeDialog: () => void;
 }
 
@@ -15,9 +15,9 @@ const ItemDialogContext = React.createContext<ItemDialogContextType | undefined>
 
 export function ItemDialogProvider({ children }: { children: React.ReactNode }) {
 	const [isOpen, setIsOpen] = React.useState(false);
-	const [currentItem, setCurrentItem] = React.useState<Item | null>(null);
+	const [currentItem, setCurrentItem] = React.useState<BaseItem | null>(null);
 
-	const openDialog = React.useCallback((item: Item) => {
+	const openDialog = React.useCallback((item: BaseItem) => {
 		setCurrentItem(item);
 		setIsOpen(true);
 	}, []);

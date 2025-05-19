@@ -1,4 +1,5 @@
-import { Rarity, ItemSource, ItemCategory, Recipe } from "./types";
+import { Rarity, ItemSource, ItemCategory, Recipe, Recycling } from "./types";
+import { LucideIcon } from "lucide-react";
 
 /**
  * Base interface that all items must implement
@@ -25,11 +26,11 @@ export interface BaseItem {
 	/** Maximum stack size (1 for non-stackable items) */
 	maxStack: number;
 
-	/** Categories this item belongs to */
-	categories: ItemCategory[];
+	/** Category this item belongs to */
+	category: ItemCategory;
 
-	/** Path to the item's icon */
-	icon: string;
+	/** Icon for the item (LucideIcon) */
+	icon: LucideIcon;
 
 	/** Optional flavor text or lore */
 	flavorText?: string;
@@ -38,8 +39,8 @@ export interface BaseItem {
 	sources?: ItemSource[];
 
 	/** Optional recipe if this item can be crafted */
-	recipe?: Recipe;
+	recipe: string | null;
 
-	/** Version of the item data structure */
-	version: number;
+	/** Optional recycling information, if applicable */
+	recycling?: Recycling[];
 }
