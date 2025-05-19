@@ -3,6 +3,7 @@
 import { createContext, ReactNode, useCallback, useMemo, useState, useContext } from "react";
 import { BaseItem } from "@/types/items/base";
 import { items } from "@/data/items/itemHandler";
+import { valuables } from "@/data/valuables/valuableHandler";
 
 type SortOrder = "asc" | "desc" | "none";
 type SortField = "name" | "rarity" | "category" | "value" | "none"; // 'category' replaces 'type' from legacy Item
@@ -26,6 +27,8 @@ interface ItemContextType {
 	resetFilters: () => void;
 }
 
+const allItems = [...items, ...valuables];
+
 const defaultFilterState: FilterState = {
 	searchQuery: "",
 	rarities: [],
@@ -46,7 +49,7 @@ export function ItemProvider({
 	const [sortOrder, setSortOrder] = useState<SortOrder>("none");
 
 	const filteredItems = useMemo(() => {
-		let result = [...(itemsSubset || items)];
+		let result = [...(itemsSubset || allItems)];
 
 		// Apply search filter
 		if (filterState.searchQuery) {

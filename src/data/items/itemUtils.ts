@@ -2,6 +2,7 @@ import { BaseItem } from "@/types/items/base";
 import { ItemSource } from "@/types/items/types";
 import {
 	Cog,
+	Gem,
 	Hammer,
 	Heart,
 	Info,
@@ -151,6 +152,8 @@ export const getTypeIcon = (category: string): LucideIconType => {
 			return Sword;
 		case "gear":
 			return Shield;
+		case "valuable":
+			return Gem;
 		case "consumable":
 			return Heart;
 		case "recyclable":
