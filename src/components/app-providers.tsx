@@ -2,7 +2,7 @@
 
 import { ThemeProvider } from "@/contexts/themeContext";
 import { ItemProvider } from "@/contexts/itemContext";
-import { ItemDialogProvider } from "@/components/items/item-dialog-context";
+import { DialogProvider } from "@/contexts/dialogContext";
 import { SidebarProvider } from "@/components/ui/sidebar";
 
 interface AppProvidersProps {
@@ -18,7 +18,7 @@ export function AppProviders({ children }: AppProvidersProps) {
 		>
 			<SidebarProvider>
 				<ItemProvider>
-					<ItemDialogProvider>{children}</ItemDialogProvider>
+					<DialogProvider>{children}</DialogProvider>
 				</ItemProvider>
 			</SidebarProvider>
 		</ThemeProvider>

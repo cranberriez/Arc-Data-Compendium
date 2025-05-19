@@ -9,14 +9,19 @@ import {
 	DialogTitle,
 } from "@/components/ui/dialog";
 import { formatName, getRarityColor, getTypeIcon } from "@/data/items/itemUtils";
-import { useItemDialog } from "./item-dialog-context";
+
 import { cn } from "@/lib/utils";
 import { Book } from "lucide-react";
 
-export function ItemDialog() {
-	const { isOpen, item, closeDialog } = useItemDialog();
+type ItemDialogProps = {
+	data: any;
+	isOpen: boolean;
+	closeDialog: () => void;
+};
 
-	if (!item) return null;
+export function ItemDialog({ data, isOpen, closeDialog }: ItemDialogProps) {
+	if (!data) return null;
+	const item = data;
 	const ItemIcon = item.icon;
 
 	return (

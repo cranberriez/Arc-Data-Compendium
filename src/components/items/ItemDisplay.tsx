@@ -6,19 +6,20 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/comp
 import { Book } from "lucide-react";
 import { BaseItem } from "@/types/items/base";
 import { formatName, getRarityColor, getTypeIcon } from "@/data/items/itemUtils";
-import { useItemDialog } from "./item-dialog-context";
+import { useDialog } from "../../contexts/dialogContext";
 import { cn } from "@/lib/utils";
 
 type ItemCardProps = { item?: BaseItem };
 
 export function ItemCard({ item }: ItemCardProps) {
-	const { openDialog } = useItemDialog();
+	const { openDialog } = useDialog();
 	// Use the provided item or fallback to the first item in the datastore
 	const displayItem = item;
 	if (!displayItem) return null;
 
 	const handleClick = () => {
-		openDialog(displayItem);
+		if (!displayItem) return;
+		openDialog("item", displayItem);
 	};
 
 	return (
@@ -45,12 +46,12 @@ export function ItemCard({ item }: ItemCardProps) {
 					<TooltipProvider>
 						<Tooltip>
 							<TooltipTrigger>
-								{React.createElement(getTypeIcon(item.category), {
+								{React.createElement(getTypeIcon(displayItem.category), {
 									size: 12,
 								})}
 							</TooltipTrigger>
 							<TooltipContent side="right">
-								<span>{formatName(item.category)}</span>
+								<span>{formatName(displayItem.category)}</span>
 							</TooltipContent>
 						</Tooltip>
 					</TooltipProvider>
