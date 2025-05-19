@@ -1,7 +1,7 @@
 "use client";
 
 import { ThemeProvider } from "@/contexts/themeContext";
-import { ItemProvider } from "@/contexts/itemContextcap";
+import { ItemProvider } from "@/contexts/itemContext";
 import { DialogProvider } from "@/contexts/dialogContext";
 import { SidebarProvider } from "@/components/ui/sidebar";
 
