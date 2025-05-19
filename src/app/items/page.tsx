@@ -1,7 +1,7 @@
 "use client";
 
-import { ItemCard } from "@/components/items/ItemDisplay";
-import { useItems } from "@/contexts/itemContext";
+import { ItemCard } from "@/components/items/itemDisplay";
+import { useItems } from "@/contexts/itemContextcap";
 
 function ItemList() {
 	const { filteredItems } = useItems();
