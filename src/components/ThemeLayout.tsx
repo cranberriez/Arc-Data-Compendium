@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState, ReactNode } from "react";
-import { Inter } from "next/font/google";
 
 import { AppSidebar } from "@/components/app-sidebar";
 import {
@@ -14,8 +13,6 @@ import {
 } from "@/components/ui/breadcrumb";
 import { Separator } from "@/components/ui/separator";
 import { SidebarInset, SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
-
-const inter = Inter({ subsets: ["latin"] });
 
 export default function ThemeLayout({ children }: { children: ReactNode }) {
 	// Always start with 'light' to match SSR output

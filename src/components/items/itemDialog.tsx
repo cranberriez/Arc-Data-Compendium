@@ -12,9 +12,10 @@ import { formatName, getRarityColor, getTypeIcon } from "@/data/items/itemUtils"
 
 import { cn } from "@/lib/utils";
 import { Book } from "lucide-react";
+import { BaseItem } from "@/types";
 
 type ItemDialogProps = {
-	data: any;
+	data: BaseItem;
 	isOpen: boolean;
 	closeDialog: () => void;
 };

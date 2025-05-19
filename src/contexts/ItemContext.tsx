@@ -107,7 +107,7 @@ export function ItemProvider({
 		});
 
 		return result;
-	}, [items, itemsSubset, filterState, sortField, sortOrder]);
+	}, [itemsSubset, filterState, sortField, sortOrder]);
 
 	const setSearchQuery = useCallback((query: string) => {
 		setFilterState((prev) => ({ ...prev, searchQuery: query }));
@@ -165,7 +165,6 @@ export function ItemProvider({
 			toggleCategory,
 			setSort,
 			resetFilters,
-			items,
 		]
 	);
 
