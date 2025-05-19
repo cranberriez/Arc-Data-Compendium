@@ -48,9 +48,11 @@ export function NavMain({
 							<SidebarMenuButton
 								asChild
 								tooltip={item.title}
-								className={
-									isActive ? activeButton : isDisabled ? disabledButton : ""
-								}
+								className={[
+									"flex flex-row items-center gap-2",
+									isActive ? activeButton : "",
+									isDisabled ? disabledButton : "",
+								].join(" ")}
 								disabled={isDisabled}
 							>
 								<Link
@@ -58,7 +60,7 @@ export function NavMain({
 									className={isActive ? "font-semibold text-primary" : ""}
 								>
 									{item.icon && <item.icon />}
-									<span>{item.title}</span>
+									<span className="text-lg">{item.title}</span>
 								</Link>
 							</SidebarMenuButton>
 						</SidebarMenuItem>
