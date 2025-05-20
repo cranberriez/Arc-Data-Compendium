@@ -1,31 +1,79 @@
 "use client";
 
+import { useEffect, useRef, useCallback, useState } from "react";
 import { ItemCard } from "@/components/items/itemDisplay";
 import { useItems } from "@/contexts/itemContext";
 
+const ITEMS_PER_PAGE = 30; // Number of items to load per page
+
 function ItemList() {
 	const { filteredItems } = useItems();
+	const [visibleItems, setVisibleItems] = useState<number>(ITEMS_PER_PAGE);
+	const loader = useRef<HTMLDivElement>(null);
+	const loadingRef = useRef<boolean>(false);
+
+	// Handle infinite scroll
+	const handleObserver = useCallback(
+		(entries: IntersectionObserverEntry[]) => {
+			const target = entries[0];
+			if (target.isIntersecting && !loadingRef.current) {
+				loadingRef.current = true;
+				// Load more items when the loader is visible
+				setVisibleItems((prev) => {
+					const newCount = Math.min(prev + ITEMS_PER_PAGE, filteredItems.length);
+					loadingRef.current = false;
+					return newCount;
+				});
+			}
+		},
+		[filteredItems.length]
+	);
+
+	// Set up intersection observer for infinite scroll
+	useEffect(() => {
+		const observer = new IntersectionObserver(handleObserver, {
+			root: null,
+			rootMargin: "20px",
+			threshold: 0.1,
+		});
+
+		const currentLoader = loader.current;
+		if (currentLoader) {
+			observer.observe(currentLoader);
+		}
+
+		// Reset visible items when filtered items change
+		setVisibleItems(ITEMS_PER_PAGE);
+
+		return () => {
+			if (currentLoader) {
+				observer.unobserve(currentLoader);
+			}
+		};
+	}, [filteredItems, handleObserver]);
+
+	// Only render visible items
+	const itemsToRender = filteredItems.slice(0, visibleItems);
+
 	return (
-		<main className="grid grid-cols-[repeat(auto-fit,_minmax(250px,1fr))] gap-x-6 gap-y-8 min-h-full w-full py-8 px-4">
-			{/* Example placeholder item */}
-			<ItemCard />
-			{/* <ItemCard item={items[0]} /> */}
-			{filteredItems.map((item) => (
+		<main className="grid grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-4 p-4 w-full">
+			{itemsToRender.map((item) => (
 				<ItemCard
 					key={item.id}
 					item={item}
 				/>
 			))}
 
-			{/* A bunch of empty slots */}
-			{Array.from({ length: 100 }).map((_, i) => (
-				<div
-					key={i}
-					className="flex items-center justify-center rounded-md border-2 border-dashed border-muted text-muted-foreground w-full h-16 md:max-w-[300px] max-w-[400px]"
-				>
-					<span className="text-sm">Placeholder {i + 1}</span>
-				</div>
-			))}
+			{/* Loading indicator (hidden until needed) */}
+			<div
+				ref={loader}
+				className="col-span-full flex justify-center py-4"
+				style={{
+					visibility: visibleItems < filteredItems.length ? "visible" : "hidden",
+				}}
+			>
+				<div className="animate-pulse text-muted-foreground">Loading more items...</div>
+			</div>
 		</main>
 	);
 }

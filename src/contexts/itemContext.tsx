@@ -30,8 +30,6 @@ interface ItemContextType {
 	setDialogQueue: React.Dispatch<React.SetStateAction<BaseItem[]>>;
 }
 
-const allItems = [...items, ...valuables];
-
 const defaultFilterState: FilterState = {
 	searchQuery: "",
 	rarities: [],
@@ -47,13 +45,31 @@ export function ItemProvider({
 	children: ReactNode;
 	itemsSubset?: BaseItem[];
 }) {
+	// Memoize the combined items array to prevent recreation on every render
+	const allItems = useMemo(() => [...items, ...valuables], []);
+
 	const [dialogQueue, setDialogQueue] = useState<BaseItem[]>([]);
 	const [filterState, setFilterState] = useState<FilterState>(defaultFilterState);
 	const [sortField, setSortField] = useState<SortField>("none");
 	const [sortOrder, setSortOrder] = useState<SortOrder>("none");
 
+	// Memoize the current items to prevent recalculation
+	const currentItems = useMemo(() => itemsSubset || allItems, [itemsSubset, allItems]);
+
 	const filteredItems = useMemo(() => {
-		let result = [...(itemsSubset || allItems)];
+		// Early return if no filters are active
+		const noFilters = 
+			!filterState.searchQuery && 
+			filterState.rarities.length === 0 && 
+			filterState.categories.length === 0 &&
+			sortField === 'none' && 
+			sortOrder === 'none';
+
+		if (noFilters) {
+			return currentItems;
+		}
+
+		let result = [...currentItems];
 
 		// Apply search filter
 		if (filterState.searchQuery) {
@@ -111,11 +127,11 @@ export function ItemProvider({
 		});
 
 		return result;
-	}, [itemsSubset, filterState, sortField, sortOrder]);
+	}, [currentItems, filterState, sortField, sortOrder]);
 
 	const setSearchQuery = useCallback((query: string) => {
 		setFilterState((prev) => ({ ...prev, searchQuery: query }));
-	}, []);
+	}, [setFilterState]);
 
 	const toggleRarity = useCallback((rarity: string) => {
 		setFilterState((prev) => {
@@ -148,9 +164,9 @@ export function ItemProvider({
 
 	const getItemById = useCallback(
 		(id: string): BaseItem | undefined => {
-			return (itemsSubset || allItems).find((item) => item.id === id);
+			return currentItems.find((item) => item.id === id);
 		},
-		[itemsSubset]
+		[currentItems]
 	);
 
 	const value = useMemo(
@@ -204,7 +220,5 @@ export function useFilteredItems(filterFn?: (item: BaseItem) => boolean) {
 	return { filteredItems: scopedItems, ...rest };
 }
 
-export function getItemById(id: string) {
-	const { getItemById } = useItems();
-	return getItemById(id);
-}
+// Removed standalone getItemById to fix hook rules
+// Use useItems() directly in components instead

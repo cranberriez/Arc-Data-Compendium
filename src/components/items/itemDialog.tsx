@@ -25,11 +25,13 @@ type ItemDialogProps = {
 };
 
 export function ItemDialog({ data, isOpen, closeDialog }: ItemDialogProps) {
+	// Move hooks to the top level
+	const { getItemById, dialogQueue, setDialogQueue } = useItems();
+	const { openDialog } = useDialog();
+
 	if (!data) return null;
 	const item = data;
 	const ItemIcon = item.icon;
-	const { getItemById, dialogQueue, setDialogQueue } = useItems();
-	const { openDialog } = useDialog();
 
 	// Custom close handler to clear the queue
 	const handleCloseDialog = () => {

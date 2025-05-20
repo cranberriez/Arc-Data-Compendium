@@ -19,7 +19,7 @@ export default function Page() {
 							Coming Soon
 						</h2>
 						<p className="text-muted-foreground">
-							This page is still a work in progress. Here's what we're planning:
+							This page is still a work in progress. Here&apos;s what we&apos;re planning:
 						</p>
 					</div>
 					<ul className="grid gap-2 text-sm text-muted-foreground list-disc list-inside marker:text-muted-foreground/50">
@@ -44,7 +44,7 @@ export default function Page() {
 							crafting progress
 						</li>
 						<li className="pl-2 text-muted-foreground/70 text-sm">
-							(World events and more might come later...)
+							(World events and more might come later&#8230;)
 						</li>
 					</ul>
 				</div>
@@ -99,7 +99,7 @@ export default function Page() {
 							className="border rounded-lg px-4"
 						>
 							<AccordionTrigger className="text-left hover:no-underline [&[data-state=open]>svg]:rotate-180">
-								I've found an item to be incorrect or missing, what do I do?
+								I&apos;ve found an item to be incorrect or missing, what do I do?
 							</AccordionTrigger>
 							<AccordionContent className="text-muted-foreground pb-2">
 								Fill out the provided form (coming soon) or contact us on our
