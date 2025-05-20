@@ -4,59 +4,79 @@ import { useEffect, useRef, useCallback, useState } from "react";
 import { ItemCard } from "@/components/items/itemDisplay";
 import { useItems } from "@/contexts/itemContext";
 
-const ITEMS_PER_PAGE = 30; // Number of items to load per page
+const ITEMS_PER_PAGE = 10; // Number of items to load per page
 
 function ItemList() {
 	const { filteredItems } = useItems();
 	const [visibleItems, setVisibleItems] = useState<number>(ITEMS_PER_PAGE);
 	const loader = useRef<HTMLDivElement>(null);
-	const loadingRef = useRef<boolean>(false);
+	const observer = useRef<IntersectionObserver | null>(null);
 
-	// Handle infinite scroll
-	const handleObserver = useCallback(
-		(entries: IntersectionObserverEntry[]) => {
-			const target = entries[0];
-			if (target.isIntersecting && !loadingRef.current) {
-				loadingRef.current = true;
-				// Load more items when the loader is visible
-				setVisibleItems((prev) => {
-					const newCount = Math.min(prev + ITEMS_PER_PAGE, filteredItems.length);
-					loadingRef.current = false;
-					return newCount;
-				});
-			}
-		},
-		[filteredItems.length]
-	);
+	// Handle loading more items
+	const loadMoreItems = useCallback(() => {
+		setVisibleItems((prev) => {
+			const newCount = Math.min(prev + ITEMS_PER_PAGE, filteredItems.length);
+			return newCount;
+		});
+	}, [filteredItems.length]);
+
+	// Force-load more items if loader is visible and not enough items to fill viewport
+	useEffect(() => {
+		function isLoaderVisible() {
+			if (!loader.current) return false;
+			const rect = loader.current.getBoundingClientRect();
+			return rect.top < window.innerHeight && rect.bottom >= 0;
+		}
+		if (visibleItems < filteredItems.length && isLoaderVisible()) {
+			// Give the DOM a tick to render, then load more
+			setTimeout(() => loadMoreItems(), 0);
+		}
+	}, [filteredItems.length, visibleItems, loadMoreItems]);
 
 	// Set up intersection observer for infinite scroll
 	useEffect(() => {
-		const observer = new IntersectionObserver(handleObserver, {
+		if (observer.current) {
+			observer.current.disconnect();
+		}
+
+		const handleIntersect = (entries: IntersectionObserverEntry[]) => {
+			const target = entries[0];
+			if (target.isIntersecting) {
+				loadMoreItems();
+			}
+		};
+
+		// Create new observer
+		observer.current = new IntersectionObserver(handleIntersect, {
 			root: null,
-			rootMargin: "20px",
+			rootMargin: "100px",
 			threshold: 0.1,
 		});
 
 		const currentLoader = loader.current;
 		if (currentLoader) {
-			observer.observe(currentLoader);
+			observer.current.observe(currentLoader);
 		}
 
-		// Reset visible items when filtered items change
-		setVisibleItems(ITEMS_PER_PAGE);
-
 		return () => {
-			if (currentLoader) {
-				observer.unobserve(currentLoader);
+			if (observer.current) {
+				observer.current.disconnect();
 			}
 		};
-	}, [filteredItems, handleObserver]);
+	}, [loadMoreItems]);
 
-	// Only render visible items
+	// Reset visible items when filtered items change
+	useEffect(() => {
+		setVisibleItems(ITEMS_PER_PAGE);
+	}, [filteredItems]);
+
+	// Only render visible items and check if there are more to load
 	const itemsToRender = filteredItems.slice(0, visibleItems);
+	const hasMoreItems = visibleItems < filteredItems.length;
+	const loading = visibleItems < filteredItems.length;
 
 	return (
-		<main className="grid grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-4 p-4 w-full">
+		<main className="grid grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-x-6 gap-y-8 p-4 w-full">
 			{itemsToRender.map((item) => (
 				<ItemCard
 					key={item.id}
@@ -64,16 +84,19 @@ function ItemList() {
 				/>
 			))}
 
-			{/* Loading indicator (hidden until needed) */}
+			{/* Loader ref - this is what triggers loading more items */}
 			<div
 				ref={loader}
-				className="col-span-full flex justify-center py-4"
-				style={{
-					visibility: visibleItems < filteredItems.length ? "visible" : "hidden",
-				}}
-			>
-				<div className="animate-pulse text-muted-foreground">Loading more items...</div>
-			</div>
+				className="h-1 w-full"
+				style={{ visibility: "hidden" }}
+			/>
+
+			{/* Loading indicator */}
+			{loading && (
+				<div className="col-span-full flex justify-center py-4">
+					<div className="animate-pulse text-muted-foreground">Loading more items...</div>
+				</div>
+			)}
 		</main>
 	);
 }

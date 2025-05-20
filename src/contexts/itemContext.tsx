@@ -38,6 +38,15 @@ const defaultFilterState: FilterState = {
 
 const ItemContext = createContext<ItemContextType | undefined>(undefined);
 
+// Rarity order mapping for default sort
+const rarityOrder: Record<string, number> = {
+	common: 1,
+	uncommon: 2,
+	rare: 3,
+	epic: 4,
+	legendary: 5,
+};
+
 export function ItemProvider({
 	children,
 	itemsSubset,
@@ -57,18 +66,6 @@ export function ItemProvider({
 	const currentItems = useMemo(() => itemsSubset || allItems, [itemsSubset, allItems]);
 
 	const filteredItems = useMemo(() => {
-		// Early return if no filters are active
-		const noFilters = 
-			!filterState.searchQuery && 
-			filterState.rarities.length === 0 && 
-			filterState.categories.length === 0 &&
-			sortField === 'none' && 
-			sortOrder === 'none';
-
-		if (noFilters) {
-			return currentItems;
-		}
-
 		let result = [...currentItems];
 
 		// Apply search filter
@@ -90,48 +87,45 @@ export function ItemProvider({
 			result = result.filter((item) => filterState.categories.includes(item.category));
 		}
 
-		// Define rarity order for sorting
-		const rarityOrder: Record<string, number> = {
-			common: 1,
-			uncommon: 2,
-			rare: 3,
-			epic: 4,
-			legendary: 5,
-		};
+		// Sorting
+		if (sortField !== "none" && sortOrder !== "none") {
+			// Explicit user sort
+			result.sort((a, b) => {
+				let aValue: any, bValue: any;
 
-		// Apply sorting
-		result.sort((a, b) => {
-			// Default: sort by rarity then name
-			if (sortField === "none" || sortOrder === "none") {
+				if (sortField === "name") {
+					aValue = a.name.toLowerCase();
+					bValue = b.name.toLowerCase();
+				} else if (sortField === "category") {
+					aValue = a.category;
+					bValue = b.category;
+				} else {
+					aValue = a[sortField as keyof BaseItem];
+					bValue = b[sortField as keyof BaseItem];
+				}
+
+				if (aValue < bValue) return sortOrder === "asc" ? -1 : 1;
+				if (aValue > bValue) return sortOrder === "asc" ? 1 : -1;
+				return 0;
+			});
+		} else {
+			// Default: sort by rarity, then name
+			result.sort((a, b) => {
 				const rarityCompare = rarityOrder[a.rarity] - rarityOrder[b.rarity];
 				if (rarityCompare !== 0) return rarityCompare;
 				return a.name.localeCompare(b.name);
-			}
-
-			let aValue: any, bValue: any;
-
-			if (sortField === "name") {
-				aValue = a.name.toLowerCase();
-				bValue = b.name.toLowerCase();
-			} else if (sortField === "category") {
-				aValue = a.category;
-				bValue = b.category;
-			} else {
-				aValue = a[sortField as keyof BaseItem];
-				bValue = b[sortField as keyof BaseItem];
-			}
-
-			if (aValue < bValue) return sortOrder === "asc" ? -1 : 1;
-			if (aValue > bValue) return sortOrder === "asc" ? 1 : -1;
-			return 0;
-		});
+			});
+		}
 
 		return result;
 	}, [currentItems, filterState, sortField, sortOrder]);
 
-	const setSearchQuery = useCallback((query: string) => {
-		setFilterState((prev) => ({ ...prev, searchQuery: query }));
-	}, [setFilterState]);
+	const setSearchQuery = useCallback(
+		(query: string) => {
+			setFilterState((prev) => ({ ...prev, searchQuery: query }));
+		},
+		[setFilterState]
+	);
 
 	const toggleRarity = useCallback((rarity: string) => {
 		setFilterState((prev) => {
