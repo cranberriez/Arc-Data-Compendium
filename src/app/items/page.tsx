@@ -6,7 +6,7 @@ import { useItems } from "@/contexts/itemContext";
 function ItemList() {
 	const { filteredItems } = useItems();
 	return (
-		<main className="grid grid-cols-[repeat(auto-fit,_minmax(280px,1fr))] gap-x-6 gap-y-8 min-h-full w-full py-8 px-4">
+		<main className="grid grid-cols-[repeat(auto-fit,_minmax(250px,1fr))] gap-x-6 gap-y-8 min-h-full w-full py-8 px-4">
 			{/* Example placeholder item */}
 			<ItemCard />
 			{/* <ItemCard item={items[0]} /> */}

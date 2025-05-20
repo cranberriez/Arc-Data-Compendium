@@ -11,8 +11,12 @@ import {
 import { formatName, getRarityColor, getTypeIcon } from "@/data/items/itemUtils";
 
 import { cn } from "@/lib/utils";
-import { Book } from "lucide-react";
+import { ArrowRight, Book } from "lucide-react";
 import { BaseItem } from "@/types";
+import { useItems } from "@/contexts/itemContext";
+import { useDialog } from "@/contexts/dialogContext";
+import { Button } from "@/components/ui/button";
+import { ItemCard } from "./itemDisplay";
 
 type ItemDialogProps = {
 	data: BaseItem;
@@ -24,13 +28,42 @@ export function ItemDialog({ data, isOpen, closeDialog }: ItemDialogProps) {
 	if (!data) return null;
 	const item = data;
 	const ItemIcon = item.icon;
+	const { getItemById, dialogQueue, setDialogQueue } = useItems();
+	const { openDialog } = useDialog();
+
+	// Custom close handler to clear the queue
+	const handleCloseDialog = () => {
+		setDialogQueue([]);
+		closeDialog();
+	};
+
+	// Back navigation
+	const handleBack = () => {
+		const prevQueue = [...dialogQueue];
+		const lastItem = prevQueue.pop();
+		if (lastItem) {
+			setDialogQueue(prevQueue);
+			openDialog("item", lastItem);
+		}
+	};
 
 	return (
 		<Dialog
 			open={isOpen}
-			onOpenChange={(open) => !open && closeDialog()}
+			onOpenChange={(open) => !open && handleCloseDialog()}
 		>
-			<DialogContent className="w-[95vw] max-w-lg max-h-[95vh] overflow-y-scroll">
+			<DialogContent className="w-[95vw] max-w-lg max-h-[95vh]">
+				{dialogQueue.length > 0 && (
+					<div>
+						<Button
+							variant="secondary"
+							onClick={handleBack}
+							className="px-3 py-1 cursor-pointer"
+						>
+							← Back to {dialogQueue[dialogQueue.length - 1].name}
+						</Button>
+					</div>
+				)}
 				{/* Screen Reader Stuff */}
 				<DialogDescription className="sr-only">
 					Details for {item.name}, {formatName(item.rarity)} {formatName(item.category)}
@@ -54,7 +87,7 @@ export function ItemDialog({ data, isOpen, closeDialog }: ItemDialogProps) {
 						<div className="space-y-4">
 							<div className="flex items-center gap-4">
 								<div className="flex items-center gap-1">
-									<div className="w-fit h-fit">
+									<div className="flex items-center w-fit h-fit">
 										{React.createElement(getTypeIcon(item.category), {
 											size: 12,
 										})}
@@ -90,10 +123,104 @@ export function ItemDialog({ data, isOpen, closeDialog }: ItemDialogProps) {
 
 				<hr className="my-2 border-t border-t-secondary-foreground/20 dark:border-t-secondary-foreground/10" />
 
-				<div>
-					<p>Recycling Value: TODO</p>
-					<div className="flex flex-row items-center gap-2"></div>
-				</div>
+				{item.recycling && item.recycling.length > 0 && (
+					<div>
+						<p className="font-mono font-light mb-2">Recycles Into:</p>
+						<div className="flex flex-row items-center gap-2">
+							{item.recycling.map((recycle, idx) => {
+								const recycledItem = getItemById(recycle.id);
+								if (!recycledItem) return null;
+								return (
+									<ItemCard
+										key={recycle.id + idx}
+										item={recycledItem}
+										variant="icon"
+										count={recycle.count}
+										onClick={() => {
+											setDialogQueue((prev) => [...prev, item]);
+											openDialog("item", recycledItem);
+										}}
+									/>
+								);
+							})}
+						</div>
+					</div>
+				)}
+
+				{item.sources && item.sources.length > 0 && (
+					<div>
+						<p className="font-mono font-light mb-2">Sources:</p>
+						{/* <div className="flex flex-col items-start gap-2 max-h-[250px] w-full overflow-y-scroll pb-6"> */}
+						<div className="flex flex-col items-start gap-2">
+							{[...item.sources]
+								.filter((source) => source.type !== "buy")
+								.sort((a, b) => (b.count || 0) - (a.count || 0))
+								.map((source) => {
+									const sourceItem = getItemById(source.fromItemId);
+									if (!sourceItem) return null;
+
+									// Get recycle products for this sourceItem
+									const recycleProducts = (sourceItem.recycling || [])
+										.map((recycle) => getItemById(recycle.id))
+										.filter(Boolean);
+
+									return (
+										<div
+											key={sourceItem.id}
+											className="flex flex-row items-center gap-2"
+										>
+											<ItemCard
+												item={sourceItem}
+												variant="icon"
+												// count={source.count}
+												onClick={() => {
+													setDialogQueue((prev) => [...prev, item]);
+													openDialog("item", sourceItem);
+												}}
+											/>
+
+											<ArrowRight className="size-4" />
+
+											<ItemCard
+												item={item}
+												variant="icon"
+												onClick={() => {}}
+												count={source.count}
+											/>
+
+											{recycleProducts.length > 0 && (
+												<div className="flex flex-row items-center gap-1 ml-2">
+													{recycleProducts.map((recycledItem) => {
+														if (!recycledItem) return null;
+														if (recycledItem.id === item.id)
+															return null;
+														return (
+															<ItemCard
+																key={recycledItem.id}
+																item={recycledItem}
+																variant="icon"
+																count={source.count}
+																onClick={() => {
+																	setDialogQueue((prev) => [
+																		...prev,
+																		item,
+																	]);
+																	openDialog(
+																		"item",
+																		recycledItem
+																	);
+																}}
+															/>
+														);
+													})}
+												</div>
+											)}
+										</div>
+									);
+								})}
+						</div>
+					</div>
+				)}
 
 				{/* TODO: Add Sell Value, Buy Value, Recycle Value */}
 				{/* TODO: Add Sources */}
