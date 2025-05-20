@@ -1,15 +1,15 @@
 "use client";
 
 import { ItemCard } from "@/components/items/itemDisplay";
-import { useItems } from "@/contexts/itemContext";
+import { useFilteredItems } from "@/contexts/itemContext";
 
-function ItemList() {
-	const { filteredItems } = useItems();
+function ValuableList() {
+	const { filteredItems } = useFilteredItems((item) => item.category === "valuable");
 	return (
-		<main className="grid grid-cols-[repeat(auto-fit,_minmax(280px,1fr))] gap-x-6 gap-y-8 min-h-full w-full py-8 px-4">
-			{/* Example placeholder item */}
+		<main className="grid grid-cols-[repeat(auto-fit,_minmax(300px,_1fr))] gap-x-6 gap-y-8 min-h-full w-full py-8 px-4">
+			{/* Example placeholder valuable */}
 			<ItemCard />
-			{/* <ItemCard item={items[0]} /> */}
+			{/* <ItemCard item={filteredItems[0]} /> */}
 			{filteredItems.map((item) => (
 				<ItemCard
 					key={item.id}
@@ -18,7 +18,7 @@ function ItemList() {
 			))}
 
 			{/* A bunch of empty slots */}
-			{Array.from({ length: 100 }).map((_, i) => (
+			{Array.from({ length: 22 }).map((_, i) => (
 				<div
 					key={i}
 					className="flex items-center justify-center rounded-md border-2 border-dashed border-muted text-muted-foreground w-full h-16 md:max-w-[300px] max-w-[400px]"
@@ -30,8 +30,8 @@ function ItemList() {
 	);
 }
 
-function ItemPage() {
-	return <ItemList />;
+function ValuablePage() {
+	return <ValuableList />;
 }
 
-export default ItemPage;
+export default ValuablePage;

@@ -49,7 +49,7 @@ export function NavMain({
 								asChild
 								tooltip={item.title}
 								className={[
-									"flex flex-row items-center gap-2",
+									"flex flex-row items-center gap-2 h-auto",
 									isActive ? activeButton : "",
 									isDisabled ? disabledButton : "",
 								].join(" ")}

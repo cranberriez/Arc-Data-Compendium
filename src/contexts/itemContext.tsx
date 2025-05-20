@@ -25,6 +25,7 @@ interface ItemContextType {
 	toggleCategory: (category: string) => void; // replaces toggleType
 	setSort: (field: SortField, order: SortOrder) => void;
 	resetFilters: () => void;
+	getItemById: (id: string) => BaseItem | undefined;
 }
 
 const allItems = [...items, ...valuables];
@@ -142,6 +143,13 @@ export function ItemProvider({
 		setSortOrder("asc");
 	}, [setSortField, setSortOrder]);
 
+	const getItemById = useCallback(
+		(id: string): BaseItem | undefined => {
+			return (itemsSubset || allItems).find((item) => item.id === id);
+		},
+		[itemsSubset]
+	);
+
 	const value = useMemo(
 		() => ({
 			items,
@@ -154,6 +162,7 @@ export function ItemProvider({
 			toggleCategory,
 			setSort,
 			resetFilters,
+			getItemById,
 		}),
 		[
 			filteredItems,
@@ -165,6 +174,7 @@ export function ItemProvider({
 			toggleCategory,
 			setSort,
 			resetFilters,
+			getItemById,
 		]
 	);
 
@@ -177,4 +187,17 @@ export function useItems() {
 		throw new Error("useItems must be used within an ItemProvider");
 	}
 	return context;
+}
+
+// TypeScript: You can type filterFn as (item: ItemType) => boolean if you have an Item type.
+export function useFilteredItems(filterFn?: (item: BaseItem) => boolean) {
+	const { filteredItems, ...rest } = useItems();
+	// If a filter function is provided, apply it; otherwise, return all filteredItems.
+	const scopedItems = filterFn ? filteredItems.filter(filterFn) : filteredItems;
+	return { filteredItems: scopedItems, ...rest };
+}
+
+export function getItemById(id: string) {
+	const { getItemById } = useItems();
+	return getItemById(id);
 }

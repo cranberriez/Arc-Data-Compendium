@@ -88,13 +88,20 @@ export function ItemDialog({ data, isOpen, closeDialog }: ItemDialogProps) {
 					</div>
 				</DialogHeader>
 
+				<hr className="my-2 border-t border-t-secondary-foreground/20 dark:border-t-secondary-foreground/10" />
+
+				<div>
+					<p>Recycling Value: TODO</p>
+					<div className="flex flex-row items-center gap-2"></div>
+				</div>
+
 				{/* TODO: Add Sell Value, Buy Value, Recycle Value */}
 				{/* TODO: Add Sources */}
 				{/* TODO: Add Recycling if applicable */}
 				{/* TODO: Add Recipe if applicable */}
 
-				{/* TODO: Add raw item data for debugging */}
-				<div className="max-h-[200px] overflow-y-scroll">
+				{/* DONE: Add raw item data for debugging */}
+				<div className="max-h-[400px] w-fit overflow-y-scroll">
 					<pre>{JSON.stringify(item, null, 2)}</pre>
 				</div>
 			</DialogContent>
