@@ -7,8 +7,6 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/comp
 import { Book, ShoppingCart, Weight } from "lucide-react";
 import { BaseItem } from "@/types/items/base";
 import { formatName, getRarityColor, getTypeIcon } from "@/data/items/itemUtils";
-import { useDialog } from "../../contexts/dialogContext";
-import { useItems } from "@/contexts/itemContext";
 import { cn } from "@/lib/utils";
 
 type ItemCardProps = {
@@ -16,13 +14,19 @@ type ItemCardProps = {
 	variant?: "default" | "icon";
 	count?: number;
 	onClick?: () => void;
+	className?: string;
 };
 
 const ItemCardComponent = React.memo(
-	function ItemCard({ item, variant = "default", count = undefined, onClick }: ItemCardProps) {
+	function ItemCard({
+		item,
+		variant = "default",
+		count = undefined,
+		onClick,
+		className,
+	}: ItemCardProps) {
 		// Only use context if onClick is not provided
-		const dialogContext = !onClick ? useDialog() : undefined;
-		const itemsContext = !onClick ? useItems() : undefined;
+		const handleClick = onClick;
 
 		// Memoize the icon to prevent unnecessary re-renders
 		const itemIcon = useMemo(() => {
@@ -38,16 +42,6 @@ const ItemCardComponent = React.memo(
 			[item]
 		);
 
-		const handleClick = useCallback(() => {
-			if (!item) return;
-			if (onClick) {
-				onClick();
-			} else if (dialogContext && itemsContext) {
-				itemsContext.setDialogQueue((prev) => [...prev, item]);
-				dialogContext.openDialog("item", item);
-			}
-		}, [item, onClick, dialogContext, itemsContext]);
-
 		if (!item) return null;
 
 		if (variant === "icon") {
@@ -56,7 +50,8 @@ const ItemCardComponent = React.memo(
 					className={cn(
 						"flex flex-col items-center justify-between border-2 hover:border-primary/60 rounded p-2 min-w-[60px] aspect-square cursor-pointer",
 						borderClass,
-						"border-secondary-foreground/20"
+						"border-secondary-foreground/20",
+						className
 					)}
 					onClick={handleClick}
 				>
@@ -81,18 +76,25 @@ const ItemCardComponent = React.memo(
 		return (
 			<Card
 				onClick={handleClick}
-				className="flex flex-row items-center gap-2 p-1 pr-2 max-w-[300px] md:max-w-[400px] rounded-lg w-full h-16 bg-transparent border-zinc-700 cursor-pointer hover:bg-zinc-100 dark:hover:bg-zinc-800"
+				className={cn(
+					"flex flex-row items-center gap-2 p-1 pr-2 max-w-[300px] md:max-w-[400px] rounded-lg w-full h-16 bg-transparent border-zinc-700 cursor-pointer hover:bg-zinc-100 dark:hover:bg-zinc-800",
+					className
+				)}
 			>
 				{/* Item Icon */}
 				<div
 					className={cn(
 						"flex items-center justify-center rounded-md h-full border-2 p-2",
-						getRarityColor(item.rarity, "border")
+						getRarityColor(item.rarity, "border"),
+						`${getRarityColor(item.rarity, "bg")}/10`
 					)}
 				>
 					{item.icon && (
 						<item.icon
-							className={cn("w-full h-full", getRarityColor(item.rarity, "text"))}
+							className={cn(
+								"h-full aspect-square",
+								getRarityColor(item.rarity, "text")
+							)}
 						/>
 					)}
 				</div>

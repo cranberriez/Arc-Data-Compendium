@@ -3,6 +3,8 @@
 import { useEffect, useRef, useCallback, useState } from "react";
 import { ItemCard } from "@/components/items/itemDisplay";
 import { useItems } from "@/contexts/itemContext";
+import { useDialog } from "@/contexts/dialogContext";
+import { BaseItem } from "@/types";
 
 const ITEMS_PER_PAGE = 10; // Number of items to load per page
 
@@ -11,6 +13,7 @@ function ItemList() {
 	const [visibleItems, setVisibleItems] = useState<number>(ITEMS_PER_PAGE);
 	const loader = useRef<HTMLDivElement>(null);
 	const observer = useRef<IntersectionObserver | null>(null);
+	const { openDialog } = useDialog();
 
 	// Handle loading more items
 	const loadMoreItems = useCallback(() => {
@@ -19,6 +22,13 @@ function ItemList() {
 			return newCount;
 		});
 	}, [filteredItems.length]);
+
+	const handleCardClick = useCallback(
+		(item: BaseItem) => {
+			openDialog("item", item);
+		},
+		[openDialog]
+	);
 
 	// Force-load more items if loader is visible and not enough items to fill viewport
 	useEffect(() => {
@@ -81,6 +91,9 @@ function ItemList() {
 				<ItemCard
 					key={item.id}
 					item={item}
+					onClick={() => {
+						handleCardClick(item);
+					}}
 				/>
 			))}
 

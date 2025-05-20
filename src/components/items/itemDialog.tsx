@@ -55,6 +55,7 @@ export function ItemDialog({ data, isOpen, closeDialog }: ItemDialogProps) {
 			onOpenChange={(open) => !open && handleCloseDialog()}
 		>
 			<DialogContent className="w-[95vw] max-w-lg max-h-[95vh]">
+				{/* Back buttons */}
 				{dialogQueue.length > 0 && (
 					<div>
 						<Button
@@ -77,7 +78,8 @@ export function ItemDialog({ data, isOpen, closeDialog }: ItemDialogProps) {
 						className={cn(
 							"flex items-center justify-center rounded-lg w-16 h-16 border-2 p-2",
 							getRarityColor(item.rarity, "border"),
-							getRarityColor(item.rarity, "text")
+							getRarityColor(item.rarity, "text"),
+							`dark:${getRarityColor(item.rarity, "bg")}/10`
 						)}
 					>
 						{ItemIcon && <ItemIcon className="w-10 h-10" />}
@@ -188,6 +190,7 @@ export function ItemDialog({ data, isOpen, closeDialog }: ItemDialogProps) {
 												variant="icon"
 												onClick={() => {}}
 												count={source.count}
+												className="cursor-default border-none bg-accent"
 											/>
 
 											{recycleProducts.length > 0 && (
@@ -230,9 +233,9 @@ export function ItemDialog({ data, isOpen, closeDialog }: ItemDialogProps) {
 				{/* TODO: Add Recipe if applicable */}
 
 				{/* DONE: Add raw item data for debugging */}
-				<div className="max-h-[400px] w-fit overflow-y-scroll">
+				{/* <div className="max-h-[400px] w-fit overflow-y-scroll">
 					<pre>{JSON.stringify(item, null, 2)}</pre>
-				</div>
+				</div> */}
 			</DialogContent>
 		</Dialog>
 	);
