@@ -4,7 +4,7 @@ import { useEffect, useRef, useCallback, useState } from "react";
 import { ItemCard } from "@/components/items/itemDisplay";
 import { useItems } from "@/contexts/itemContext";
 import { useDialog } from "@/contexts/dialogContext";
-import { BaseItem } from "@/types";
+import { Item } from "@/types";
 
 const ITEMS_PER_PAGE = 10; // Number of items to load per page
 
@@ -24,7 +24,7 @@ function ItemList() {
 	}, [filteredItems.length]);
 
 	const handleCardClick = useCallback(
-		(item: BaseItem) => {
+		(item: Item) => {
 			openDialog("item", item);
 		},
 		[openDialog]

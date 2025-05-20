@@ -38,8 +38,7 @@ export function NavMain({
 						pathname === item.url ? true : pathname === "/" && item.url === "/";
 
 					const isDisabled = !item.enabled;
-					const activeButton =
-						"bg-arc-copper hover:bg-arc-copper/90 hover:dark:bg-arc-copper/90 focus:bg-arc-copper focus:dark:bg-arc-copper focus:outline-none focus:ring-1 focus:ring-arc-copper focus:ring-offset-1";
+					const activeButton = "bg-background hover:bg-background focus:outline-none";
 					const disabledButton =
 						"text-neutral-500 dark:text-neutral-500/80 cursor-not-allowed";
 
@@ -57,7 +56,7 @@ export function NavMain({
 							>
 								<Link
 									href={isDisabled ? "#" : item.url}
-									className={isActive ? "font-semibold text-primary" : ""}
+									className={isActive ? "text-primary" : ""}
 								>
 									{item.icon && <item.icon />}
 									<span className="text-lg">{item.title}</span>

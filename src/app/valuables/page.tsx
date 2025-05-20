@@ -21,7 +21,7 @@ function ValuableList() {
 			{Array.from({ length: 22 }).map((_, i) => (
 				<div
 					key={i}
-					className="flex items-center justify-center rounded-md border-2 border-dashed border-muted text-muted-foreground w-full h-16 md:max-w-[300px] max-w-[400px]"
+					className="flex items-center justify-center rounded-md border-2 border-dashed border-muted text-muted-foreground w-full h-16"
 				>
 					<span className="text-sm">Placeholder {i + 1}</span>
 				</div>

@@ -1,9 +1,9 @@
-import { BaseItem } from "@/types/items/base";
+import { Item } from "@/types";
 import { getItemSources, getRecycleSources, invalidateRecycleCache } from "./itemUtils";
 import { itemsData } from "./itemData";
 
 // Process items to include dynamic sources
-const processedItems = itemsData.map((item: BaseItem) => ({
+const processedItems = itemsData.map((item: Item) => ({
 	...item,
 	// This will be called when the item is accessed
 	get sources() {
@@ -12,7 +12,7 @@ const processedItems = itemsData.map((item: BaseItem) => ({
 }));
 
 // Export the processed items with dynamic sources
-export const items: BaseItem[] = processedItems;
+export const items: Item[] = processedItems;
 
 // Export utility functions
 export { getItemSources, getRecycleSources, invalidateRecycleCache };

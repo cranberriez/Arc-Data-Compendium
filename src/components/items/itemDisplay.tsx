@@ -5,12 +5,12 @@ import { useMemo, useCallback } from "react";
 import { Card } from "@/components/ui/card";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { Book, ShoppingCart, Weight } from "lucide-react";
-import { BaseItem } from "@/types/items/base";
+import { Item } from "@/types";
 import { formatName, getRarityColor, getTypeIcon } from "@/data/items/itemUtils";
 import { cn } from "@/lib/utils";
 
 type ItemCardProps = {
-	item?: BaseItem;
+	item?: Item;
 	variant?: "default" | "icon";
 	count?: number;
 	onClick?: () => void;

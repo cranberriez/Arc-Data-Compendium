@@ -19,10 +19,17 @@ export default function Page() {
 							Coming Soon
 						</h2>
 						<p className="text-muted-foreground">
-							This page is still a work in progress. Here&apos;s what we&apos;re planning:
+							This page is still a work in progress. Here&apos;s what we&apos;re
+							planning:
 						</p>
 					</div>
 					<ul className="grid gap-2 text-sm text-muted-foreground list-disc list-inside marker:text-muted-foreground/50">
+						<li className="pl-2 font-medium text-foreground/90">
+							<span className="font-semibold text-foreground">
+								Description Item Details
+							</span>{" "}
+							- Item found in area, flavor text, stats, and more in the final version
+						</li>
 						<li className="pl-2 font-medium text-foreground/90">
 							<span className="font-semibold text-foreground">
 								Quick Access Favorites

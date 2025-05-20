@@ -69,15 +69,15 @@ const data = {
 		category: "Crafting",
 		items: [
 			{
+				title: "Workbenches",
+				url: "/workbenches",
+				icon: FlaskConical,
+				enabled: true,
+			},
+			{
 				title: "Workbench Recipes",
 				url: "/crafting",
 				icon: Hammer,
-				enabled: false,
-			},
-			{
-				title: "Workbench Info",
-				url: "/workbenches",
-				icon: FlaskConical,
 				enabled: false,
 			},
 		],

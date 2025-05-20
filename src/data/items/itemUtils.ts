@@ -1,13 +1,13 @@
-import { BaseItem } from "@/types/items/base";
+import { Item } from "@/types";
 import { ItemSource } from "@/types/items/types";
 import {
 	Cog,
 	Gem,
-	Hammer,
 	Heart,
 	Info,
 	LucideIcon as LucideIconType,
 	MapPin,
+	Package,
 	Shield,
 	ShoppingCart,
 	Sparkles,
@@ -24,7 +24,7 @@ let recycleSourceCache: Map<string, ItemSource[]> | null = null;
  * @param items Array of all items
  * @returns Map where key is item ID and value is array of sources that can be recycled into it
  */
-function buildRecycleSourceMap(items: BaseItem[]): Map<string, ItemSource[]> {
+function buildRecycleSourceMap(items: Item[]): Map<string, ItemSource[]> {
 	const sourceMap = new Map<string, ItemSource[]>();
 
 	items.forEach((item) => {
@@ -52,7 +52,7 @@ function buildRecycleSourceMap(items: BaseItem[]): Map<string, ItemSource[]> {
  * @param items Array of all items
  * @returns Array of all sources for the item
  */
-export function getItemSources(itemId: string, items: BaseItem[]): ItemSource[] {
+export function getItemSources(itemId: string, items: Item[]): ItemSource[] {
 	// Find the item
 	const item = items.find((i) => i.id === itemId);
 	if (!item) return [];
@@ -91,7 +91,7 @@ export function getItemSources(itemId: string, items: BaseItem[]): ItemSource[] 
  * @param items Array of all items
  * @returns Array of items that can be recycled into the specified item
  */
-export function getRecycleSources(itemId: string, items: BaseItem[]): ItemSource[] {
+export function getRecycleSources(itemId: string, items: Item[]): ItemSource[] {
 	if (!recycleSourceCache) {
 		recycleSourceCache = buildRecycleSourceMap(items);
 	}
@@ -160,6 +160,10 @@ export const getTypeIcon = (category: string): LucideIconType => {
 			return Wrench;
 		case "crafting_material":
 			return Cog;
+		case "misc":
+			return Package;
+		case "topside_material":
+			return MapPin;
 		default:
 			return Info;
 	}

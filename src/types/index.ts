@@ -6,6 +6,8 @@ export * from "./items/base";
 
 // Re-export commonly used types for convenience
 export type { BaseItem } from "./items/base";
+export type { Item } from "./items/item";
+export type { Workbench } from "./items/workbench";
 
 export type {
 	Rarity,

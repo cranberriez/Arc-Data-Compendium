@@ -25,9 +25,9 @@ import {
 	Flower2,
 	Club,
 } from "lucide-react";
-import { BaseItem } from "@/types/items/base";
+import { Item } from "@/types";
 
-export const valuablesData: BaseItem[] = [
+export const valuablesData: Item[] = [
 	{
 		id: "faded_photograph",
 		name: "Faded Photograph",

@@ -1,7 +1,7 @@
 "use client";
 
 import { createContext, ReactNode, useCallback, useMemo, useState, useContext } from "react";
-import { BaseItem } from "@/types/items/base";
+import { BaseItem, Item } from "@/types";
 import { items } from "@/data/items/itemHandler";
 import { valuables } from "@/data/valuables/valuableHandler";
 
@@ -15,8 +15,8 @@ interface FilterState {
 }
 
 interface ItemContextType {
-	items: BaseItem[];
-	filteredItems: BaseItem[];
+	items: Item[];
+	filteredItems: Item[];
 	filterState: FilterState;
 	sortField: SortField;
 	sortOrder: SortOrder;
@@ -25,9 +25,9 @@ interface ItemContextType {
 	toggleCategory: (category: string) => void; // replaces toggleType
 	setSort: (field: SortField, order: SortOrder) => void;
 	resetFilters: () => void;
-	getItemById: (id: string) => BaseItem | undefined;
-	dialogQueue: BaseItem[];
-	setDialogQueue: React.Dispatch<React.SetStateAction<BaseItem[]>>;
+	getItemById: (id: string) => Item | undefined;
+	dialogQueue: Item[];
+	setDialogQueue: React.Dispatch<React.SetStateAction<Item[]>>;
 }
 
 const defaultFilterState: FilterState = {
@@ -52,12 +52,12 @@ export function ItemProvider({
 	itemsSubset,
 }: {
 	children: ReactNode;
-	itemsSubset?: BaseItem[];
+	itemsSubset?: Item[];
 }) {
 	// Memoize the combined items array to prevent recreation on every render
 	const allItems = useMemo(() => [...items, ...valuables], []);
 
-	const [dialogQueue, setDialogQueue] = useState<BaseItem[]>([]);
+	const [dialogQueue, setDialogQueue] = useState<Item[]>([]);
 	const [filterState, setFilterState] = useState<FilterState>(defaultFilterState);
 	const [sortField, setSortField] = useState<SortField>("none");
 	const [sortOrder, setSortOrder] = useState<SortOrder>("none");
@@ -157,8 +157,8 @@ export function ItemProvider({
 	}, [setSortField, setSortOrder]);
 
 	const getItemById = useCallback(
-		(id: string): BaseItem | undefined => {
-			return currentItems.find((item) => item.id === id);
+		(id: string): Item | undefined => {
+			return currentItems.find((item) => item.id === id) as Item | undefined;
 		},
 		[currentItems]
 	);
@@ -207,7 +207,7 @@ export function useItems() {
 }
 
 // TypeScript: You can type filterFn as (item: ItemType) => boolean if you have an Item type.
-export function useFilteredItems(filterFn?: (item: BaseItem) => boolean) {
+export function useFilteredItems(filterFn?: (item: Item) => boolean) {
 	const { filteredItems, ...rest } = useItems();
 	// If a filter function is provided, apply it; otherwise, return all filteredItems.
 	const scopedItems = filterFn ? filteredItems.filter(filterFn) : filteredItems;

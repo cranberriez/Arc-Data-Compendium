@@ -10,7 +10,9 @@ export type ItemCategory =
 	| "quick_use"
 	| "ammunition"
 	| "weapon"
-	| "gear";
+	| "gear"
+	| "misc"
+	| "topside_material";
 
 export type QuickUseCategory = "healing" | "throwable" | "utility";
 

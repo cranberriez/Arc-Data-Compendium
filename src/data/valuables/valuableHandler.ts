@@ -1,9 +1,9 @@
-import { BaseItem } from "@/types/items/base";
+import { Item } from "@/types";
 import { valuablesData } from "./valuableData";
 
 // processValuables
-const processedValuables = valuablesData.map((item: BaseItem) => ({
+const processedValuables = valuablesData.map((item) => ({
 	...item,
 }));
 
-export const valuables: BaseItem[] = processedValuables;
+export const valuables: Item[] = processedValuables;

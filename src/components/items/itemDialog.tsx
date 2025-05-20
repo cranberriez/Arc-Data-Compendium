@@ -12,14 +12,14 @@ import { formatName, getRarityColor, getTypeIcon } from "@/data/items/itemUtils"
 
 import { cn } from "@/lib/utils";
 import { ArrowRight, Book } from "lucide-react";
-import { BaseItem } from "@/types";
+import { Item } from "@/types";
 import { useItems } from "@/contexts/itemContext";
 import { useDialog } from "@/contexts/dialogContext";
 import { Button } from "@/components/ui/button";
 import { ItemCard } from "./itemDisplay";
 
 type ItemDialogProps = {
-	data: BaseItem;
+	data: Item;
 	isOpen: boolean;
 	closeDialog: () => void;
 };
@@ -125,7 +125,9 @@ export function ItemDialog({ data, isOpen, closeDialog }: ItemDialogProps) {
 					</div>
 				</DialogHeader>
 
-				<hr className="my-2 border-t border-t-secondary-foreground/20 dark:border-t-secondary-foreground/10" />
+				{item.recycling && item.sources && (
+					<hr className="my-2 border-t border-t-secondary-foreground/20 dark:border-t-secondary-foreground/10" />
+				)}
 
 				{item.recycling && item.recycling.length > 0 && (
 					<div>
