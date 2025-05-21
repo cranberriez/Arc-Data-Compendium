@@ -33,6 +33,7 @@ export function DialogProvider({ children }: { children: React.ReactNode }) {
 
 	const openDialog = React.useCallback((type: DialogType, data: any) => {
 		setState({ open: true, type, data });
+		console.log(data);
 	}, []);
 
 	const closeDialog = React.useCallback(() => {
