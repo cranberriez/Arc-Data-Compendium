@@ -18,11 +18,14 @@ type ItemDialogProps = {
 
 export function ItemDialog({ data, isOpen, closeDialog }: ItemDialogProps) {
 	// Move hooks to the top level
-	const { dialogQueue, setDialogQueue, getItemById } = useItems();
+	const { dialogQueue, setDialogQueue } = useItems();
 	const { openDialog } = useDialog();
 
 	if (!data) return null;
 	const item = data;
+
+	const sourcesPresent = item.sources && item.sources.length > 0;
+	const recyclingPresent = item.recycling && item.recycling.length > 0;
 
 	// Custom close handler to clear the queue
 	const handleCloseDialog = () => {
@@ -67,15 +70,15 @@ export function ItemDialog({ data, isOpen, closeDialog }: ItemDialogProps) {
 				{/* Dialog Header */}
 				<ItemHeader item={item} />
 
-				{item.recycling || item.sources ? (
+				{sourcesPresent || recyclingPresent ? (
 					<hr className="my-2 border-t border-t-secondary-foreground/20 dark:border-t-secondary-foreground/10" />
 				) : null}
 
 				{/* Recycling Section */}
-				{item.recycling && <RecyclingSection item={item} />}
+				{recyclingPresent && <RecyclingSection item={item} />}
 
 				{/* Sources Section (with two columns) */}
-				{item.sources && <SourcesSection item={item} />}
+				{sourcesPresent && <SourcesSection item={item} />}
 			</DialogContent>
 		</Dialog>
 	);
