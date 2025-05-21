@@ -4,7 +4,6 @@ import { useEffect, useRef, useCallback, useState } from "react";
 import { ItemCard } from "@/components/items/itemDisplay";
 import { useItems } from "@/contexts/itemContext";
 import { useDialog } from "@/contexts/dialogContext";
-import { Item } from "@/types";
 
 const ITEMS_PER_PAGE = 10; // Number of items to load per page
 
@@ -22,13 +21,6 @@ function ItemList() {
 			return newCount;
 		});
 	}, [filteredItems.length]);
-
-	const handleCardClick = useCallback(
-		(item: Item) => {
-			openDialog("item", item);
-		},
-		[openDialog]
-	);
 
 	// Force-load more items if loader is visible and not enough items to fill viewport
 	useEffect(() => {
@@ -91,9 +83,6 @@ function ItemList() {
 				<ItemCard
 					key={item.id}
 					item={item}
-					onClick={() => {
-						handleCardClick(item);
-					}}
 				/>
 			))}
 

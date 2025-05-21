@@ -1336,23 +1336,6 @@ export const itemsData: Item[] = [
 		],
 	},
 	{
-		id: "sensors",
-		name: "Sensors",
-		category: "recyclable",
-		icon: Radar,
-		rarity: "rare",
-		description: "No provided description for this item yet.",
-		weight: 1,
-		maxStack: 1,
-		recipe: null,
-		sources: [],
-		value: 0,
-		recycling: [
-			{ id: "wires", count: 1 },
-			{ id: "metal_parts", count: 1 },
-		],
-	},
-	{
 		id: "speaker_component",
 		name: "Speaker Component",
 		category: "recyclable",

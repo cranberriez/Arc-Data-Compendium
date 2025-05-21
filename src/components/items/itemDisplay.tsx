@@ -8,6 +8,7 @@ import { Book, ShoppingCart, Weight } from "lucide-react";
 import { Item } from "@/types";
 import { formatName, getRarityColor, getTypeIcon } from "@/data/items/itemUtils";
 import { cn } from "@/lib/utils";
+import { useDialog } from "@/contexts/dialogContext";
 
 type ItemCardProps = {
 	item?: Item;
@@ -25,8 +26,8 @@ const ItemCardComponent = React.memo(
 		onClick,
 		className,
 	}: ItemCardProps) {
-		// Only use context if onClick is not provided
-		const handleClick = onClick;
+		const { openDialog } = useDialog();
+		const handleClick = onClick || (() => openDialog("item", item));
 
 		// Memoize the icon to prevent unnecessary re-renders
 		const itemIcon = useMemo(() => {
