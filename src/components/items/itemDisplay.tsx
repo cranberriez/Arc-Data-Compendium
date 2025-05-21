@@ -79,7 +79,7 @@ const ItemCardComponent = React.memo(
 			<Card
 				onClick={handleClick}
 				className={cn(
-					"flex flex-row items-center gap-2 p-1 pr-2 max-w-[300px] md:max-w-[400px] rounded-lg w-full h-16 bg-transparent border-zinc-700 cursor-pointer hover:bg-zinc-100 dark:hover:bg-zinc-800",
+					"flex flex-row items-center gap-2 p-1 pr-2 max-w-full sm:max-w-[300px] md:max-w-[400px] rounded-lg w-full h-16 bg-transparent border-zinc-700 cursor-pointer hover:bg-zinc-100 dark:hover:bg-zinc-800",
 					className
 				)}
 			>
