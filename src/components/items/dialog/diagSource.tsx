@@ -3,6 +3,7 @@
 import { Item } from "@/types";
 import { useItems } from "@/contexts/itemContext";
 import { SourceItem } from "./diagSourceItem";
+import { Link } from "lucide-react";
 
 type SourcesSectionProps = {
 	item: Item;
@@ -25,7 +26,20 @@ export function SourcesSection({ item }: SourcesSectionProps) {
 
 	return (
 		<div className="w-fit">
-			<p className="font-mono font-light mb-2 w-fit">Sources:</p>
+			<div className="font-mono font-light w-fit flex items-center gap-2 mb-2">
+				<Link
+					className="inline-block"
+					size={24}
+				/>
+				<p>
+					<span className="inline-block text-lg">Sources:</span>
+					<span className="text-xs text-muted-foreground">
+						{" "}
+						({filteredSources.length})
+					</span>
+				</p>
+			</div>
+
 			<div className="flex flex-col md:flex-row w-fit">
 				{/* Left Column */}
 				<div className="flex flex-col gap-2 md:pr-4">

@@ -6,8 +6,8 @@ import { useItems } from "@/contexts/itemContext";
 import { Card } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 
-const ITEMS_PER_PAGE = 3; // Number of items to load per page
-const DEBUG_LOADING_DELAY = 5; // Delay in ms to simulate loading
+const ITEMS_PER_PAGE = 20; // Number of items to load per page
+const DEBUG_LOADING_DELAY = 0; // Delay in ms to simulate loading
 
 function ItemList() {
 	const { filteredItems } = useItems();
@@ -15,6 +15,7 @@ function ItemList() {
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const loader = useRef<HTMLDivElement>(null);
 	const observer = useRef<IntersectionObserver | null>(null);
+	const debugging = false;
 
 	// Load more items with delayed loading for debug visualization
 	const loadMoreItems = useCallback(() => {
@@ -24,10 +25,11 @@ function ItemList() {
 		// Don't load more if we're already loading
 		if (isLoading) return;
 
-		console.log("Loading more items...", {
-			current: visibleItems,
-			total: filteredItems.length,
-		});
+		if (debugging)
+			console.log("Loading more items...", {
+				current: visibleItems,
+				total: filteredItems.length,
+			});
 
 		// Set loading state
 		setIsLoading(true);
@@ -56,7 +58,7 @@ function ItemList() {
 			const isNearViewport = rect.top < window.innerHeight + 400;
 
 			if (isNearViewport) {
-				console.log("Loader is near viewport, loading more items");
+				if (debugging) console.log("Loader is near viewport, loading more items");
 				loadMoreItems();
 			}
 		}
@@ -64,7 +66,7 @@ function ItemList() {
 
 	// Reset visible items when filtered items change
 	useEffect(() => {
-		console.log("Filtered items changed, resetting to first page");
+		if (debugging) console.log("Filtered items changed, resetting to first page");
 		setVisibleItems(ITEMS_PER_PAGE);
 		setIsLoading(false);
 	}, [filteredItems]);
@@ -77,13 +79,13 @@ function ItemList() {
 			observer.current = null;
 		}
 
-		console.log("Setting up intersection observer");
+		if (debugging) console.log("Setting up intersection observer");
 
 		// Create new observer with more generous margins
 		observer.current = new IntersectionObserver(
 			(entries) => {
 				if (entries[0]?.isIntersecting && !isLoading) {
-					console.log("Intersection observer triggered");
+					if (debugging) console.log("Intersection observer triggered");
 					loadMoreItems();
 				}
 			},
@@ -97,7 +99,7 @@ function ItemList() {
 		// Observe loader element
 		if (loader.current) {
 			observer.current.observe(loader.current);
-			console.log("Now observing loader element");
+			if (debugging) console.log("Now observing loader element");
 		}
 
 		// Cleanup on unmount
@@ -150,7 +152,7 @@ function ItemList() {
 	const loading = isLoading || visibleItems < filteredItems.length;
 
 	return (
-		<main className="grid grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-x-6 gap-y-8 p-4 w-full smooth-scroll">
+		<main className="grid grid-cols-[repeat(auto-fit,_minmax(300px,_1fr))] gap-x-6 gap-y-8 min-h-full w-full py-8 px-4 smooth-scroll">
 			{/* Rendered items */}
 			{itemsToRender.map((item) => (
 				<ItemCard
