@@ -102,7 +102,7 @@ const ItemCardComponent = React.memo(
 				</div>
 				<div className="flex flex-col flex-1 h-full min-w-0">
 					<div className="flex flex-1 flex-row items-center justify-between">
-						<div className="text-nowrap truncate max-w-[90%]">{item.name}</div>
+						<div className="text-nowrap truncate max-w-[85%]">{item.name}</div>
 						<TooltipProvider>
 							<Tooltip>
 								<TooltipTrigger>

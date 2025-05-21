@@ -54,7 +54,7 @@ export function ItemDialog({ data, isOpen, closeDialog }: ItemDialogProps) {
 			open={isOpen}
 			onOpenChange={(open) => !open && handleCloseDialog()}
 		>
-			<DialogContent className="w-[95vw] max-w-lg max-h-[95vh]">
+			<DialogContent className="w-[95vw] max-h-[95vh]">
 				{/* Back buttons */}
 				{dialogQueue.length > 0 && (
 					<div>
