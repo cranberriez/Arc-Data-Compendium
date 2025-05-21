@@ -6,8 +6,8 @@ import { useItems } from "@/contexts/itemContext";
 import { Card } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 
-const ITEMS_PER_PAGE = 20; // Number of items to load per page
-const DEBUG_LOADING_DELAY = 50; // Delay in ms to simulate loading
+const ITEMS_PER_PAGE = 3; // Number of items to load per page
+const DEBUG_LOADING_DELAY = 5; // Delay in ms to simulate loading
 
 function ItemList() {
 	const { filteredItems } = useItems();

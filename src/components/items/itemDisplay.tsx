@@ -74,6 +74,7 @@ const ItemCardComponent = React.memo(
 			);
 		}
 
+		// Variant: Default
 		return (
 			<Card
 				onClick={handleClick}
@@ -85,7 +86,7 @@ const ItemCardComponent = React.memo(
 				{/* Item Icon */}
 				<div
 					className={cn(
-						"flex items-center justify-center rounded-md h-full border-2 p-2",
+						"flex items-center justify-center rounded-sm h-full aspect-square border-2 p-2",
 						getRarityColor(item.rarity, "border"),
 						`${getRarityColor(item.rarity, "bg")}/10`
 					)}
