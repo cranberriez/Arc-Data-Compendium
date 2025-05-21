@@ -2,6 +2,7 @@ import { Item } from "@/types";
 import { useDialog } from "@/contexts/dialogContext";
 import { useItems } from "@/contexts/itemContext";
 import { ItemCard } from "../itemDisplay";
+import { Recycle } from "lucide-react";
 
 export const RecyclingSection = ({ item }: { item: Item }) => {
 	const { getItemById } = useItems();
@@ -11,11 +12,23 @@ export const RecyclingSection = ({ item }: { item: Item }) => {
 
 	return (
 		<div>
-			<div className="flex items-center justify-between gap-2 mb-2">
-				<p className="font-mono font-light">Recycles Into:</p>
-				<p className="text-xs text-muted-foreground">
-					Items recycled while in Raid have their output halvedd
-				</p>
+			<div className="font-mono font-light w-full flex items-center gap-2 mb-2">
+				<Recycle
+					className="inline-block"
+					size={24}
+				/>
+				<div className="flex w-full items-baseline">
+					<p>
+						<span className="inline-block text-lg">Recycling:</span>
+						<span className="text-xs text-muted-foreground">
+							{" "}
+							({item.recycling.length})
+						</span>
+					</p>
+					<p className="text-xs text-muted-foreground ml-auto whitespace-nowrap">
+						In Raid output is halved
+					</p>
+				</div>
 			</div>
 			<div className="flex flex-row items-center gap-2">
 				{item.recycling.map((recycle, idx) => {
