@@ -100,9 +100,9 @@ const ItemCardComponent = React.memo(
 						/>
 					)}
 				</div>
-				<div className="flex flex-col flex-1 w-full h-full">
-					<div className="min-w-fit flex flex-1 flex-row items-center justify-between">
-						<div className="text-nowrap truncate max-w-[180px]">{item.name}</div>
+				<div className="flex flex-col flex-1 h-full min-w-0">
+					<div className="flex flex-1 flex-row items-center justify-between">
+						<div className="text-nowrap truncate max-w-[90%]">{item.name}</div>
 						<TooltipProvider>
 							<Tooltip>
 								<TooltipTrigger>
@@ -136,16 +136,21 @@ const ItemCardComponent = React.memo(
 							</div>
 						</div>
 						{item.recipe && (
-							<TooltipProvider>
-								<Tooltip>
-									<TooltipTrigger className="w-4 h-4 flex items-center justify-center">
-										<Book className="w-3 h-3" />
-									</TooltipTrigger>
-									<TooltipContent side="right">
-										<span>Craftable</span>
-									</TooltipContent>
-								</Tooltip>
-							</TooltipProvider>
+							<div className="ml-auto text-amber-600 dark:text-amber-300">
+								<TooltipProvider>
+									<Tooltip>
+										<TooltipTrigger className="w-4 h-4 flex items-center justify-center">
+											<Book
+												className="w-3 h-3"
+												strokeWidth={4}
+											/>
+										</TooltipTrigger>
+										<TooltipContent side="right">
+											<span>Craftable</span>
+										</TooltipContent>
+									</Tooltip>
+								</TooltipProvider>
+							</div>
 						)}
 					</div>
 				</div>
