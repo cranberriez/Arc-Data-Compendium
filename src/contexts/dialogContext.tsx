@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import { Item } from "@/types";
 
 type DialogType = "item"; // Extend with more types as needed
 
@@ -13,6 +14,8 @@ interface DialogState {
 interface DialogContextType {
 	openDialog: (type: DialogType, data: any) => void;
 	closeDialog: () => void;
+	dialogQueue: Item[];
+	setDialogQueue: React.Dispatch<React.SetStateAction<Item[]>>;
 }
 
 import { ItemDialog } from "../components/items/itemDialog";
@@ -25,6 +28,7 @@ const dialogComponentMap: Record<DialogType, React.ComponentType<any>> = {
 };
 
 export function DialogProvider({ children }: { children: React.ReactNode }) {
+	const [dialogQueue, setDialogQueue] = React.useState<Item[]>([]);
 	const [state, setState] = React.useState<DialogState>({
 		open: false,
 		type: null,
@@ -49,8 +53,10 @@ export function DialogProvider({ children }: { children: React.ReactNode }) {
 		() => ({
 			openDialog,
 			closeDialog,
+			dialogQueue,
+			setDialogQueue,
 		}),
-		[openDialog, closeDialog]
+		[openDialog, closeDialog, dialogQueue, setDialogQueue]
 	);
 
 	return (

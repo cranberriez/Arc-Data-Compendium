@@ -14,8 +14,8 @@ export const SourceItem = ({
 	item: Item;
 	source: any;
 }) => {
-	const { getItemById, setDialogQueue } = useItems();
-	const { openDialog } = useDialog();
+	const { getItemById } = useItems();
+	const { openDialog, setDialogQueue } = useDialog();
 
 	// Get recycle products for this sourceItem
 	const recycleProducts = (sourceItem.recycling || [])

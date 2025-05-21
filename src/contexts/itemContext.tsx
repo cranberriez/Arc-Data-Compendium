@@ -26,8 +26,6 @@ interface ItemContextType {
 	setSort: (field: SortField, order: SortOrder) => void;
 	resetFilters: () => void;
 	getItemById: (id: string) => Item | undefined;
-	dialogQueue: Item[];
-	setDialogQueue: React.Dispatch<React.SetStateAction<Item[]>>;
 }
 
 const defaultFilterState: FilterState = {
@@ -57,7 +55,6 @@ export function ItemProvider({
 	// Memoize the combined items array to prevent recreation on every render
 	const allItems = useMemo(() => [...items, ...valuables], []);
 
-	const [dialogQueue, setDialogQueue] = useState<Item[]>([]);
 	const [filterState, setFilterState] = useState<FilterState>(defaultFilterState);
 	const [sortField, setSortField] = useState<SortField>("none");
 	const [sortOrder, setSortOrder] = useState<SortOrder>("none");
@@ -176,8 +173,6 @@ export function ItemProvider({
 			setSort,
 			resetFilters,
 			getItemById,
-			dialogQueue,
-			setDialogQueue,
 		}),
 		[
 			filteredItems,
@@ -190,8 +185,6 @@ export function ItemProvider({
 			setSort,
 			resetFilters,
 			getItemById,
-			dialogQueue,
-			setDialogQueue,
 		]
 	);
 

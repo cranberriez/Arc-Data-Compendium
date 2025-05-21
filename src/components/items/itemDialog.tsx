@@ -3,7 +3,6 @@
 import * as React from "react";
 import { Dialog, DialogContent, DialogDescription } from "@/components/ui/dialog";
 import { Item } from "@/types";
-import { useItems } from "@/contexts/itemContext";
 import { useDialog } from "@/contexts/dialogContext";
 import { Button } from "@/components/ui/button";
 import { ItemHeader } from "./dialog/diagHeader";
@@ -18,8 +17,7 @@ type ItemDialogProps = {
 
 export function ItemDialog({ data, isOpen, closeDialog }: ItemDialogProps) {
 	// Move hooks to the top level
-	const { dialogQueue, setDialogQueue } = useItems();
-	const { openDialog } = useDialog();
+	const { openDialog, dialogQueue, setDialogQueue } = useDialog();
 
 	if (!data) return null;
 	const item = data;

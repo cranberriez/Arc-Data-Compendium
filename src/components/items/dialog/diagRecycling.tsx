@@ -4,8 +4,8 @@ import { useItems } from "@/contexts/itemContext";
 import { ItemCard } from "../itemDisplay";
 
 export const RecyclingSection = ({ item }: { item: Item }) => {
-	const { getItemById, setDialogQueue } = useItems();
-	const { openDialog } = useDialog();
+	const { getItemById } = useItems();
+	const { openDialog, setDialogQueue } = useDialog();
 
 	if (!item.recycling || item.recycling.length === 0) return null;
 

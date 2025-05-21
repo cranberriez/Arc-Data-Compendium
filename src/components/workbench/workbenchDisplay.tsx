@@ -13,13 +13,21 @@ interface WorkbenchDisplayProps {
 }
 
 const startsWithBadge = (baseTier: number) => {
-	if (baseTier === 1) return null;
+	if (baseTier === 1)
+		return (
+			<Badge
+				variant="outline"
+				className="text-sm bg-green-500 dark:bg-green-700 border-green-500 dark:border-green-700"
+			>
+				Unlocked
+			</Badge>
+		);
 	return (
 		<Badge
 			variant="outline"
-			className="text-sm"
+			className="text-sm bg-red-400 dark:bg-red-700 border-red-400 dark:border-red-700"
 		>
-			Base Tier {baseTier}
+			Starts Locked
 		</Badge>
 	);
 };
@@ -56,7 +64,7 @@ export function WorkbenchDisplay({ workbench, items, getItemById }: WorkbenchDis
 									<div className="flex items-center justify-between">
 										<CardTitle className="text-2xl">Tier {tier.tier}</CardTitle>
 										{tier.raidsRequired !== undefined && (
-											<span className="text-sm text-orange-500 border-orange-500 border rounded px-2 py-1">
+											<span className="text-sm dark:text-orange-500 text-orange-700 rounded px-2 py-1">
 												{tier.raidsRequired} raid
 												{tier.raidsRequired !== 1 ? "s" : ""} required
 											</span>
