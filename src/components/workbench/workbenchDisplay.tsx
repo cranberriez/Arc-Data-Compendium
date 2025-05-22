@@ -5,6 +5,8 @@ import { Separator } from "@/components/ui/separator";
 import { Item } from "@/types";
 import { ItemCard } from "../items/itemDisplay";
 import { useDialog } from "@/contexts/dialogContext";
+import { Unlock } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 interface WorkbenchDisplayProps {
 	workbench: Workbench;
@@ -31,6 +33,12 @@ const startsWithBadge = (baseTier: number) => {
 	);
 };
 
+const toRomanNumberal = (num: number) => {
+	const romanNumerals = ["I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X"];
+
+	return romanNumerals[num - 1];
+};
+
 export function WorkbenchDisplay({ workbench, getItemById }: WorkbenchDisplayProps) {
 	const { openDialog } = useDialog();
 
@@ -44,89 +52,107 @@ export function WorkbenchDisplay({ workbench, getItemById }: WorkbenchDisplayPro
 						variant="secondary"
 						className="text-sm"
 					>
-						{workbench.tiers.length + workbench.baseTier} Tier
-						{workbench.tiers.length + workbench.baseTier !== 1 ? "s" : ""}
+						{workbench.tiers.length} Tier
+						{workbench.tiers.length !== 1 ? "s" : ""}
 					</Badge>
 				</div>
 			</div>
 
 			<Separator className="my-4" />
 
-			<div className="grid grid-cols-1 lg:grid-cols-[1fr_2fr] gap-6">
+			<div className="grid grid-rows-1 gap-6">
 				{/* Left Column - Tiers and Requirements */}
 				<div className="space-y-4">
 					<h3 className="text-xl font-semibold">Tiers & Requirements</h3>
-					<div className="space-y-4">
-						{workbench.tiers.map((tier) => (
-							<Card key={tier.tier}>
-								<CardHeader className="pb-3">
-									<div className="flex items-center justify-between">
-										<CardTitle className="text-2xl">Tier {tier.tier}</CardTitle>
-										{tier.raidsRequired !== undefined && (
-											<span className="text-sm dark:text-orange-500 text-orange-700 rounded px-2 py-1">
-												{tier.raidsRequired} raid
-												{tier.raidsRequired !== 1 ? "s" : ""} required
-											</span>
-										)}
-									</div>
-								</CardHeader>
+					<div className="flex flex-wrap gap-2">
+						{workbench.tiers.map((tier) => {
+							const startsUnlocked =
+								tier.raidsRequired === undefined && tier.requiredItems.length === 0;
 
-								<CardContent className="pt-0">
-									{tier.requiredItems.length > 0 ? (
-										<ul className="flex flex-wrap gap-2">
-											{tier.requiredItems.map((item) => {
-												const itemData = getItemById(item.itemId);
-												if (!itemData) {
-													return (
-														<div
-															key={item.itemId}
-															className="flex flex-col h-[90px] aspect-square items-center gap-1 p-2 border-2 border-red-500 rounded-md bg-muted/50 cursor-pointer"
-														>
-															<div className="flex items-center gap-1">
-																<div className="w-8 h-8 bg-red-500/30 border-red-500 border-2 rounded" />
-																<span className="text-lg font-mono text-center">
-																	x{item.count}
+							return (
+								<Card
+									key={tier.tier}
+									className={cn(
+										"w-fit px-2 gap-1 min-h-[178px] ",
+										startsUnlocked && "bg-green-300/10 border-green-300/20"
+									)}
+								>
+									<CardHeader className="px-4 [container-type:normal]">
+										<div className="flex items-center justify-between w-full min-w-fit gap-3">
+											<CardTitle className="text-xl font-mono font-light">
+												{toRomanNumberal(tier.tier)}
+											</CardTitle>
+											{tier.raidsRequired !== undefined && (
+												<span className="text-sm dark:text-orange-500 text-orange-700 rounded">
+													{tier.raidsRequired} Raid
+													{tier.raidsRequired !== 1 ? "s" : ""}
+												</span>
+											)}
+										</div>
+									</CardHeader>
+
+									<CardContent className="pt-0 px-2 flex justify-center h-full">
+										{tier.requiredItems.length > 0 ? (
+											<div className="flex gap-2">
+												{tier.requiredItems.map((item) => {
+													const itemData = getItemById(item.itemId);
+													if (!itemData) {
+														return (
+															<div
+																key={item.itemId}
+																className="flex flex-col h-[90px] aspect-square items-center gap-1 p-2 border-2 border-red-500 rounded-md bg-muted/50 cursor-pointer"
+															>
+																<div className="flex items-center gap-1">
+																	<div className="w-8 h-8 bg-red-500/30 border-red-500 border-2 rounded" />
+																	<span className="text-lg font-mono text-center">
+																		x{item.count}
+																	</span>
+																</div>
+																<span className="text-xs text-muted-foreground truncate w-full text-center">
+																	{item.itemId}
 																</span>
 															</div>
-															<span className="text-xs text-muted-foreground truncate w-full text-center">
-																{item.itemId}
-															</span>
-														</div>
+														);
+													}
+													return (
+														<ItemCard
+															key={item.itemId}
+															variant="icon"
+															item={itemData}
+															count={item.count}
+															onClick={() => {
+																openDialog("item", itemData);
+															}}
+														/>
 													);
-												}
-												return (
-													<ItemCard
-														key={item.itemId}
-														variant="icon"
-														item={itemData}
-														count={item.count}
-														onClick={() => {
-															openDialog("item", itemData);
-														}}
-													/>
-												);
-											})}
-										</ul>
-									) : (
-										<p className="text-sm text-muted-foreground">
-											No items required
-										</p>
-									)}
-								</CardContent>
-							</Card>
-						))}
+												})}
+											</div>
+										) : (
+											<div className="flex items-center justify-center h-full">
+												<Unlock
+													size={16}
+													className={cn(
+														startsUnlocked && "text-green-500"
+													)}
+												/>
+											</div>
+										)}
+									</CardContent>
+								</Card>
+							);
+						})}
 					</div>
 				</div>
 
 				{/* Right Column - Empty for now */}
-				<div className="space-y-4">
+				{/* <div className="space-y-4">
 					<h3 className="text-xl font-semibold">Recipes</h3>
 					<Card>
 						<CardContent className="pt-6 text-muted-foreground text-center">
 							<p>Additional details will be displayed here</p>
 						</CardContent>
 					</Card>
-				</div>
+				</div> */}
 			</div>
 		</div>
 	);

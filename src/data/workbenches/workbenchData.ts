@@ -87,6 +87,7 @@ export const workbenchesData: Workbench[] = [
 			{
 				tier: 1,
 				requiredItems: [],
+				raidsRequired: 2,
 			},
 		],
 	},
