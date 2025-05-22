@@ -46,11 +46,6 @@ export type ItemSource =
 			count: number;
 	  };
 
-export interface RecipeRequirement {
-	itemId: string;
-	count: number;
-}
-
 /**
  * Recycling structure for items that can be recycled into other items
  */
@@ -59,23 +54,4 @@ export interface Recycling {
 	id: string;
 	/** Number of items produced */
 	count: number;
-}
-
-export interface Recipe {
-	id: string;
-	outputItemId: string;
-	requirements: RecipeRequirement[];
-	workbench:
-		| "none"
-		| "scrappy"
-		| "weapon_bench"
-		| "equipment_bench"
-		| "med_station"
-		| "explosives_bench"
-		| "utility_bench"
-		| "refiner";
-	workbenchTier: number;
-	craftTime: number;
-	outputCount: number;
-	unlockedByDefault: boolean;
 }

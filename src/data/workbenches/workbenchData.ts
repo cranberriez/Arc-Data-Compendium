@@ -11,6 +11,10 @@ export const workbenchesData: Workbench[] = [
 		baseTier: 1,
 		tiers: [
 			{
+				tier: 1,
+				requiredItems: [],
+			},
+			{
 				tier: 2,
 				requiredItems: [
 					{
@@ -69,6 +73,20 @@ export const workbenchesData: Workbench[] = [
 						count: 3,
 					},
 				],
+			},
+		],
+	},
+	{
+		id: "wb_basic",
+		name: "Basic Workbench",
+		type: "workbench",
+		description: "A basic workbench with general purpose crafting",
+		icon: Egg,
+		baseTier: 0,
+		tiers: [
+			{
+				tier: 1,
+				requiredItems: [],
 			},
 		],
 	},

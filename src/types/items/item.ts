@@ -1,6 +1,5 @@
 import { BaseItem } from "./base";
 import { ItemCategory, ItemSource, Rarity, Recycling } from "./types";
-import { LucideIcon } from "lucide-react";
 
 /**
  * Base interface that all items must implement
@@ -40,7 +39,7 @@ export interface Item extends BaseItem {
 	sources?: ItemSource[];
 
 	/** Optional recipe if this item can be crafted */
-	recipe: string | null;
+	recipeId: string | null;
 
 	/** Optional recycling information, if applicable */
 	recycling?: Recycling[];

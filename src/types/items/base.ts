@@ -1,4 +1,3 @@
-import { Rarity, ItemSource, ItemCategory, Recipe, Recycling } from "./types";
 import { LucideIcon } from "lucide-react";
 
 /**
