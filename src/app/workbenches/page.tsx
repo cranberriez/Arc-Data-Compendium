@@ -6,6 +6,7 @@ import { workbenches } from "@/data/workbenches/workbenchHandler";
 import { useItems } from "@/contexts/itemContext";
 import { ScrollArea } from "@radix-ui/react-scroll-area";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { useDialog } from "@/contexts/dialogContext";
 import { cn } from "@/lib/utils";
 
 function WorkbenchList() {
@@ -19,6 +20,8 @@ function WorkbenchList() {
 			block: "start",
 		});
 	};
+
+	const { openDialog } = useDialog();
 
 	return (
 		<main className="flex relative">
@@ -69,6 +72,7 @@ function WorkbenchList() {
 							<WorkbenchDisplay
 								workbench={workbench}
 								getItemById={getItemById}
+								openDialog={openDialog}
 							/>
 						</div>
 					);

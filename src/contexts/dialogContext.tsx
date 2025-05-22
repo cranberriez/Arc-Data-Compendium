@@ -3,16 +3,14 @@
 import * as React from "react";
 import { Item } from "@/types";
 
-type DialogType = "item"; // Extend with more types as needed
-
 interface DialogState {
 	open: boolean;
-	type: DialogType | null;
+	type: string | null;
 	data: any;
 }
 
 interface DialogContextType {
-	openDialog: (type: DialogType, data: any) => void;
+	openDialog: (type: string, data: any) => void;
 	closeDialog: () => void;
 	dialogQueue: Item[];
 	setDialogQueue: React.Dispatch<React.SetStateAction<Item[]>>;
@@ -22,7 +20,7 @@ import { ItemDialog } from "../components/items/itemDialog";
 
 const DialogContext = React.createContext<DialogContextType | undefined>(undefined);
 
-const dialogComponentMap: Record<DialogType, React.ComponentType<any>> = {
+const dialogComponentMap: Record<string, React.ComponentType<any>> = {
 	item: ItemDialog,
 	// Add more dialog types and components here
 };
@@ -35,7 +33,7 @@ export function DialogProvider({ children }: { children: React.ReactNode }) {
 		data: null,
 	});
 
-	const openDialog = React.useCallback((type: DialogType, data: any) => {
+	const openDialog = React.useCallback((type: string, data: any) => {
 		setState({ open: true, type, data });
 		console.log(data);
 	}, []);

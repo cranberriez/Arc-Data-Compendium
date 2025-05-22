@@ -9,7 +9,7 @@ export * from "./items/recipe";
 // Re-export commonly used types for convenience
 export type { BaseItem } from "./items/base";
 export type { Item } from "./items/item";
-export type { Workbench } from "./items/workbench";
+export type { Workbench, WorkbenchTier } from "./items/workbench";
 export type { Recipe, RecipeRequirement } from "./items/recipe";
 
 export type {
