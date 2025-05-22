@@ -5,7 +5,7 @@ import { workbenches } from "@/data/workbenches/workbenchHandler";
 import { useItems } from "@/contexts/itemContext";
 
 function WorkbenchList() {
-	const { getItemById, items } = useItems();
+	const { getItemById } = useItems();
 
 	return (
 		<main className="flex flex-col gap-x-6 gap-y-8 min-h-full w-full py-8 px-4 max-w-[1600px] mx-auto">
@@ -13,7 +13,6 @@ function WorkbenchList() {
 				<WorkbenchDisplay
 					key={workbench.id}
 					workbench={workbench}
-					items={items}
 					getItemById={getItemById}
 				/>
 			))}

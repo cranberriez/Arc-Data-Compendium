@@ -8,7 +8,6 @@ import { useDialog } from "@/contexts/dialogContext";
 
 interface WorkbenchDisplayProps {
 	workbench: Workbench;
-	items: Item[];
 	getItemById: (id: string) => Item | undefined;
 }
 
@@ -32,7 +31,7 @@ const startsWithBadge = (baseTier: number) => {
 	);
 };
 
-export function WorkbenchDisplay({ workbench, items, getItemById }: WorkbenchDisplayProps) {
+export function WorkbenchDisplay({ workbench, getItemById }: WorkbenchDisplayProps) {
 	const { openDialog } = useDialog();
 
 	return (
