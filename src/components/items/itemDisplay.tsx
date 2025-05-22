@@ -4,7 +4,7 @@ import * as React from "react";
 import { useMemo, useCallback } from "react";
 import { Card } from "@/components/ui/card";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import { Book, ShoppingCart, Weight } from "lucide-react";
+import { Book, BadgeCent, Weight } from "lucide-react";
 import { Item } from "@/types";
 import { formatName, getRarityColor, getTypeIcon } from "@/data/items/itemUtils";
 import { cn } from "@/lib/utils";
@@ -119,20 +119,18 @@ const ItemCardComponent = React.memo(
 					<div className="min-w-fit flex flex-1 flex-row items-center gap-3">
 						<div className="text-sm text-muted-foreground flex items-center gap-1">
 							<Weight
-								size={12}
-								strokeWidth={4}
+								size={14}
+								strokeWidth={3}
 							/>
 							<span className="text-sm font-mono tabular-nums">{item.weight}kg</span>
 						</div>
 						<div className="text-sm text-muted-foreground flex items-center gap-1">
 							<div className="text-sm text-muted-foreground flex items-center gap-1">
-								<ShoppingCart
-									size={12}
-									strokeWidth={4}
+								<BadgeCent
+									size={14}
+									strokeWidth={3}
 								/>
-								<span className="text-sm font-mono tabular-nums">
-									${item.value}
-								</span>
+								<span className="text-sm font-mono tabular-nums">{item.value}</span>
 							</div>
 						</div>
 						{item.recipeId && (
