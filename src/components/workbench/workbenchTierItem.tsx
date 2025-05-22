@@ -1,22 +1,17 @@
-import { Unlock } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
+import { Card, CardHeader, CardTitle } from "../ui/card";
 import { cn } from "@/lib/utils";
 import { WorkbenchTier } from "@/types/items/workbench";
-import { Item } from "@/types";
-import { ItemCard } from "../items/itemDisplay";
 import WorkbenchRequirement from "./workbenchRequirement";
+import { useItems } from "@/contexts/itemContext";
+import { useDialog } from "@/contexts/dialogContext";
 
 interface WorkbenchTierItemProps {
 	tier: WorkbenchTier;
-	getItemById: (id: string) => Item | undefined;
-	openDialog: (type: string, item: Item) => void;
 }
 
-export default function WorkbenchTierItem({
-	tier,
-	getItemById,
-	openDialog,
-}: WorkbenchTierItemProps) {
+export default function WorkbenchTierItem({ tier }: WorkbenchTierItemProps) {
+	const { getItemById } = useItems();
+	const { openDialog } = useDialog();
 	const startsUnlocked = tier.raidsRequired === undefined && tier.requiredItems.length === 0;
 
 	const toRomanNumberal = (num: number) => {

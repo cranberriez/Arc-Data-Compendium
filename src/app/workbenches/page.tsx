@@ -3,14 +3,11 @@
 import { useRef } from "react";
 import { WorkbenchDisplay } from "@/components/workbench/workbenchDisplay";
 import { workbenches } from "@/data/workbenches/workbenchHandler";
-import { useItems } from "@/contexts/itemContext";
 import { ScrollArea } from "@radix-ui/react-scroll-area";
 import { useIsMobile } from "@/hooks/use-mobile";
-import { useDialog } from "@/contexts/dialogContext";
 import { cn } from "@/lib/utils";
 
 function WorkbenchList() {
-	const { getItemById } = useItems();
 	const mobile = useIsMobile();
 	const workbenchRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
 
@@ -20,8 +17,6 @@ function WorkbenchList() {
 			block: "start",
 		});
 	};
-
-	const { openDialog } = useDialog();
 
 	return (
 		<main className="flex relative">
@@ -69,11 +64,7 @@ function WorkbenchList() {
 							>
 								{workbench.name}
 							</h2>
-							<WorkbenchDisplay
-								workbench={workbench}
-								getItemById={getItemById}
-								openDialog={openDialog}
-							/>
+							<WorkbenchDisplay workbench={workbench} />
 						</div>
 					);
 				})}

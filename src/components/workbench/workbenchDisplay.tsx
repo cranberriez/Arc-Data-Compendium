@@ -1,13 +1,10 @@
 import { Workbench } from "@/types/items/workbench";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
-import { Item } from "@/types";
 import WorkbenchRequirement from "./workbenchTierItem";
 
 interface WorkbenchDisplayProps {
 	workbench: Workbench;
-	getItemById: (id: string) => Item | undefined;
-	openDialog: (type: string, item: Item) => void;
 }
 
 const startsWithBadge = (baseTier: number) => {
@@ -30,7 +27,7 @@ const startsWithBadge = (baseTier: number) => {
 	);
 };
 
-export function WorkbenchDisplay({ workbench, getItemById, openDialog }: WorkbenchDisplayProps) {
+export function WorkbenchDisplay({ workbench }: WorkbenchDisplayProps) {
 	return (
 		<div>
 			<div className="flex flex-col gap-2">
@@ -59,8 +56,6 @@ export function WorkbenchDisplay({ workbench, getItemById, openDialog }: Workben
 								<WorkbenchRequirement
 									key={tier.tier}
 									tier={tier}
-									getItemById={getItemById}
-									openDialog={openDialog}
 								/>
 							);
 						})}
