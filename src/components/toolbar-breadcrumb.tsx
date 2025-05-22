@@ -51,14 +51,9 @@ export function ToolbarBreadcrumb() {
 			</Breadcrumb>
 
 			<div className="flex items-center ml-auto gap-1">
-				<Button
-					variant="ghost"
-					size="icon"
-					aria-label="Search"
-					onClick={() => setSearchOpen(true)}
-				>
-					<SearchIcon className="h-[1.2rem] w-[1.2rem]" />
-				</Button>
+				<p className="text-sm text-muted-foreground ml-4">
+					Viewing {filteredItems.length} items
+				</p>
 
 				{hasActiveFilters && (
 					<Button
@@ -68,14 +63,19 @@ export function ToolbarBreadcrumb() {
 						onClick={() => resetFilters()}
 						className="relative"
 					>
-						<RefreshCwIcon className="h-[1.2rem] w-[1.2rem]" />
+						<RefreshCwIcon />
 						<span className="absolute top-0 right-0 h-2 w-2 bg-red-500 rounded-full"></span>
 					</Button>
 				)}
 
-				<p className="text-sm text-muted-foreground ml-4">
-					Viewing {filteredItems.length} items
-				</p>
+				<Button
+					variant="ghost"
+					size="icon"
+					aria-label="Search"
+					onClick={() => setSearchOpen(true)}
+				>
+					<SearchIcon />
+				</Button>
 			</div>
 
 			<SearchDialog

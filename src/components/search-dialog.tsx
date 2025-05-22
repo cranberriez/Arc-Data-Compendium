@@ -84,6 +84,15 @@ export function SearchDialog({
 		return counts;
 	}, [categories, queriedItems]);
 
+	// Determine which categories to display based on counts
+	const displayedCategories = useMemo(() => {
+		// If no search query, show all categories
+		if (!localSearch) return categories;
+
+		// Otherwise, show categories with items matching the search
+		return categories.filter((category) => categoryCounts[category] > 0);
+	}, [categories, categoryCounts, localSearch]);
+
 	// Handle category selection
 	const handleCategorySelect = (category: ItemCategory) => {
 		// Apply both search term and category filter
@@ -118,11 +127,11 @@ export function SearchDialog({
 
 				{/* Always show category filter group */}
 				<CommandGroup heading="Filter by Category">
-					{categories.map((category) => (
+					{displayedCategories.map((category) => (
 						<CommandItem
 							key={`category-${category}`}
 							onSelect={() => handleCategorySelect(category)}
-							value={`category-${category}`}
+							value={`${localSearch} ${category}`}
 						>
 							<div className="flex items-center gap-2">
 								{/* Category icon */}
@@ -150,7 +159,7 @@ export function SearchDialog({
 				{/* Show individual items */}
 				{queriedItems.length > 0 && queriedItems.length <= 10 && (
 					<>
-						{categories.length > 0 && <CommandSeparator />}
+						{displayedCategories.length > 0 && <CommandSeparator />}
 						<CommandGroup heading="Items">
 							{queriedItems.map((item) => (
 								<CommandItem
