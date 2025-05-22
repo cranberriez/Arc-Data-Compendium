@@ -11,7 +11,7 @@ import "./globals.css";
 
 export const metadata: Metadata = {
 	title: "ARC Data Compendium",
-	description: "A comprehensive data compendium for ARC game items and gear",
+	description: "A comprehensive data compendium for ARC Raiders items.",
 };
 
 export default function RootLayout({

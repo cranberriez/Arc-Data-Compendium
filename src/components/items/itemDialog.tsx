@@ -62,7 +62,7 @@ export function ItemDialog({ data, isOpen, closeDialog }: ItemDialogProps) {
 				{/* Screen Reader Stuff */}
 				<DialogDescription className="sr-only">
 					Details for {item.name}, {item.rarity} {item.category}
-					{item.recipe ? ", Recipe" : ""}
+					{item.recipeId ? ", Recipe" : ""}
 				</DialogDescription>
 
 				{/* Dialog Header */}

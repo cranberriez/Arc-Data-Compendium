@@ -135,7 +135,7 @@ const ItemCardComponent = React.memo(
 								</span>
 							</div>
 						</div>
-						{item.recipe && (
+						{item.recipeId && (
 							<div className="ml-auto text-amber-600 dark:text-amber-300">
 								<TooltipProvider>
 									<Tooltip>

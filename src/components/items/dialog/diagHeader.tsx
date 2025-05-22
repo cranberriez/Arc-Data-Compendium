@@ -50,7 +50,7 @@ export const ItemHeader = ({ item }: { item: Item }) => {
 							</p>
 						</div>
 
-						{item.recipe && (
+						{item.recipeId && (
 							<div className="flex items-center gap-1">
 								<div className="w-fit h-fit">
 									<Book size={12} />
