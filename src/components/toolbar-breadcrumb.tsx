@@ -51,9 +51,11 @@ export function ToolbarBreadcrumb() {
 			</Breadcrumb>
 
 			<div className="flex items-center ml-auto gap-1">
-				<p className="text-sm text-muted-foreground ml-4">
-					Viewing {filteredItems.length} items
-				</p>
+				{pageTitle.toLowerCase() === "items" && (
+					<p className="text-sm text-muted-foreground ml-4">
+						Viewing {filteredItems.length} items
+					</p>
+				)}
 
 				{hasActiveFilters && (
 					<Button
@@ -82,6 +84,7 @@ export function ToolbarBreadcrumb() {
 				open={searchOpen}
 				onOpenChange={setSearchOpen}
 				allItems={allItems}
+				showCategories={pageTitle.toLowerCase() === "items"}
 			/>
 		</div>
 	);

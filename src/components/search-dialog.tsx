@@ -23,10 +23,12 @@ export function SearchDialog({
 	open,
 	onOpenChange,
 	allItems,
+	showCategories,
 }: {
 	open: boolean;
 	onOpenChange: (open: boolean) => void;
 	allItems: Item[];
+	showCategories?: boolean;
 }) {
 	const { setSearchQuery, setCategory } = useItems();
 	// Local search state that doesn't affect global filtering until selection
@@ -126,35 +128,37 @@ export function SearchDialog({
 				<CommandEmpty>No results found.</CommandEmpty>
 
 				{/* Always show category filter group */}
-				<CommandGroup heading="Filter by Category">
-					{displayedCategories.map((category) => (
-						<CommandItem
-							key={`category-${category}`}
-							onSelect={() => handleCategorySelect(category)}
-							value={`${localSearch} ${category}`}
-						>
-							<div className="flex items-center gap-2">
-								{/* Category icon */}
-								<div className="h-5 w-5">
-									{React.createElement(getTypeIcon(category), {
-										size: 16,
-									})}
+				{showCategories && (
+					<CommandGroup heading="Filter by Category">
+						{displayedCategories.map((category) => (
+							<CommandItem
+								key={`category-${category}`}
+								onSelect={() => handleCategorySelect(category)}
+								value={`${localSearch} ${category}`}
+							>
+								<div className="flex items-center gap-2">
+									{/* Category icon */}
+									<div className="h-5 w-5">
+										{React.createElement(getTypeIcon(category), {
+											size: 16,
+										})}
+									</div>
+
+									{/* Category name */}
+									<span>{formatName(category)}</span>
+
+									{/* Count badge */}
+									<Badge
+										variant="secondary"
+										className="ml-auto"
+									>
+										{categoryCounts[category]}
+									</Badge>
 								</div>
-
-								{/* Category name */}
-								<span>{formatName(category)}</span>
-
-								{/* Count badge */}
-								<Badge
-									variant="secondary"
-									className="ml-auto"
-								>
-									{categoryCounts[category]}
-								</Badge>
-							</div>
-						</CommandItem>
-					))}
-				</CommandGroup>
+							</CommandItem>
+						))}
+					</CommandGroup>
+				)}
 
 				{/* Show individual items */}
 				{queriedItems.length > 0 && queriedItems.length <= 10 && (

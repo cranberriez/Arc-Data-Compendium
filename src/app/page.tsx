@@ -110,14 +110,15 @@ export default function Page() {
 							</AccordionTrigger>
 							<AccordionContent className="text-muted-foreground pb-2">
 								Fill out the provided form (coming soon) or contact us on our
-								<Link
+								discord (coming soon)
+								{/* <Link
 									href="#"
 									target="_blank"
 									rel="noopener noreferrer"
 									className="text-primary inline-flex items-center gap-1 hover:underline ml-1"
 								>
 									Discord <ExternalLink className="w-3 h-3" />
-								</Link>
+								</Link> */}
 								.
 							</AccordionContent>
 						</AccordionItem>
