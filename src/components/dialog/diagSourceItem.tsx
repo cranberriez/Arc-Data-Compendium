@@ -2,7 +2,7 @@
 import { Item } from "@/types";
 import { useDialog } from "@/contexts/dialogContext";
 import { useItems } from "@/contexts/itemContext";
-import { ItemCard } from "../itemDisplay";
+import { ItemCard } from "../items/itemDisplay";
 import { ArrowRight } from "lucide-react";
 
 export const SourceItem = ({

@@ -136,6 +136,11 @@ export default function Page() {
 						</AccordionItem>
 					</Accordion>
 				</div>
+				<p className="text-sm dark:text-red-400/50 text-red-800">
+					Nothing on this site is final. This is a work in progress and is subject to
+					change at any time. Almost every item is incomplete or contains incorrect
+					information.
+				</p>
 			</div>
 		</div>
 	);

@@ -1,7 +1,7 @@
 import { Item } from "@/types";
 import { useDialog } from "@/contexts/dialogContext";
 import { useItems } from "@/contexts/itemContext";
-import { ItemCard } from "../itemDisplay";
+import { ItemCard } from "../items/itemDisplay";
 import { Recycle } from "lucide-react";
 
 export const RecyclingSection = ({ item }: { item: Item }) => {
