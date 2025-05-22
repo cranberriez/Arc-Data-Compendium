@@ -184,3 +184,7 @@ export const formatValue = (value: number) => {
 		maximumFractionDigits: 0,
 	});
 };
+
+export const searchFunc = (item: Item, query: string) =>
+	item.name.toLowerCase().replace(" ", "").includes(query) ||
+	item.id.toLowerCase().replace("_", "").includes(query);

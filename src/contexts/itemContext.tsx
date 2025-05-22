@@ -4,6 +4,7 @@ import { createContext, ReactNode, useCallback, useMemo, useState, useContext } 
 import { BaseItem, Item } from "@/types";
 import { items } from "@/data/items/itemHandler";
 import { valuables } from "@/data/valuables/valuableHandler";
+import { searchFunc } from "@/data/items/itemUtils";
 
 type SortOrder = "asc" | "desc" | "none";
 type SortField = "name" | "rarity" | "category" | "value" | "none"; // 'category' replaces 'type' from legacy Item
@@ -15,12 +16,14 @@ interface FilterState {
 }
 
 interface ItemContextType {
-	items: Item[];
+	allItems: Item[];
 	filteredItems: Item[];
 	filterState: FilterState;
 	sortField: SortField;
 	sortOrder: SortOrder;
 	setSearchQuery: (query: string) => void;
+	setRarity: (rarity: string) => void;
+	setCategory: (category: string) => void;
 	toggleRarity: (rarity: string) => void;
 	toggleCategory: (category: string) => void; // replaces toggleType
 	setSort: (field: SortField, order: SortOrder) => void;
@@ -68,10 +71,7 @@ export function ItemProvider({
 		// Apply search filter
 		if (filterState.searchQuery) {
 			const query = filterState.searchQuery.toLowerCase();
-			result = result.filter(
-				(item) =>
-					item.name.toLowerCase().includes(query) || item.id.toLowerCase().includes(query)
-			);
+			result = result.filter((item) => searchFunc(item, query));
 		}
 
 		// Filter by rarity
@@ -124,6 +124,14 @@ export function ItemProvider({
 		[setFilterState]
 	);
 
+	const setRarity = useCallback((rarity: string) => {
+		setFilterState((prev) => ({ ...prev, rarities: [rarity] }));
+	}, []);
+
+	const setCategory = useCallback((category: string) => {
+		setFilterState((prev) => ({ ...prev, categories: [category] }));
+	}, []);
+
 	const toggleRarity = useCallback((rarity: string) => {
 		setFilterState((prev) => {
 			const newRarities = prev.rarities.includes(rarity)
@@ -149,8 +157,8 @@ export function ItemProvider({
 
 	const resetFilters = useCallback(() => {
 		setFilterState(defaultFilterState);
-		setSortField("name");
-		setSortOrder("asc");
+		setSortField("none");
+		setSortOrder("none");
 	}, [setSortField, setSortOrder]);
 
 	const getItemById = useCallback(
@@ -162,12 +170,14 @@ export function ItemProvider({
 
 	const value = useMemo(
 		() => ({
-			items,
+			allItems,
 			filteredItems,
 			filterState,
 			sortField,
 			sortOrder,
 			setSearchQuery,
+			setRarity,
+			setCategory,
 			toggleRarity,
 			toggleCategory,
 			setSort,
@@ -175,11 +185,14 @@ export function ItemProvider({
 			getItemById,
 		}),
 		[
+			allItems,
 			filteredItems,
 			filterState,
 			sortField,
 			sortOrder,
 			setSearchQuery,
+			setRarity,
+			setCategory,
 			toggleRarity,
 			toggleCategory,
 			setSort,

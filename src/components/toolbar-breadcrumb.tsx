@@ -9,6 +9,11 @@ import {
 	BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import { usePathname } from "next/navigation";
+import { Button } from "@/components/ui/button";
+import { SearchIcon, RefreshCwIcon } from "lucide-react";
+import { useState } from "react";
+import { useItems } from "@/contexts/itemContext";
+import { SearchDialog } from "./search-dialog";
 
 export function ToolbarBreadcrumb() {
 	const pathname = usePathname();
@@ -18,21 +23,66 @@ export function ToolbarBreadcrumb() {
 		.replace("/", "")
 		.replace(/^(.)/, (match) => match.toUpperCase());
 
+	const [searchOpen, setSearchOpen] = useState(false);
+	const { resetFilters, filterState, filteredItems, allItems } = useItems();
+
+	// Check if any filters are currently active
+	const hasActiveFilters =
+		filterState.searchQuery !== "" ||
+		filterState.rarities.length > 0 ||
+		filterState.categories.length > 0;
+
 	return (
-		<Breadcrumb>
-			<BreadcrumbList>
-				<BreadcrumbItem className="hidden md:block">
-					<BreadcrumbLink href="/">ARC Data</BreadcrumbLink>
-				</BreadcrumbItem>
-				{pageTitle !== "" && (
-					<>
-						<BreadcrumbSeparator className="hidden md:block" />
-						<BreadcrumbItem>
-							<BreadcrumbPage>{pageTitle}</BreadcrumbPage>
-						</BreadcrumbItem>
-					</>
+		<div className="flex items-center justify-between w-full">
+			<Breadcrumb>
+				<BreadcrumbList>
+					<BreadcrumbItem className="hidden md:block">
+						<BreadcrumbLink href="/">ARC Data</BreadcrumbLink>
+					</BreadcrumbItem>
+					{pageTitle !== "" && (
+						<>
+							<BreadcrumbSeparator className="hidden md:block" />
+							<BreadcrumbItem>
+								<BreadcrumbPage>{pageTitle}</BreadcrumbPage>
+							</BreadcrumbItem>
+						</>
+					)}
+				</BreadcrumbList>
+			</Breadcrumb>
+
+			<div className="flex items-center ml-auto gap-1">
+				<Button
+					variant="ghost"
+					size="icon"
+					aria-label="Search"
+					onClick={() => setSearchOpen(true)}
+				>
+					<SearchIcon className="h-[1.2rem] w-[1.2rem]" />
+				</Button>
+
+				{hasActiveFilters && (
+					<Button
+						variant="ghost"
+						size="icon"
+						aria-label="Clear filters"
+						onClick={() => resetFilters()}
+						className="relative"
+					>
+						<RefreshCwIcon className="h-[1.2rem] w-[1.2rem]" />
+						<span className="absolute top-0 right-0 h-2 w-2 bg-red-500 rounded-full"></span>
+					</Button>
 				)}
-			</BreadcrumbList>
-		</Breadcrumb>
+
+				<p className="text-sm text-muted-foreground ml-4">
+					Viewing {filteredItems.length} items
+				</p>
+			</div>
+
+			<SearchDialog
+				open={searchOpen}
+				onOpenChange={setSearchOpen}
+				allItems={allItems}
+			/>
+		</div>
 	);
 }
