@@ -58,7 +58,9 @@ export function SourcesSection({ item }: SourcesSectionProps) {
 				</div>
 
 				{/* Divider */}
-				<div className="hidden md:block w-px bg-secondary-foreground/20 dark:bg-secondary-foreground/10 mx-2"></div>
+				{leftColumnSources.length > 0 && rightColumnSources.length > 0 && (
+					<div className="hidden md:block w-px bg-secondary-foreground/20 dark:bg-secondary-foreground/10 mx-2"></div>
+				)}
 
 				{/* Right Column */}
 				<div className="flex flex-col gap-2 md:pl-4">
