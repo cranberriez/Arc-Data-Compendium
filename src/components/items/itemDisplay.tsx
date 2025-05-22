@@ -1,7 +1,8 @@
 "use client";
 
 import * as React from "react";
-import { useMemo, useCallback } from "react";
+import { useMemo } from "react";
+import Image from "next/image";
 import { Card } from "@/components/ui/card";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { Book, BadgeCent, Weight } from "lucide-react";
@@ -9,6 +10,9 @@ import { Item } from "@/types";
 import { formatName, getRarityColor, getTypeIcon } from "@/data/items/itemUtils";
 import { cn } from "@/lib/utils";
 import { useDialog } from "@/contexts/dialogContext";
+import { getItemImagePath } from "@/utils/itemImage";
+
+const USE_ACTUAL_IMAGES = false;
 
 type ItemCardProps = {
 	item?: Item;
@@ -29,13 +33,33 @@ const ItemCardComponent = React.memo(
 		const { openDialog } = useDialog();
 		const handleClick = onClick || (() => openDialog("item", item));
 
-		// Memoize the icon to prevent unnecessary re-renders
-		const itemIcon = useMemo(() => {
-			if (!item?.icon) return null;
-			return (
-				<item.icon className={cn("w-8 h-8 mb-1", getRarityColor(item.rarity, "text"))} />
-			);
-		}, [item?.icon, item?.rarity]);
+		// Check if item has an image, otherwise use the icon
+		const itemImage = useMemo(() => {
+			if (!item) return null;
+
+			const imagePath = getItemImagePath(item.id);
+			if (USE_ACTUAL_IMAGES && imagePath) {
+				return (
+					<div className="relative w-8 h-8 mb-1">
+						<Image
+							src={imagePath}
+							alt={item.name}
+							fill
+							className="object-contain"
+							sizes="32px"
+							unoptimized={process.env.NODE_ENV !== "production"}
+						/>
+					</div>
+				);
+			}
+
+			// Fallback to icon if no image found
+			if (item?.icon) {
+				return <item.icon className={cn("w-8 h-8", getRarityColor(item.rarity, "text"))} />;
+			}
+
+			return null;
+		}, [item]);
 
 		// Memoize the border color for icon variant
 		const borderClass = useMemo(
@@ -57,7 +81,7 @@ const ItemCardComponent = React.memo(
 					onClick={handleClick}
 				>
 					<div className="flex items-center gap-1">
-						{itemIcon}
+						{itemImage}
 						{count !== undefined && (
 							<span className="text-lg font-mono text-center">
 								x{count > 0 ? count : "?"}
@@ -83,22 +107,43 @@ const ItemCardComponent = React.memo(
 					className
 				)}
 			>
-				{/* Item Icon */}
+				{/* Item Image/Icon */}
 				<div
 					className={cn(
-						"flex items-center justify-center rounded-sm h-full aspect-square border-2 p-2",
+						"flex items-center justify-center rounded-sm h-full aspect-square border-2 p-[2px]",
 						getRarityColor(item.rarity, "border"),
 						`${getRarityColor(item.rarity, "bg")}/10`
 					)}
 				>
-					{item.icon && (
-						<item.icon
-							className={cn(
-								"h-full aspect-square",
-								getRarityColor(item.rarity, "text")
-							)}
-						/>
-					)}
+					{itemImage}
+					{/* {(() => {
+						const imagePath = getItemImagePath(item.id);
+						if (imagePath) {
+							return (
+								<div className="relative w-full h-full">
+									<Image
+										src={imagePath}
+										alt={item.name}
+										fill
+										className="object-contain"
+										sizes="48px"
+										unoptimized={process.env.NODE_ENV !== "production"}
+									/>
+								</div>
+							);
+						}
+						if (item.icon) {
+							return (
+								<item.icon
+									className={cn(
+										"h-full aspect-square",
+										getRarityColor(item.rarity, "text")
+									)}
+								/>
+							);
+						}
+						return null;
+					})()} */}
 				</div>
 				<div className="flex flex-col flex-1 h-full min-w-0">
 					<div className="flex flex-1 flex-row items-center justify-between">
