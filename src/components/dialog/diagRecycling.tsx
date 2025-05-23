@@ -6,7 +6,7 @@ import { Recycle } from "lucide-react";
 
 export const RecyclingSection = ({ item }: { item: Item }) => {
 	const { getItemById } = useItems();
-	const { openDialog, setDialogQueue } = useDialog();
+	const { openDialog } = useDialog();
 
 	if (!item.recycling || item.recycling.length === 0) return null;
 
@@ -40,10 +40,6 @@ export const RecyclingSection = ({ item }: { item: Item }) => {
 							item={recycledItem}
 							variant="icon"
 							count={recycle.count}
-							onClick={() => {
-								setDialogQueue((prev) => [...prev, item]);
-								openDialog("item", recycledItem);
-							}}
 						/>
 					);
 				})}

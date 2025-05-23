@@ -1,6 +1,6 @@
 "use client";
 
-import * as React from "react";
+import React, { createContext, useState, useCallback, useMemo, useContext } from "react";
 import { Item } from "@/types";
 
 interface DialogState {
@@ -13,12 +13,11 @@ interface DialogContextType {
 	openDialog: (type: string, data: any) => void;
 	closeDialog: () => void;
 	dialogQueue: Item[];
-	setDialogQueue: React.Dispatch<React.SetStateAction<Item[]>>;
 }
 
 import { ItemDialog } from "../components/items/itemDialog";
 
-const DialogContext = React.createContext<DialogContextType | undefined>(undefined);
+const DialogContext = createContext<DialogContextType | undefined>(undefined);
 
 const dialogComponentMap: Record<string, React.ComponentType<any>> = {
 	item: ItemDialog,
@@ -26,35 +25,64 @@ const dialogComponentMap: Record<string, React.ComponentType<any>> = {
 };
 
 export function DialogProvider({ children }: { children: React.ReactNode }) {
-	const [dialogQueue, setDialogQueue] = React.useState<Item[]>([]);
-	const [state, setState] = React.useState<DialogState>({
+	const [dialogQueue, setDialogQueue] = useState<Item[]>([]);
+	const [state, setState] = useState<DialogState>({
 		open: false,
 		type: null,
 		data: null,
 	});
 
-	const openDialog = React.useCallback((type: string, data: any) => {
-		setState({ open: true, type, data });
-		console.log(data);
+	const backDialog = useCallback(() => {
+		if (dialogQueue.length > 0) {
+			const lastItem = dialogQueue[dialogQueue.length - 1];
+			setState((prevState) => ({
+				open: true,
+				type: prevState.type,
+				data: lastItem,
+			}));
+			setDialogQueue((prev) => prev.slice(0, prev.length - 1));
+		}
+	}, [dialogQueue]);
+
+	const openDialog = useCallback((type: string, data: any) => {
+		setState((prevState) => {
+			if (prevState.open && prevState.data) {
+				console.log("Dialog already open, updating data");
+				// Add previous data to queue before updating state
+				setDialogQueue((prevQueue) => {
+					// Remove any existing instance of this item from the queue
+					const filteredQueue = prevQueue.filter(item => item.id !== prevState.data.id);
+					// Add the item to the end of the queue
+					return [...filteredQueue, prevState.data];
+				});
+			}
+			return {
+				open: true,
+				type: type,
+				data: data,
+			};
+		});
 	}, []);
 
-	const closeDialog = React.useCallback(() => {
-		setState((prev) => ({ ...prev, open: false }));
-		setTimeout(() => {
-			setState({ open: false, type: null, data: null });
-		}, 200);
+	const closeDialog = useCallback(() => {
+		setState({
+			open: false,
+			type: null,
+			data: null,
+		});
+		setDialogQueue([]);
 	}, []);
 
 	const DialogComponent = state.type ? dialogComponentMap[state.type] : null;
 
-	const value = React.useMemo(
+	const value = useMemo(
 		() => ({
 			openDialog,
 			closeDialog,
+			backDialog,
 			dialogQueue,
-			setDialogQueue,
 		}),
-		[openDialog, closeDialog, dialogQueue, setDialogQueue]
+		[openDialog, closeDialog, backDialog, dialogQueue]
 	);
 
 	return (
@@ -65,6 +93,7 @@ export function DialogProvider({ children }: { children: React.ReactNode }) {
 					isOpen={state.open}
 					data={state.data}
 					closeDialog={closeDialog}
+					backDialog={backDialog}
 				/>
 			)}
 		</DialogContext.Provider>
@@ -72,7 +101,7 @@ export function DialogProvider({ children }: { children: React.ReactNode }) {
 }
 
 export function useDialog() {
-	const context = React.useContext(DialogContext);
+	const context = useContext(DialogContext);
 	if (!context) {
 		throw new Error("useDialog must be used within a DialogProvider");
 	}

@@ -8,16 +8,21 @@ import { Button } from "@/components/ui/button";
 import { ItemHeader } from "../dialog/diagHeader";
 import { RecyclingSection } from "../dialog/diagRecycling";
 import { SourcesSection } from "../dialog/diagSource";
+import { useEffect } from "react";
 
 type ItemDialogProps = {
 	data: Item;
 	isOpen: boolean;
 	closeDialog: () => void;
+	backDialog: () => void;
 };
 
-export function ItemDialog({ data, isOpen, closeDialog }: ItemDialogProps) {
-	// Move hooks to the top level
-	const { openDialog, dialogQueue, setDialogQueue } = useDialog();
+export function ItemDialog({ data, isOpen, closeDialog, backDialog }: ItemDialogProps) {
+	const { dialogQueue } = useDialog();
+
+	useEffect(() => {
+		console.log(dialogQueue);
+	}, [dialogQueue]);
 
 	if (!data) return null;
 	const item = data;
@@ -27,18 +32,12 @@ export function ItemDialog({ data, isOpen, closeDialog }: ItemDialogProps) {
 
 	// Custom close handler to clear the queue
 	const handleCloseDialog = () => {
-		setDialogQueue([]);
 		closeDialog();
 	};
 
 	// Back navigation
 	const handleBack = () => {
-		const prevQueue = [...dialogQueue];
-		const lastItem = prevQueue.pop();
-		if (lastItem) {
-			setDialogQueue(prevQueue);
-			openDialog("item", lastItem);
-		}
+		backDialog();
 	};
 
 	return (

@@ -15,7 +15,7 @@ export const SourceItem = ({
 	source: any;
 }) => {
 	const { getItemById } = useItems();
-	const { openDialog, setDialogQueue } = useDialog();
+	const { openDialog } = useDialog();
 
 	// Get recycle products for this sourceItem
 	const recycleProducts = (sourceItem.recycling || [])
@@ -28,10 +28,6 @@ export const SourceItem = ({
 			<ItemCard
 				item={sourceItem}
 				variant="icon"
-				onClick={() => {
-					setDialogQueue((prev) => [...prev, item]);
-					openDialog("item", sourceItem);
-				}}
 			/>
 			<ArrowRight className="size-4" />
 			<ItemCard
@@ -51,10 +47,6 @@ export const SourceItem = ({
 								item={recycledItem}
 								variant="icon"
 								count={source.count}
-								onClick={() => {
-									setDialogQueue((prev) => [...prev, item]);
-									openDialog("item", recycledItem);
-								}}
 							/>
 						);
 					})}
