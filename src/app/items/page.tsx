@@ -43,7 +43,7 @@ function ItemList() {
 			});
 			setIsLoading(false);
 		}, DEBUG_LOADING_DELAY);
-	}, [isLoading, visibleItems, filteredItems.length]);
+	}, [isLoading, visibleItems, filteredItems.length, debugging]);
 
 	// Check if we need to load more items when scroll position changes
 	const checkIfNeedsMoreItems = useCallback(() => {
@@ -69,7 +69,7 @@ function ItemList() {
 		if (debugging) console.log("Filtered items changed, resetting to first page");
 		setVisibleItems(ITEMS_PER_PAGE);
 		setIsLoading(false);
-	}, [filteredItems]);
+	}, [filteredItems, debugging]);
 
 	// Set up intersection observer for infinite scroll
 	useEffect(() => {
