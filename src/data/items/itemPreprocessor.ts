@@ -57,6 +57,7 @@ export const processIcons: ItemProcessor<Item> = (item) => {
 		...item,
 		// Add icon processing logic here
 		// Example: icon: normalizeIconName(item.icon)
+		// Currently DOES NOTHING, item icon conversion is handled in jsonLoader
 	};
 };
 

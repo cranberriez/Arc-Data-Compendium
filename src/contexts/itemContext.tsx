@@ -4,13 +4,7 @@ import { createContext, ReactNode, useCallback, useMemo, useState, useContext } 
 import { BaseItem, Item } from "@/types";
 import { items, valuables } from "@/data";
 import { searchFunc } from "@/data/items/itemUtils";
-import {
-	addSources,
-	composeProcessors,
-	processIcons,
-	processItems,
-	validateItem,
-} from "@/data/items/itemPreprocessor";
+import { addSources, composeProcessors, processItems } from "@/data/items/itemPreprocessor";
 
 type SortOrder = "asc" | "desc" | "none";
 type SortField = "name" | "rarity" | "category" | "value" | "none"; // 'category' replaces 'type' from legacy Item
@@ -62,10 +56,8 @@ export function ItemProvider({
 	itemsSubset?: Item[];
 }) {
 	// Compose item preprocessors
-	const itemProcessor = useMemo(
-		() => composeProcessors<Item>(addSources, processIcons, validateItem),
-		[]
-	);
+	// Expand to include validItem and processIcons when needed
+	const itemProcessor = useMemo(() => composeProcessors<Item>(addSources), []);
 
 	// Memoize the combined items array to prevent recreation on every render
 	const allItems = useMemo(
