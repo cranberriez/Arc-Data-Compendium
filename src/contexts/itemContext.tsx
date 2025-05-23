@@ -2,8 +2,8 @@
 
 import { createContext, ReactNode, useCallback, useMemo, useState, useContext } from "react";
 import { BaseItem, Item } from "@/types";
-import { items } from "@/data/items/itemHandler";
-import { valuables } from "@/data/valuables/valuableHandler";
+import { items } from "@/data/jsonLoader";
+import { valuables } from "@/data/jsonLoader";
 import { searchFunc } from "@/data/items/itemUtils";
 
 type SortOrder = "asc" | "desc" | "none";

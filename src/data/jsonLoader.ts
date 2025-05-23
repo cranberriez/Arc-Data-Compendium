@@ -14,20 +14,20 @@ import valuableJson from "./valuables/valuableData.json";
  * Type mapping for different data categories
  */
 export type DataTypes = {
-  workbench: Workbench;
-  item: Item;
-  recipe: Recipe;
-  valuable: Item;
+	workbench: Workbench;
+	item: Item;
+	recipe: Recipe;
+	valuable: Item;
 };
 
 /**
  * Data source mapping
  */
 export const dataSources = {
-  workbench: workbenchJson as unknown[],
-  item: itemJson as unknown[],
-  recipe: (recipeJson || []) as unknown[],
-  valuable: valuableJson as unknown[],
+	workbench: workbenchJson as unknown[],
+	item: itemJson as unknown[],
+	recipe: (recipeJson || []) as unknown[],
+	valuable: valuableJson as unknown[],
 };
 
 /**
@@ -39,47 +39,51 @@ export type DataMapper<T> = (jsonItem: Record<string, any>) => T;
  * Default mappers for each data type
  */
 export const defaultMappers: {
-  [K in keyof DataTypes]?: DataMapper<DataTypes[K]>;
+	[K in keyof DataTypes]?: DataMapper<DataTypes[K]>;
 } = {
-  item: (jsonItem) => ({
-    ...jsonItem,
-    value: jsonItem.value ?? 0,
-  }) as Item,
-  valuable: (jsonItem) => ({
-    ...jsonItem,
-    category: "valuable",
-    value: jsonItem.value ?? 100,
-  }) as Item,
-  recipe: (jsonItem) => ({
-    ...jsonItem,
-    craftTime: jsonItem.craftTime ?? 5,
-    outputCount: jsonItem.outputCount ?? 1,
-    unlockedByDefault: jsonItem.unlockedByDefault ?? false,
-  }) as Recipe,
-  workbench: (jsonItem) => ({
-    ...jsonItem,
-  }) as Workbench,
+	item: (jsonItem) =>
+		({
+			...jsonItem,
+			value: jsonItem.value ?? 0,
+		} as Item),
+	valuable: (jsonItem) =>
+		({
+			...jsonItem,
+			category: "valuable",
+			value: jsonItem.value ?? 100,
+		} as Item),
+	recipe: (jsonItem) =>
+		({
+			...jsonItem,
+			craftTime: jsonItem.craftTime ?? 5,
+			outputCount: jsonItem.outputCount ?? 1,
+			unlockedByDefault: jsonItem.unlockedByDefault ?? false,
+		} as Recipe),
+	workbench: (jsonItem) =>
+		({
+			...jsonItem,
+		} as Workbench),
 };
 
 /**
  * Processes icon strings to Lucide components
  */
 function processIcon(item: Record<string, any>): Record<string, any> {
-  const processedItem = { ...item };
+	const processedItem = { ...item };
 
-  if (typeof item.icon === "string") {
-    // Convert icon string to LucideIcon component
-    const iconName = item.icon as keyof typeof LucideIcons;
-    processedItem.icon = LucideIcons[iconName] as LucideIcon;
+	if (typeof item.icon === "string") {
+		// Convert icon string to LucideIcon component
+		const iconName = item.icon as keyof typeof LucideIcons;
+		processedItem.icon = LucideIcons[iconName] as LucideIcon;
 
-    if (!processedItem.icon) {
-      console.warn(`Icon not found: ${item.icon}`);
-      // Provide a fallback icon
-      processedItem.icon = LucideIcons.HelpCircle;
-    }
-  }
+		if (!processedItem.icon) {
+			console.warn(`Icon not found: ${item.icon} for item ${item.id}`);
+			// Provide a fallback icon
+			processedItem.icon = LucideIcons.HelpCircle;
+		}
+	}
 
-  return processedItem;
+	return processedItem;
 }
 
 /**
@@ -89,28 +93,28 @@ function processIcon(item: Record<string, any>): Record<string, any> {
  * @returns The loaded data with proper TypeScript types
  */
 export function loadData<T extends keyof DataTypes>(
-  dataType: T,
-  customMapper?: DataMapper<DataTypes[T]>
+	dataType: T,
+	customMapper?: DataMapper<DataTypes[T]>
 ): DataTypes[T][] {
-  const jsonData = dataSources[dataType];
-  
-  if (!jsonData || !Array.isArray(jsonData) || jsonData.length === 0) {
-    return [];
-  }
+	const jsonData = dataSources[dataType];
 
-  return jsonData.map((item) => {
-    // Process the item with the custom mapper, default mapper, or just process icons
-    const itemAsRecord = item as Record<string, any>;
-    let processedItem = processIcon(itemAsRecord);
-    
-    if (customMapper) {
-      processedItem = customMapper(processedItem);
-    } else if (defaultMappers[dataType]) {
-      processedItem = defaultMappers[dataType]!(processedItem);
-    }
+	if (!jsonData || !Array.isArray(jsonData) || jsonData.length === 0) {
+		return [];
+	}
 
-    return processedItem as DataTypes[T];
-  });
+	return jsonData.map((item) => {
+		// Process the item with the custom mapper, default mapper, or just process icons
+		const itemAsRecord = item as Record<string, any>;
+		let processedItem = processIcon(itemAsRecord);
+
+		if (customMapper) {
+			processedItem = customMapper(processedItem);
+		} else if (defaultMappers[dataType]) {
+			processedItem = defaultMappers[dataType]!(processedItem);
+		}
+
+		return processedItem as DataTypes[T];
+	});
 }
 
 /**
@@ -129,37 +133,37 @@ export const valuables = loadData("valuable");
  * @returns Promise that resolves to the loaded data
  */
 export async function loadDataFromFile<T extends keyof DataTypes>(
-  jsonPath: string,
-  dataType: T,
-  customMapper?: DataMapper<DataTypes[T]>
+	jsonPath: string,
+	dataType: T,
+	customMapper?: DataMapper<DataTypes[T]>
 ): Promise<DataTypes[T][]> {
-  try {
-    const response = await fetch(jsonPath);
-    if (!response.ok) {
-      throw new Error(`Failed to load JSON data from ${jsonPath}: ${response.statusText}`);
-    }
+	try {
+		const response = await fetch(jsonPath);
+		if (!response.ok) {
+			throw new Error(`Failed to load JSON data from ${jsonPath}: ${response.statusText}`);
+		}
 
-    const jsonData = await response.json();
-    
-    if (!jsonData || !Array.isArray(jsonData)) {
-      return [];
-    }
+		const jsonData = await response.json();
 
-    return jsonData.map((item) => {
-      // Process the item with the custom mapper, default mapper, or just process icons
-      const itemAsRecord = item as Record<string, any>;
-      let processedItem = processIcon(itemAsRecord);
-      
-      if (customMapper) {
-        processedItem = customMapper(processedItem);
-      } else if (defaultMappers[dataType]) {
-        processedItem = defaultMappers[dataType]!(processedItem);
-      }
+		if (!jsonData || !Array.isArray(jsonData)) {
+			return [];
+		}
 
-      return processedItem as DataTypes[T];
-    });
-  } catch (error) {
-    console.error(`Error loading JSON data from ${jsonPath}:`, error);
-    return [];
-  }
+		return jsonData.map((item) => {
+			// Process the item with the custom mapper, default mapper, or just process icons
+			const itemAsRecord = item as Record<string, any>;
+			let processedItem = processIcon(itemAsRecord);
+
+			if (customMapper) {
+				processedItem = customMapper(processedItem);
+			} else if (defaultMappers[dataType]) {
+				processedItem = defaultMappers[dataType]!(processedItem);
+			}
+
+			return processedItem as DataTypes[T];
+		});
+	} catch (error) {
+		console.error(`Error loading JSON data from ${jsonPath}:`, error);
+		return [];
+	}
 }

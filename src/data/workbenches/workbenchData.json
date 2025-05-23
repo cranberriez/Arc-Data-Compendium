@@ -325,7 +325,7 @@
 		"name": "Utility Bench",
 		"type": "workbench",
 		"description": "Craft utility items and tools",
-		"icon": "UtilWrench",
+		"icon": "Wrench",
 		"baseTier": 0,
 		"tiers": [
 			{
