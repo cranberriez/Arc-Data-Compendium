@@ -26,6 +26,8 @@ interface QuickLinkProps {
 	color?: string;
 }
 
+const DEBUG_DAYS_FORWARD = 0;
+
 const DashboardPage = () => {
 	const { filteredItems: items } = useFilteredItems();
 	const [recentItems, setRecentItems] = useState<Item[]>([]);
@@ -48,9 +50,27 @@ const DashboardPage = () => {
 				valuables: items.filter((item) => item.category === "valuable").length,
 			});
 
-			// Get 4 most recent items (using id as a proxy for recency)
-			const sortedItems = [...items].sort((a, b) => b.id.localeCompare(a.id)).slice(0, 4);
-			setRecentItems(sortedItems);
+			// Create a seed based on current date (YYYY-MM-DD)
+			const today = new Date();
+			today.setDate(today.getDate() + DEBUG_DAYS_FORWARD);
+
+			const dateString = today.toISOString().split("T")[0];
+			const seed = dateString.split("-").reduce((acc, val) => acc + parseInt(val), 0);
+
+			// Simple seeded random function
+			const createSeededRandom = (seed: number) => {
+				let s = seed;
+				return () => {
+					s = Math.sin(s) * 10000;
+					return s - Math.floor(s);
+				};
+			};
+
+			// Get 4 items based on today's seed
+			const random = createSeededRandom(seed);
+			const shuffled = [...items].sort(() => 0.5 - random());
+			setRecentItems(shuffled.slice(0, 4));
+
 			setIsLoading(false);
 		}
 	}, [items]);
@@ -177,7 +197,7 @@ const DashboardPage = () => {
 			{/* Recent Items */}
 			<div className="space-y-4">
 				<div className="flex items-center justify-between">
-					<h2 className="text-xl font-semibold">Recently Added</h2>
+					<h2 className="text-xl font-semibold">Today's Random Items</h2>
 					<Button
 						variant="ghost"
 						asChild
