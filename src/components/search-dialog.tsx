@@ -116,6 +116,7 @@ export function SearchDialog({
 		<CommandDialog
 			open={open}
 			onOpenChange={onOpenChange}
+			className="top-[3rem] translate-y-0"
 		>
 			<CommandInput
 				placeholder="Search for items..."
