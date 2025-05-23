@@ -185,6 +185,42 @@ export const formatValue = (value: number) => {
 	});
 };
 
-export const searchFunc = (item: Item, query: string) =>
-	item.name.toLowerCase().replace(" ", "").includes(query) ||
-	item.id.toLowerCase().replace("_", "").includes(query);
+export const searchFunc = (item: Item, query: string) => {
+	// Helper: normalize and tokenize
+	const normalize = (str: string) =>
+		str
+			.toLowerCase()
+			.replace(/[_\s]+/g, " ") // treat underscores and spaces the same
+			.replace(/[^a-z0-9 ]/g, "") // remove non-alphanum except space
+			.trim();
+
+	const queryNorm = normalize(query);
+	if (!queryNorm) return false;
+
+	const queryTokens = queryNorm.split(" ").filter(Boolean);
+
+	// Prepare name and id tokens
+	const nameTokens = normalize(item.name).split(" ").filter(Boolean);
+	const idTokens = normalize(item.id).split(" ").filter(Boolean);
+
+	// Also prepare compact versions (remove all spaces and underscores)
+	const compact = (str: string) =>
+		str
+			.toLowerCase()
+			.replace(/[_\s]+/g, "")
+			.replace(/[^a-z0-9]/g, "");
+	const compactQuery = compact(query);
+	const compactName = compact(item.name);
+	const compactId = compact(item.id);
+
+	// Match if every query token is found in either name or id tokens,
+	// or if the compact query is a substring of the compact name or id
+	return (
+		queryTokens.every(
+			(qt) =>
+				nameTokens.some((nt) => nt.includes(qt)) || idTokens.some((it) => it.includes(qt))
+		) ||
+		(compactQuery.length > 0 &&
+			(compactName.includes(compactQuery) || compactId.includes(compactQuery)))
+	);
+};

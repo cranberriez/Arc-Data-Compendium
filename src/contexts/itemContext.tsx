@@ -76,7 +76,7 @@ export function ItemProvider({
 
 		// Apply search filter
 		if (filterState.searchQuery) {
-			const query = filterState.searchQuery.toLowerCase();
+			const query = filterState.searchQuery;
 			result = result.filter((item) => searchFunc(item, query));
 		}
 

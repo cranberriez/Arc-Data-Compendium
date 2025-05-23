@@ -1,12 +1,12 @@
 "use client";
 
+import React from "react";
 import { useState, useEffect, useMemo } from "react";
 import { useItems } from "@/contexts/itemContext";
 import { getTypeIcon, getRarityColor, formatName, searchFunc } from "@/data/items/itemUtils";
 import { Item } from "@/types";
 import { Badge } from "@/components/ui/badge";
 import {
-	Command,
 	CommandDialog,
 	CommandEmpty,
 	CommandGroup,
@@ -16,7 +16,6 @@ import {
 	CommandSeparator,
 } from "@/components/ui/command";
 import { ItemCategory } from "@/types/items/types";
-import React from "react";
 import { useDialog } from "@/contexts/dialogContext";
 
 export function SearchDialog({
@@ -47,7 +46,7 @@ export function SearchDialog({
 
 	// Filter items based on local search
 	const queriedItems = useMemo(() => {
-		const query = localSearch.toLowerCase().replace(" ", "").replace("_", "").trim();
+		const query = localSearch;
 
 		// Always show all items when search is empty
 		if (!query) return allItems;
@@ -66,6 +65,10 @@ export function SearchDialog({
 
 	// Count items by category based on filtered items
 	const categoryCounts = useMemo((): Record<ItemCategory, number> => {
+		if (queriedItems.length < 25) {
+			console.log(queriedItems);
+		}
+
 		// Initialize with all categories at 0 count
 		const initialCounts = categories.reduce((acc, category) => {
 			acc[category] = 0;
@@ -77,11 +80,6 @@ export function SearchDialog({
 			acc[item.category as ItemCategory]++;
 			return acc;
 		}, initialCounts);
-		console.log(counts);
-
-		if (queriedItems.length > 0 && queriedItems.length < 10) {
-			console.log(queriedItems);
-		}
 
 		return counts;
 	}, [categories, queriedItems]);
@@ -108,7 +106,7 @@ export function SearchDialog({
 		// Close the dialog
 		onOpenChange(false);
 
-		// TODO: open item dialog or search for specific item
+		// Open item dialog for this item
 		openDialog("item", item);
 	};
 
@@ -139,7 +137,7 @@ export function SearchDialog({
 							>
 								<div className="flex items-center gap-2">
 									{/* Category icon */}
-									<div className="h-5 w-5">
+									<div className="h-5 w-5 flex items-center justify-center">
 										{React.createElement(getTypeIcon(category), {
 											size: 16,
 										})}
@@ -162,45 +160,11 @@ export function SearchDialog({
 				)}
 
 				{/* Show individual items */}
-				{queriedItems.length > 0 && queriedItems.length <= 10 && (
+				{queriedItems.length > 0 && queriedItems.length <= 25 && (
 					<>
 						{displayedCategories.length > 0 && <CommandSeparator />}
 						<CommandGroup heading="Items">
-							{queriedItems.map((item) => (
-								<CommandItem
-									key={`item-${item.id}`}
-									onSelect={() => handleItemSelect(item)}
-									value={`item-${item.name}`}
-								>
-									<div className="flex items-center gap-2">
-										{/* Item icon */}
-										<div className="h-5 w-5">
-											{item.icon ? (
-												<item.icon className="h-4 w-4" />
-											) : (
-												React.createElement(getTypeIcon(item.category), {
-													className: "h-4 w-4",
-												})
-											)}
-										</div>
-
-										{/* Item name */}
-										<span className="align-top">{item.name}</span>
-
-										{/* Rarity dot */}
-										<div
-											className={`ml-auto h-2 w-2 rounded-full ${getRarityColor(
-												item.rarity,
-												"bg"
-											)}`}
-											title={`${
-												item.rarity.charAt(0).toUpperCase() +
-												item.rarity.slice(1)
-											}`}
-										/>
-									</div>
-								</CommandItem>
-							))}
+							{createCommandItems(queriedItems, handleItemSelect, localSearch)}
 						</CommandGroup>
 					</>
 				)}
@@ -208,3 +172,41 @@ export function SearchDialog({
 		</CommandDialog>
 	);
 }
+
+const createCommandItems = (
+	queriedItems: Item[],
+	handleItemSelect: (item: Item) => void,
+	localSearch: string
+) => {
+	console.log(queriedItems);
+
+	return queriedItems.map((item) => (
+		<CommandItem
+			key={`item-${item.id}`}
+			onSelect={() => handleItemSelect(item)}
+			value={`${localSearch} ${item.name}`}
+		>
+			<div className="flex items-center gap-2">
+				{/* Item icon */}
+				<div className="h-5 w-5 flex items-center justify-center">
+					{item.icon ? (
+						<item.icon className="h-4 w-4" />
+					) : (
+						React.createElement(getTypeIcon(item.category), {
+							className: "h-4 w-4",
+						})
+					)}
+				</div>
+
+				{/* Item name */}
+				<span className="align-top">{item.name}</span>
+
+				{/* Rarity dot */}
+				<div
+					className={`ml-auto h-2 w-2 rounded-full ${getRarityColor(item.rarity, "bg")}`}
+					title={`${item.rarity.charAt(0).toUpperCase() + item.rarity.slice(1)}`}
+				/>
+			</div>
+		</CommandItem>
+	));
+};
