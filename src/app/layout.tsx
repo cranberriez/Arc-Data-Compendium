@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 // import ThemeLayout from "@/components/ThemeLayout";
 import { AppSidebar } from "@/components/app-sidebar";
 import { Separator } from "@/components/ui/separator";
@@ -10,8 +10,48 @@ import { AppProviders } from "@/components/app-providers";
 import "./globals.css";
 
 export const metadata: Metadata = {
-	title: "ARC Data Compendium",
-	description: "A comprehensive data compendium for ARC Raiders items.",
+	title: "ARC Data Compendium | Complete Item Database & Guides",
+	description:
+		"Your ultimate resource for ARC Raiders with detailed item stats, locations, and game data.",
+	keywords: [
+		"ARC Raiders vault",
+		"ARC Raiders items",
+		"ARC Raiders database",
+		"ARC Raiders crafting guide",
+		"weapon stats ARC Raiders",
+		"quest walkthroughs",
+		"gear progression",
+		"recycle chains",
+		"workbenches",
+	],
+	metadataBase: new URL("https://arcvault.app"),
+	alternates: {
+		canonical: "/",
+	},
+	openGraph: {
+		title: "ARC Data Compendium | Item & Stats Database",
+		description:
+			"Your ultimate resource for ARC Raiders with detailed item stats and recycle chains, quests, tracking, and more.",
+		url: "https://arcvault.app",
+		siteName: "ARC Data Compendium",
+		images: [
+			{
+				url: "/og-image.jpg",
+				width: 1200,
+				height: 630,
+				alt: "ARC Data Compendium",
+			},
+		],
+		locale: "en_US",
+		type: "website",
+	},
+};
+
+export const viewport: Viewport = {
+	width: "device-width",
+	initialScale: 1,
+	maximumScale: 1,
+	userScalable: false,
 };
 
 export default function RootLayout({
