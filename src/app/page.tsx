@@ -136,11 +136,29 @@ export default function Page() {
 						</AccordionItem>
 					</Accordion>
 				</div>
-				<p className="text-sm dark:text-red-400/50 text-red-800">
-					Nothing on this site is final. This is a work in progress and is subject to
-					change at any time. Almost every item is incomplete or contains incorrect
-					information.
-				</p>
+				<div className="space-y-4 mt-8">
+					{/* Add smaller acknowledgments here */}
+					<div className="text-xs text-muted-foreground space-y-1.5">
+						<p className="mb-2 font-bold">Special thanks to our contributors:</p>
+						<div className="grid sm:grid-cols-2 gap-x-4 gap-y-1 sm:gap-y-5 ">
+							<div className="flex items-center gap-1">
+								<span className="text-muted-foreground/80">
+									Item documentation -
+								</span>
+								<span className="font-medium">Redstone_Gamer_1, Zeetu</span>
+							</div>
+							<div className="flex items-center gap-1">
+								<span className="text-muted-foreground/80">Item Images -</span>
+								<span className="font-medium">Zeetu</span>
+							</div>
+						</div>
+					</div>
+					<p className="text-sm dark:text-red-400/50 text-red-800">
+						Nothing on this site is final. This is a work in progress and is subject to
+						change at any time. Almost every item is incomplete or contains incorrect
+						information.
+					</p>
+				</div>
 			</div>
 		</div>
 	);
