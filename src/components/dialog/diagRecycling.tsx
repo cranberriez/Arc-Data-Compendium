@@ -1,12 +1,10 @@
 import { Item } from "@/types";
-import { useDialog } from "@/contexts/dialogContext";
 import { useItems } from "@/contexts/itemContext";
 import { ItemCard } from "../items/itemDisplay";
 import { Recycle } from "lucide-react";
 
 export const RecyclingSection = ({ item }: { item: Item }) => {
 	const { getItemById } = useItems();
-	const { openDialog } = useDialog();
 
 	if (!item.recycling || item.recycling.length === 0) return null;
 

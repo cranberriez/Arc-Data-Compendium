@@ -1,6 +1,5 @@
 // Component for a single source item
 import { Item } from "@/types";
-import { useDialog } from "@/contexts/dialogContext";
 import { useItems } from "@/contexts/itemContext";
 import { ItemCard } from "../items/itemDisplay";
 import { ArrowRight } from "lucide-react";
@@ -15,7 +14,6 @@ export const SourceItem = ({
 	source: any;
 }) => {
 	const { getItemById } = useItems();
-	const { openDialog } = useDialog();
 
 	// Get recycle products for this sourceItem
 	const recycleProducts = (sourceItem.recycling || [])
