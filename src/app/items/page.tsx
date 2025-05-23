@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, useCallback } from "react";
-import { ItemCard } from "@/components/items/itemDisplay";
+import { ItemCard, ItemCardSkeleton } from "@/components/items/itemDisplay";
 import { useItems } from "@/contexts/itemContext";
 import { Card } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -38,7 +38,7 @@ function ItemList() {
 		setTimeout(() => {
 			setVisibleItems((prev) => {
 				const newCount = Math.min(prev + ITEMS_PER_PAGE, filteredItems.length);
-				console.log("Loaded new items", { previous: prev, new: newCount });
+				if (debugging) console.log("Loaded new items", { previous: prev, new: newCount });
 				return newCount;
 			});
 			setIsLoading(false);
@@ -125,28 +125,6 @@ function ItemList() {
 		};
 	}, [checkIfNeedsMoreItems]);
 
-	// Create a skeleton card to show during loading
-	const ItemCardSkeleton = () => {
-		return (
-			<Card className="flex flex-row items-center gap-2 p-1 pr-2 max-w-[300px] md:max-w-[400px] rounded-lg w-full h-16 bg-transparent border-zinc-700">
-				{/* Item Icon Skeleton */}
-				<div className="flex items-center justify-center rounded-md h-full border-2 border-secondary/30 p-2 bg-secondary/5">
-					<Skeleton className="h-full aspect-square w-8" />
-				</div>
-				<div className="flex flex-col flex-1 w-full h-full gap-2">
-					<div className="min-w-fit flex flex-1 flex-row items-center justify-between">
-						<Skeleton className="h-4 w-[120px]" />
-						<Skeleton className="h-4 w-4 rounded-full" />
-					</div>
-					<div className="min-w-fit flex flex-1 flex-row items-center gap-3">
-						<Skeleton className="h-3 w-[40px]" />
-						<Skeleton className="h-3 w-[40px]" />
-					</div>
-				</div>
-			</Card>
-		);
-	};
-
 	// Items to render and loading state
 	const itemsToRender = filteredItems.slice(0, visibleItems);
 	const loading = isLoading || visibleItems < filteredItems.length;
@@ -161,8 +139,8 @@ function ItemList() {
 				/>
 			))}
 
-			{/* Ghost skeleton items - only show when actively loading and more items exist */}
-			{isLoading && visibleItems < filteredItems.length && (
+			{/* Ghost skeleton items - only show when actively loading */}
+			{loading && (
 				<>
 					{[...Array(3)].map((_, index) => (
 						<div

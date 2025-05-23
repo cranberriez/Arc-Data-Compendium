@@ -11,8 +11,9 @@ import { formatName, getRarityColor, getTypeIcon } from "@/data/items/itemUtils"
 import { cn } from "@/lib/utils";
 import { useDialog } from "@/contexts/dialogContext";
 import { getItemImagePath } from "@/utils/itemImage";
+import { Skeleton } from "../ui/skeleton";
 
-const USE_ACTUAL_IMAGES = false;
+const USE_ACTUAL_IMAGES = true;
 
 type ItemCardProps = {
 	item?: Item;
@@ -32,22 +33,24 @@ const ItemCardComponent = React.memo(
 	}: ItemCardProps) {
 		const { openDialog } = useDialog();
 		const handleClick = onClick || (() => openDialog("item", item));
+		const [imageError, setImageError] = React.useState(false);
 
 		// Check if item has an image, otherwise use the icon
 		const itemImage = useMemo(() => {
 			if (!item) return null;
 
 			const imagePath = getItemImagePath(item.id);
-			if (USE_ACTUAL_IMAGES && imagePath) {
+			if (USE_ACTUAL_IMAGES && imagePath && !imageError) {
 				return (
-					<div className="relative w-8 h-8 mb-1">
+					<div className="relative w-full h-full">
 						<Image
 							src={imagePath}
 							alt={item.name}
 							fill
 							className="object-contain"
-							sizes="32px"
+							sizes="64px"
 							unoptimized={process.env.NODE_ENV !== "production"}
+							onError={() => setImageError(true)}
 						/>
 					</div>
 				);
@@ -210,4 +213,26 @@ const ItemCardComponent = React.memo(
 	}
 );
 
-export { ItemCardComponent as ItemCard };
+// Create a skeleton card to show during loading
+const ItemCardSkeleton = () => {
+	return (
+		<Card className="flex flex-row items-center gap-2 p-1 pr-2 max-w-[300px] md:max-w-[400px] rounded-lg w-full h-16 bg-transparent border-zinc-700">
+			{/* Item Icon Skeleton */}
+			<div className="flex items-center justify-center rounded-md h-full border-2 border-secondary/30 p-2 bg-secondary/5">
+				<Skeleton className="h-full aspect-square w-8" />
+			</div>
+			<div className="flex flex-col flex-1 w-full h-full gap-2">
+				<div className="min-w-fit flex flex-1 flex-row items-center justify-between">
+					<Skeleton className="h-4 w-[120px]" />
+					<Skeleton className="h-4 w-4 rounded-full" />
+				</div>
+				<div className="min-w-fit flex flex-1 flex-row items-center gap-3">
+					<Skeleton className="h-3 w-[40px]" />
+					<Skeleton className="h-3 w-[40px]" />
+				</div>
+			</div>
+		</Card>
+	);
+};
+
+export { ItemCardComponent as ItemCard, ItemCardSkeleton };
