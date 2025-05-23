@@ -4,6 +4,7 @@ import { Item } from "@/types";
 import { useItems } from "@/contexts/itemContext";
 import { SourceItem } from "./diagSourceItem";
 import { Link } from "lucide-react";
+import { ScrollArea } from "@radix-ui/react-scroll-area";
 
 type SourcesSectionProps = {
 	item: Item;
@@ -40,44 +41,46 @@ export function SourcesSection({ item }: SourcesSectionProps) {
 				</p>
 			</div>
 
-			<div className="flex flex-col md:flex-row w-fit">
-				{/* Left Column */}
-				<div className="flex flex-col gap-2 md:pr-4">
-					{leftColumnSources.map((source) => {
-						const sourceItem = getItemById(source.fromItemId);
-						if (!sourceItem) return null;
-						return (
-							<SourceItem
-								key={sourceItem.id}
-								sourceItem={sourceItem}
-								item={item}
-								source={source}
-							/>
-						);
-					})}
-				</div>
+			<ScrollArea className="w-fit max-h[minmax(200px, 60vh)]">
+				<div className="flex flex-col md:flex-row gap-2 md:gap-0 w-fit">
+					{/* Left Column */}
+					<div className="flex flex-col gap-2 md:pr-4">
+						{leftColumnSources.map((source) => {
+							const sourceItem = getItemById(source.fromItemId);
+							if (!sourceItem) return null;
+							return (
+								<SourceItem
+									key={sourceItem.id}
+									sourceItem={sourceItem}
+									item={item}
+									source={source}
+								/>
+							);
+						})}
+					</div>
 
-				{/* Divider */}
-				{leftColumnSources.length > 0 && rightColumnSources.length > 0 && (
-					<div className="hidden md:block w-px bg-secondary-foreground/20 dark:bg-secondary-foreground/10 mx-2"></div>
-				)}
+					{/* Divider */}
+					{leftColumnSources.length > 0 && rightColumnSources.length > 0 && (
+						<div className="hidden md:block w-px bg-secondary-foreground/20 dark:bg-secondary-foreground/10 mx-2"></div>
+					)}
 
-				{/* Right Column */}
-				<div className="flex flex-col gap-2 md:pl-4">
-					{rightColumnSources.map((source) => {
-						const sourceItem = getItemById(source.fromItemId);
-						if (!sourceItem) return null;
-						return (
-							<SourceItem
-								key={sourceItem.id}
-								sourceItem={sourceItem}
-								item={item}
-								source={source}
-							/>
-						);
-					})}
+					{/* Right Column */}
+					<div className="flex flex-col gap-2 md:pl-4">
+						{rightColumnSources.map((source) => {
+							const sourceItem = getItemById(source.fromItemId);
+							if (!sourceItem) return null;
+							return (
+								<SourceItem
+									key={sourceItem.id}
+									sourceItem={sourceItem}
+									item={item}
+									source={source}
+								/>
+							);
+						})}
+					</div>
 				</div>
-			</div>
+			</ScrollArea>
 		</div>
 	);
 }

@@ -11,13 +11,13 @@ export const RecyclingSection = ({ item }: { item: Item }) => {
 	if (!item.recycling || item.recycling.length === 0) return null;
 
 	return (
-		<div>
+		<div className="w-fit min-w-full">
 			<div className="font-mono font-light w-full flex items-center gap-2 mb-2">
 				<Recycle
 					className="inline-block"
 					size={24}
 				/>
-				<div className="flex w-full items-baseline">
+				<div className="flex md:flex-row flex-col w-full items-baseline">
 					<p>
 						<span className="inline-block text-lg">Recycling:</span>
 						<span className="text-xs text-muted-foreground">
@@ -25,7 +25,7 @@ export const RecyclingSection = ({ item }: { item: Item }) => {
 							({item.recycling.length})
 						</span>
 					</p>
-					<p className="text-xs text-muted-foreground ml-auto whitespace-nowrap">
+					<p className="text-xs text-muted-foreground md:ml-auto whitespace-nowrap">
 						In Raid output is halved
 					</p>
 				</div>

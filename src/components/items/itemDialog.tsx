@@ -45,7 +45,7 @@ export function ItemDialog({ data, isOpen, closeDialog, backDialog }: ItemDialog
 			open={isOpen}
 			onOpenChange={(open) => !open && handleCloseDialog()}
 		>
-			<DialogContent>
+			<DialogContent className="p-2 sm:p-6">
 				{/* Back buttons */}
 				{dialogQueue.length > 0 && (
 					<div>
