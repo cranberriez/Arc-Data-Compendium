@@ -17,6 +17,7 @@ import {
 } from "@/components/ui/command";
 import { ItemCategory } from "@/types/items/types";
 import { useDialog } from "@/contexts/dialogContext";
+import { usePathname, useRouter } from "next/navigation";
 
 export function SearchDialog({
 	open,
@@ -36,6 +37,15 @@ export function SearchDialog({
 	const [localCategory, setLocalCategory] = useState<ItemCategory | null>(null);
 
 	const { openDialog } = useDialog();
+
+	// TODO: Convert to a Utility
+	const pathname = usePathname();
+	const path = pathname.split("/");
+	const currentPage = path[path.length - 1];
+	const router = useRouter();
+
+	const onItemsPage = currentPage === "items";
+	// TODO: Convert to a Utility
 
 	// Reset local search when dialog closes
 	useEffect(() => {
@@ -95,6 +105,12 @@ export function SearchDialog({
 
 	// Handle category selection
 	const handleCategorySelect = (category: ItemCategory) => {
+		// Switch to items page where category is useful
+		// TODO: Convert to a Utility and use it here
+		if (!onItemsPage) {
+			router.push("/items");
+		}
+
 		// Apply both search term and category filter
 		setSearchQuery(localSearch);
 		setCategory(category);
@@ -126,40 +142,36 @@ export function SearchDialog({
 			<CommandList>
 				<CommandEmpty>No results found.</CommandEmpty>
 
-				{/* Always show category filter group */}
-				{showCategories && (
-					<CommandGroup heading="Filter by Category">
-						{displayedCategories.map((category) => (
-							<CommandItem
-								key={`category-${category}`}
-								onSelect={() => handleCategorySelect(category)}
-								value={`${localSearch} ${category}`}
-							>
-								<div className="flex items-center gap-2">
-									{/* Category icon */}
-									<div className="h-5 w-5 flex items-center justify-center">
-										{React.createElement(getTypeIcon(category), {
-											size: 16,
-										})}
-									</div>
-
-									{/* Category name */}
-									<span>{formatName(category)}</span>
-
-									{/* Count badge */}
-									<Badge
-										variant="secondary"
-										className="ml-auto"
-									>
-										{categoryCounts[category]}
-									</Badge>
+				<CommandGroup heading="Filter by Category">
+					{displayedCategories.map((category) => (
+						<CommandItem
+							key={`category-${category}`}
+							onSelect={() => handleCategorySelect(category)}
+							value={`${localSearch} ${category}`}
+						>
+							<div className="flex items-center gap-2">
+								{/* Category icon */}
+								<div className="h-5 w-5 flex items-center justify-center">
+									{React.createElement(getTypeIcon(category), {
+										size: 16,
+									})}
 								</div>
-							</CommandItem>
-						))}
-					</CommandGroup>
-				)}
 
-				{/* Show individual items */}
+								{/* Category name */}
+								<span>{formatName(category)}</span>
+
+								{/* Count badge */}
+								<Badge
+									variant="secondary"
+									className="ml-auto"
+								>
+									{categoryCounts[category]}
+								</Badge>
+							</div>
+						</CommandItem>
+					))}
+				</CommandGroup>
+
 				{queriedItems.length > 0 && queriedItems.length <= 25 && (
 					<>
 						{displayedCategories.length > 0 && <CommandSeparator />}

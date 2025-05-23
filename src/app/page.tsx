@@ -156,7 +156,7 @@ export default function Page() {
 						change at any time. Almost every item is incomplete or contains incorrect
 						information.
 					</p>
-					<p className="flex items-center text-xs text-muted-foreground">
+					<div className="flex items-center text-xs text-muted-foreground">
 						<div className="relative w-4 h-4 mr-1">
 							<Heart
 								className="w-full h-full text-red-500"
@@ -168,7 +168,7 @@ export default function Page() {
 							/>
 						</div>
 						Special thanks to our direct & indirect contributors.
-					</p>
+					</div>
 				</div>
 			</div>
 		</div>

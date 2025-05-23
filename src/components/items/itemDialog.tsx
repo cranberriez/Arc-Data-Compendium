@@ -8,7 +8,6 @@ import { Button } from "@/components/ui/button";
 import { ItemHeader } from "../dialog/diagHeader";
 import { RecyclingSection } from "../dialog/diagRecycling";
 import { SourcesSection } from "../dialog/diagSource";
-import { useEffect } from "react";
 
 type ItemDialogProps = {
 	data: Item;
@@ -19,10 +18,6 @@ type ItemDialogProps = {
 
 export function ItemDialog({ data, isOpen, closeDialog, backDialog }: ItemDialogProps) {
 	const { dialogQueue } = useDialog();
-
-	useEffect(() => {
-		console.log(dialogQueue);
-	}, [dialogQueue]);
 
 	if (!data) return null;
 	const item = data;
