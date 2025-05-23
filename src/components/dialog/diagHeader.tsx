@@ -12,7 +12,7 @@ export const ItemHeader = ({ item }: { item: Item }) => {
 	const ItemIcon = item.icon;
 
 	return (
-		<DialogHeader className="flex flex-row items-center gap-4 pr-2">
+		<DialogHeader className="flex flex-row items-center gap-4 sm:pr-2">
 			{/* Keep existing header content from DialogHeader */}
 			<div
 				className={cn(
@@ -25,7 +25,9 @@ export const ItemHeader = ({ item }: { item: Item }) => {
 				{ItemIcon && <ItemIcon className="w-10 h-10" />}
 			</div>
 			<div className="flex flex-col items-start">
-				<DialogTitle className="text-2xl font-mono font-light">{item.name}</DialogTitle>
+				<DialogTitle className="text-left text-2xl font-normal pr-6 sm:pr-0">
+					{item.name}
+				</DialogTitle>
 				<div className="space-y-4">
 					<div className="flex items-center gap-4">
 						<div className="flex items-center gap-1">

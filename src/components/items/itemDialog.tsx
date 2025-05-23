@@ -52,9 +52,12 @@ export function ItemDialog({ data, isOpen, closeDialog, backDialog }: ItemDialog
 						<Button
 							variant="secondary"
 							onClick={handleBack}
-							className="px-3 py-1 cursor-pointer"
+							className="px-3 py-1 cursor-pointer max-w-[80%]"
 						>
-							← Back to {dialogQueue[dialogQueue.length - 1].name}
+							← Back to
+							<span className="truncate">
+								{dialogQueue[dialogQueue.length - 1].name}
+							</span>
 						</Button>
 					</div>
 				)}

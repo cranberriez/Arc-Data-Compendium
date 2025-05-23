@@ -21,6 +21,7 @@ type ItemCardProps = {
 	count?: number;
 	onClick?: () => void;
 	className?: string;
+	size?: "sm" | "md" | "lg" | "default";
 };
 
 const ItemCardComponent = React.memo(
@@ -30,6 +31,7 @@ const ItemCardComponent = React.memo(
 		count = undefined,
 		onClick,
 		className,
+		size,
 	}: ItemCardProps) {
 		const { openDialog } = useDialog();
 		const handleClick = onClick || (() => openDialog("item", item));
@@ -58,7 +60,15 @@ const ItemCardComponent = React.memo(
 
 			// Fallback to icon if no image found
 			if (item?.icon) {
-				return <item.icon className={cn("w-8 h-8", getRarityColor(item.rarity, "text"))} />;
+				return (
+					<item.icon
+						className={cn(
+							"w-8 h-8",
+							size === "sm" && "w-6 h-6",
+							getRarityColor(item.rarity, "text")
+						)}
+					/>
+				);
 			}
 
 			return null;
@@ -79,7 +89,8 @@ const ItemCardComponent = React.memo(
 						"flex flex-col items-center justify-between border-2 hover:border-primary/60 rounded p-2 min-w-[60px] aspect-square cursor-pointer",
 						borderClass,
 						"border-secondary-foreground/20",
-						className
+						className,
+						size === "sm" && "max-w-[80px]"
 					)}
 					onClick={handleClick}
 				>

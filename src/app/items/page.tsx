@@ -130,7 +130,7 @@ function ItemList() {
 	const loading = isLoading || visibleItems < filteredItems.length;
 
 	return (
-		<main className="grid grid-cols-[repeat(auto-fit,_minmax(300px,_1fr))] gap-x-6 gap-y-8 min-h-full w-full py-8 px-4 smooth-scroll">
+		<main className="grid grid-cols-[repeat(auto-fit,_minmax(300px,_1fr))] gap-x-6 gap-y-8 min-h-full w-full py-8 px-2 sm:px-4 smooth-scroll">
 			{/* Rendered items */}
 			{itemsToRender.map((item) => (
 				<ItemCard

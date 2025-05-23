@@ -41,7 +41,7 @@ export function SourcesSection({ item }: SourcesSectionProps) {
 				</p>
 			</div>
 
-			<ScrollArea className="w-fit max-h[minmax(200px, 60vh)]">
+			<ScrollArea className="w-fit min-w-full max-h[minmax(200px, 60vh)]">
 				<div className="flex flex-col md:flex-row gap-2 md:gap-0 w-fit">
 					{/* Left Column */}
 					<div className="flex flex-col gap-2 md:pr-4">
