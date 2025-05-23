@@ -55,7 +55,7 @@ export function ToolbarBreadcrumb() {
 				</BreadcrumbList>
 			</Breadcrumb>
 
-			{!isUseMobile && (
+			{!isUseMobile && onItemsPage && (
 				<div className="flex items-center ml-auto gap-1">
 					<p className="text-sm dark:text-red-500 text-red-700">Work In Progress</p>
 				</div>
