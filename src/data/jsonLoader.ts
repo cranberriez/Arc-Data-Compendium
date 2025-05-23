@@ -10,6 +10,9 @@ import itemJson from "./items/itemData.json";
 import recipeJson from "./recipes/recipeData.json";
 import valuableJson from "./valuables/valuableData.json";
 
+// Preprocessors
+import { processItems } from "./items/itemPreprocessor";
+
 /**
  * Type mapping for different data categories
  */
@@ -24,10 +27,20 @@ export type DataTypes = {
  * Data source mapping
  */
 export const dataSources = {
-	workbench: workbenchJson as unknown[],
-	item: itemJson as unknown[],
-	recipe: (recipeJson || []) as unknown[],
-	valuable: valuableJson as unknown[],
+	workbench: workbenchJson,
+	item: itemJson,
+	recipe: recipeJson,
+	valuable: valuableJson,
+};
+
+/**
+ * Data Source Handlers
+ */
+const dataPreprocessors = {
+	workbench: null,
+	item: processItems,
+	recipe: null,
+	valuable: null,
 };
 
 /**

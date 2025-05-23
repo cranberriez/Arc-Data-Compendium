@@ -2,7 +2,7 @@
 
 import { useRef } from "react";
 import { WorkbenchDisplay } from "@/components/workbench/workbenchDisplay";
-import { workbenches } from "@/data/workbenches/workbenchHandler";
+import { workbenches } from "@/data/jsonLoader";
 import { ScrollArea } from "@radix-ui/react-scroll-area";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { cn } from "@/lib/utils";

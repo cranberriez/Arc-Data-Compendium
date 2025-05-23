@@ -2,9 +2,15 @@
 
 import { createContext, ReactNode, useCallback, useMemo, useState, useContext } from "react";
 import { BaseItem, Item } from "@/types";
-import { items } from "@/data/jsonLoader";
-import { valuables } from "@/data/jsonLoader";
+import { items, valuables } from "@/data";
 import { searchFunc } from "@/data/items/itemUtils";
+import {
+	addSources,
+	composeProcessors,
+	processIcons,
+	processItems,
+	validateItem,
+} from "@/data/items/itemPreprocessor";
 
 type SortOrder = "asc" | "desc" | "none";
 type SortField = "name" | "rarity" | "category" | "value" | "none"; // 'category' replaces 'type' from legacy Item
@@ -55,9 +61,17 @@ export function ItemProvider({
 	children: ReactNode;
 	itemsSubset?: Item[];
 }) {
-	// Memoize the combined items array to prevent recreation on every render
-	const allItems = useMemo(() => [...items, ...valuables], []);
+	// Compose item preprocessors
+	const itemProcessor = useMemo(
+		() => composeProcessors<Item>(addSources, processIcons, validateItem),
+		[]
+	);
 
+	// Memoize the combined items array to prevent recreation on every render
+	const allItems = useMemo(
+		() => processItems([...items, ...valuables], itemProcessor),
+		[itemProcessor]
+	);
 	const [filterState, setFilterState] = useState<FilterState>(defaultFilterState);
 	const [sortField, setSortField] = useState<SortField>("none");
 	const [sortOrder, setSortOrder] = useState<SortOrder>("none");
