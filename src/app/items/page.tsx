@@ -62,7 +62,7 @@ function ItemList() {
 				loadMoreItems();
 			}
 		}
-	}, [isLoading, visibleItems, filteredItems.length, loadMoreItems]);
+	}, [isLoading, visibleItems, filteredItems.length, loadMoreItems, debugging]);
 
 	// Reset visible items when filtered items change
 	useEffect(() => {
@@ -109,7 +109,7 @@ function ItemList() {
 				observer.current = null;
 			}
 		};
-	}, [loadMoreItems, debugging]); // Only re-create observer when loadMoreItems changes
+	}, [loadMoreItems, debugging, isLoading]); // Include isLoading in dependencies
 
 	// Add scroll event listener as backup
 	useEffect(() => {

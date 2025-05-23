@@ -72,7 +72,7 @@ const ItemCardComponent = React.memo(
 			}
 
 			return null;
-		}, [item]);
+		}, [item, imageError, size]);
 
 		// Memoize the border color for icon variant
 		const borderClass = useMemo(
