@@ -4,6 +4,8 @@ import { Item } from "@/types";
 import { ItemCard } from "../items/itemDisplay";
 import { Unlock } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useIsMobile } from "@/hooks/use-mobile";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 interface WorkbenchRequirementProps {
 	tier: WorkbenchTier;
@@ -18,8 +20,10 @@ export default function WorkbenchRequirement({
 	openDialog,
 	startsUnlocked,
 }: WorkbenchRequirementProps) {
+	const isMobile = useIsMobile();
+
 	return (
-		<CardContent className="pt-0 px-2 flex justify-center h-full">
+		<CardContent className="pt-0 px-2 flex justify-start h-full">
 			{tier.requiredItems.length > 0 ? (
 				<div className="flex gap-2">
 					{tier.requiredItems.map((item) => {
@@ -48,6 +52,7 @@ export default function WorkbenchRequirement({
 								variant="icon"
 								item={itemData}
 								count={item.count}
+								size={isMobile ? "sm" : "default"}
 								onClick={() => {
 									openDialog("item", itemData);
 								}}
@@ -56,11 +61,24 @@ export default function WorkbenchRequirement({
 					})}
 				</div>
 			) : (
-				<div className="flex items-center justify-center h-full">
-					<Unlock
-						size={16}
-						className={cn(startsUnlocked && "text-green-500")}
-					/>
+				<div className="flex items-center justify-center w-full h-full">
+					{startsUnlocked ? (
+						<TooltipProvider>
+							<Tooltip>
+								<TooltipTrigger asChild>
+									<Unlock
+										size={16}
+										className={cn("text-green-500 cursor-help")}
+									/>
+								</TooltipTrigger>
+								<TooltipContent side="right">
+									<p>Starts Unlocked</p>
+								</TooltipContent>
+							</Tooltip>
+						</TooltipProvider>
+					) : (
+						<p>No Item Requirements</p>
+					)}
 				</div>
 			)}
 		</CardContent>

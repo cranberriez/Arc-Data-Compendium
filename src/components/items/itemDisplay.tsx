@@ -90,7 +90,7 @@ const ItemCardComponent = React.memo(
 						borderClass,
 						"border-secondary-foreground/20",
 						className,
-						size === "sm" && "max-w-[80px]"
+						size === "sm" && "max-h-[80px]"
 					)}
 					onClick={handleClick}
 				>

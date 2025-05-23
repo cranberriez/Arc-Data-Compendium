@@ -20,6 +20,7 @@ function WorkbenchList() {
 
 	return (
 		<main className="flex relative">
+			<h1 className="sr-only">Workbenches</h1>
 			<nav
 				className={cn(
 					"flex flex-col w-48 gap-4 p-4 sticky top-0 r-0 h-full overflow-hidden",

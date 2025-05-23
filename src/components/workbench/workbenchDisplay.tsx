@@ -2,6 +2,9 @@ import { Workbench } from "@/types/items/workbench";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import WorkbenchRequirement from "./workbenchTierItem";
+import Link from "next/link";
+import { Button } from "../ui/button";
+import { LinkIcon } from "lucide-react";
 
 interface WorkbenchDisplayProps {
 	workbench: Workbench;
@@ -47,7 +50,6 @@ export function WorkbenchDisplay({ workbench }: WorkbenchDisplayProps) {
 			<Separator className="my-4" />
 
 			<div className="grid grid-rows-1 gap-6">
-				{/* Left Column - Tiers and Requirements */}
 				<div className="space-y-4">
 					<h3 className="text-xl font-semibold">Tiers & Requirements</h3>
 					<div className="flex flex-wrap gap-2">
@@ -61,17 +63,26 @@ export function WorkbenchDisplay({ workbench }: WorkbenchDisplayProps) {
 						})}
 					</div>
 				</div>
-
-				{/* Right Column - Empty for now */}
-				{/* <div className="space-y-4">
-					<h3 className="text-xl font-semibold">Recipes</h3>
-					<Card>
-						<CardContent className="pt-6 text-muted-foreground text-center">
-							<p>Additional details will be displayed here</p>
-						</CardContent>
-					</Card>
-				</div> */}
 			</div>
+
+			{false && (
+				<div className="flex mt-2">
+					<Link
+						className=""
+						aria-label="View recipes"
+						aria-labelledby={`${workbench.name}-recipes`}
+						href={`#`}
+					>
+						<Button
+							variant="secondary"
+							className="text-sm cursor-pointer"
+						>
+							Go to Recipes
+							<LinkIcon className="ml-2 h-4 w-4" />
+						</Button>
+					</Link>
+				</div>
+			)}
 		</div>
 	);
 }
