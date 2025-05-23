@@ -197,7 +197,7 @@ const DashboardPage = () => {
 			{/* Recent Items */}
 			<div className="space-y-4">
 				<div className="flex items-center justify-between">
-					<h2 className="text-xl font-semibold">Today's Random Items</h2>
+					<h2 className="text-xl font-semibold">Today&apos;s Random Items</h2>
 					<Button
 						variant="ghost"
 						asChild
