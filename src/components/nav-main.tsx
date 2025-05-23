@@ -59,7 +59,7 @@ export function NavMain({
 									className={isActive ? "text-primary" : ""}
 								>
 									{item.icon && <item.icon />}
-									<span className="text-lg">{item.title}</span>
+									<span className="text-base">{item.title}</span>
 								</Link>
 							</SidebarMenuButton>
 						</SidebarMenuItem>

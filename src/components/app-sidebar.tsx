@@ -15,6 +15,8 @@ import {
 	Zap,
 	BadgeCent,
 	LayoutDashboard,
+	Home,
+	Vault,
 } from "lucide-react";
 
 import { NavMain } from "@/components/nav-main";
@@ -24,8 +26,13 @@ import {
 	SidebarContent,
 	SidebarFooter,
 	SidebarHeader,
+	SidebarMenu,
+	SidebarMenuButton,
+	SidebarMenuItem,
 	SidebarRail,
 } from "@/components/ui/sidebar";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 // This is sample data.
 const data = {
@@ -34,7 +41,7 @@ const data = {
 		items: [
 			{
 				title: "Dashboard",
-				url: "/",
+				url: "/dashboard",
 				icon: LayoutDashboard,
 				enabled: true,
 			},
@@ -168,8 +175,40 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 			{...props}
 			variant="inset"
 		>
-			<SidebarHeader>{/* <TeamSwitcher teams={data.teams} /> */}</SidebarHeader>
-			<SidebarContent>
+			<SidebarHeader>
+				<SidebarMenu>
+					<SidebarMenuItem>
+						<SidebarMenuButton
+							asChild
+							className="h-12 [&>svg]:size-8"
+							size="lg"
+							isActive={usePathname() === "/"}
+						>
+							<Link
+								href="/"
+								className="relative"
+							>
+								<Vault
+									className={`text-blue-600 group-hover:text-blue-500 dark:text-blue-500 dark:group-hover:text-blue-400 transition-colors ${
+										usePathname() === "/" ? "dark:text-blue-400" : ""
+									}`}
+								/>
+								<span
+									className={`text-xl font-semibold text-blue-600 group-hover:text-blue-500 dark:text-blue-500 dark:group-hover:text-blue-400 transition-colors ${
+										usePathname() === "/" ? "dark:text-blue-400 font-bold" : ""
+									}`}
+								>
+									ARC Vault
+								</span>
+								{usePathname() === "/" && (
+									<span className="absolute -left-1 top-1/2 h-6 w-1 -translate-y-1/2 rounded-full bg-blue-500" />
+								)}
+							</Link>
+						</SidebarMenuButton>
+					</SidebarMenuItem>
+				</SidebarMenu>
+			</SidebarHeader>
+			<SidebarContent className="gap-0">
 				{Object.values(data).map((category) => (
 					<NavMain
 						key={category.category}

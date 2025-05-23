@@ -1,10 +1,9 @@
 "use client";
 
 import { useEffect, useRef, useState, useCallback } from "react";
-import { ItemCard, ItemCardSkeleton } from "@/components/items/itemDisplay";
+import { ItemCard } from "@/components/items/itemDisplay";
 import { useItems } from "@/contexts/itemContext";
-import { Card } from "@/components/ui/card";
-import { Skeleton } from "@/components/ui/skeleton";
+import ItemSkeleton from "@/components/items/itemSkeleton";
 
 const ITEMS_PER_PAGE = 20; // Number of items to load per page
 const DEBUG_LOADING_DELAY = 0; // Delay in ms to simulate loading
@@ -147,7 +146,7 @@ function ItemList() {
 							key={`skeleton-${index}`}
 							className="animate-pulse"
 						>
-							<ItemCardSkeleton />
+							<ItemSkeleton />
 						</div>
 					))}
 				</>

@@ -37,7 +37,7 @@ export function ToolbarBreadcrumb() {
 			<Breadcrumb>
 				<BreadcrumbList>
 					<BreadcrumbItem className="hidden md:block">
-						<BreadcrumbLink href="/">ARC Data</BreadcrumbLink>
+						<BreadcrumbLink href="/">ARC Vault</BreadcrumbLink>
 					</BreadcrumbItem>
 					{pageTitle !== "" && (
 						<>

@@ -6,7 +6,7 @@ import {
 	AccordionItem,
 	AccordionTrigger,
 } from "@/components/ui/accordion";
-import { ExternalLink } from "lucide-react";
+import { ExternalLink, Heart } from "lucide-react";
 import Link from "next/link";
 
 export default function Page() {
@@ -138,19 +138,17 @@ export default function Page() {
 				</div>
 				<div className="space-y-4 mt-8">
 					{/* Add smaller acknowledgments here */}
-					<div className="text-xs text-muted-foreground space-y-1.5">
-						<p className="mb-2 font-bold">Special thanks to our contributors:</p>
-						<div className="grid sm:grid-cols-2 gap-x-4 gap-y-1 sm:gap-y-5 ">
-							<div className="flex items-center gap-1">
-								<span className="text-muted-foreground/80">
-									Item documentation -
-								</span>
-								<span className="font-medium">Redstone_Gamer_1, Zeetu</span>
-							</div>
-							<div className="flex items-center gap-1">
-								<span className="text-muted-foreground/80">Item Images -</span>
-								<span className="font-medium">Zeetu</span>
-							</div>
+					<div className="space-y-1.5">
+						<h3 className="text-lg font-semibold mb-4 text-foreground">
+							Acknowledgments
+						</h3>
+						<div className="flex flex-col gap-4">
+							{contributors.map((contributor) => (
+								<Contributor
+									key={contributor.name}
+									{...contributor}
+								/>
+							))}
 						</div>
 					</div>
 					<p className="text-sm dark:text-red-400/50 text-red-800">
@@ -158,8 +156,91 @@ export default function Page() {
 						change at any time. Almost every item is incomplete or contains incorrect
 						information.
 					</p>
+					<p className="flex items-center text-xs text-muted-foreground">
+						<div className="relative w-4 h-4 mr-1">
+							<Heart
+								className="w-full h-full text-red-500"
+								fill="currentColor"
+							/>
+							<Heart
+								className="w-full h-full text-red-500 absolute top-0 left-0 animate-ping"
+								fill="currentColor"
+							/>
+						</div>
+						Special thanks to our direct & indirect contributors.
+					</p>
 				</div>
 			</div>
 		</div>
 	);
 }
+
+const contributors = [
+	{
+		name: "Redstone_Gamer_1",
+		links: [
+			{
+				site: "https://docs.google.com/document/d/1LPpXIYuTH54o3bWDx3Q7ClRDGLGNpIuNvisK-HwOwjk/edit?usp=sharing",
+				name: "Google Doc",
+			},
+		],
+		role: "Item & Recipe Documentation, Inspiration",
+	},
+	{
+		name: "Zeetu",
+		links: [
+			{
+				site: "https://arctracker.io/",
+				name: "ArcTracker",
+			},
+			{
+				site: "https://github.com/RaidTheory/arcraiders-data",
+				name: "ARC Data Project",
+			},
+			{
+				site: "https://discord.gg/3EdnvjtcGW",
+				name: "Discord",
+			},
+		],
+		role: "Game Documentation & Item Images",
+	},
+	{
+		name: "Z, S, G",
+		links: [],
+		role: "UI/UX Design",
+	},
+];
+
+const Contributor = ({
+	name,
+	links,
+	role,
+}: {
+	name: string;
+	links: { site: string; name: string }[];
+	role: string;
+}) => {
+	return (
+		<div className="flex sm:flex-row flex-col sm:items-center gap-4 w-full text-sm">
+			<div className="sm:w-1/4 w-full sm:text-right h-full sm:justify-end text-muted-foreground">
+				<span className="font-semibold text-base">{name}</span>
+			</div>
+			<div className="flex flex-col gap-1 border-l border-muted-foreground/20 pl-4">
+				<span className="text-muted-foreground/80">{role}</span>
+				<div className="flex gap-3">
+					{links.map((link) => (
+						<Link
+							key={link.name}
+							href={link.site}
+							target="_blank"
+							rel="noopener noreferrer"
+							className="text-primary inline-flex items-center gap-1 hover:underline"
+						>
+							{link.name} <ExternalLink className="w-3 h-3" />
+						</Link>
+					))}
+				</div>
+			</div>
+		</div>
+	);
+};
