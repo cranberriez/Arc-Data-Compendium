@@ -13,7 +13,7 @@ import { useDialog } from "@/contexts/dialogContext";
 import { getItemImagePath } from "@/utils/itemImage";
 import { Skeleton } from "../ui/skeleton";
 
-const USE_ACTUAL_IMAGES = true;
+const USE_ACTUAL_IMAGES = false;
 
 type ItemCardProps = {
 	item?: Item;

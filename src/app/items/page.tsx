@@ -109,7 +109,7 @@ function ItemList() {
 				observer.current = null;
 			}
 		};
-	}, [loadMoreItems]); // Only re-create observer when loadMoreItems changes
+	}, [loadMoreItems, debugging]); // Only re-create observer when loadMoreItems changes
 
 	// Add scroll event listener as backup
 	useEffect(() => {
