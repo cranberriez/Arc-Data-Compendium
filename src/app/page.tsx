@@ -205,6 +205,16 @@ const contributors = [
 		role: "Game Documentation & Item Images",
 	},
 	{
+		name: "nateblaine",
+		links: [
+			{
+				site: "https://github.com/nateblaine/scrappy-tr-api",
+				name: "Scrappy API",
+			},
+		],
+		role: "Item Data",
+	},
+	{
 		name: "Z, S, G",
 		links: [],
 		role: "UI/UX Design",
