@@ -108,19 +108,6 @@
 		"value": 0
 	},
 	{
-		"id": "arc_alloy",
-		"name": "ARC Alloy",
-		"description": "Specialized alloys from ARC technology.",
-		"icon": "",
-		"rarity": "common",
-		"value": 0,
-		"weight": 0,
-		"maxStack": 1,
-		"category": "material",
-		"flavorText": null,
-		"recipeId": null
-	},
-	{
 		"id": "arc_alloys",
 		"name": "ARC Alloys",
 		"category": "recyclable",

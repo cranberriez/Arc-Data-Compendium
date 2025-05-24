@@ -217,7 +217,7 @@ const contributors = [
 	{
 		name: "Z, S, G",
 		links: [],
-		role: "UI/UX Design",
+		role: "UI/UX Design Considerations",
 	},
 ];
 
