@@ -1,8 +1,9 @@
 "use client";
 
 import React from "react";
-import { Moon, Sun } from "lucide-react";
+import { Moon, Sun, Scale } from "lucide-react";
 import { useTheme } from "next-themes";
+import Link from "next/link";
 
 import {
 	SidebarGroup,
@@ -12,7 +13,7 @@ import {
 	SidebarMenuItem,
 } from "@/components/ui/sidebar";
 
-export function NavSettings() {
+export function NavSettings({ pages }: { pages: any }) {
 	const { theme, setTheme } = useTheme();
 	const [mounted, setMounted] = React.useState(false);
 
@@ -22,7 +23,7 @@ export function NavSettings() {
 
 	return (
 		<SidebarGroup>
-			<SidebarGroupLabel>Settings</SidebarGroupLabel>
+			<SidebarGroupLabel>Other</SidebarGroupLabel>
 			<SidebarMenu>
 				<SidebarMenuItem>
 					<SidebarMenuButton
@@ -40,7 +41,26 @@ export function NavSettings() {
 						) : (
 							<Sun className="h-5 w-5" />
 						)}
-						<span>{mounted ? (theme === "light" ? "Dark Mode" : "Light Mode") : "Light Mode"}</span>
+						<span>
+							{mounted
+								? theme === "light"
+									? "Dark Mode"
+									: "Light Mode"
+								: "Light Mode"}
+						</span>
+					</SidebarMenuButton>
+				</SidebarMenuItem>
+				<SidebarMenuItem>
+					<SidebarMenuButton
+						variant="default"
+						size="default"
+						className="w-full flex items-center justify-start gap-2 text-left cursor-pointer"
+						asChild
+					>
+						<Link href={pages.Legal.items[0].url}>
+							<Scale />
+							<span>Legal</span>
+						</Link>
 					</SidebarMenuButton>
 				</SidebarMenuItem>
 			</SidebarMenu>

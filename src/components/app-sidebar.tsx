@@ -17,6 +17,7 @@ import {
 	LayoutDashboard,
 	Home,
 	Vault,
+	Scale,
 } from "lucide-react";
 
 import { NavMain } from "@/components/nav-main";
@@ -168,6 +169,20 @@ const data = {
 	// },
 };
 
+const settingsPages = {
+	Legal: {
+		category: "Legal",
+		items: [
+			{
+				title: "Legal Information",
+				url: "/legal",
+				icon: Scale,
+				enabled: true,
+			},
+		],
+	},
+};
+
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 	return (
 		<Sidebar
@@ -218,8 +233,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 				))}
 			</SidebarContent>
 			<SidebarFooter>
-				<NavSettings />
-				{/* <NavUser user={data.user} /> */}
+				<NavSettings pages={settingsPages} />
 			</SidebarFooter>
 			<SidebarRail />
 		</Sidebar>
