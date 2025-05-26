@@ -1,905 +1,64 @@
 [
 	{
-		"id": "accordion",
-		"name": "Accordion",
+		"id": "degraded_arc_rubber",
+		"name": "Degraded ARC Rubber",
 		"category": "recyclable",
-		"icon": "Music",
-		"rarity": "rare",
-		"description": "No provided description for this item yet.",
-		"weight": 1,
-		"maxStack": 1,
-		"recipeId": null,
-		"value": 0,
-		"recycling": [
-			{
-				"id": "rubber_parts",
-				"count": 18
-			},
-			{
-				"id": "steel_spring",
-				"count": 3
-			}
-		]
-	},
-	{
-		"id": "advanced_electrical_components",
-		"name": "Advanced Electrical Components",
-		"category": "recyclable",
-		"icon": "Plug",
-		"rarity": "epic",
-		"description": "Specialized electrical parts required for advanced repairs and upgrades.",
-		"weight": 1,
-		"maxStack": 1,
-		"recipeId": null,
-		"value": 0,
-		"recycling": [
-			{
-				"id": "wires",
-				"count": 4
-			},
-			{
-				"id": "arc_alloys",
-				"count": 3
-			}
-		]
-	},
-	{
-		"id": "advanced_mechanical_components",
-		"name": "Advanced Mechanical Components",
-		"category": "recyclable",
-		"icon": "Cog",
-		"rarity": "epic",
-		"description": "Mostly used to craft advanced weapons. Can be recycled into crafting materials.",
-		"weight": 1,
-		"maxStack": 1,
-		"recipeId": null,
-		"value": 3000,
-		"recycling": [
-			{
-				"id": "steel_spring",
-				"count": 4
-			},
-			{
-				"id": "arc_alloys",
-				"count": 3
-			}
-		]
-	},
-	{
-		"id": "alarm_clock",
-		"name": "Alarm Clock",
-		"category": "recyclable",
-		"icon": "AlarmClock",
-		"rarity": "rare",
-		"description": "No provided description for this item yet.",
-		"weight": 1,
-		"maxStack": 1,
-		"recipeId": null,
-		"value": 0
-	},
-	{
-		"id": "antiseptic",
-		"name": "Antiseptic",
-		"category": "recyclable",
-		"icon": "FlaskConical",
-		"rarity": "rare",
-		"description": "A bottle of antiseptic liquid for cleaning wounds.",
-		"weight": 1,
-		"maxStack": 1,
-		"recipeId": null,
-		"value": 0,
-		"recycling": [
-			{
-				"id": "chemicals",
-				"count": 10
-			}
-		]
-	},
-	{
-		"id": "apricot",
-		"name": "Apricot",
-		"category": "misc",
-		"icon": "Apple",
-		"rarity": "common",
-		"description": "Can be consumed for a small amount of stamina",
-		"weight": 0.2,
-		"maxStack": 10,
-		"recipeId": null,
-		"value": 0
-	},
-	{
-		"id": "arc_alloys",
-		"name": "ARC Alloys",
-		"category": "recyclable",
-		"icon": "Layers",
+		"icon": "",
 		"rarity": "uncommon",
-		"description": "No provided description for this item yet.",
-		"weight": 1,
-		"maxStack": 1,
-		"recipeId": null,
-		"value": 0
-	},
-	{
-		"id": "arc_circuitry",
-		"name": "ARC Circuitry",
-		"category": "recyclable",
-		"icon": "Zap",
-		"rarity": "rare",
-		"description": "Advanced circuitry used in ARC technology.",
+		"description": "",
 		"weight": 1,
 		"maxStack": 1,
 		"recipeId": null,
 		"value": 0,
-		"recycling": [
-			{
-				"id": "arc_alloys",
-				"count": 2
-			}
-		]
+		"recycling": []
 	},
 	{
-		"id": "arc_coolant",
-		"name": "ARC Coolant",
+		"id": "portable_tv",
+		"name": "Portable TV",
 		"category": "recyclable",
-		"icon": "ThermometerSnowflake",
-		"rarity": "rare",
-		"description": "No provided description for this item yet.",
-		"weight": 1,
-		"maxStack": 1,
-		"recipeId": null,
-		"value": 0,
-		"recycling": [
-			{
-				"id": "canister",
-				"count": 0
-			},
-			{
-				"id": "chemicals",
-				"count": 0
-			}
-		]
-	},
-	{
-		"id": "arc_flex_rubber",
-		"name": "ARC Flex Rubber",
-		"category": "recyclable",
-		"icon": "StretchHorizontal",
-		"rarity": "rare",
-		"description": "Obtained from ARC enemies or activities. Can be recycled into rubber.",
+		"icon": "",
+		"rarity": "common",
+		"description": "",
 		"weight": 1,
 		"maxStack": 1,
 		"recipeId": null,
 		"value": 1000,
 		"recycling": [
 			{
-				"id": "rubber_parts",
-				"count": 24
-			}
-		]
-	},
-	{
-		"id": "arc_motion_core",
-		"name": "ARC Motion Core",
-		"category": "recyclable",
-		"icon": "Cpu",
-		"rarity": "rare",
-		"description": "A powerful core used in ARC machinery.",
-		"weight": 1,
-		"maxStack": 1,
-		"recipeId": null,
-		"value": 0,
-		"recycling": [
-			{
-				"id": "arc_alloys",
-				"count": 2
-			}
-		]
-	},
-	{
-		"id": "arc_powercells",
-		"name": "ARC Powercells",
-		"category": "recyclable",
-		"icon": "BatteryFull",
-		"rarity": "common",
-		"description": "A powerful energy cell used in ARC technology.",
-		"weight": 1,
-		"maxStack": 1,
-		"recipeId": null,
-		"value": 0
-	},
-	{
-		"id": "arc_synthetic_resin",
-		"name": "ARC Synthetic Resin",
-		"category": "recyclable",
-		"icon": "FlaskRound",
-		"rarity": "rare",
-		"description": "No provided description for this item yet.",
-		"weight": 1,
-		"maxStack": 1,
-		"recipeId": null,
-		"value": 0,
-		"recycling": [
-			{
-				"id": "plastic_parts",
-				"count": 21
-			}
-		]
-	},
-	{
-		"id": "bastion_part",
-		"name": "Bastion Part",
-		"category": "recyclable",
-		"icon": "Shield",
-		"rarity": "epic",
-		"description": "A salvaged component from a Bastion unit.",
-		"weight": 1,
-		"maxStack": 1,
-		"recipeId": null,
-		"value": 0,
-		"recycling": [
-			{
-				"id": "arc_motion_core",
-				"count": 1
-			},
-			{
-				"id": "arc_alloys",
-				"count": 2
-			}
-		]
-	},
-	{
-		"id": "battery",
-		"name": "Battery",
-		"category": "recyclable",
-		"icon": "BatteryFull",
-		"rarity": "uncommon",
-		"description": "No provided description for this item yet.",
-		"weight": 1,
-		"maxStack": 1,
-		"recipeId": null,
-		"value": 0,
-		"recycling": [
-			{
-				"id": "metal_parts",
-				"count": 2
-			}
-		]
-	},
-	{
-		"id": "binoculars",
-		"name": "Binoculars",
-		"description": "Optical instrument for viewing distant objects.",
-		"icon": "Binoculars",
-		"rarity": "common",
-		"value": 0,
-		"weight": 0,
-		"maxStack": 1,
-		"category": "quick_use",
-		"flavorText": null,
-		"recipeId": "recipe_binoculars",
-		"recycling": [
-			{
-				"id": "plastic_parts",
-				"count": 8
-			},
-			{
-				"id": "rubber_parts",
-				"count": 4
-			}
-		]
-	},
-	{
-		"id": "bison_driver",
-		"name": "Bison Driver",
-		"category": "recyclable",
-		"icon": "Truck",
-		"rarity": "rare",
-		"description": "A critical control component from a Bison vehicle.",
-		"weight": 1,
-		"maxStack": 1,
-		"recipeId": null,
-		"value": 0
-	},
-	{
-		"id": "blaze_grenades",
-		"name": "Blaze Grenades",
-		"description": "Incendiary grenades.",
-		"icon": "",
-		"rarity": "common",
-		"value": 0,
-		"weight": 0,
-		"maxStack": 1,
-		"category": "quick_use",
-		"flavorText": null,
-		"recipeId": null
-	},
-	{
-		"id": "broken_flashlight",
-		"name": "Broken Flashlight",
-		"category": "recyclable",
-		"icon": "Flashlight",
-		"rarity": "rare",
-		"description": "No provided description for this item yet.",
-		"weight": 1,
-		"maxStack": 1,
-		"recipeId": null,
-		"value": 0,
-		"recycling": [
-			{
-				"id": "battery",
-				"count": 3
-			},
-			{
-				"id": "metal_parts",
-				"count": 7
-			}
-		]
-	},
-	{
-		"id": "broken_handheld_radio",
-		"name": "Broken Handheld Radio",
-		"category": "recyclable",
-		"icon": "RadioReceiver",
-		"rarity": "rare",
-		"description": "No provided description for this item yet.",
-		"weight": 1,
-		"maxStack": 1,
-		"recipeId": null,
-		"value": 0,
-		"recycling": [
-			{
-				"id": "sensors",
-				"count": 3
-			},
-			{
 				"id": "wires",
-				"count": 3
-			}
-		]
-	},
-	{
-		"id": "broken_riot_shield",
-		"name": "Broken Riot Shield",
-		"category": "recyclable",
-		"icon": "Shield",
-		"rarity": "rare",
-		"description": "No provided description for this item yet.",
-		"weight": 1,
-		"maxStack": 1,
-		"recipeId": null,
-		"value": 0,
-		"recycling": [
-			{
-				"id": "plastic_parts",
-				"count": 12
-			}
-		]
-	},
-	{
-		"id": "burletta_recipe",
-		"name": "Burletta Recipe",
-		"description": "A recipe to craft the Burletta weapon.",
-		"icon": "",
-		"rarity": "legendary",
-		"value": 0,
-		"weight": 0,
-		"maxStack": 1,
-		"category": "recipe",
-		"flavorText": null,
-		"recipeId": null
-	},
-	{
-		"id": "burned_arc_circuitry",
-		"name": "Burned ARC Circuitry",
-		"category": "recyclable",
-		"icon": "Zap",
-		"rarity": "uncommon",
-		"description": "No provided description for this item yet.",
-		"weight": 1,
-		"maxStack": 1,
-		"recipeId": null,
-		"value": 0,
-		"recycling": [
-			{
-				"id": "arc_alloys",
-				"count": 2
-			}
-		]
-	},
-	{
-		"id": "camera_lens",
-		"name": "Camera Lens",
-		"category": "recyclable",
-		"icon": "Camera",
-		"rarity": "uncommon",
-		"description": "A precision optical lens for cameras, fragile but valuable.",
-		"weight": 1,
-		"maxStack": 1,
-		"recipeId": null,
-		"value": 0,
-		"recycling": [
-			{
-				"id": "plastic_parts",
-				"count": 8
-			}
-		]
-	},
-	{
-		"id": "candle_holder",
-		"name": "Candle Holder",
-		"category": "recyclable",
-		"icon": "Lamp",
-		"rarity": "uncommon",
-		"description": "No provided description for this item yet.",
-		"weight": 1,
-		"maxStack": 1,
-		"recipeId": null,
-		"value": 0,
-		"recycling": [
-			{
-				"id": "metal_parts",
-				"count": 8
-			}
-		]
-	},
-	{
-		"id": "canister",
-		"name": "Canister",
-		"category": "recyclable",
-		"icon": "Droplet",
-		"rarity": "uncommon",
-		"description": "A metal container used for storing pressurized gas or fuel, essential for certain advanced weapons and devices.",
-		"weight": 1,
-		"maxStack": 1,
-		"recipeId": null,
-		"value": 0,
-		"recycling": [
-			{
-				"id": "plastic_parts",
-				"count": 3
-			}
-		]
-	},
-	{
-		"id": "chemicals",
-		"name": "Chemicals",
-		"category": "recyclable",
-		"icon": "FlaskConical",
-		"rarity": "common",
-		"description": "Used to craft medical supplies, explosives, and utility items.",
-		"weight": 0.15,
-		"maxStack": 1,
-		"recipeId": null,
-		"value": 50
-	},
-	{
-		"id": "coolant",
-		"name": "Coolant",
-		"category": "recyclable",
-		"icon": "Thermometer",
-		"rarity": "rare",
-		"description": "No provided description for this item yet.",
-		"weight": 1,
-		"maxStack": 1,
-		"recipeId": null,
-		"value": 0,
-		"recycling": [
-			{
-				"id": "fabric",
-				"count": 8
-			},
-			{
-				"id": "oil",
-				"count": 3
-			}
-		]
-	},
-	{
-		"id": "cooling_coil",
-		"name": "Cooling Coil",
-		"category": "recyclable",
-		"icon": "RotateCcw",
-		"rarity": "rare",
-		"description": "No provided description for this item yet.",
-		"weight": 1,
-		"maxStack": 1,
-		"recipeId": null,
-		"value": 0,
-		"recycling": [
-			{
-				"id": "chemicals",
-				"count": 6
-			},
-			{
-				"id": "steel_spring",
-				"count": 4
-			}
-		]
-	},
-	{
-		"id": "cooling_fan",
-		"name": "Cooling Fan",
-		"category": "recyclable",
-		"icon": "Fan",
-		"rarity": "rare",
-		"description": "No provided description for this item yet.",
-		"weight": 1,
-		"maxStack": 1,
-		"recipeId": null,
-		"value": 0
-	},
-	{
-		"id": "cracked_bioscanner",
-		"name": "Cracked Bioscanner",
-		"category": "recyclable",
-		"icon": "ScanSearch",
-		"rarity": "rare",
-		"description": "No provided description for this item yet.",
-		"weight": 1,
-		"maxStack": 1,
-		"recipeId": null,
-		"value": 0,
-		"recycling": [
-			{
-				"id": "rubber_parts",
-				"count": 3
+				"count": 7
 			},
 			{
 				"id": "battery",
-				"count": 5
-			}
-		]
-	},
-	{
-		"id": "crumpled_plastic_bottle",
-		"name": "Crumpled Plastic Bottle",
-		"category": "recyclable",
-		"icon": "FlaskRound",
-		"rarity": "uncommon",
-		"description": "No provided description for this item yet.",
-		"weight": 1,
-		"maxStack": 1,
-		"recipeId": null,
-		"value": 0,
-		"recycling": [
-			{
-				"id": "plastic_parts",
 				"count": 3
 			}
 		]
 	},
 	{
-		"id": "damaged_arc_motion_core",
-		"name": "Damaged ARC Motion Core",
+		"id": "projector",
+		"name": "Projector",
 		"category": "recyclable",
-		"icon": "Cpu",
-		"rarity": "uncommon",
-		"description": "No provided description for this item yet.",
-		"weight": 1,
-		"maxStack": 1,
-		"recipeId": null,
-		"value": 0,
-		"recycling": [
-			{
-				"id": "arc_alloys",
-				"count": 2
-			}
-		]
-	},
-	{
-		"id": "damaged_arc_powercell",
-		"name": "Damaged ARC Powercell",
-		"category": "recyclable",
-		"icon": "BatteryLow",
-		"rarity": "uncommon",
-		"description": "No provided description for this item yet.",
-		"weight": 1,
-		"maxStack": 1,
-		"recipeId": null,
-		"value": 0,
-		"recycling": [
-			{
-				"id": "arc_alloys",
-				"count": 1
-			}
-		]
-	},
-	{
-		"id": "damaged_heat_sink",
-		"name": "Damaged Heat Sink",
-		"category": "recyclable",
-		"icon": "Filter",
+		"icon": "",
 		"rarity": "rare",
-		"description": "Can be recycled into crafting materials.",
-		"weight": 2,
+		"description": "",
+		"weight": 1,
 		"maxStack": 1,
 		"recipeId": null,
 		"value": 640,
-		"recycling": [
-			{
-				"id": "metal_parts",
-				"count": 7
-			},
-			{
-				"id": "wires",
-				"count": 4
-			}
-		]
+		"recycling": []
 	},
 	{
-		"id": "damaged_rocketeer_part",
-		"name": "Damaged Rocketeer Part",
+		"id": "ruined_tactical_vest",
+		"name": "Ruined Tactical Vest",
 		"category": "recyclable",
-		"icon": "Rocket",
-		"rarity": "common",
-		"description": "No provided description for this item yet.",
-		"weight": 1,
-		"maxStack": 1,
-		"recipeId": null,
-		"value": 0,
-		"recycling": [
-			{
-				"id": "arc_alloys",
-				"count": 7
-			}
-		]
-	},
-	{
-		"id": "damaged_wasp_drive",
-		"name": "Damaged Wasp Drive",
-		"category": "recyclable",
-		"icon": "Cog",
-		"rarity": "common",
-		"description": "No provided description for this item yet.",
-		"weight": 1,
-		"maxStack": 1,
-		"recipeId": null,
-		"value": 0
-	},
-	{
-		"id": "damaged_wasp_driver",
-		"name": "Damaged Wasp Driver",
-		"category": "recyclable",
-		"icon": "Cog",
-		"rarity": "uncommon",
-		"description": "No provided description for this item yet.",
-		"weight": 1,
-		"maxStack": 1,
-		"recipeId": null,
-		"value": 0,
-		"recycling": [
-			{
-				"id": "arc_alloys",
-				"count": 1
-			}
-		]
-	},
-	{
-		"id": "dog_collar",
-		"name": "Dog Collar",
-		"category": "recyclable",
-		"icon": "PawPrint",
-		"rarity": "uncommon",
-		"description": "A worn dog collar.",
-		"weight": 1,
-		"maxStack": 1,
-		"recipeId": null,
-		"value": 0,
-		"recycling": [
-			{
-				"id": "fabric",
-				"count": 8
-			},
-			{
-				"id": "metal_parts",
-				"count": 1
-			}
-		]
-	},
-	{
-		"id": "duct_tape",
-		"name": "Duct Tape",
-		"category": "recyclable",
-		"icon": "Scissors",
-		"rarity": "uncommon",
-		"description": "A roll of strong, multipurpose adhesive tape. Useful for all kinds of repairs.",
-		"weight": 1,
-		"maxStack": 1,
-		"recipeId": null,
-		"value": 0,
-		"recycling": [
-			{
-				"id": "fabric",
-				"count": 3
-			}
-		]
-	},
-	{
-		"id": "electrical_components",
-		"name": "Electrical Components",
-		"category": "recyclable",
-		"icon": "Plug",
-		"rarity": "rare",
-		"description": "A collection of wires, chips, and connectors for electrical repairs.",
-		"weight": 1,
-		"maxStack": 1,
-		"recipeId": null,
-		"value": 0,
-		"recycling": [
-			{
-				"id": "plastic_parts",
-				"count": 8
-			},
-			{
-				"id": "wires",
-				"count": 3
-			}
-		]
-	},
-	{
-		"id": "esr_analyzer",
-		"name": "ESR Analyzer",
-		"description": "A specialized medical device for analyzing erythrocyte sedimentation rates.",
 		"icon": "",
-		"rarity": "common",
-		"value": 0,
-		"weight": 0,
-		"maxStack": 1,
-		"category": "recyclable",
-		"flavorText": null,
-		"recipeId": null
-	},
-	{
-		"id": "expired_respirator",
-		"name": "Expired Respirator",
-		"category": "recyclable",
-		"icon": "Shirt",
-		"rarity": "rare",
-		"description": "No provided description for this item yet.",
-		"weight": 1,
-		"maxStack": 1,
-		"recipeId": null,
-		"value": 0,
-		"recycling": [
-			{
-				"id": "rubber_parts",
-				"count": 8
-			},
-			{
-				"id": "fabric",
-				"count": 4
-			}
-		]
-	},
-	{
-		"id": "explosive_mixture",
-		"name": "Explosive Mixture",
-		"category": "recyclable",
-		"icon": "Flame",
-		"rarity": "rare",
-		"description": "A volatile crafting component.",
-		"weight": 1,
-		"maxStack": 1,
-		"recipeId": null,
-		"value": 0,
-		"recycling": [
-			{
-				"id": "chemicals",
-				"count": 10
-			}
-		]
-	},
-	{
-		"id": "fabric",
-		"name": "Fabric",
-		"category": "recyclable",
-		"icon": "Shirt",
-		"rarity": "common",
-		"description": "A common crafting material.",
-		"weight": 1,
-		"maxStack": 1,
-		"recipeId": null,
-		"value": 0
-	},
-	{
-		"id": "fireball_burner",
-		"name": "Fireball Burner",
-		"category": "recyclable",
-		"icon": "Flame",
 		"rarity": "uncommon",
-		"description": "A burner module from a Fireball unit.",
+		"description": "",
 		"weight": 1,
 		"maxStack": 1,
 		"recipeId": null,
 		"value": 0,
-		"recycling": [
-			{
-				"id": "arc_alloys",
-				"count": 1
-			},
-			{
-				"id": "chemicals",
-				"count": 1
-			}
-		]
-	},
-	{
-		"id": "flute",
-		"name": "Flute",
-		"category": "recyclable",
-		"icon": "Music",
-		"rarity": "rare",
-		"description": "A simple musical instrument, lightweight and portable.",
-		"weight": 1,
-		"maxStack": 1,
-		"recipeId": null,
-		"value": 0,
-		"recycling": [
-			{
-				"id": "plastic_parts",
-				"count": 10
-			}
-		]
-	},
-	{
-		"id": "fried_motherboard",
-		"name": "Fried Motherboard",
-		"category": "recyclable",
-		"icon": "Cpu",
-		"rarity": "rare",
-		"description": "A damaged motherboard, useful for salvage.",
-		"weight": 1,
-		"maxStack": 1,
-		"recipeId": null,
-		"value": 0,
-		"recycling": [
-			{
-				"id": "plastic_parts",
-				"count": 5
-			},
-			{
-				"id": "electrical_components",
-				"count": 1
-			}
-		]
-	},
-	{
-		"id": "garlic_press",
-		"name": "Garlic Press",
-		"category": "recyclable",
-		"icon": "Utensils",
-		"rarity": "uncommon",
-		"description": "No provided description for this item yet.",
-		"weight": 1,
-		"maxStack": 1,
-		"recipeId": null,
-		"value": 0,
-		"recycling": [
-			{
-				"id": "metal_parts",
-				"count": 14
-			}
-		]
-	},
-	{
-		"id": "healing_stim",
-		"name": "Healing Stim",
-		"category": "quick_use",
-		"icon": "PlusCircle",
-		"rarity": "uncommon",
-		"description": "Heals 25% of your max health.",
-		"weight": 0.5,
-		"maxStack": 1,
-		"recipeId": "recipe_healing_stim",
-		"sources": [
-			{
-				"type": "buy",
-				"trader": "Tian Wen",
-				"count": 1,
-				"value": 45
-			}
-		],
-		"value": 20
+		"recycling": []
 	},
 	{
 		"id": "heavy_ammo",
@@ -915,231 +74,6 @@
 		"recipeId": null
 	},
 	{
-		"id": "heavy_fuse_grenade",
-		"name": "Heavy Fuse Grenade",
-		"description": "A powerful explosive with a timed fuse.",
-		"icon": "",
-		"rarity": "common",
-		"value": 0,
-		"weight": 0,
-		"maxStack": 1,
-		"category": "quick_use",
-		"flavorText": null,
-		"recipeId": null
-	},
-	{
-		"id": "heavy_gun_parts",
-		"name": "Heavy Gun Parts",
-		"category": "recyclable",
-		"icon": "Target",
-		"rarity": "rare",
-		"description": "Specialized components salvaged from heavy firearms, used in advanced weapon crafting.",
-		"weight": 1,
-		"maxStack": 1,
-		"recipeId": null,
-		"value": 0,
-		"recycling": [
-			{
-				"id": "simple_gun_parts",
-				"count": 2
-			}
-		]
-	},
-	{
-		"id": "herbal_bandages",
-		"name": "Herbal Bandages",
-		"description": "Bandages infused with healing herbs.",
-		"icon": "",
-		"rarity": "common",
-		"value": 0,
-		"weight": 0,
-		"maxStack": 1,
-		"category": "consumable",
-		"flavorText": null,
-		"recipeId": null
-	},
-	{
-		"id": "hornet_driver",
-		"name": "Hornet Driver",
-		"category": "recyclable",
-		"icon": "Truck",
-		"rarity": "rare",
-		"description": "A control module used to operate Hornet drones or vehicles.",
-		"weight": 1,
-		"maxStack": 1,
-		"recipeId": null,
-		"value": 0,
-		"recycling": [
-			{
-				"id": "arc_alloys",
-				"count": 1
-			}
-		]
-	},
-	{
-		"id": "household_cleaner",
-		"name": "Household Cleaner",
-		"category": "recyclable",
-		"icon": "SprayCan",
-		"rarity": "uncommon",
-		"description": "No provided description for this item yet.",
-		"weight": 1,
-		"maxStack": 1,
-		"recipeId": null,
-		"value": 0
-	},
-	{
-		"id": "humidifier",
-		"name": "Humidifier",
-		"category": "recyclable",
-		"icon": "Droplet",
-		"rarity": "rare",
-		"description": "No provided description for this item yet.",
-		"weight": 1,
-		"maxStack": 1,
-		"recipeId": null,
-		"value": 0,
-		"recycling": [
-			{
-				"id": "canister",
-				"count": 3
-			},
-			{
-				"id": "wires",
-				"count": 2
-			}
-		]
-	},
-	{
-		"id": "ice_cream_scooper",
-		"name": "Ice Cream Scooper",
-		"category": "recyclable",
-		"icon": "IceCream",
-		"rarity": "uncommon",
-		"description": "No provided description for this item yet.",
-		"weight": 1,
-		"maxStack": 1,
-		"recipeId": null,
-		"value": 0,
-		"recycling": [
-			{
-				"id": "metal_parts",
-				"count": 7
-			}
-		]
-	},
-	{
-		"id": "impure_arc_coolant",
-		"name": "Impure ARC Coolant",
-		"category": "recyclable",
-		"icon": "ThermometerSnowflake",
-		"rarity": "uncommon",
-		"description": "No provided description for this item yet.",
-		"weight": 1,
-		"maxStack": 1,
-		"recipeId": null,
-		"value": 0,
-		"recycling": [
-			{
-				"id": "chemicals",
-				"count": 13
-			}
-		]
-	},
-	{
-		"id": "industrial_battery",
-		"name": "Industrial Battery",
-		"category": "recyclable",
-		"icon": "BatteryFull",
-		"rarity": "rare",
-		"description": "A large, high-capacity battery for industrial equipment.",
-		"weight": 1,
-		"maxStack": 1,
-		"recipeId": null,
-		"value": 0
-	},
-	{
-		"id": "industrial_charger",
-		"name": "Industrial Charger",
-		"category": "recyclable",
-		"icon": "Plug",
-		"rarity": "rare",
-		"description": "No provided description for this item yet.",
-		"weight": 1,
-		"maxStack": 1,
-		"recipeId": null,
-		"value": 0,
-		"recycling": [
-			{
-				"id": "metal_parts",
-				"count": 5
-			},
-			{
-				"id": "voltage_converter",
-				"count": 2
-			}
-		]
-	},
-	{
-		"id": "industrial_magnet",
-		"name": "Industrial Magnet",
-		"category": "recyclable",
-		"icon": "MagnetIcon",
-		"rarity": "rare",
-		"description": "No provided description for this item yet.",
-		"weight": 1,
-		"maxStack": 1,
-		"recipeId": null,
-		"value": 0
-	},
-	{
-		"id": "jump_mines",
-		"name": "Jump Mines",
-		"description": "Proximity mines that launch into the air.",
-		"icon": "",
-		"rarity": "common",
-		"value": 0,
-		"weight": 0,
-		"maxStack": 1,
-		"category": "quick_use",
-		"flavorText": null,
-		"recipeId": null
-	},
-	{
-		"id": "laboratory_reagents",
-		"name": "Laboratory Reagents",
-		"category": "recyclable",
-		"icon": "FlaskConical",
-		"rarity": "rare",
-		"description": "A set of chemical reagents used in laboratory experiments.",
-		"weight": 1,
-		"maxStack": 1,
-		"recipeId": null,
-		"value": 0,
-		"recycling": [
-			{
-				"id": "chemicals",
-				"count": 2
-			},
-			{
-				"id": "explosive_mixture",
-				"count": 2
-			}
-		]
-	},
-	{
-		"id": "lemon",
-		"name": "Lemon",
-		"category": "misc",
-		"icon": "Citrus",
-		"rarity": "common",
-		"description": "Can be consumed for a small amount of stamina",
-		"weight": 0.2,
-		"maxStack": 10,
-		"recipeId": null,
-		"value": 0
-	},
-	{
 		"id": "light_ammo",
 		"name": "Light Ammo",
 		"description": "Light bullets used mainly with SMGs and light handguns.",
@@ -1151,100 +85,6 @@
 		"category": "ammo",
 		"flavorText": null,
 		"recipeId": null
-	},
-	{
-		"id": "light_gun_parts",
-		"name": "Light Gun Parts",
-		"category": "recyclable",
-		"icon": "Target",
-		"rarity": "rare",
-		"description": "No provided description for this item yet.",
-		"weight": 1,
-		"maxStack": 1,
-		"recipeId": null,
-		"value": 0,
-		"recycling": [
-			{
-				"id": "simple_gun_parts",
-				"count": 2
-			}
-		]
-	},
-	{
-		"id": "light_impact_grenade",
-		"name": "Light Impact Grenade",
-		"description": "A small grenade designed for light impact and crowd control.",
-		"icon": "",
-		"rarity": "common",
-		"value": 0,
-		"weight": 0,
-		"maxStack": 1,
-		"category": "quick_use",
-		"flavorText": null,
-		"recipeId": "recipe_light_impact_grenade",
-		"recycling": [
-			{
-				"id": "plastic_parts",
-				"count": 1
-			},
-			{
-				"id": "chemicals",
-				"count": 3
-			}
-		]
-	},
-	{
-		"id": "lure_grenade",
-		"name": "Lure Grenade",
-		"description": "A grenade that attracts attention.",
-		"icon": "",
-		"rarity": "uncommon",
-		"value": 0,
-		"weight": 0,
-		"maxStack": 1,
-		"category": "quick_use",
-		"flavorText": null,
-		"recipeId": null
-	},
-	{
-		"id": "magnet",
-		"name": "Magnet",
-		"category": "recyclable",
-		"icon": "MagnetIcon",
-		"rarity": "uncommon",
-		"description": "No provided description for this item yet.",
-		"weight": 1,
-		"maxStack": 1,
-		"recipeId": null,
-		"value": 0,
-		"recycling": [
-			{
-				"id": "metal_parts",
-				"count": 3
-			}
-		]
-	},
-	{
-		"id": "mechanical_components",
-		"name": "Mechanical Components",
-		"category": "recyclable",
-		"icon": "Cog",
-		"rarity": "rare",
-		"description": "A set of quick_uses, springs, and metal parts used in weapon and device crafting.",
-		"weight": 1,
-		"maxStack": 1,
-		"recipeId": null,
-		"value": 0,
-		"recycling": [
-			{
-				"id": "metal_parts",
-				"count": 8
-			},
-			{
-				"id": "steel_spring",
-				"count": 2
-			}
-		]
 	},
 	{
 		"id": "medium_ammo",
@@ -1260,22 +100,30 @@
 		"recipeId": null
 	},
 	{
-		"id": "medium_gun_parts",
-		"name": "Medium Gun Parts",
-		"category": "recyclable",
-		"icon": "Target",
-		"rarity": "rare",
-		"description": "Components salvaged from medium firearms, used in weapon crafting.",
-		"weight": 1,
-		"maxStack": 1,
-		"recipeId": null,
+		"id": "herbal_bandages",
+		"name": "Herbal Bandages",
+		"description": "Bandages infused with healing herbs.",
+		"icon": "",
+		"rarity": "common",
 		"value": 0,
-		"recycling": [
-			{
-				"id": "simple_gun_parts",
-				"count": 2
-			}
-		]
+		"weight": 0,
+		"maxStack": 1,
+		"category": "consumable",
+		"flavorText": null,
+		"recipeId": null
+	},
+	{
+		"id": "sterilized_bandage",
+		"name": "Sterilized Bandage",
+		"description": "A sterile bandage for treating wounds.",
+		"icon": "",
+		"rarity": "common",
+		"value": 0,
+		"weight": 0,
+		"maxStack": 1,
+		"category": "consumable",
+		"flavorText": null,
+		"recipeId": "recipe_sterilized_bandage"
 	},
 	{
 		"id": "light_shield",
@@ -1315,313 +163,6 @@
 		"category": "gear",
 		"flavorText": null,
 		"recipeId": "recipe_heavy_shield"
-	},
-	{
-		"id": "metal_brackets",
-		"name": "Metal Brackets",
-		"category": "recyclable",
-		"icon": "Brackets",
-		"rarity": "uncommon",
-		"description": "No provided description for this item yet.",
-		"weight": 1,
-		"maxStack": 1,
-		"recipeId": null,
-		"value": 0,
-		"recycling": [
-			{
-				"id": "metal_parts",
-				"count": 0
-			}
-		]
-	},
-	{
-		"id": "metal_parts",
-		"name": "Metal Parts",
-		"category": "recyclable",
-		"icon": "Wrench",
-		"rarity": "common",
-		"description": "Used to craft a wide range of items.",
-		"weight": 0.15,
-		"maxStack": 1,
-		"recipeId": null,
-		"value": 75
-	},
-	{
-		"id": "metal_plate",
-		"name": "Metal Plate",
-		"category": "recyclable",
-		"icon": "Square",
-		"rarity": "uncommon",
-		"description": "No provided description for this item yet.",
-		"weight": 1,
-		"maxStack": 1,
-		"recipeId": null,
-		"value": 0,
-		"recycling": [
-			{
-				"id": "metal_parts",
-				"count": 0
-			}
-		]
-	},
-	{
-		"id": "mod_components",
-		"name": "Mod Components",
-		"category": "recyclable",
-		"icon": "Wrench",
-		"rarity": "epic",
-		"description": "No provided description for this item yet.",
-		"weight": 1,
-		"maxStack": 1,
-		"recipeId": null,
-		"value": 0,
-		"recycling": [
-			{
-				"id": "steel_spring",
-				"count": 4
-			},
-			{
-				"id": "arc_alloys",
-				"count": 3
-			}
-		]
-	},
-	{
-		"id": "moss",
-		"name": "Moss",
-		"category": "recyclable",
-		"icon": "Flower",
-		"rarity": "rare",
-		"description": "No provided description for this item yet.",
-		"weight": 1,
-		"maxStack": 1,
-		"recipeId": null,
-		"value": 0,
-		"recycling": [
-			{
-				"id": "chemicals",
-				"count": 5
-			}
-		]
-	},
-	{
-		"id": "motor",
-		"name": "Motor",
-		"category": "recyclable",
-		"icon": "RotateCcw",
-		"rarity": "rare",
-		"description": "A small electric motor, useful for various devices.",
-		"weight": 1,
-		"maxStack": 1,
-		"recipeId": null,
-		"value": 0,
-		"recycling": [
-			{
-				"id": "oil",
-				"count": 2
-			},
-			{
-				"id": "mechanical_components",
-				"count": 1
-			}
-		]
-	},
-	{
-		"id": "mushroom",
-		"name": "Mushroom",
-		"category": "misc",
-		"icon": "Torus",
-		"rarity": "common",
-		"description": "Can be consumed for a small amount of stamina",
-		"weight": 0.2,
-		"maxStack": 10,
-		"recipeId": null,
-		"value": 0
-	},
-	{
-		"id": "oil",
-		"name": "Oil",
-		"category": "recyclable",
-		"icon": "Droplet",
-		"rarity": "uncommon",
-		"description": "A small container of multipurpose oil, useful for maintenance and crafting.",
-		"weight": 1,
-		"maxStack": 1,
-		"recipeId": null,
-		"value": 0,
-		"recycling": [
-			{
-				"id": "chemicals",
-				"count": 3
-			}
-		]
-	},
-	{
-		"id": "olives",
-		"name": "Olives",
-		"category": "misc",
-		"icon": "Martini",
-		"rarity": "common",
-		"description": "Can be consumed for a small amount of stamina",
-		"weight": 0.2,
-		"maxStack": 10,
-		"recipeId": null,
-		"value": 0
-	},
-	{
-		"id": "photoelectric_cloak",
-		"name": "Photoelectric Cloak",
-		"description": "A cloak that hides your from ARC",
-		"icon": "",
-		"rarity": "common",
-		"value": 0,
-		"weight": 0,
-		"maxStack": 1,
-		"category": "quick_use",
-		"flavorText": null,
-		"recipeId": null
-	},
-	{
-		"id": "plastic_parts",
-		"name": "Plastic Parts",
-		"category": "recyclable",
-		"icon": "Package",
-		"rarity": "common",
-		"description": "Scrap plastic pieces for crafting.",
-		"weight": 1,
-		"maxStack": 1,
-		"recipeId": null,
-		"value": 0
-	},
-	{
-		"id": "polluted_air_filter",
-		"name": "Polluted Air Filter",
-		"category": "recyclable",
-		"icon": "Filter",
-		"rarity": "rare",
-		"description": "No provided description for this item yet.",
-		"weight": 1,
-		"maxStack": 1,
-		"recipeId": null,
-		"value": 0,
-		"recycling": [
-			{
-				"id": "fabric",
-				"count": 8
-			},
-			{
-				"id": "oil",
-				"count": 3
-			}
-		]
-	},
-	{
-		"id": "power_bank",
-		"name": "Power Bank",
-		"category": "recyclable",
-		"icon": "BatteryLow",
-		"rarity": "rare",
-		"description": "No provided description for this item yet.",
-		"weight": 1,
-		"maxStack": 1,
-		"recipeId": null,
-		"value": 0,
-		"recycling": [
-			{
-				"id": "battery",
-				"count": 4
-			},
-			{
-				"id": "wires",
-				"count": 2
-			}
-		]
-	},
-	{
-		"id": "power_cables",
-		"name": "Power Cables",
-		"category": "recyclable",
-		"icon": "Cable",
-		"rarity": "rare",
-		"description": "A heavy-duty cable used for transmitting electrical power.",
-		"weight": 1,
-		"maxStack": 1,
-		"recipeId": null,
-		"value": 0,
-		"recycling": [
-			{
-				"id": "wires",
-				"count": 7
-			}
-		]
-	},
-	{
-		"id": "power_rod",
-		"name": "Power Rod",
-		"category": "recyclable",
-		"icon": "Zap",
-		"rarity": "epic",
-		"description": "Used to craft shields. Can be recycled into crafting materials.",
-		"weight": 1,
-		"maxStack": 1,
-		"recipeId": null,
-		"value": 3000,
-		"recycling": [
-			{
-				"id": "wires",
-				"count": 4
-			},
-			{
-				"id": "arc_alloys",
-				"count": 3
-			}
-		]
-	},
-	{
-		"id": "prickly_pear",
-		"name": "Prickly Pear",
-		"category": "misc",
-		"icon": "Flower",
-		"rarity": "common",
-		"description": "Can be consumed for a small amount of stamina",
-		"weight": 0.2,
-		"maxStack": 10,
-		"recipeId": null,
-		"value": 0
-	},
-	{
-		"id": "processor",
-		"name": "Processor",
-		"category": "recyclable",
-		"icon": "Zap",
-		"rarity": "rare",
-		"description": "No provided description for this item yet.",
-		"weight": 1,
-		"maxStack": 1,
-		"recipeId": null,
-		"value": 0,
-		"recycling": [
-			{
-				"id": "wires",
-				"count": 1
-			},
-			{
-				"id": "plastic_parts",
-				"count": 1
-			}
-		]
-	},
-	{
-		"id": "queen_part",
-		"name": "Queen Part",
-		"category": "recyclable",
-		"icon": "Bug",
-		"rarity": "epic",
-		"description": "A rare part salvaged from a Queen unit.",
-		"weight": 1,
-		"maxStack": 1,
-		"recipeId": null,
-		"value": 34000
 	},
 	{
 		"id": "raider_augment_i",
@@ -1689,6 +230,1687 @@
 		"recipeId": null
 	},
 	{
+		"id": "apricot",
+		"name": "Apricot",
+		"category": "misc",
+		"icon": "Apple",
+		"rarity": "common",
+		"description": "Can be consumed for a small amount of stamina",
+		"weight": 0.2,
+		"maxStack": 10,
+		"recipeId": null,
+		"value": 640
+	},
+	{
+		"id": "lemon",
+		"name": "Lemon",
+		"category": "misc",
+		"icon": "Citrus",
+		"rarity": "common",
+		"description": "Can be consumed for a small amount of stamina",
+		"weight": 0.2,
+		"maxStack": 10,
+		"recipeId": null,
+		"value": 640
+	},
+	{
+		"id": "mushroom",
+		"name": "Mushroom",
+		"category": "misc",
+		"icon": "Torus",
+		"rarity": "common",
+		"description": "Can be consumed for a small amount of stamina",
+		"weight": 0.2,
+		"maxStack": 10,
+		"recipeId": null,
+		"value": 1000
+	},
+	{
+		"id": "olives",
+		"name": "Olives",
+		"category": "misc",
+		"icon": "Martini",
+		"rarity": "common",
+		"description": "Can be consumed for a small amount of stamina",
+		"weight": 0.2,
+		"maxStack": 10,
+		"recipeId": null,
+		"value": 640
+	},
+	{
+		"id": "prickly_pear",
+		"name": "Prickly Pear",
+		"category": "misc",
+		"icon": "Flower",
+		"rarity": "common",
+		"description": "Can be consumed for a small amount of stamina",
+		"weight": 0.2,
+		"maxStack": 10,
+		"recipeId": null,
+		"value": 640
+	},
+	{
+		"id": "agave",
+		"name": "Agave",
+		"category": "misc",
+		"icon": "",
+		"rarity": "common",
+		"description": "",
+		"weight": 1,
+		"maxStack": 1,
+		"recipeId": null,
+		"value": 1000,
+		"recycling": []
+	},
+	{
+		"id": "fertilizer",
+		"name": "Fertilizer",
+		"category": "misc",
+		"icon": "",
+		"rarity": "common",
+		"description": "",
+		"weight": 1,
+		"maxStack": 1,
+		"recipeId": null,
+		"value": 1000,
+		"recycling": []
+	},
+	{
+		"id": "resin",
+		"name": "Resin",
+		"category": "misc",
+		"icon": "",
+		"rarity": "common",
+		"description": "",
+		"weight": 1,
+		"maxStack": 1,
+		"recipeId": null,
+		"value": 0,
+		"recycling": []
+	},
+	{
+		"id": "roots",
+		"name": "Roots",
+		"category": "misc",
+		"icon": "",
+		"rarity": "common",
+		"description": "",
+		"weight": 1,
+		"maxStack": 1,
+		"recipeId": null,
+		"value": 0,
+		"recycling": []
+	},
+	{
+		"id": "volcanic_rock",
+		"name": "Volcanic Rock",
+		"category": "misc",
+		"icon": "",
+		"rarity": "common",
+		"description": "",
+		"weight": 1,
+		"maxStack": 1,
+		"recipeId": null,
+		"value": 0,
+		"recycling": []
+	},
+	{
+		"id": "binoculars",
+		"name": "Binoculars",
+		"description": "Optical instrument for viewing distant objects.",
+		"icon": "Binoculars",
+		"rarity": "common",
+		"value": 0,
+		"weight": 0,
+		"maxStack": 1,
+		"category": "quick_use",
+		"flavorText": null,
+		"recipeId": "recipe_binoculars",
+		"recycling": [
+			{
+				"id": "plastic_parts",
+				"count": 8
+			},
+			{
+				"id": "rubber_parts",
+				"count": 4
+			}
+		]
+	},
+	{
+		"id": "blaze_grenades",
+		"name": "Blaze Grenades",
+		"description": "Incendiary grenades.",
+		"icon": "",
+		"rarity": "common",
+		"value": 0,
+		"weight": 0,
+		"maxStack": 1,
+		"category": "quick_use",
+		"flavorText": null,
+		"recipeId": null
+	},
+	{
+		"id": "healing_stim",
+		"name": "Healing Stim",
+		"category": "quick_use",
+		"icon": "PlusCircle",
+		"rarity": "uncommon",
+		"description": "Heals 25% of your max health.",
+		"weight": 0.5,
+		"maxStack": 1,
+		"recipeId": "recipe_healing_stim",
+		"sources": [
+			{
+				"type": "buy",
+				"trader": "Tian Wen",
+				"count": 1,
+				"value": 45
+			}
+		],
+		"value": 20
+	},
+	{
+		"id": "heavy_fuse_grenade",
+		"name": "Heavy Fuse Grenade",
+		"description": "A powerful explosive with a timed fuse.",
+		"icon": "",
+		"rarity": "common",
+		"value": 0,
+		"weight": 0,
+		"maxStack": 1,
+		"category": "quick_use",
+		"flavorText": null,
+		"recipeId": null
+	},
+	{
+		"id": "jump_mines",
+		"name": "Jump Mines",
+		"description": "Proximity mines that launch into the air.",
+		"icon": "",
+		"rarity": "common",
+		"value": 0,
+		"weight": 0,
+		"maxStack": 1,
+		"category": "quick_use",
+		"flavorText": null,
+		"recipeId": null
+	},
+	{
+		"id": "light_impact_grenade",
+		"name": "Light Impact Grenade",
+		"description": "A small grenade designed for light impact and crowd control.",
+		"icon": "",
+		"rarity": "common",
+		"value": 0,
+		"weight": 0,
+		"maxStack": 1,
+		"category": "quick_use",
+		"flavorText": null,
+		"recipeId": "recipe_light_impact_grenade",
+		"recycling": [
+			{
+				"id": "plastic_parts",
+				"count": 1
+			},
+			{
+				"id": "chemicals",
+				"count": 3
+			}
+		]
+	},
+	{
+		"id": "lure_grenade",
+		"name": "Lure Grenade",
+		"description": "A grenade that attracts attention.",
+		"icon": "",
+		"rarity": "uncommon",
+		"value": 0,
+		"weight": 0,
+		"maxStack": 1,
+		"category": "quick_use",
+		"flavorText": null,
+		"recipeId": null
+	},
+	{
+		"id": "photoelectric_cloak",
+		"name": "Photoelectric Cloak",
+		"description": "A cloak that hides your from ARC",
+		"icon": "",
+		"rarity": "common",
+		"value": 0,
+		"weight": 0,
+		"maxStack": 1,
+		"category": "quick_use",
+		"flavorText": null,
+		"recipeId": null
+	},
+	{
+		"id": "showstopper",
+		"name": "Showstopper",
+		"description": "Unknown",
+		"icon": "",
+		"rarity": "common",
+		"value": 0,
+		"weight": 0,
+		"maxStack": 1,
+		"category": "quick_use",
+		"flavorText": null,
+		"recipeId": null
+	},
+	{
+		"id": "snap_grenade",
+		"name": "Snap Grenade",
+		"description": "A grenade that disorients targets.",
+		"icon": "",
+		"rarity": "common",
+		"value": 0,
+		"weight": 0,
+		"maxStack": 1,
+		"category": "quick_use",
+		"flavorText": null,
+		"recipeId": null
+	},
+	{
+		"id": "snap_hook",
+		"name": "Snap Hook",
+		"description": "A sturdy metal hook with a spring-loaded gate, used for fast attachment.",
+		"icon": "",
+		"rarity": "common",
+		"value": 0,
+		"weight": 0,
+		"maxStack": 1,
+		"category": "quick_use",
+		"flavorText": null,
+		"recipeId": null
+	},
+	{
+		"id": "wolfpack",
+		"name": "WolfPack",
+		"description": "A compact bundle of high-explosive charges, commonly used by Raiders.",
+		"icon": "",
+		"rarity": "epic",
+		"value": 0,
+		"weight": 0,
+		"maxStack": 1,
+		"category": "quick_use",
+		"flavorText": null,
+		"recipeId": null
+	},
+	{
+		"id": "zipline",
+		"name": "Zipline",
+		"description": "A deployable zipline that allows you to quickly move between two locations.",
+		"icon": "",
+		"rarity": "uncommon",
+		"value": 2000,
+		"weight": 0.8,
+		"maxStack": 1,
+		"category": "quick_use",
+		"flavorText": null,
+		"recipeId": null
+	},
+	{
+		"id": "burletta_recipe",
+		"name": "Burletta Recipe",
+		"description": "A recipe to craft the Burletta weapon.",
+		"icon": "",
+		"rarity": "legendary",
+		"value": 0,
+		"weight": 0,
+		"maxStack": 1,
+		"category": "recipe",
+		"flavorText": null,
+		"recipeId": null
+	},
+	{
+		"id": "accordion",
+		"name": "Accordion",
+		"category": "recyclable",
+		"icon": "Music",
+		"rarity": "rare",
+		"description": "No provided description for this item yet.",
+		"weight": 1,
+		"maxStack": 1,
+		"recipeId": null,
+		"value": 2000,
+		"recycling": [
+			{
+				"id": "rubber_parts",
+				"count": 18
+			},
+			{
+				"id": "steel_spring",
+				"count": 3
+			}
+		]
+	},
+	{
+		"id": "advanced_electrical_components",
+		"name": "Advanced Electrical Components",
+		"category": "recyclable",
+		"icon": "Plug",
+		"rarity": "epic",
+		"description": "Specialized electrical parts required for advanced repairs and upgrades.",
+		"weight": 1,
+		"maxStack": 1,
+		"recipeId": null,
+		"value": 3000,
+		"recycling": [
+			{
+				"id": "wires",
+				"count": 4
+			},
+			{
+				"id": "arc_alloy",
+				"count": 3
+			}
+		]
+	},
+	{
+		"id": "advanced_mechanical_components",
+		"name": "Advanced Mechanical Components",
+		"category": "recyclable",
+		"icon": "Cog",
+		"rarity": "epic",
+		"description": "Mostly used to craft advanced weapons. Can be recycled into crafting materials.",
+		"weight": 1,
+		"maxStack": 1,
+		"recipeId": null,
+		"value": 3000,
+		"recycling": [
+			{
+				"id": "steel_spring",
+				"count": 4
+			},
+			{
+				"id": "arc_alloys",
+				"count": 3
+			}
+		]
+	},
+	{
+		"id": "alarm_clock",
+		"name": "Alarm Clock",
+		"category": "recyclable",
+		"icon": "AlarmClock",
+		"rarity": "rare",
+		"description": "No provided description for this item yet.",
+		"weight": 1,
+		"maxStack": 1,
+		"recipeId": null,
+		"value": 640,
+		"recycling": [
+			{
+				"id": "plastic_parts",
+				"count": 5
+			},
+			{
+				"id": "processor",
+				"count": 2
+			}
+		]
+	},
+	{
+		"id": "antiseptic",
+		"name": "Antiseptic",
+		"category": "recyclable",
+		"icon": "FlaskConical",
+		"rarity": "rare",
+		"description": "A bottle of antiseptic liquid for cleaning wounds.",
+		"weight": 1,
+		"maxStack": 1,
+		"recipeId": null,
+		"value": 1000,
+		"recycling": [
+			{
+				"id": "chemicals",
+				"count": 10
+			}
+		]
+	},
+	{
+		"id": "arc_alloy",
+		"name": "ARC Alloys",
+		"category": "recyclable",
+		"icon": "Layers",
+		"rarity": "uncommon",
+		"description": "No provided description for this item yet.",
+		"weight": 1,
+		"maxStack": 1,
+		"recipeId": null,
+		"value": 0
+	},
+	{
+		"id": "arc_circuitry",
+		"name": "ARC Circuitry",
+		"category": "recyclable",
+		"icon": "Zap",
+		"rarity": "rare",
+		"description": "Advanced circuitry used in ARC technology.",
+		"weight": 1,
+		"maxStack": 1,
+		"recipeId": null,
+		"value": 1000,
+		"recycling": [
+			{
+				"id": "arc_alloys",
+				"count": 2
+			}
+		]
+	},
+	{
+		"id": "arc_coolant",
+		"name": "ARC Coolant",
+		"category": "recyclable",
+		"icon": "ThermometerSnowflake",
+		"rarity": "rare",
+		"description": "No provided description for this item yet.",
+		"weight": 1,
+		"maxStack": 1,
+		"recipeId": null,
+		"value": 1000,
+		"recycling": [
+			{
+				"id": "chemicals",
+				"count": 24
+			}
+		]
+	},
+	{
+		"id": "arc_flex_rubber",
+		"name": "ARC Flex Rubber",
+		"category": "recyclable",
+		"icon": "StretchHorizontal",
+		"rarity": "rare",
+		"description": "Obtained from ARC enemies or activities. Can be recycled into rubber.",
+		"weight": 1,
+		"maxStack": 1,
+		"recipeId": null,
+		"value": 1000,
+		"recycling": [
+			{
+				"id": "rubber_parts",
+				"count": 24
+			}
+		]
+	},
+	{
+		"id": "arc_motion_core",
+		"name": "ARC Motion Core",
+		"category": "recyclable",
+		"icon": "Cpu",
+		"rarity": "rare",
+		"description": "A powerful core used in ARC machinery.",
+		"weight": 1,
+		"maxStack": 1,
+		"recipeId": null,
+		"value": 1000,
+		"recycling": [
+			{
+				"id": "arc_alloys",
+				"count": 2
+			}
+		]
+	},
+	{
+		"id": "arc_powercell",
+		"name": "ARC Powercell",
+		"category": "recyclable",
+		"icon": "BatteryFull",
+		"rarity": "common",
+		"description": "A powerful energy cell used in ARC technology.",
+		"weight": 1,
+		"maxStack": 1,
+		"recipeId": null,
+		"value": 640
+	},
+	{
+		"id": "arc_synthetic_resin",
+		"name": "ARC Synthetic Resin",
+		"category": "recyclable",
+		"icon": "FlaskRound",
+		"rarity": "rare",
+		"description": "No provided description for this item yet.",
+		"weight": 1,
+		"maxStack": 1,
+		"recipeId": null,
+		"value": 1000,
+		"recycling": [
+			{
+				"id": "plastic_parts",
+				"count": 21
+			}
+		]
+	},
+	{
+		"id": "bastion_part",
+		"name": "Bastion Part",
+		"category": "recyclable",
+		"icon": "Shield",
+		"rarity": "epic",
+		"description": "A salvaged component from a Bastion unit.",
+		"weight": 1,
+		"maxStack": 1,
+		"recipeId": null,
+		"value": 3000,
+		"recycling": [
+			{
+				"id": "arc_motion_core",
+				"count": 1
+			},
+			{
+				"id": "arc_alloys",
+				"count": 2
+			}
+		]
+	},
+	{
+		"id": "battery",
+		"name": "Battery",
+		"category": "recyclable",
+		"icon": "BatteryFull",
+		"rarity": "uncommon",
+		"description": "No provided description for this item yet.",
+		"weight": 1,
+		"maxStack": 1,
+		"recipeId": null,
+		"value": 250,
+		"recycling": [
+			{
+				"id": "metal_parts",
+				"count": 2
+			}
+		]
+	},
+	{
+		"id": "bison_driver",
+		"name": "Bison Driver",
+		"category": "recyclable",
+		"icon": "Truck",
+		"rarity": "rare",
+		"description": "A critical control component from a Bison vehicle.",
+		"weight": 1,
+		"maxStack": 1,
+		"recipeId": null,
+		"value": 5000
+	},
+	{
+		"id": "broken_flashlight",
+		"name": "Broken Flashlight",
+		"category": "recyclable",
+		"icon": "Flashlight",
+		"rarity": "rare",
+		"description": "No provided description for this item yet.",
+		"weight": 1,
+		"maxStack": 1,
+		"recipeId": null,
+		"value": 952,
+		"recycling": [
+			{
+				"id": "battery",
+				"count": 3
+			},
+			{
+				"id": "metal_parts",
+				"count": 7
+			}
+		]
+	},
+	{
+		"id": "broken_handheld_radio",
+		"name": "Broken Handheld Radio",
+		"category": "recyclable",
+		"icon": "RadioReceiver",
+		"rarity": "rare",
+		"description": "No provided description for this item yet.",
+		"weight": 1,
+		"maxStack": 1,
+		"recipeId": null,
+		"value": 1000,
+		"recycling": [
+			{
+				"id": "sensors",
+				"count": 3
+			},
+			{
+				"id": "wires",
+				"count": 3
+			}
+		]
+	},
+	{
+		"id": "broken_riot_shield",
+		"name": "Broken Riot Shield",
+		"category": "recyclable",
+		"icon": "Shield",
+		"rarity": "rare",
+		"description": "No provided description for this item yet.",
+		"weight": 1,
+		"maxStack": 1,
+		"recipeId": null,
+		"value": 0,
+		"recycling": [
+			{
+				"id": "plastic_parts",
+				"count": 12
+			}
+		]
+	},
+	{
+		"id": "burned_arc_circuitry",
+		"name": "Burned ARC Circuitry",
+		"category": "recyclable",
+		"icon": "Zap",
+		"rarity": "uncommon",
+		"description": "No provided description for this item yet.",
+		"weight": 1,
+		"maxStack": 1,
+		"recipeId": null,
+		"value": 640,
+		"recycling": [
+			{
+				"id": "arc_alloys",
+				"count": 2
+			}
+		]
+	},
+	{
+		"id": "camera_lens",
+		"name": "Camera Lens",
+		"category": "recyclable",
+		"icon": "Camera",
+		"rarity": "uncommon",
+		"description": "A precision optical lens for cameras, fragile but valuable.",
+		"weight": 1,
+		"maxStack": 1,
+		"recipeId": null,
+		"value": 270,
+		"recycling": [
+			{
+				"id": "plastic_parts",
+				"count": 8
+			}
+		]
+	},
+	{
+		"id": "candle_holder",
+		"name": "Candle Holder",
+		"category": "recyclable",
+		"icon": "Lamp",
+		"rarity": "uncommon",
+		"description": "No provided description for this item yet.",
+		"weight": 1,
+		"maxStack": 1,
+		"recipeId": null,
+		"value": 270,
+		"recycling": [
+			{
+				"id": "metal_parts",
+				"count": 8
+			}
+		]
+	},
+	{
+		"id": "canister",
+		"name": "Canister",
+		"category": "recyclable",
+		"icon": "Droplet",
+		"rarity": "uncommon",
+		"description": "A metal container used for storing pressurized gas or fuel, essential for certain advanced weapons and devices.",
+		"weight": 1,
+		"maxStack": 1,
+		"recipeId": null,
+		"value": 300,
+		"recycling": [
+			{
+				"id": "plastics_parts",
+				"count": 3
+			}
+		]
+	},
+	{
+		"id": "chemicals",
+		"name": "Chemicals",
+		"category": "recyclable",
+		"icon": "FlaskConical",
+		"rarity": "common",
+		"description": "Used to craft medical supplies, explosives, and utility items.",
+		"weight": 0.15,
+		"maxStack": 1,
+		"recipeId": null,
+		"value": 50
+	},
+	{
+		"id": "coolant",
+		"name": "Coolant",
+		"category": "recyclable",
+		"icon": "Thermometer",
+		"rarity": "rare",
+		"description": "No provided description for this item yet.",
+		"weight": 1,
+		"maxStack": 1,
+		"recipeId": null,
+		"value": 640,
+		"recycling": [
+			{
+				"id": "fabric_3x_oil",
+				"count": 8
+			}
+		]
+	},
+	{
+		"id": "cooling_coil",
+		"name": "Cooling Coil",
+		"category": "recyclable",
+		"icon": "RotateCcw",
+		"rarity": "rare",
+		"description": "No provided description for this item yet.",
+		"weight": 1,
+		"maxStack": 1,
+		"recipeId": null,
+		"value": 640,
+		"recycling": [
+			{
+				"id": "chemicals",
+				"count": 6
+			},
+			{
+				"id": "steel_spring",
+				"count": 4
+			}
+		]
+	},
+	{
+		"id": "cooling_fan",
+		"name": "Cooling Fan",
+		"category": "recyclable",
+		"icon": "Fan",
+		"rarity": "rare",
+		"description": "No provided description for this item yet.",
+		"weight": 1,
+		"maxStack": 1,
+		"recipeId": null,
+		"value": 1000,
+		"recycling": [
+			{
+				"id": "plastic_parts",
+				"count": 15
+			},
+			{
+				"id": "battery",
+				"count": 4
+			}
+		]
+	},
+	{
+		"id": "cracked_bioscanner",
+		"name": "Cracked Bioscanner",
+		"category": "recyclable",
+		"icon": "ScanSearch",
+		"rarity": "rare",
+		"description": "No provided description for this item yet.",
+		"weight": 1,
+		"maxStack": 1,
+		"recipeId": null,
+		"value": 640,
+		"recycling": [
+			{
+				"id": "rubber_parts",
+				"count": 3
+			},
+			{
+				"id": "battery",
+				"count": 5
+			}
+		]
+	},
+	{
+		"id": "crumpled_plastic_bottle",
+		"name": "Crumpled Plastic Bottle",
+		"category": "recyclable",
+		"icon": "FlaskRound",
+		"rarity": "uncommon",
+		"description": "No provided description for this item yet.",
+		"weight": 1,
+		"maxStack": 1,
+		"recipeId": null,
+		"value": 80,
+		"recycling": [
+			{
+				"id": "plastics_parts",
+				"count": 3
+			}
+		]
+	},
+	{
+		"id": "damaged_arc_motion_core",
+		"name": "Damaged ARC Motion Core",
+		"category": "recyclable",
+		"icon": "Cpu",
+		"rarity": "uncommon",
+		"description": "No provided description for this item yet.",
+		"weight": 1,
+		"maxStack": 1,
+		"recipeId": null,
+		"value": 640,
+		"recycling": [
+			{
+				"id": "arc_alloys",
+				"count": 2
+			}
+		]
+	},
+	{
+		"id": "damaged_arc_powercell",
+		"name": "Damaged ARC Powercell",
+		"category": "recyclable",
+		"icon": "BatteryLow",
+		"rarity": "uncommon",
+		"description": "No provided description for this item yet.",
+		"weight": 1,
+		"maxStack": 1,
+		"recipeId": null,
+		"value": 293,
+		"recycling": [
+			{
+				"id": "arc_alloys",
+				"count": 1
+			}
+		]
+	},
+	{
+		"id": "damaged_heat_sink",
+		"name": "Damaged Heat Sink",
+		"category": "recyclable",
+		"icon": "Filter",
+		"rarity": "rare",
+		"description": "Can be recycled into crafting materials.",
+		"weight": 2,
+		"maxStack": 1,
+		"recipeId": null,
+		"value": 640,
+		"recycling": [
+			{
+				"id": "metal_parts",
+				"count": 7
+			},
+			{
+				"id": "wires",
+				"count": 4
+			}
+		]
+	},
+	{
+		"id": "damaged_rocketeer_part",
+		"name": "Damaged Rocketeer Part",
+		"category": "recyclable",
+		"icon": "Rocket",
+		"rarity": "common",
+		"description": "No provided description for this item yet.",
+		"weight": 1,
+		"maxStack": 1,
+		"recipeId": null,
+		"value": 2000,
+		"recycling": [
+			{
+				"id": "arc_alloys",
+				"count": 7
+			}
+		]
+	},
+	{
+		"id": "damaged_wasp_drive",
+		"name": "Damaged Wasp Drive",
+		"category": "recyclable",
+		"icon": "Cog",
+		"rarity": "common",
+		"description": "No provided description for this item yet.",
+		"weight": 1,
+		"maxStack": 1,
+		"recipeId": null,
+		"value": 0
+	},
+	{
+		"id": "damaged_wasp_driver",
+		"name": "Damaged Wasp Driver",
+		"category": "recyclable",
+		"icon": "Cog",
+		"rarity": "common",
+		"description": "No provided description for this item yet.",
+		"weight": 1,
+		"maxStack": 1,
+		"recipeId": null,
+		"value": 270,
+		"recycling": [
+			{
+				"id": "arc_alloys",
+				"count": 1
+			}
+		]
+	},
+	{
+		"id": "dog_collar",
+		"name": "Dog Collar",
+		"category": "recyclable",
+		"icon": "PawPrint",
+		"rarity": "uncommon",
+		"description": "A worn dog collar.",
+		"weight": 1,
+		"maxStack": 1,
+		"recipeId": null,
+		"value": 270,
+		"recycling": [
+			{
+				"id": "fabric",
+				"count": 8
+			},
+			{
+				"id": "metal_parts",
+				"count": 1
+			}
+		]
+	},
+	{
+		"id": "duct_tape",
+		"name": "Duct Tape",
+		"category": "recyclable",
+		"icon": "Scissors",
+		"rarity": "uncommon",
+		"description": "A roll of strong, multipurpose adhesive tape. Useful for all kinds of repairs.",
+		"weight": 1,
+		"maxStack": 1,
+		"recipeId": null,
+		"value": 300,
+		"recycling": [
+			{
+				"id": "fabric",
+				"count": 3
+			}
+		]
+	},
+	{
+		"id": "electrical_components",
+		"name": "Electrical Components",
+		"category": "recyclable",
+		"icon": "Plug",
+		"rarity": "rare",
+		"description": "A collection of wires, chips, and connectors for electrical repairs.",
+		"weight": 1,
+		"maxStack": 1,
+		"recipeId": null,
+		"value": 2000,
+		"recycling": [
+			{
+				"id": "plastics_parts",
+				"count": 8
+			},
+			{
+				"id": "wires",
+				"count": 3
+			}
+		]
+	},
+	{
+		"id": "esr_analyzer",
+		"name": "ESR Analyzer",
+		"description": "A specialized medical device for analyzing erythrocyte sedimentation rates.",
+		"icon": "",
+		"rarity": "common",
+		"value": 0,
+		"weight": 0,
+		"maxStack": 1,
+		"category": "recyclable",
+		"flavorText": null,
+		"recipeId": null
+	},
+	{
+		"id": "expired_respirator",
+		"name": "Expired Respirator",
+		"category": "recyclable",
+		"icon": "Shirt",
+		"rarity": "rare",
+		"description": "No provided description for this item yet.",
+		"weight": 1,
+		"maxStack": 1,
+		"recipeId": null,
+		"value": 640,
+		"recycling": [
+			{
+				"id": "rubber_parts",
+				"count": 8
+			},
+			{
+				"id": "fabric",
+				"count": 4
+			}
+		]
+	},
+	{
+		"id": "explosive_mixture",
+		"name": "Explosive Mixture",
+		"category": "recyclable",
+		"icon": "Flame",
+		"rarity": "rare",
+		"description": "A volatile crafting component.",
+		"weight": 1,
+		"maxStack": 1,
+		"recipeId": null,
+		"value": 1000,
+		"recycling": [
+			{
+				"id": "chemicals",
+				"count": 10
+			}
+		]
+	},
+	{
+		"id": "fabric",
+		"name": "Fabric",
+		"category": "recyclable",
+		"icon": "Shirt",
+		"rarity": "common",
+		"description": "A common crafting material.",
+		"weight": 1,
+		"maxStack": 1,
+		"recipeId": null,
+		"value": 50
+	},
+	{
+		"id": "fireball_burner",
+		"name": "Fireball Burner",
+		"category": "recyclable",
+		"icon": "Flame",
+		"rarity": "uncommon",
+		"description": "A burner module from a Fireball unit.",
+		"weight": 1,
+		"maxStack": 1,
+		"recipeId": null,
+		"value": 640,
+		"recycling": [
+			{
+				"id": "arc_alloy",
+				"count": 1
+			},
+			{
+				"id": "chemicals",
+				"count": 1
+			}
+		]
+	},
+	{
+		"id": "flute",
+		"name": "Flute",
+		"category": "recyclable",
+		"icon": "Music",
+		"rarity": "rare",
+		"description": "A simple musical instrument, lightweight and portable.",
+		"weight": 1,
+		"maxStack": 1,
+		"recipeId": null,
+		"value": 640,
+		"recycling": [
+			{
+				"id": "plastic_parts",
+				"count": 10
+			}
+		]
+	},
+	{
+		"id": "fried_motherboard",
+		"name": "Fried Motherboard",
+		"category": "recyclable",
+		"icon": "Cpu",
+		"rarity": "rare",
+		"description": "A damaged motherboard, useful for salvage.",
+		"weight": 1,
+		"maxStack": 1,
+		"recipeId": null,
+		"value": 1000,
+		"recycling": [
+			{
+				"id": "plastic_parts",
+				"count": 5
+			},
+			{
+				"id": "electrical_components",
+				"count": 1
+			}
+		]
+	},
+	{
+		"id": "garlic_press",
+		"name": "Garlic Press",
+		"category": "recyclable",
+		"icon": "Utensils",
+		"rarity": "uncommon",
+		"description": "No provided description for this item yet.",
+		"weight": 1,
+		"maxStack": 1,
+		"recipeId": null,
+		"value": 640,
+		"recycling": [
+			{
+				"id": "metal_parts",
+				"count": 14
+			}
+		]
+	},
+	{
+		"id": "heavy_gun_parts",
+		"name": "Heavy Gun Parts",
+		"category": "recyclable",
+		"icon": "Target",
+		"rarity": "rare",
+		"description": "Specialized components salvaged from heavy firearms, used in advanced weapon crafting.",
+		"weight": 1,
+		"maxStack": 1,
+		"recipeId": null,
+		"value": 0,
+		"recycling": [
+			{
+				"id": "simple_gun_parts",
+				"count": 2
+			}
+		]
+	},
+	{
+		"id": "hornet_driver",
+		"name": "Hornet Driver",
+		"category": "recyclable",
+		"icon": "Truck",
+		"rarity": "rare",
+		"description": "A control module used to operate Hornet drones or vehicles.",
+		"weight": 1,
+		"maxStack": 1,
+		"recipeId": null,
+		"value": 2000,
+		"recycling": [
+			{
+				"id": "arc_alloy",
+				"count": 1
+			}
+		]
+	},
+	{
+		"id": "household_cleaner",
+		"name": "Household Cleaner",
+		"category": "recyclable",
+		"icon": "SprayCan",
+		"rarity": "uncommon",
+		"description": "No provided description for this item yet.",
+		"weight": 1,
+		"maxStack": 1,
+		"recipeId": null,
+		"value": 270,
+		"recycling": [
+			{
+				"id": "chemicals",
+				"count": 13
+			}
+		]
+	},
+	{
+		"id": "humidifier",
+		"name": "Humidifier",
+		"category": "recyclable",
+		"icon": "Droplet",
+		"rarity": "rare",
+		"description": "No provided description for this item yet.",
+		"weight": 1,
+		"maxStack": 1,
+		"recipeId": null,
+		"value": 542,
+		"recycling": [
+			{
+				"id": "canister",
+				"count": 3
+			},
+			{
+				"id": "wires",
+				"count": 2
+			}
+		]
+	},
+	{
+		"id": "ice_cream_scooper",
+		"name": "Ice Cream Scooper",
+		"category": "recyclable",
+		"icon": "IceCream",
+		"rarity": "uncommon",
+		"description": "No provided description for this item yet.",
+		"weight": 1,
+		"maxStack": 1,
+		"recipeId": null,
+		"value": 270,
+		"recycling": [
+			{
+				"id": "metal_parts",
+				"count": 7
+			}
+		]
+	},
+	{
+		"id": "impure_arc_coolant",
+		"name": "Impure ARC Coolant",
+		"category": "recyclable",
+		"icon": "ThermometerSnowflake",
+		"rarity": "uncommon",
+		"description": "No provided description for this item yet.",
+		"weight": 1,
+		"maxStack": 1,
+		"recipeId": null,
+		"value": 0,
+		"recycling": [
+			{
+				"id": "chemicals",
+				"count": 13
+			}
+		]
+	},
+	{
+		"id": "industrial_battery",
+		"name": "Industrial Battery",
+		"category": "recyclable",
+		"icon": "BatteryFull",
+		"rarity": "rare",
+		"description": "A large, high-capacity battery for industrial equipment.",
+		"weight": 1,
+		"maxStack": 1,
+		"recipeId": null,
+		"value": 640
+	},
+	{
+		"id": "industrial_charger",
+		"name": "Industrial Charger",
+		"category": "recyclable",
+		"icon": "Plug",
+		"rarity": "rare",
+		"description": "No provided description for this item yet.",
+		"weight": 1,
+		"maxStack": 1,
+		"recipeId": null,
+		"value": 640,
+		"recycling": [
+			{
+				"id": "metal_parts",
+				"count": 5
+			},
+			{
+				"id": "voltage_converter",
+				"count": 2
+			}
+		]
+	},
+	{
+		"id": "industrial_magnet",
+		"name": "Industrial Magnet",
+		"category": "recyclable",
+		"icon": "MagnetIcon",
+		"rarity": "rare",
+		"description": "No provided description for this item yet.",
+		"weight": 1,
+		"maxStack": 1,
+		"recipeId": null,
+		"value": 640
+	},
+	{
+		"id": "laboratory_reagents",
+		"name": "Laboratory Reagents",
+		"category": "recyclable",
+		"icon": "FlaskConical",
+		"rarity": "rare",
+		"description": "A set of chemical reagents used in laboratory experiments.",
+		"weight": 1,
+		"maxStack": 1,
+		"recipeId": null,
+		"value": 1000,
+		"recycling": [
+			{
+				"id": "chemicals",
+				"count": 2
+			},
+			{
+				"id": "explosive_mixture",
+				"count": 2
+			}
+		]
+	},
+	{
+		"id": "light_gun_parts",
+		"name": "Light Gun Parts",
+		"category": "recyclable",
+		"icon": "Target",
+		"rarity": "rare",
+		"description": "No provided description for this item yet.",
+		"weight": 1,
+		"maxStack": 1,
+		"recipeId": null,
+		"value": 0,
+		"recycling": [
+			{
+				"id": "simple_gun_parts",
+				"count": 2
+			}
+		]
+	},
+	{
+		"id": "magnet",
+		"name": "Magnet",
+		"category": "recyclable",
+		"icon": "MagnetIcon",
+		"rarity": "uncommon",
+		"description": "No provided description for this item yet.",
+		"weight": 1,
+		"maxStack": 1,
+		"recipeId": null,
+		"value": 300,
+		"recycling": [
+			{
+				"id": "metal_parts",
+				"count": 3
+			}
+		]
+	},
+	{
+		"id": "mechanical_components",
+		"name": "Mechanical Components",
+		"category": "recyclable",
+		"icon": "Cog",
+		"rarity": "rare",
+		"description": "A set of quick_uses, springs, and metal parts used in weapon and device crafting.",
+		"weight": 1,
+		"maxStack": 1,
+		"recipeId": null,
+		"value": 2000,
+		"recycling": [
+			{
+				"id": "metal_parts",
+				"count": 8
+			},
+			{
+				"id": "steel_spring",
+				"count": 2
+			}
+		]
+	},
+	{
+		"id": "medium_gun_parts",
+		"name": "Medium Gun Parts",
+		"category": "recyclable",
+		"icon": "Target",
+		"rarity": "rare",
+		"description": "Components salvaged from medium firearms, used in weapon crafting.",
+		"weight": 1,
+		"maxStack": 1,
+		"recipeId": null,
+		"value": 0,
+		"recycling": [
+			{
+				"id": "simple_gun_parts",
+				"count": 2
+			}
+		]
+	},
+	{
+		"id": "metal_brackets",
+		"name": "Metal Brackets",
+		"category": "recyclable",
+		"icon": "Brackets",
+		"rarity": "uncommon",
+		"description": "No provided description for this item yet.",
+		"weight": 1,
+		"maxStack": 1,
+		"recipeId": null,
+		"value": 270,
+		"recycling": [
+			{
+				"id": "metal_parts",
+				"count": 0
+			}
+		]
+	},
+	{
+		"id": "metal_parts",
+		"name": "Metal Parts",
+		"category": "recyclable",
+		"icon": "Wrench",
+		"rarity": "common",
+		"description": "Used to craft a wide range of items.",
+		"weight": 0.15,
+		"maxStack": 1,
+		"recipeId": null,
+		"value": 75
+	},
+	{
+		"id": "metal_plate",
+		"name": "Metal Plate",
+		"category": "recyclable",
+		"icon": "Square",
+		"rarity": "uncommon",
+		"description": "No provided description for this item yet.",
+		"weight": 1,
+		"maxStack": 1,
+		"recipeId": null,
+		"value": 0,
+		"recycling": [
+			{
+				"id": "metal_parts",
+				"count": 3
+			}
+		]
+	},
+	{
+		"id": "mod_components",
+		"name": "Mod Components",
+		"category": "recyclable",
+		"icon": "Wrench",
+		"rarity": "epic",
+		"description": "No provided description for this item yet.",
+		"weight": 1,
+		"maxStack": 1,
+		"recipeId": null,
+		"value": 3000,
+		"recycling": [
+			{
+				"id": "steels_springs",
+				"count": 4
+			},
+			{
+				"id": "arc_alloys",
+				"count": 3
+			}
+		]
+	},
+	{
+		"id": "moss",
+		"name": "Moss",
+		"category": "recyclable",
+		"icon": "Flower",
+		"rarity": "rare",
+		"description": "No provided description for this item yet.",
+		"weight": 1,
+		"maxStack": 1,
+		"recipeId": null,
+		"value": 500,
+		"recycling": [
+			{
+				"id": "chemicals",
+				"count": 5
+			}
+		]
+	},
+	{
+		"id": "motor",
+		"name": "Motor",
+		"category": "recyclable",
+		"icon": "RotateCcw",
+		"rarity": "rare",
+		"description": "A small electric motor, useful for various devices.",
+		"weight": 1,
+		"maxStack": 1,
+		"recipeId": null,
+		"value": 1000,
+		"recycling": [
+			{
+				"id": "oil",
+				"count": 2
+			},
+			{
+				"id": "mechanical_components",
+				"count": 1
+			}
+		]
+	},
+	{
+		"id": "oil",
+		"name": "Oil",
+		"category": "recyclable",
+		"icon": "Droplet",
+		"rarity": "uncommon",
+		"description": "A small container of multipurpose oil, useful for maintenance and crafting.",
+		"weight": 1,
+		"maxStack": 1,
+		"recipeId": null,
+		"value": 300,
+		"recycling": [
+			{
+				"id": "chemicals",
+				"count": 3
+			}
+		]
+	},
+	{
+		"id": "plastic_parts",
+		"name": "Plastic Parts",
+		"category": "recyclable",
+		"icon": "Package",
+		"rarity": "common",
+		"description": "Scrap plastic pieces for crafting.",
+		"weight": 1,
+		"maxStack": 1,
+		"recipeId": null,
+		"value": 60
+	},
+	{
+		"id": "polluted_air_filter",
+		"name": "Polluted Air Filter",
+		"category": "recyclable",
+		"icon": "Filter",
+		"rarity": "rare",
+		"description": "No provided description for this item yet.",
+		"weight": 1,
+		"maxStack": 1,
+		"recipeId": null,
+		"value": 640,
+		"recycling": [
+			{
+				"id": "fabric",
+				"count": 8
+			},
+			{
+				"id": "oil",
+				"count": 3
+			}
+		]
+	},
+	{
+		"id": "power_bank",
+		"name": "Power Bank",
+		"category": "recyclable",
+		"icon": "BatteryLow",
+		"rarity": "rare",
+		"description": "No provided description for this item yet.",
+		"weight": 1,
+		"maxStack": 1,
+		"recipeId": null,
+		"value": 640,
+		"recycling": [
+			{
+				"id": "battery",
+				"count": 4
+			},
+			{
+				"id": "wires",
+				"count": 2
+			}
+		]
+	},
+	{
+		"id": "power_cable",
+		"name": "Power Cable",
+		"category": "recyclable",
+		"icon": "Cable",
+		"rarity": "rare",
+		"description": "A heavy-duty cable used for transmitting electrical power.",
+		"weight": 1,
+		"maxStack": 1,
+		"recipeId": null,
+		"value": 640,
+		"recycling": [
+			{
+				"id": "wires",
+				"count": 7
+			}
+		]
+	},
+	{
+		"id": "power_rod",
+		"name": "Power Rod",
+		"category": "recyclable",
+		"icon": "Zap",
+		"rarity": "epic",
+		"description": "Used to craft shields. Can be recycled into crafting materials.",
+		"weight": 1,
+		"maxStack": 1,
+		"recipeId": null,
+		"value": 3000,
+		"recycling": [
+			{
+				"id": "wires",
+				"count": 4
+			},
+			{
+				"id": "arc_alloy",
+				"count": 3
+			}
+		]
+	},
+	{
+		"id": "processor",
+		"name": "Processor",
+		"category": "recyclable",
+		"icon": "Zap",
+		"rarity": "rare",
+		"description": "No provided description for this item yet.",
+		"weight": 1,
+		"maxStack": 1,
+		"recipeId": null,
+		"value": 500,
+		"recycling": [
+			{
+				"id": "wires",
+				"count": 1
+			},
+			{
+				"id": "plastic_parts",
+				"count": 1
+			}
+		]
+	},
+	{
+		"id": "queen_part",
+		"name": "Queen Part",
+		"category": "recyclable",
+		"icon": "Bug",
+		"rarity": "epic",
+		"description": "A rare part salvaged from a Queen unit.",
+		"weight": 1,
+		"maxStack": 1,
+		"recipeId": null,
+		"value": 34000
+	},
+	{
 		"id": "remote_control",
 		"name": "Remote Control",
 		"category": "recyclable",
@@ -1698,7 +1920,7 @@
 		"weight": 1,
 		"maxStack": 1,
 		"recipeId": null,
-		"value": 0,
+		"value": 270,
 		"recycling": [
 			{
 				"id": "plastic_parts",
@@ -1720,11 +1942,11 @@
 		"weight": 1,
 		"maxStack": 1,
 		"recipeId": null,
-		"value": 0,
+		"value": 1000,
 		"recycling": [
 			{
-				"id": "fabric",
-				"count": 0
+				"id": "magnet_13x_fabric",
+				"count": 2
 			}
 		]
 	},
@@ -1738,7 +1960,7 @@
 		"weight": 1,
 		"maxStack": 1,
 		"recipeId": null,
-		"value": 0,
+		"value": 7000,
 		"recycling": [
 			{
 				"id": "arc_circuitry",
@@ -1760,7 +1982,7 @@
 		"weight": 1,
 		"maxStack": 1,
 		"recipeId": null,
-		"value": 0
+		"value": 2000
 	},
 	{
 		"id": "rope",
@@ -1772,7 +1994,7 @@
 		"weight": 1,
 		"maxStack": 1,
 		"recipeId": null,
-		"value": 0,
+		"value": 500,
 		"recycling": [
 			{
 				"id": "fabric",
@@ -1790,7 +2012,7 @@
 		"weight": 1,
 		"maxStack": 1,
 		"recipeId": null,
-		"value": 0,
+		"value": 640,
 		"recycling": [
 			{
 				"id": "rubber_parts",
@@ -1808,7 +2030,7 @@
 		"weight": 1,
 		"maxStack": 1,
 		"recipeId": null,
-		"value": 0
+		"value": 50
 	},
 	{
 		"id": "rusted_bolts",
@@ -1876,7 +2098,7 @@
 		"weight": 1,
 		"maxStack": 1,
 		"recipeId": null,
-		"value": 0,
+		"value": 640,
 		"recycling": [
 			{
 				"id": "metal_parts",
@@ -1898,7 +2120,7 @@
 		"weight": 1,
 		"maxStack": 1,
 		"recipeId": null,
-		"value": 0,
+		"value": 500,
 		"recycling": [
 			{
 				"id": "wires",
@@ -1923,7 +2145,7 @@
 		"value": 0,
 		"recycling": [
 			{
-				"id": "arc_alloys",
+				"id": "arc_alloy",
 				"count": 2
 			}
 		]
@@ -1947,19 +2169,6 @@
 		]
 	},
 	{
-		"id": "showstopper",
-		"name": "Showstopper",
-		"description": "Unknown",
-		"icon": "",
-		"rarity": "common",
-		"value": 0,
-		"weight": 0,
-		"maxStack": 1,
-		"category": "quick_use",
-		"flavorText": null,
-		"recipeId": null
-	},
-	{
 		"id": "simple_gun_parts",
 		"name": "Simple Gun Parts",
 		"category": "recyclable",
@@ -1969,39 +2178,13 @@
 		"weight": 1,
 		"maxStack": 1,
 		"recipeId": null,
-		"value": 0,
+		"value": 330,
 		"recycling": [
 			{
-				"id": "metal_parts",
+				"id": "metals_parts",
 				"count": 3
 			}
 		]
-	},
-	{
-		"id": "snap_grenade",
-		"name": "Snap Grenade",
-		"description": "A grenade that disorients targets.",
-		"icon": "",
-		"rarity": "common",
-		"value": 0,
-		"weight": 0,
-		"maxStack": 1,
-		"category": "quick_use",
-		"flavorText": null,
-		"recipeId": null
-	},
-	{
-		"id": "snap_hook",
-		"name": "Snap Hook",
-		"description": "A sturdy metal hook with a spring-loaded gate, used for fast attachment.",
-		"icon": "",
-		"rarity": "common",
-		"value": 0,
-		"weight": 0,
-		"maxStack": 1,
-		"category": "quick_use",
-		"flavorText": null,
-		"recipeId": null
 	},
 	{
 		"id": "snitch_scanner",
@@ -2013,10 +2196,10 @@
 		"weight": 1,
 		"maxStack": 1,
 		"recipeId": null,
-		"value": 0,
+		"value": 2000,
 		"recycling": [
 			{
-				"id": "arc_alloys",
+				"id": "arc_alloy",
 				"count": 4
 			}
 		]
@@ -2031,7 +2214,7 @@
 		"weight": 1,
 		"maxStack": 1,
 		"recipeId": null,
-		"value": 0,
+		"value": 500,
 		"recycling": [
 			{
 				"id": "plastic_parts",
@@ -2053,7 +2236,7 @@
 		"weight": 1,
 		"maxStack": 1,
 		"recipeId": null,
-		"value": 0,
+		"value": 640,
 		"recycling": [
 			{
 				"id": "fabric",
@@ -2075,26 +2258,13 @@
 		"weight": 1,
 		"maxStack": 1,
 		"recipeId": null,
-		"value": 0,
+		"value": 300,
 		"recycling": [
 			{
 				"id": "metal_parts",
 				"count": 3
 			}
 		]
-	},
-	{
-		"id": "sterilized_bandage",
-		"name": "Sterilized Bandage",
-		"description": "A sterile bandage for treating wounds.",
-		"icon": "",
-		"rarity": "common",
-		"value": 0,
-		"weight": 0,
-		"maxStack": 1,
-		"category": "consumable",
-		"flavorText": null,
-		"recipeId": "recipe_sterilized_bandage"
 	},
 	{
 		"id": "synthesized_fuel",
@@ -2106,7 +2276,7 @@
 		"weight": 1,
 		"maxStack": 1,
 		"recipeId": null,
-		"value": 0,
+		"value": 700,
 		"recycling": [
 			{
 				"id": "oil",
@@ -2114,7 +2284,7 @@
 			},
 			{
 				"id": "plastic_parts",
-				"count": 14
+				"count": 1
 			}
 		]
 	},
@@ -2128,7 +2298,7 @@
 		"weight": 1,
 		"maxStack": 1,
 		"recipeId": null,
-		"value": 0,
+		"value": 500,
 		"recycling": [
 			{
 				"id": "plastic_parts",
@@ -2150,7 +2320,7 @@
 		"weight": 1,
 		"maxStack": 1,
 		"recipeId": null,
-		"value": 0,
+		"value": 270,
 		"recycling": [
 			{
 				"id": "fabric",
@@ -2168,7 +2338,7 @@
 		"weight": 1,
 		"maxStack": 1,
 		"recipeId": null,
-		"value": 0
+		"value": 640
 	},
 	{
 		"id": "tick_pod",
@@ -2180,10 +2350,10 @@
 		"weight": 1,
 		"maxStack": 1,
 		"recipeId": null,
-		"value": 0,
+		"value": 640,
 		"recycling": [
 			{
-				"id": "arc_alloys",
+				"id": "arc_alloy",
 				"count": 0
 			}
 		]
@@ -2198,7 +2368,7 @@
 		"weight": 1,
 		"maxStack": 1,
 		"recipeId": null,
-		"value": 0,
+		"value": 640,
 		"recycling": [
 			{
 				"id": "plastic_parts",
@@ -2220,7 +2390,7 @@
 		"weight": 1,
 		"maxStack": 1,
 		"recipeId": null,
-		"value": 0,
+		"value": 300,
 		"recycling": [
 			{
 				"id": "chemicals",
@@ -2238,7 +2408,7 @@
 		"weight": 1,
 		"maxStack": 1,
 		"recipeId": null,
-		"value": 0,
+		"value": 640,
 		"recycling": [
 			{
 				"id": "fabric",
@@ -2256,7 +2426,7 @@
 		"weight": 1,
 		"maxStack": 1,
 		"recipeId": null,
-		"value": 0,
+		"value": 500,
 		"recycling": [
 			{
 				"id": "wires",
@@ -2278,7 +2448,7 @@
 		"weight": 1,
 		"maxStack": 1,
 		"recipeId": null,
-		"value": 0,
+		"value": 1000,
 		"recycling": [
 			{
 				"id": "arc_alloys",
@@ -2296,7 +2466,17 @@
 		"weight": 1,
 		"maxStack": 1,
 		"recipeId": null,
-		"value": 0
+		"value": 640,
+		"recycling": [
+			{
+				"id": "rubber_parts",
+				"count": 3
+			},
+			{
+				"id": "canister",
+				"count": 4
+			}
+		]
 	},
 	{
 		"id": "water_pump",
@@ -2308,7 +2488,7 @@
 		"weight": 1,
 		"maxStack": 1,
 		"recipeId": null,
-		"value": 0,
+		"value": 640,
 		"recycling": [
 			{
 				"id": "metal_parts",
@@ -2330,7 +2510,7 @@
 		"weight": 1,
 		"maxStack": 1,
 		"recipeId": null,
-		"value": 0,
+		"value": 200,
 		"recycling": [
 			{
 				"id": "rubber_parts",
@@ -2339,29 +2519,242 @@
 		]
 	},
 	{
-		"id": "wolfpack",
-		"name": "WolfPack",
-		"description": "A compact bundle of high-explosive charges, commonly used by Raiders.",
-		"icon": "",
-		"rarity": "epic",
-		"value": 0,
-		"weight": 0,
+		"id": "deflated_soccerball",
+		"name": "Deflated Soccerball",
+		"category": "recyclable",
+		"icon": "CircleDashed",
+		"rarity": "uncommon",
+		"description": "No provided description for this item yet.",
+		"weight": 1,
 		"maxStack": 1,
-		"category": "quick_use",
-		"flavorText": null,
-		"recipeId": null
+		"recipeId": null,
+		"value": 0
 	},
 	{
-		"id": "zipline",
-		"name": "Zipline",
-		"description": "A deployable zipline that allows you to quickly move between two locations.",
+		"id": "arc_performance_steel",
+		"name": "ARC Performance Steel",
+		"category": "recyclable",
+		"icon": "",
+		"rarity": "common",
+		"description": "",
+		"weight": 1,
+		"maxStack": 1,
+		"recipeId": null,
+		"value": 1000,
+		"recycling": []
+	},
+	{
+		"id": "arc_thermo_lining",
+		"name": "ARC Thermo Lining",
+		"category": "recyclable",
+		"icon": "",
+		"rarity": "rare",
+		"description": "",
+		"weight": 1,
+		"maxStack": 1,
+		"recipeId": null,
+		"value": 1000,
+		"recycling": []
+	},
+	{
+		"id": "bicycle_pump",
+		"name": "Bicycle Pump",
+		"category": "recyclable",
+		"icon": "",
+		"rarity": "rare",
+		"description": "",
+		"weight": 1,
+		"maxStack": 1,
+		"recipeId": null,
+		"value": 1000,
+		"recycling": [
+			{
+				"id": "canister",
+				"count": 4
+			},
+			{
+				"id": "metal_parts",
+				"count": 10
+			}
+		]
+	},
+	{
+		"id": "broken_handcuffs",
+		"name": "Broken Handcuffs",
+		"category": "recyclable",
 		"icon": "",
 		"rarity": "uncommon",
-		"value": 2000,
-		"weight": 0.8,
+		"description": "",
+		"weight": 1,
 		"maxStack": 1,
-		"category": "quick_use",
-		"flavorText": null,
-		"recipeId": null
+		"recipeId": null,
+		"value": 270,
+		"recycling": []
+	},
+	{
+		"id": "broken_taser",
+		"name": "Broken Taser",
+		"category": "recyclable",
+		"icon": "",
+		"rarity": "rare",
+		"description": "",
+		"weight": 1,
+		"maxStack": 1,
+		"recipeId": null,
+		"value": 640,
+		"recycling": []
+	},
+	{
+		"id": "diving_goggles",
+		"name": "Diving Goggles",
+		"category": "recyclable",
+		"icon": "",
+		"rarity": "rare",
+		"description": "",
+		"weight": 1,
+		"maxStack": 1,
+		"recipeId": null,
+		"value": 640,
+		"recycling": [
+			{
+				"id": "rubber_parts",
+				"count": 12
+			}
+		]
+	},
+	{
+		"id": "dried_out_arc_resin",
+		"name": "Dried-Out ARC Resin",
+		"category": "recyclable",
+		"icon": "",
+		"rarity": "uncommon",
+		"description": "",
+		"weight": 1,
+		"maxStack": 1,
+		"recipeId": null,
+		"value": 0,
+		"recycling": []
+	},
+	{
+		"id": "frying_pan",
+		"name": "Frying Pan",
+		"category": "recyclable",
+		"icon": "",
+		"rarity": "rare",
+		"description": "",
+		"weight": 1,
+		"maxStack": 1,
+		"recipeId": null,
+		"value": 270,
+		"recycling": []
+	},
+	{
+		"id": "headphones",
+		"name": "Headphones",
+		"category": "recyclable",
+		"icon": "",
+		"rarity": "rare",
+		"description": "",
+		"weight": 1,
+		"maxStack": 1,
+		"recipeId": null,
+		"value": 640,
+		"recycling": [
+			{
+				"id": "rubber_parts",
+				"count": 6
+			},
+			{
+				"id": "speaker_components",
+				"count": 2
+			}
+		]
+	},
+	{
+		"id": "number_plate",
+		"name": "Number Plate",
+		"category": "recyclable",
+		"icon": "",
+		"rarity": "uncommon",
+		"description": "",
+		"weight": 1,
+		"maxStack": 1,
+		"recipeId": null,
+		"value": 80,
+		"recycling": []
+	},
+	{
+		"id": "radio",
+		"name": "Radio",
+		"category": "recyclable",
+		"icon": "",
+		"rarity": "rare",
+		"description": "",
+		"weight": 1,
+		"maxStack": 1,
+		"recipeId": null,
+		"value": 640,
+		"recycling": []
+	},
+	{
+		"id": "rusted_gear",
+		"name": "Rusted Gear",
+		"category": "recyclable",
+		"icon": "",
+		"rarity": "rare",
+		"description": "",
+		"weight": 1,
+		"maxStack": 1,
+		"recipeId": null,
+		"value": 1000,
+		"recycling": [
+			{
+				"id": "metal_parts",
+				"count": 4
+			},
+			{
+				"id": "mechanical_components",
+				"count": 1
+			}
+		]
+	},
+	{
+		"id": "rusty_arc_steel",
+		"name": "Rusty ARC Steel",
+		"category": "recyclable",
+		"icon": "",
+		"rarity": "uncommon",
+		"description": "",
+		"weight": 1,
+		"maxStack": 1,
+		"recipeId": null,
+		"value": 640,
+		"recycling": []
+	},
+	{
+		"id": "setinel_core",
+		"name": "Setinel Core",
+		"category": "recyclable",
+		"icon": "",
+		"rarity": "rare",
+		"description": "",
+		"weight": 1,
+		"maxStack": 1,
+		"recipeId": null,
+		"value": 3000,
+		"recycling": []
+	},
+	{
+		"id": "tattered_arc_lining",
+		"name": "Tattered ARC Lining",
+		"category": "recyclable",
+		"icon": "",
+		"rarity": "uncommon",
+		"description": "",
+		"weight": 1,
+		"maxStack": 1,
+		"recipeId": null,
+		"value": 640,
+		"recycling": []
 	}
 ]

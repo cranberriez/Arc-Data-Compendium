@@ -29,26 +29,20 @@
 		"id": "deflated_football",
 		"name": "Deflated Football",
 		"category": "valuable",
-		"icon": "Club",
-		"rarity": "common",
+		"icon": "CircleDashed",
+		"rarity": "uncommon",
 		"description": "A football that has seen better days.",
 		"weight": 1,
 		"maxStack": 1,
 		"recipeId": null,
 		"sources": [],
-		"value": 1000
-	},
-	{
-		"id": "deflated_soccerball",
-		"name": "Deflated Soccerball",
-		"category": "recyclable",
-		"icon": "CircleDashed",
-		"rarity": "uncommon",
-		"description": "No provided description for this item yet.",
-		"weight": 1,
-		"maxStack": 1,
-		"recipeId": null,
-		"value": 0
+		"value": 1000,
+		"recycling": [
+			{
+				"id": "rubber_parts",
+				"count": 15
+			}
+		]
 	},
 	{
 		"id": "empty_wine_bottle",
@@ -113,7 +107,7 @@
 		"maxStack": 1,
 		"recipeId": null,
 		"sources": [],
-		"value": 1000
+		"value": 2000
 	},
 	{
 		"id": "very_comfortable_pillow",
@@ -321,7 +315,7 @@
 		"maxStack": 1,
 		"recipeId": null,
 		"sources": [],
-		"value": 0
+		"value": 1000
 	},
 	{
 		"id": "portable_tv_set",
@@ -351,7 +345,7 @@
 	},
 	{
 		"id": "lances_mixtape_5th_edition",
-		"name": "Lance’s Mixtape (5th Edition)",
+		"name": "Lance\u2019s Mixtape (5th Edition)",
 		"category": "valuable",
 		"icon": "Package",
 		"rarity": "epic",
@@ -361,5 +355,96 @@
 		"recipeId": null,
 		"sources": [],
 		"value": 10000
+	},
+	{
+		"id": "blown_fuses",
+		"name": "Blown Fuses",
+		"category": "valuable",
+		"icon": "",
+		"rarity": "common",
+		"description": "",
+		"weight": 1,
+		"maxStack": 1,
+		"recipeId": null,
+		"value": 0,
+		"recycling": []
+	},
+	{
+		"id": "breathtaking_snow_globe",
+		"name": "Breathtaking Snow Globe",
+		"category": "valuable",
+		"icon": "",
+		"rarity": "common",
+		"description": "",
+		"weight": 1,
+		"maxStack": 1,
+		"recipeId": null,
+		"value": 7000,
+		"recycling": []
+	},
+	{
+		"id": "dartboard",
+		"name": "Dartboard",
+		"category": "valuable",
+		"icon": "",
+		"rarity": "common",
+		"description": "",
+		"weight": 1,
+		"maxStack": 1,
+		"recipeId": null,
+		"value": 2000,
+		"recycling": []
+	},
+	{
+		"id": "painted_box",
+		"name": "Painted Box",
+		"category": "valuable",
+		"icon": "",
+		"rarity": "common",
+		"description": "",
+		"weight": 1,
+		"maxStack": 1,
+		"recipeId": null,
+		"value": 2000,
+		"recycling": []
+	},
+	{
+		"id": "red_coral_jewlery",
+		"name": "Red Coral Jewlery",
+		"category": "valuable",
+		"icon": "",
+		"rarity": "common",
+		"description": "",
+		"weight": 1,
+		"maxStack": 1,
+		"recipeId": null,
+		"value": 5000,
+		"recycling": []
+	},
+	{
+		"id": "rosary",
+		"name": "Rosary",
+		"category": "valuable",
+		"icon": "",
+		"rarity": "common",
+		"description": "",
+		"weight": 1,
+		"maxStack": 1,
+		"recipeId": null,
+		"value": 2000,
+		"recycling": []
+	},
+	{
+		"id": "rubber_duck",
+		"name": "Rubber Duck",
+		"category": "valuable",
+		"icon": "",
+		"rarity": "common",
+		"description": "",
+		"weight": 1,
+		"maxStack": 1,
+		"recipeId": null,
+		"value": 1000,
+		"recycling": []
 	}
 ]
