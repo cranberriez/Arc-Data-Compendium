@@ -6,13 +6,10 @@ import { DialogTitle } from "@/components/ui/dialog";
 import { Book } from "lucide-react";
 import React from "react";
 import { formatName, getTypeIcon } from "@/data/items/itemUtils";
-import DynamicIcon from "@/components/items/createIcon";
-import type { IconName } from "@/components/items/createIcon";
+import getItemIcon from "@/components/items/getItemIcon";
 
 // Component that displays item header information
 export const ItemHeader = ({ item }: { item: Item }) => {
-	const iconName = item.icon as IconName;
-
 	return (
 		<DialogHeader className="flex flex-row items-center gap-4 sm:pr-2">
 			{/* Keep existing header content from DialogHeader */}
@@ -24,10 +21,7 @@ export const ItemHeader = ({ item }: { item: Item }) => {
 					`dark:${getRarityColor(item.rarity, "bg")}/10`
 				)}
 			>
-				<DynamicIcon
-					name={iconName}
-					className={cn("w-8 h-8", getRarityColor(item.rarity, "text"))}
-				/>
+				{getItemIcon(item.icon, cn("w-8 h-8", getRarityColor(item.rarity, "text")))}
 			</div>
 			<div className="flex flex-col items-start">
 				<DialogTitle className="text-left text-2xl font-normal pr-6 sm:pr-0">

@@ -18,6 +18,7 @@ import {
 import { ItemCategory } from "@/types/items/types";
 import { useDialog } from "@/contexts/dialogContext";
 import { usePathname, useRouter } from "next/navigation";
+import getItemIcon from "./items/getItemIcon";
 
 export function SearchDialog({
 	open,
@@ -201,13 +202,7 @@ const createCommandItems = (
 			<div className="flex items-center gap-2">
 				{/* Item icon */}
 				<div className="h-5 w-5 flex items-center justify-center">
-					{item.icon ? (
-						<item.icon className="h-4 w-4" />
-					) : (
-						React.createElement(getTypeIcon(item.category), {
-							className: "h-4 w-4",
-						})
-					)}
+					{getItemIcon(item.icon, "h-4 w-4")}
 				</div>
 
 				{/* Item name */}
