@@ -380,7 +380,7 @@
 		"name": "Burletta Recipe",
 		"description": "A recipe to craft the Burletta weapon.",
 		"icon": "",
-		"rarity": "common",
+		"rarity": "legendary",
 		"value": 0,
 		"weight": 0,
 		"maxStack": 1,
@@ -745,7 +745,7 @@
 		"value": 0,
 		"weight": 0,
 		"maxStack": 1,
-		"category": "misc",
+		"category": "recyclable",
 		"flavorText": null,
 		"recipeId": null
 	},
@@ -1179,7 +1179,7 @@
 		"value": 0,
 		"weight": 0,
 		"maxStack": 1,
-		"category": "misc",
+		"category": "quick_use",
 		"flavorText": null,
 		"recipeId": "recipe_light_impact_grenade",
 		"recycling": [
@@ -2347,7 +2347,7 @@
 		"value": 0,
 		"weight": 0,
 		"maxStack": 1,
-		"category": "misc",
+		"category": "quick_use",
 		"flavorText": null,
 		"recipeId": null
 	},
