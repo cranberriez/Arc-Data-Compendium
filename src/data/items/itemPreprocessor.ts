@@ -49,31 +49,3 @@ export const addSources: ItemProcessor<Item> = (item, allItems = []) => ({
 		return getItemSources(item.id, allItems);
 	},
 });
-
-export const processIcons: ItemProcessor<Item> = (item) => {
-	if (!item.icon) return item;
-
-	return {
-		...item,
-		// Add icon processing logic here
-		// Example: icon: normalizeIconName(item.icon)
-		// Currently DOES NOTHING, item icon conversion is handled in jsonLoader
-	};
-};
-
-export const validateItem: ItemProcessor<Item> = (item) => {
-	// Add validation logic here
-	// Could throw errors or log warnings for invalid items
-	return item;
-};
-
-// Example usage with composition
-export const defaultItemProcessor = composeProcessors(
-	// addSources, // Incompatible type with default processors
-	processIcons,
-	validateItem
-	// Add more processors as needed
-);
-
-// Helper to process all items with the default processor
-export const processAllItems = (items: Item[]) => processItems(items, defaultItemProcessor);

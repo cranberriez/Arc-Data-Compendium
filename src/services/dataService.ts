@@ -1,8 +1,13 @@
 import { Item } from "@/types/items/item";
 import { Recipe } from "@/types/items/recipe";
 import { Workbench } from "@/types/items/workbench";
-import { DataTypes } from "@/data/jsonLoader";
-// Remove Lucide imports - we'll handle icons on the client side
+
+export type DataTypes = {
+	workbench: Workbench;
+	item: Item;
+	recipe: Recipe;
+	valuable: Item;
+};
 
 /**
  * Fetches items data from the API
@@ -12,7 +17,15 @@ export async function fetchItems(): Promise<Item[]> {
 		// In server components, we need absolute URLs
 		// Use process.env.NEXT_PUBLIC_BASE_URL or a default for local development
 		const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
-		const response = await fetch(`${baseUrl}/api/items`);
+		const response = await fetch(`${baseUrl}/api/items`, {
+			method: "GET",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			next: {
+				revalidate: 3600,
+			},
+		});
 		if (!response.ok) {
 			throw new Error(`Failed to fetch items: ${response.statusText}`);
 		}
@@ -35,7 +48,15 @@ export async function fetchItems(): Promise<Item[]> {
 export async function fetchValuables(): Promise<Item[]> {
 	try {
 		const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
-		const response = await fetch(`${baseUrl}/api/valuables`);
+		const response = await fetch(`${baseUrl}/api/valuables`, {
+			method: "GET",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			next: {
+				revalidate: 3600,
+			},
+		});
 		if (!response.ok) {
 			throw new Error(`Failed to fetch valuables: ${response.statusText}`);
 		}
@@ -59,7 +80,15 @@ export async function fetchValuables(): Promise<Item[]> {
 export async function fetchRecipes(): Promise<Recipe[]> {
 	try {
 		const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
-		const response = await fetch(`${baseUrl}/api/recipes`);
+		const response = await fetch(`${baseUrl}/api/recipes`, {
+			method: "GET",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			next: {
+				revalidate: 3600,
+			},
+		});
 		if (!response.ok) {
 			throw new Error(`Failed to fetch recipes: ${response.statusText}`);
 		}
@@ -84,7 +113,15 @@ export async function fetchRecipes(): Promise<Recipe[]> {
 export async function fetchWorkbenches(): Promise<Workbench[]> {
 	try {
 		const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
-		const response = await fetch(`${baseUrl}/api/workbenches`);
+		const response = await fetch(`${baseUrl}/api/workbenches`, {
+			method: "GET",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			next: {
+				revalidate: 3600,
+			},
+		});
 		if (!response.ok) {
 			throw new Error(`Failed to fetch workbenches: ${response.statusText}`);
 		}
