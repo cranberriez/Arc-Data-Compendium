@@ -1,10 +1,18 @@
 "use client";
 
-import { createContext, ReactNode, useCallback, useMemo, useState, useContext } from "react";
+import {
+	createContext,
+	ReactNode,
+	useCallback,
+	useMemo,
+	useState,
+	useContext,
+	useEffect,
+} from "react";
 import { BaseItem, Item } from "@/types";
-import { items, valuables } from "@/data";
 import { searchFunc } from "@/data/items/itemUtils";
 import { addSources, composeProcessors, processItems } from "@/data/items/itemPreprocessor";
+import { fetchItems, fetchValuables } from "@/services/dataService";
 
 type SortOrder = "asc" | "desc" | "none";
 type SortField = "name" | "rarity" | "category" | "value" | "none"; // 'category' replaces 'type' from legacy Item
@@ -21,6 +29,8 @@ interface ItemContextType {
 	filterState: FilterState;
 	sortField: SortField;
 	sortOrder: SortOrder;
+	isLoading: boolean;
+	error: string | null;
 	setSearchQuery: (query: string) => void;
 	setRarity: (rarity: string) => void;
 	setCategory: (category: string) => void;
@@ -59,11 +69,40 @@ export function ItemProvider({
 	// Expand to include validItem and processIcons when needed
 	const itemProcessor = useMemo(() => composeProcessors<Item>(addSources), []);
 
-	// Memoize the combined items array to prevent recreation on every render
-	const allItems = useMemo(
-		() => processItems([...items, ...valuables], itemProcessor),
-		[itemProcessor]
-	);
+	// State for storing fetched items
+	const [allItems, setAllItems] = useState<Item[]>([]);
+	const [isLoading, setIsLoading] = useState(true);
+	const [error, setError] = useState<string | null>(null);
+
+	// Fetch data from API endpoints
+	useEffect(() => {
+		async function loadData() {
+			setIsLoading(true);
+			try {
+				const [fetchedItems, fetchedValuables] = await Promise.all([
+					fetchItems(),
+					fetchValuables(),
+				]);
+
+				// Process items with the processor if needed
+				const processedItems = processItems(
+					[...fetchedItems, ...fetchedValuables],
+					itemProcessor
+				);
+				setAllItems(processedItems);
+				setError(null);
+			} catch (err) {
+				console.error("Failed to fetch items:", err);
+				setError("Failed to load items. Please try again later.");
+			} finally {
+				setIsLoading(false);
+			}
+		}
+
+		loadData();
+	}, [itemProcessor]);
+
+	// State for filter and sort
 	const [filterState, setFilterState] = useState<FilterState>(defaultFilterState);
 	const [sortField, setSortField] = useState<SortField>("none");
 	const [sortOrder, setSortOrder] = useState<SortOrder>("none");
@@ -181,6 +220,8 @@ export function ItemProvider({
 			filterState,
 			sortField,
 			sortOrder,
+			isLoading,
+			error,
 			setSearchQuery,
 			setRarity,
 			setCategory,
@@ -196,6 +237,8 @@ export function ItemProvider({
 			filterState,
 			sortField,
 			sortOrder,
+			isLoading,
+			error,
 			setSearchQuery,
 			setRarity,
 			setCategory,

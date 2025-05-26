@@ -1,4 +1,4 @@
-import { LucideIcon } from "lucide-react";
+// Remove LucideIcon import - we'll use string for icon names
 
 /**
  * Base interface that all items must implement
@@ -13,6 +13,6 @@ export interface BaseItem {
 	/** Item description (can include flavor text) */
 	description: string;
 
-	/** Icon for the item (LucideIcon) */
-	icon: LucideIcon;
+	/** Icon name as string (will be converted to LucideIcon on client) */
+	icon: string;
 }

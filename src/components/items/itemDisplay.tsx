@@ -5,13 +5,14 @@ import { useMemo } from "react";
 import Image from "next/image";
 import { Card } from "@/components/ui/card";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import { Book, BadgeCent, Weight } from "lucide-react";
+import { Book, BadgeCent, Weight, FileQuestion } from "lucide-react";
+import DynamicIcon from "@/components/items/createIcon";
+import type { IconName } from "@/components/items/createIcon";
 import { Item } from "@/types";
 import { formatName, getRarityColor, getTypeIcon } from "@/data/items/itemUtils";
 import { cn } from "@/lib/utils";
 import { useDialog } from "@/contexts/dialogContext";
 import { getItemImagePath } from "@/utils/itemImage";
-import { Skeleton } from "../ui/skeleton";
 
 const USE_ACTUAL_IMAGES = false;
 
@@ -60,8 +61,21 @@ const ItemCardComponent = React.memo(
 
 			// Fallback to icon if no image found
 			if (item?.icon) {
+				const iconName = item.icon as IconName;
+				// Convert icon string to LucideIcon component
 				return (
-					<item.icon
+					<DynamicIcon
+						name={iconName}
+						className={cn(
+							"w-8 h-8",
+							size === "sm" && "w-6 h-6",
+							getRarityColor(item.rarity, "text")
+						)}
+					/>
+				);
+			} else {
+				return (
+					<FileQuestion
 						className={cn(
 							"w-8 h-8",
 							size === "sm" && "w-6 h-6",
