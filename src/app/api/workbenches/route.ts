@@ -25,3 +25,13 @@ export async function GET() {
 		);
 	}
 }
+
+// Handle OPTIONS method for CORS preflight
+// This is needed for some browsers and frameworks
+// that send a preflight OPTIONS request before the actual request
+export async function OPTIONS() {
+	return new NextResponse(null, {
+		headers,
+		status: 200,
+	});
+}
