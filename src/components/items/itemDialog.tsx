@@ -24,7 +24,6 @@ export function ItemDialog({ data, isOpen, closeDialog, backDialog }: ItemDialog
 
 	const sourcesPresent = item.sources && item.sources.length > 0;
 	const recyclingPresent = item.recycling && item.recycling.length > 0;
-	console.log(item.sources);
 
 	// Custom close handler to clear the queue
 	const handleCloseDialog = () => {

@@ -274,7 +274,7 @@
 		"value": 0,
 		"weight": 0,
 		"maxStack": 1,
-		"category": "gear",
+		"category": "quick_use",
 		"flavorText": null,
 		"recipeId": "recipe_binoculars",
 		"recycling": [
@@ -309,7 +309,7 @@
 		"value": 0,
 		"weight": 0,
 		"maxStack": 1,
-		"category": "gear",
+		"category": "quick_use",
 		"flavorText": null,
 		"recipeId": null
 	},
@@ -923,7 +923,7 @@
 		"value": 0,
 		"weight": 0,
 		"maxStack": 1,
-		"category": "gear",
+		"category": "quick_use",
 		"flavorText": null,
 		"recipeId": null
 	},
@@ -1101,7 +1101,7 @@
 		"value": 0,
 		"weight": 0,
 		"maxStack": 1,
-		"category": "gear",
+		"category": "quick_use",
 		"flavorText": null,
 		"recipeId": null
 	},
@@ -1198,11 +1198,11 @@
 		"name": "Lure Grenade",
 		"description": "A grenade that attracts attention.",
 		"icon": "",
-		"rarity": "common",
+		"rarity": "uncommon",
 		"value": 0,
 		"weight": 0,
 		"maxStack": 1,
-		"category": "gear",
+		"category": "quick_use",
 		"flavorText": null,
 		"recipeId": null
 	},
@@ -1230,7 +1230,7 @@
 		"category": "recyclable",
 		"icon": "Cog",
 		"rarity": "rare",
-		"description": "A set of gears, springs, and metal parts used in weapon and device crafting.",
+		"description": "A set of quick_uses, springs, and metal parts used in weapon and device crafting.",
 		"weight": 1,
 		"maxStack": 1,
 		"recipeId": null,
@@ -1286,7 +1286,7 @@
 		"value": 0,
 		"weight": 0,
 		"maxStack": 1,
-		"category": "shield",
+		"category": "gear",
 		"flavorText": null,
 		"recipeId": "recipe_light_shield"
 	},
@@ -1299,7 +1299,7 @@
 		"value": 2000,
 		"weight": 7,
 		"maxStack": 1,
-		"category": "shield",
+		"category": "gear",
 		"flavorText": null,
 		"recipeId": "recipe_medium_shield"
 	},
@@ -1312,7 +1312,7 @@
 		"value": 2000,
 		"weight": 7,
 		"maxStack": 1,
-		"category": "shield",
+		"category": "gear",
 		"flavorText": null,
 		"recipeId": "recipe_heavy_shield"
 	},
@@ -1477,7 +1477,7 @@
 		"value": 0,
 		"weight": 0,
 		"maxStack": 1,
-		"category": "gear",
+		"category": "quick_use",
 		"flavorText": null,
 		"recipeId": null
 	},
@@ -1632,7 +1632,7 @@
 		"value": 0,
 		"weight": 0,
 		"maxStack": 1,
-		"category": "augment",
+		"category": "gear",
 		"flavorText": null,
 		"recipeId": "recipe_raider_augment_i"
 	},
@@ -1645,7 +1645,7 @@
 		"value": 0,
 		"weight": 0,
 		"maxStack": 1,
-		"category": "augment",
+		"category": "gear",
 		"flavorText": null,
 		"recipeId": "recipe_raider_augment_ii"
 	},
@@ -1658,7 +1658,7 @@
 		"value": 0,
 		"weight": 0,
 		"maxStack": 1,
-		"category": "augment",
+		"category": "gear",
 		"flavorText": null,
 		"recipeId": "recipe_raider_augment_iii"
 	},
@@ -1671,7 +1671,7 @@
 		"value": 0,
 		"weight": 0,
 		"maxStack": 1,
-		"category": "augment",
+		"category": "gear",
 		"flavorText": null,
 		"recipeId": "recipe_raider_augment_iv"
 	},
@@ -1833,12 +1833,12 @@
 		]
 	},
 	{
-		"id": "rusted_gear",
-		"name": "Rusted Gear",
+		"id": "rusted_quick_use",
+		"name": "Rusted quick_use",
 		"category": "recyclable",
 		"icon": "Cog",
 		"rarity": "rare",
-		"description": "A gear covered in rust, but still functional.",
+		"description": "A quick_use covered in rust, but still functional.",
 		"weight": 1,
 		"maxStack": 1,
 		"recipeId": null,
@@ -1889,25 +1889,12 @@
 		]
 	},
 	{
-		"id": "sensor",
-		"name": "Sensor",
-		"description": "A sensitive electronic sensor used for environmental monitoring.",
-		"icon": "",
-		"rarity": "common",
-		"value": 0,
-		"weight": 0,
-		"maxStack": 1,
-		"category": "misc",
-		"flavorText": null,
-		"recipeId": null
-	},
-	{
 		"id": "sensors",
 		"name": "Sensors",
 		"category": "recyclable",
 		"icon": "Radar",
 		"rarity": "rare",
-		"description": "No provided description for this item yet.",
+		"description": "A sensitive electronic sensor used for environmental monitoring.",
 		"weight": 1,
 		"maxStack": 1,
 		"recipeId": null,
@@ -1968,7 +1955,7 @@
 		"value": 0,
 		"weight": 0,
 		"maxStack": 1,
-		"category": "gear",
+		"category": "quick_use",
 		"flavorText": null,
 		"recipeId": null
 	},
@@ -1999,7 +1986,7 @@
 		"value": 0,
 		"weight": 0,
 		"maxStack": 1,
-		"category": "gear",
+		"category": "quick_use",
 		"flavorText": null,
 		"recipeId": null
 	},
@@ -2012,7 +1999,7 @@
 		"value": 0,
 		"weight": 0,
 		"maxStack": 1,
-		"category": "misc",
+		"category": "quick_use",
 		"flavorText": null,
 		"recipeId": null
 	},
@@ -2356,7 +2343,7 @@
 		"name": "WolfPack",
 		"description": "A compact bundle of high-explosive charges, commonly used by Raiders.",
 		"icon": "",
-		"rarity": "common",
+		"rarity": "epic",
 		"value": 0,
 		"weight": 0,
 		"maxStack": 1,
