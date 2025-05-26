@@ -802,32 +802,6 @@
 		"value": 0
 	},
 	{
-		"id": "ferro_i",
-		"name": "Ferro I",
-		"description": "A basic Ferro rifle.",
-		"icon": "",
-		"rarity": "common",
-		"value": 0,
-		"weight": 0,
-		"maxStack": 1,
-		"category": "weapon",
-		"flavorText": null,
-		"recipeId": null
-	},
-	{
-		"id": "ferro_iv",
-		"name": "Ferro IV",
-		"description": "An advanced Ferro device.",
-		"icon": "",
-		"rarity": "common",
-		"value": 0,
-		"weight": 0,
-		"maxStack": 1,
-		"category": "weapon",
-		"flavorText": null,
-		"recipeId": null
-	},
-	{
 		"id": "fireball_burner",
 		"name": "Fireball Burner",
 		"category": "recyclable",
@@ -1304,9 +1278,22 @@
 		]
 	},
 	{
+		"id": "light_shield",
+		"name": "Light Shield",
+		"description": "A lightweight shield that offers limited protection without severely impacting mobility.",
+		"icon": "",
+		"rarity": "rare",
+		"value": 0,
+		"weight": 0,
+		"maxStack": 1,
+		"category": "shield",
+		"flavorText": null,
+		"recipeId": "recipe_light_shield"
+	},
+	{
 		"id": "medium_shield",
 		"name": "Medium Shield",
-		"description": "A standard shield that offers fair protection at a moderate cost to mobility.",
+		"description": "A standard shield that offers fair protection at a moderate cost to mobility",
 		"icon": "",
 		"rarity": "rare",
 		"value": 2000,
@@ -1315,6 +1302,19 @@
 		"category": "shield",
 		"flavorText": null,
 		"recipeId": "recipe_medium_shield"
+	},
+	{
+		"id": "heavy_shield",
+		"name": "Heavy Shield",
+		"description": "A heavy shield that offers maximum protection at a high cost to mobility",
+		"icon": "",
+		"rarity": "rare",
+		"value": 2000,
+		"weight": 7,
+		"maxStack": 1,
+		"category": "shield",
+		"flavorText": null,
+		"recipeId": "recipe_heavy_shield"
 	},
 	{
 		"id": "metal_brackets",
@@ -1538,25 +1538,12 @@
 		]
 	},
 	{
-		"id": "power_cable",
-		"name": "Power Cable",
-		"description": "A heavy-duty cable used for transmitting electrical power.",
-		"icon": "",
-		"rarity": "common",
-		"value": 0,
-		"weight": 0,
-		"maxStack": 1,
-		"category": "material",
-		"flavorText": null,
-		"recipeId": null
-	},
-	{
 		"id": "power_cables",
 		"name": "Power Cables",
 		"category": "recyclable",
 		"icon": "Cable",
 		"rarity": "rare",
-		"description": "No provided description for this item yet.",
+		"description": "A heavy-duty cable used for transmitting electrical power.",
 		"weight": 1,
 		"maxStack": 1,
 		"recipeId": null,
@@ -1942,7 +1929,7 @@
 		"category": "recyclable",
 		"icon": "Telescope",
 		"rarity": "rare",
-		"description": "No provided description for this item yet.",
+		"description": "A salvaged component from a Sentinel unit.",
 		"weight": 1,
 		"maxStack": 1,
 		"recipeId": null,
@@ -1953,19 +1940,6 @@
 				"count": 2
 			}
 		]
-	},
-	{
-		"id": "sentinel_part",
-		"name": "Sentinel Part",
-		"description": "A salvaged component from a Sentinel unit.",
-		"icon": "",
-		"rarity": "common",
-		"value": 0,
-		"weight": 0,
-		"maxStack": 1,
-		"category": "material",
-		"flavorText": null,
-		"recipeId": null
 	},
 	{
 		"id": "shotgun_gun_parts",
@@ -2083,19 +2057,6 @@
 		]
 	},
 	{
-		"id": "spring",
-		"name": "Spring",
-		"description": "A tightly wound coil of metal, useful for crafting mechanisms.",
-		"icon": "",
-		"rarity": "common",
-		"value": 0,
-		"weight": 0,
-		"maxStack": 1,
-		"category": "material",
-		"flavorText": null,
-		"recipeId": null
-	},
-	{
 		"id": "spring_cushion",
 		"name": "Spring Cushion",
 		"category": "recyclable",
@@ -2123,7 +2084,7 @@
 		"category": "recyclable",
 		"icon": "RotateCcw",
 		"rarity": "uncommon",
-		"description": "No provided description for this item yet.",
+		"description": "A tightly wound coil of metal, useful for crafting mechanisms.",
 		"weight": 1,
 		"maxStack": 1,
 		"recipeId": null,

@@ -12,6 +12,7 @@ import { cn } from "@/lib/utils";
 import { useDialog } from "@/contexts/dialogContext";
 import { getItemImagePath } from "@/utils/itemImage";
 import getItemIcon from "./getItemIcon";
+import { useItems } from "@/contexts/itemContext";
 
 const USE_ACTUAL_IMAGES = false;
 
@@ -34,7 +35,12 @@ const ItemCardComponent = React.memo(
 		size,
 	}: ItemCardProps) {
 		const { openDialog } = useDialog();
-		const handleClick = onClick || (() => openDialog("item", item));
+		const { getItemById } = useItems();
+		const handleClick =
+			onClick ||
+			(() => {
+				if (item) openDialog("item", getItemById(item.id));
+			});
 		const [imageError, setImageError] = React.useState(false);
 
 		// Check if item has an image, otherwise use the icon
@@ -120,34 +126,6 @@ const ItemCardComponent = React.memo(
 					)}
 				>
 					{itemImage}
-					{/* {(() => {
-						const imagePath = getItemImagePath(item.id);
-						if (imagePath) {
-							return (
-								<div className="relative w-full h-full">
-									<Image
-										src={imagePath}
-										alt={item.name}
-										fill
-										className="object-contain"
-										sizes="48px"
-										unoptimized={process.env.NODE_ENV !== "production"}
-									/>
-								</div>
-							);
-						}
-						if (item.icon) {
-							return (
-								<item.icon
-									className={cn(
-										"h-full aspect-square",
-										getRarityColor(item.rarity, "text")
-									)}
-								/>
-							);
-						}
-						return null;
-					})()} */}
 				</div>
 				<div className="flex flex-col flex-1 h-full min-w-0">
 					<div className="flex flex-1 flex-row items-center justify-between">

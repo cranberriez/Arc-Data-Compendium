@@ -9,8 +9,9 @@ import {
 	useContext,
 	useEffect,
 } from "react";
-import { BaseItem, Item } from "@/types";
-import { searchFunc } from "@/data/items/itemUtils";
+import { applyItemFilters, sortItems } from "@/utils/items";
+
+import { Item } from "@/types";
 import { addSources, composeProcessors, processItems } from "@/data/items/itemPreprocessor";
 import { fetchItems, fetchValuables } from "@/services/dataService";
 
@@ -49,22 +50,7 @@ const defaultFilterState: FilterState = {
 
 const ItemContext = createContext<ItemContextType | undefined>(undefined);
 
-// Rarity order mapping for default sort
-const rarityOrder: Record<string, number> = {
-	common: 1,
-	uncommon: 2,
-	rare: 3,
-	epic: 4,
-	legendary: 5,
-};
-
-export function ItemProvider({
-	children,
-	itemsSubset,
-}: {
-	children: ReactNode;
-	itemsSubset?: Item[];
-}) {
+export function ItemProvider({ children }: { children: ReactNode }) {
 	// Compose item preprocessors
 	// Expand to include validItem and processIcons when needed
 	const itemProcessor = useMemo(() => composeProcessors<Item>(addSources), []);
@@ -108,58 +94,16 @@ export function ItemProvider({
 	const [sortOrder, setSortOrder] = useState<SortOrder>("none");
 
 	// Memoize the current items to prevent recalculation
-	const currentItems = useMemo(() => itemsSubset || allItems, [itemsSubset, allItems]);
+	const currentItems = useMemo(() => allItems, [allItems]);
 
 	const filteredItems = useMemo(() => {
-		let result = [...currentItems];
+		const filtered = applyItemFilters(currentItems, {
+			searchQuery: filterState.searchQuery,
+			rarities: filterState.rarities,
+			categories: filterState.categories,
+		});
 
-		// Apply search filter
-		if (filterState.searchQuery) {
-			const query = filterState.searchQuery;
-			result = result.filter((item) => searchFunc(item, query));
-		}
-
-		// Filter by rarity
-		if (filterState.rarities.length > 0) {
-			result = result.filter((item) => filterState.rarities.includes(item.rarity));
-		}
-
-		// Filter by category (was 'type')
-		if (filterState.categories.length > 0) {
-			result = result.filter((item) => filterState.categories.includes(item.category));
-		}
-
-		// Sorting
-		if (sortField !== "none" && sortOrder !== "none") {
-			// Explicit user sort
-			result.sort((a, b) => {
-				let aValue: any, bValue: any;
-
-				if (sortField === "name") {
-					aValue = a.name.toLowerCase();
-					bValue = b.name.toLowerCase();
-				} else if (sortField === "category") {
-					aValue = a.category;
-					bValue = b.category;
-				} else {
-					aValue = a[sortField as keyof BaseItem];
-					bValue = b[sortField as keyof BaseItem];
-				}
-
-				if (aValue < bValue) return sortOrder === "asc" ? -1 : 1;
-				if (aValue > bValue) return sortOrder === "asc" ? 1 : -1;
-				return 0;
-			});
-		} else {
-			// Default: sort by rarity, then name
-			result.sort((a, b) => {
-				const rarityCompare = rarityOrder[a.rarity] - rarityOrder[b.rarity];
-				if (rarityCompare !== 0) return rarityCompare;
-				return a.name.localeCompare(b.name);
-			});
-		}
-
-		return result;
+		return sortItems(filtered, sortField, sortOrder);
 	}, [currentItems, filterState, sortField, sortOrder]);
 
 	const setSearchQuery = useCallback(

@@ -76,10 +76,6 @@ export function SearchDialog({
 
 	// Count items by category based on filtered items
 	const categoryCounts = useMemo((): Record<ItemCategory, number> => {
-		if (queriedItems.length < 25) {
-			console.log(queriedItems);
-		}
-
 		// Initialize with all categories at 0 count
 		const initialCounts = categories.reduce((acc, category) => {
 			acc[category] = 0;
@@ -191,8 +187,6 @@ const createCommandItems = (
 	handleItemSelect: (item: Item) => void,
 	localSearch: string
 ) => {
-	console.log(queriedItems);
-
 	return queriedItems.map((item) => (
 		<CommandItem
 			key={`item-${item.id}`}

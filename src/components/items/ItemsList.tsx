@@ -1,12 +1,24 @@
+"use client";
+
 import { Item } from "@/types";
 import { ItemCard } from "./itemDisplay";
+import { applyItemFilters, sortItems } from "@/utils/items";
+import { useItems } from "@/contexts/itemContext";
 
 interface ItemListProps {
-	items: Item[];
+	initialItems: Item[];
 }
 
-export function ItemList({ items }: ItemListProps) {
-	return items.map((item) => (
+export function ItemList({ initialItems }: ItemListProps) {
+	const { filterState } = useItems();
+	const items = sortItems(initialItems, "rarity", "asc");
+	const filteredItems = applyItemFilters(items, {
+		searchQuery: "",
+		rarities: filterState.rarities,
+		categories: filterState.categories,
+	});
+
+	return filteredItems.map((item) => (
 		<ItemCard
 			key={item.id}
 			item={item}

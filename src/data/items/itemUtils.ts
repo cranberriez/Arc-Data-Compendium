@@ -63,20 +63,20 @@ export function getItemSources(itemId: string, items: Item[]): ItemSource[] {
 	}
 
 	// Get the original sources (buy only, now)
-	const sources: ItemSource[] = [];
-	if (item.sources) {
-		for (const src of item.sources) {
-			if (src.type === "buy") {
-				// Only push buy sources, matching the new structure
-				sources.push({
-					type: "buy",
-					trader: src.trader,
-					value: src.value,
-					count: src.count,
-				});
-			}
-		}
-	}
+	// const sources: ItemSource[] = [];
+	// if (item.sources) {
+	// 	for (const src of item.sources) {
+	// 		if (src.type === "buy") {
+	// 			// Only push buy sources, matching the new structure
+	// 			sources.push({
+	// 				type: "buy",
+	// 				trader: src.trader,
+	// 				value: src.value,
+	// 				count: src.count,
+	// 			});
+	// 		}
+	// 	}
+	// }
 
 	// Add recycling sources if any
 	const recycleSources = recycleSourceCache.get(itemId) || [];

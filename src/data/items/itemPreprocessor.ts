@@ -43,9 +43,13 @@ export const processItems = <T = Item>(
 };
 
 // Individual processors
-export const addSources: ItemProcessor<Item> = (item, allItems = []) => ({
-	...item,
-	get sources() {
-		return getItemSources(item.id, allItems);
-	},
-});
+export const addSources: ItemProcessor<Item> = (item, allItems = []) => {
+	const existingSources = item.sources || [];
+	const sources = getItemSources(item.id, allItems);
+	return {
+		...item,
+		get sources() {
+			return [...existingSources, ...sources];
+		},
+	};
+};

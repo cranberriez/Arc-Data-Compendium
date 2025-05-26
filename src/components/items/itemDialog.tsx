@@ -24,6 +24,7 @@ export function ItemDialog({ data, isOpen, closeDialog, backDialog }: ItemDialog
 
 	const sourcesPresent = item.sources && item.sources.length > 0;
 	const recyclingPresent = item.recycling && item.recycling.length > 0;
+	console.log(item.sources);
 
 	// Custom close handler to clear the queue
 	const handleCloseDialog = () => {
@@ -56,14 +57,16 @@ export function ItemDialog({ data, isOpen, closeDialog, backDialog }: ItemDialog
 						</Button>
 					</div>
 				)}
+				{/* Dialog Header */}
+				<ItemHeader item={item} />
+
 				{/* Screen Reader Stuff */}
 				<DialogDescription className="sr-only">
 					Details for {item.name}, {item.rarity} {item.category}
 					{item.recipeId ? ", Recipe" : ""}
 				</DialogDescription>
 
-				{/* Dialog Header */}
-				<ItemHeader item={item} />
+				<DialogDescription>{item.description}</DialogDescription>
 
 				{sourcesPresent || recyclingPresent ? (
 					<hr className="my-2 border-t border-t-secondary-foreground/20 dark:border-t-secondary-foreground/10" />
