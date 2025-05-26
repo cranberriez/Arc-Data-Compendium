@@ -62,8 +62,8 @@ export function getItemSources(itemId: string, items: Item[]): ItemSource[] {
 		recycleSourceCache = buildRecycleSourceMap(items);
 	}
 
+	const sources: ItemSource[] = [];
 	// Get the original sources (buy only, now)
-	// const sources: ItemSource[] = [];
 	// if (item.sources) {
 	// 	for (const src of item.sources) {
 	// 		if (src.type === "buy") {
