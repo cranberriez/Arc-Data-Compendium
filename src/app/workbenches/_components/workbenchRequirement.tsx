@@ -1,11 +1,12 @@
-import { CardContent } from "../ui/card";
+import { CardContent } from "@/components/ui/card";
 import { WorkbenchTier } from "@/types/items/workbench";
 import { Item } from "@/types";
-import { ItemCard } from "../items/itemDisplay";
+import { ItemCard } from "@/components/items/itemDisplay";
 import { Unlock } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { ItemIconSkeleton } from "@/components/items/itemIconSkeleton";
 
 interface WorkbenchRequirementProps {
 	tier: WorkbenchTier;
@@ -30,20 +31,10 @@ export default function WorkbenchRequirement({
 						const itemData = getItemById(item.itemId);
 						if (!itemData) {
 							return (
-								<div
+								<ItemIconSkeleton
 									key={item.itemId}
-									className="flex flex-col h-[90px] aspect-square items-center gap-1 p-2 border-2 border-red-500 rounded-md bg-muted/50 cursor-pointer"
-								>
-									<div className="flex items-center gap-1">
-										<div className="w-8 h-8 bg-red-500/30 border-red-500 border-2 rounded" />
-										<span className="text-lg font-mono text-center">
-											x{item.count}
-										</span>
-									</div>
-									<span className="text-xs text-muted-foreground truncate w-full text-center">
-										{item.itemId}
-									</span>
-								</div>
+									size={isMobile ? "sm" : "default"}
+								/>
 							);
 						}
 						return (

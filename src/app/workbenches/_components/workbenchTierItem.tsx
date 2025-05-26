@@ -1,4 +1,4 @@
-import { Card, CardHeader, CardTitle } from "../ui/card";
+import { Card, CardHeader, CardTitle } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import { WorkbenchTier } from "@/types/items/workbench";
 import WorkbenchRequirement from "./workbenchRequirement";

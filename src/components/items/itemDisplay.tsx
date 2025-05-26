@@ -101,10 +101,10 @@ const ItemCardComponent = React.memo(
 				<div
 					className={cn(
 						"flex flex-col items-center justify-between border-2 hover:border-primary/60 rounded p-2 min-w-[60px] aspect-square cursor-pointer",
-						borderClass,
 						"border-secondary-foreground/20",
-						className,
-						size === "sm" && "max-h-[80px]"
+						size === "sm" && "max-h-[80px]",
+						borderClass,
+						className
 					)}
 					onClick={handleClick}
 				>
