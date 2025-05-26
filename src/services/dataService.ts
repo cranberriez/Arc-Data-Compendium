@@ -30,12 +30,7 @@ export async function fetchItems(): Promise<Item[]> {
 			throw new Error(`Failed to fetch items: ${response.statusText}`);
 		}
 		const data = await response.json();
-		return data.map((item: Record<string, any>) => {
-			return {
-				...item,
-				value: item.value ?? 0,
-			} as Item;
-		});
+		return data as Item[];
 	} catch (error) {
 		console.error("Error fetching items:", error);
 		return [];
@@ -61,13 +56,7 @@ export async function fetchValuables(): Promise<Item[]> {
 			throw new Error(`Failed to fetch valuables: ${response.statusText}`);
 		}
 		const data = await response.json();
-		return data.map((item: Record<string, any>) => {
-			return {
-				...item,
-				category: "valuable",
-				value: item.value ?? 100,
-			} as Item;
-		});
+		return data as Item[];
 	} catch (error) {
 		console.error("Error fetching valuables:", error);
 		return [];
@@ -93,14 +82,7 @@ export async function fetchRecipes(): Promise<Recipe[]> {
 			throw new Error(`Failed to fetch recipes: ${response.statusText}`);
 		}
 		const data = await response.json();
-		return data.map((item: Record<string, any>) => {
-			return {
-				...item,
-				craftTime: item.craftTime ?? 5,
-				outputCount: item.outputCount ?? 1,
-				unlockedByDefault: item.unlockedByDefault ?? false,
-			} as Recipe;
-		});
+		return data as Recipe[];
 	} catch (error) {
 		console.error("Error fetching recipes:", error);
 		return [];
@@ -126,11 +108,7 @@ export async function fetchWorkbenches(): Promise<Workbench[]> {
 			throw new Error(`Failed to fetch workbenches: ${response.statusText}`);
 		}
 		const data = await response.json();
-		return data.map((item: Record<string, any>) => {
-			return {
-				...item,
-			} as Workbench;
-		});
+		return data as Workbench[];
 	} catch (error) {
 		console.error("Error fetching workbenches:", error);
 		return [];
