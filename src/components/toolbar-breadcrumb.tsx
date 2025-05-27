@@ -36,7 +36,29 @@ export function ToolbarBreadcrumb() {
 
 	return (
 		<div className="flex items-center gap-2 w-full">
-			<div className="flex items-center gap-1 sm:mr-1">
+			<Breadcrumb>
+				<BreadcrumbList>
+					<BreadcrumbItem className="hidden md:block">
+						<BreadcrumbLink href="/">ARC Vault</BreadcrumbLink>
+					</BreadcrumbItem>
+					{pageTitle !== "" && (
+						<>
+							<BreadcrumbSeparator className="hidden md:block" />
+							<BreadcrumbItem>
+								<BreadcrumbPage>{pageTitle}</BreadcrumbPage>
+							</BreadcrumbItem>
+						</>
+					)}
+				</BreadcrumbList>
+			</Breadcrumb>
+
+			{pageTitle.toLowerCase() === "items" && (
+				<p className="text-sm text-muted-foreground ml-auto">
+					Viewing {filteredItems.length} items
+				</p>
+			)}
+
+			<div className="flex items-center gap-1">
 				<Button
 					variant="ghost"
 					size="sm"
@@ -61,28 +83,6 @@ export function ToolbarBreadcrumb() {
 					</Button>
 				)}
 			</div>
-
-			<Breadcrumb>
-				<BreadcrumbList>
-					<BreadcrumbItem className="hidden md:block">
-						<BreadcrumbLink href="/">ARC Vault</BreadcrumbLink>
-					</BreadcrumbItem>
-					{pageTitle !== "" && (
-						<>
-							<BreadcrumbSeparator className="hidden md:block" />
-							<BreadcrumbItem>
-								<BreadcrumbPage>{pageTitle}</BreadcrumbPage>
-							</BreadcrumbItem>
-						</>
-					)}
-				</BreadcrumbList>
-			</Breadcrumb>
-
-			{pageTitle.toLowerCase() === "items" && (
-				<p className="text-sm text-muted-foreground ml-auto">
-					Viewing {filteredItems.length} items
-				</p>
-			)}
 
 			<SearchDialog
 				open={searchOpen}
