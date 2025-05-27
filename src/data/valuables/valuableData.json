@@ -305,19 +305,6 @@
 		"value": 7000
 	},
 	{
-		"id": "expired_pasta",
-		"name": "Expired Pasta",
-		"category": "valuable",
-		"icon": "Utensils",
-		"rarity": "common",
-		"description": "No provided description for this item yet.",
-		"weight": 1,
-		"maxStack": 1,
-		"recipeId": null,
-		"sources": [],
-		"value": 1000
-	},
-	{
 		"id": "portable_tv_set",
 		"name": "Portable TV set",
 		"category": "valuable",
