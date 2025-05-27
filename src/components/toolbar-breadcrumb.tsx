@@ -14,7 +14,6 @@ import { SearchIcon, RefreshCwIcon } from "lucide-react";
 import { useState } from "react";
 import { useItems } from "@/contexts/itemContext";
 import { SearchDialog } from "./search-dialog";
-import { useIsMobile } from "@/hooks/use-mobile";
 
 export function ToolbarBreadcrumb() {
 	// TODO: Convert to a utility
@@ -35,10 +34,34 @@ export function ToolbarBreadcrumb() {
 		filterState.rarities.length > 0 ||
 		filterState.categories.length > 0;
 
-	const isUseMobile = !useIsMobile();
-
 	return (
-		<div className="flex items-center justify-between w-full">
+		<div className="flex items-center gap-2 w-full">
+			<div className="flex items-center gap-1 sm:mr-1">
+				<Button
+					variant="ghost"
+					size="sm"
+					aria-label="Search"
+					className="cursor-pointer"
+					onClick={() => setSearchOpen(true)}
+				>
+					<SearchIcon />
+					<p>Search</p>
+				</Button>
+
+				{hasActiveFilters && onItemsPage && (
+					<Button
+						variant="ghost"
+						size="icon"
+						aria-label="Clear filters"
+						onClick={() => resetFilters()}
+						className="relative cursor-pointer"
+					>
+						<RefreshCwIcon />
+						<span className="absolute top-0 right-0 h-2 w-2 bg-red-500 rounded-full"></span>
+					</Button>
+				)}
+			</div>
+
 			<Breadcrumb>
 				<BreadcrumbList>
 					<BreadcrumbItem className="hidden md:block">
@@ -55,42 +78,11 @@ export function ToolbarBreadcrumb() {
 				</BreadcrumbList>
 			</Breadcrumb>
 
-			{isUseMobile && onItemsPage && (
-				<div className="flex items-center ml-auto gap-1">
-					<p className="text-sm dark:text-red-500 text-red-700">Work In Progress</p>
-				</div>
+			{pageTitle.toLowerCase() === "items" && (
+				<p className="text-sm text-muted-foreground ml-auto">
+					Viewing {filteredItems.length} items
+				</p>
 			)}
-
-			<div className="flex items-center ml-auto gap-1">
-				{pageTitle.toLowerCase() === "items" && (
-					<p className="text-sm text-muted-foreground ml-4">
-						Viewing {filteredItems.length} items
-					</p>
-				)}
-
-				{hasActiveFilters && onItemsPage && (
-					<Button
-						variant="ghost"
-						size="icon"
-						aria-label="Clear filters"
-						onClick={() => resetFilters()}
-						className="relative"
-					>
-						<RefreshCwIcon />
-						<span className="absolute top-0 right-0 h-2 w-2 bg-red-500 rounded-full"></span>
-					</Button>
-				)}
-
-				<Button
-					variant="ghost"
-					size="sm"
-					aria-label="Search"
-					onClick={() => setSearchOpen(true)}
-				>
-					<SearchIcon />
-					<p>Search</p>
-				</Button>
-			</div>
 
 			<SearchDialog
 				open={searchOpen}

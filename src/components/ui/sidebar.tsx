@@ -256,20 +256,16 @@ function SidebarTrigger({ className, onClick, ...props }: React.ComponentProps<t
 		<Button
 			data-sidebar="trigger"
 			data-slot="sidebar-trigger"
-			variant="ghost"
+			variant="secondary"
 			size="icon"
-			className={cn("size-7", className)}
+			className={cn("size-8", className)}
 			onClick={(event) => {
 				onClick?.(event);
 				toggleSidebar();
 			}}
 			{...props}
 		>
-			{state === "collapsed" ? (
-				<PanelRightOpen className="rotate-180" />
-			) : (
-				<PanelRightClose className="rotate-180" />
-			)}
+			{state === "collapsed" ? <PanelRightOpen className="rotate-180" /> : <PanelRightOpen />}
 			<span className="sr-only">Toggle Sidebar</span>
 		</Button>
 	);

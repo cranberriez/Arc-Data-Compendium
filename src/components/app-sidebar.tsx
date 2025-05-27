@@ -58,19 +58,6 @@ const data = {
 				icon: Package,
 				enabled: true,
 			},
-			// ,
-			// {
-			// 	title: "Valuables",
-			// 	url: "/valuables",
-			// 	icon: Coins,
-			// 	enabled: true,
-			// },
-			// {
-			// 	title: "Recyclables",
-			// 	url: "/recycling",
-			// 	icon: Recycle,
-			// 	enabled: true,
-			// },
 		],
 	},
 
