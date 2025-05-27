@@ -624,7 +624,7 @@
 				"count": 4
 			},
 			{
-				"id": "arc_alloys",
+				"id": "arc_alloy",
 				"count": 3
 			}
 		]
@@ -671,7 +671,7 @@
 	},
 	{
 		"id": "arc_alloy",
-		"name": "ARC Alloys",
+		"name": "ARC Alloy",
 		"category": "recyclable",
 		"icon": "Layers",
 		"rarity": "uncommon",
@@ -694,7 +694,7 @@
 		"value": 1000,
 		"recycling": [
 			{
-				"id": "arc_alloys",
+				"id": "arc_alloy",
 				"count": 2
 			}
 		]
@@ -748,7 +748,7 @@
 		"value": 1000,
 		"recycling": [
 			{
-				"id": "arc_alloys",
+				"id": "arc_alloy",
 				"count": 2
 			}
 		]
@@ -800,7 +800,7 @@
 				"count": 1
 			},
 			{
-				"id": "arc_alloys",
+				"id": "arc_alloy",
 				"count": 2
 			}
 		]
@@ -910,7 +910,7 @@
 		"value": 640,
 		"recycling": [
 			{
-				"id": "arc_alloys",
+				"id": "arc_alloy",
 				"count": 2
 			}
 		]
@@ -1096,7 +1096,7 @@
 		"value": 640,
 		"recycling": [
 			{
-				"id": "arc_alloys",
+				"id": "arc_alloy",
 				"count": 2
 			}
 		]
@@ -1114,7 +1114,7 @@
 		"value": 293,
 		"recycling": [
 			{
-				"id": "arc_alloys",
+				"id": "arc_alloy",
 				"count": 1
 			}
 		]
@@ -1154,7 +1154,7 @@
 		"value": 2000,
 		"recycling": [
 			{
-				"id": "arc_alloys",
+				"id": "arc_alloy",
 				"count": 7
 			}
 		]
@@ -1169,7 +1169,13 @@
 		"weight": 1,
 		"maxStack": 1,
 		"recipeId": null,
-		"value": 0
+		"value": 0,
+		"recycling": [
+			{
+				"id": "arc_alloy",
+				"count": 2
+			}
+		]
 	},
 	{
 		"id": "damaged_wasp_driver",
@@ -1184,7 +1190,7 @@
 		"value": 270,
 		"recycling": [
 			{
-				"id": "arc_alloys",
+				"id": "arc_alloy",
 				"count": 1
 			}
 		]
@@ -1717,7 +1723,7 @@
 				"count": 4
 			},
 			{
-				"id": "arc_alloys",
+				"id": "arc_alloy",
 				"count": 3
 			}
 		]
@@ -1967,7 +1973,7 @@
 				"count": 2
 			},
 			{
-				"id": "arc_alloys",
+				"id": "arc_alloy",
 				"count": 6
 			}
 		]
@@ -2451,7 +2457,7 @@
 		"value": 1000,
 		"recycling": [
 			{
-				"id": "arc_alloys",
+				"id": "arc_alloy",
 				"count": 2
 			}
 		]
