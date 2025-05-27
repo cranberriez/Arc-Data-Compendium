@@ -660,32 +660,6 @@
 		}
 	},
 	{
-		"id": "bloated_tuna_can",
-		"name": "Bloated Tuna Can",
-		"description": "Something tells you that you don't want to open this...",
-		"flavorText": "Can be consumed for stamina? Or removes stamina?",
-		"icon": "Cylinder",
-		"rarity": "common",
-		"value": 0,
-		"weight": 0,
-		"maxStack": 1,
-		"category": "valuable",
-		"recipeId": null,
-		"quickUse": {
-			"category": "healing",
-			"stats": [
-				{
-					"name": "stamina",
-					"value": 25
-				},
-				{
-					"name": "use_time",
-					"duration": 1
-				}
-			]
-		}
-	},
-	{
 		"id": "healing_stim",
 		"name": "Healing Stim",
 		"category": "quick_use",
@@ -1908,31 +1882,6 @@
 				"count": 4
 			}
 		]
-	},
-	{
-		"id": "expired_pasta",
-		"name": "Expired Pasta",
-		"category": "valuable",
-		"icon": "CookingPot",
-		"rarity": "common",
-		"description": "Can (reluctantly) be consumed to restore small amounts of health. ",
-		"weight": 1,
-		"maxStack": 1,
-		"recipeId": null,
-		"value": 0,
-		"quickUse": {
-			"category": "healing",
-			"stats": [
-				{
-					"name": "healing",
-					"value": 15
-				},
-				{
-					"name": "use_time",
-					"duration": 1
-				}
-			]
-		}
 	},
 	{
 		"id": "explosive_mixture",
