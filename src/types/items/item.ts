@@ -1,4 +1,5 @@
 import { BaseItem } from "./base";
+import { QuickUseData } from "./quickuse";
 import { ItemCategory, ItemSource, Rarity, Recycling } from "./types";
 
 /**
@@ -43,4 +44,7 @@ export interface Item extends BaseItem {
 
 	/** Optional recycling information, if applicable */
 	recycling?: Recycling[];
+
+	/** Quick use item data encapsulator */
+	quickUse?: QuickUseData;
 }

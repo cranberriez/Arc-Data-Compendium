@@ -14,8 +14,6 @@ export type ItemCategory =
 	| "misc"
 	| "topside_material";
 
-export type QuickUseCategory = "healing" | "throwable" | "utility";
-
 export type ShieldType = "light" | "medium" | "heavy";
 
 export type AmmoType = "light" | "medium" | "heavy" | "shotgun" | "energy";

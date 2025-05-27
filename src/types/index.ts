@@ -5,19 +5,20 @@ export * from "./items/types";
 export * from "./items/base";
 export * from "./items/workbench";
 export * from "./items/recipe";
+export * from "./items/quickuse";
 
 // Re-export commonly used types for convenience
 export type { BaseItem } from "./items/base";
 export type { Item } from "./items/item";
 export type { Workbench, WorkbenchTier } from "./items/workbench";
 export type { Recipe, RecipeRequirement } from "./items/recipe";
+export type { QuickUseData, QuickUseStat, QuickUseCharge } from "./items/quickuse";
 
 export type {
 	Rarity,
 	ItemSource,
 	ItemCategory,
 	ItemSourceType,
-	QuickUseCategory,
 	ShieldType,
 	AmmoType,
 	ModSlotType,

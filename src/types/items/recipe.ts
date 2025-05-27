@@ -3,10 +3,7 @@ export interface RecipeRequirement {
 	count: number;
 }
 
-export interface Recipe {
-	id: string;
-	outputItemId: string;
-	requirements: RecipeRequirement[];
+export interface RecipeWB {
 	workbench:
 		| "none"
 		| "scrappy"
@@ -16,8 +13,25 @@ export interface Recipe {
 		| "explosives_bench"
 		| "utility_bench"
 		| "refiner";
-	workbenchTier: number;
+	tier: number;
+}
+
+export interface RecipeLock {
+	looted?: boolean;
+	quest?: string;
+	mastery?: string;
+	event?: string;
+	unsure?: boolean;
+}
+
+export interface Recipe {
+	id: string;
+	outputItemId: string;
+	requirements: RecipeRequirement[];
+	workbench: RecipeWB[] | null;
 	craftTime: number;
+	inRaid: boolean;
 	outputCount: number;
-	unlockedByDefault: boolean;
+	recipeLocked: boolean;
+	lockedType?: RecipeLock;
 }

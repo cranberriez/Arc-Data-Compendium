@@ -1,5 +1,32 @@
 [
 	{
+		"id": "adrenaline_shot",
+		"name": "Adrenaline Shot",
+		"category": "quick_use",
+		"icon": "Syringe",
+		"rarity": "uncommon",
+		"description": "A serum that fully restores stamina and temporarily increases stamina regeneration.",
+		"weight": 1,
+		"maxStack": 1,
+		"recipeId": "recipe_adrenaline_shot",
+		"value": 20,
+		"quickUse": {
+			"category": "healing",
+			"stats": [
+				{
+					"name": "stamina_regeneration",
+					"value": 100,
+					"perSecond": true,
+					"duration": 10
+				},
+				{
+					"name": "use_time",
+					"duration": 1
+				}
+			]
+		}
+	},
+	{
 		"id": "degraded_arc_rubber",
 		"name": "Degraded ARC Rubber",
 		"category": "recyclable",
@@ -100,30 +127,88 @@
 		"recipeId": null
 	},
 	{
-		"id": "herbal_bandages",
-		"name": "Herbal Bandages",
-		"description": "Bandages infused with healing herbs.",
-		"icon": "",
+		"id": "bandage",
+		"name": "Bandage",
+		"description": "A basic medical item that restores a small amount of health over time.",
+		"icon": "Bandage",
 		"rarity": "common",
 		"value": 0,
 		"weight": 0,
-		"maxStack": 1,
-		"category": "consumable",
+		"maxStack": 5,
+		"category": "quick_use",
 		"flavorText": null,
-		"recipeId": null
+		"recipeId": "recipe_bandage",
+		"quickUse": {
+			"category": "healing",
+			"stats": [
+				{
+					"name": "healing",
+					"value": 2.5,
+					"perSecond": true,
+					"duration": 10
+				},
+				{
+					"name": "use_time",
+					"duration": 1.5
+				}
+			]
+		}
+	},
+	{
+		"id": "herbal_bandage",
+		"name": "Herbal Bandage",
+		"description": "An improved medical item that gradually resotres health over time.",
+		"icon": "Bandage",
+		"rarity": "common",
+		"value": 0,
+		"weight": 0,
+		"maxStack": 5,
+		"category": "quick_use",
+		"flavorText": null,
+		"recipeId": "recipe_herbal_bandage",
+		"quickUse": {
+			"category": "healing",
+			"stats": [
+				{
+					"name": "healing",
+					"value": 3,
+					"perSecond": true,
+					"duration": 10
+				},
+				{
+					"name": "use_time",
+					"duration": 2
+				}
+			]
+		}
 	},
 	{
 		"id": "sterilized_bandage",
 		"name": "Sterilized Bandage",
 		"description": "A sterile bandage for treating wounds.",
-		"icon": "",
-		"rarity": "common",
+		"icon": "Bandage",
+		"rarity": "uncommon",
 		"value": 0,
 		"weight": 0,
-		"maxStack": 1,
-		"category": "consumable",
+		"maxStack": 5,
+		"category": "quick_use",
 		"flavorText": null,
-		"recipeId": "recipe_sterilized_bandage"
+		"recipeId": "recipe_sterilized_bandage",
+		"quickUse": {
+			"category": "healing",
+			"stats": [
+				{
+					"name": "healing",
+					"value": 5,
+					"perSecond": true,
+					"duration": 10
+				},
+				{
+					"name": "use_time",
+					"duration": 1.5
+				}
+			]
+		}
 	},
 	{
 		"id": "light_shield",
@@ -219,15 +304,23 @@
 	{
 		"id": "raider_hatch_key",
 		"name": "Raider Hatch Key",
-		"description": "Unlocks a Raider Hatch.",
-		"icon": "",
+		"description": "Unlocks a raider hatch located around the map for a quick extract ",
+		"flavorText": "Unlocks any Raider Hatch for a quick extract. 20 second timer will be activated when a key is used, allowing anyone to extract.",
+		"icon": "Key",
 		"rarity": "rare",
-		"value": 0,
+		"value": 1000,
 		"weight": 0,
 		"maxStack": 1,
 		"category": "key",
-		"flavorText": null,
-		"recipeId": null
+		"recipeId": "recipe_raider_hatch_key",
+		"sources": [
+			{
+				"type": "buy",
+				"trader": "Shani",
+				"value": 6000,
+				"count": 1
+			}
+		]
 	},
 	{
 		"id": "apricot",
@@ -375,20 +468,45 @@
 				"id": "rubber_parts",
 				"count": 4
 			}
-		]
+		],
+		"sources": [
+			{
+				"type": "buy",
+				"trader": "Apollo",
+				"count": 1,
+				"value": 1280
+			}
+		],
+		"quickUseCategory": "utility"
 	},
 	{
-		"id": "blaze_grenades",
-		"name": "Blaze Grenades",
-		"description": "Incendiary grenades.",
-		"icon": "",
+		"id": "blaze_grenade",
+		"name": "Blaze Grenade",
+		"description": "A grenade that detonates on impact, covering an area in fire that deals damage over time.",
+		"icon": "Flame",
 		"rarity": "common",
 		"value": 0,
 		"weight": 0,
 		"maxStack": 1,
 		"category": "quick_use",
 		"flavorText": null,
-		"recipeId": null
+		"recipeId": "recipe_blaze_grenade",
+		"quickUse": {
+			"category": "throwable",
+			"stats": [
+				{
+					"name": "damage",
+					"value": 5,
+					"perSecond": true,
+					"duration": 10,
+					"effect": "firedamage"
+				},
+				{
+					"name": "range",
+					"value": 10
+				}
+			]
+		}
 	},
 	{
 		"id": "healing_stim",
@@ -414,39 +532,117 @@
 		"id": "heavy_fuse_grenade",
 		"name": "Heavy Fuse Grenade",
 		"description": "A powerful explosive with a timed fuse.",
-		"icon": "",
+		"flavorText": "A grenade that detonates after a delay, dealing explosive damage in its radius.",
+		"icon": "LoaderCircle",
 		"rarity": "common",
-		"value": 0,
+		"value": 640,
 		"weight": 0,
 		"maxStack": 1,
 		"category": "quick_use",
-		"flavorText": null,
-		"recipeId": null
+		"recipeId": null,
+		"sources": [
+			{
+				"type": "buy",
+				"trader": "Apollo",
+				"count": 1,
+				"value": 1920
+			}
+		],
+		"quickUse": {
+			"category": "throwable",
+			"stats": [
+				{
+					"name": "damage",
+					"value": 80
+				},
+				{
+					"name": "delay",
+					"value": 3
+				},
+				{
+					"name": "range",
+					"range": 7.5
+				}
+			]
+		}
 	},
 	{
-		"id": "jump_mines",
-		"name": "Jump Mines",
+		"id": "jolt_mine",
+		"name": "Jolt Mine",
 		"description": "Proximity mines that launch into the air.",
+		"flavorText": "Pops up and stuns anything within its radius. Not set off by teammates.",
 		"icon": "",
 		"rarity": "common",
 		"value": 0,
 		"weight": 0,
 		"maxStack": 1,
 		"category": "quick_use",
-		"flavorText": null,
-		"recipeId": null
+		"recipeId": null,
+		"sources": [
+			{
+				"type": "buy",
+				"trader": "Apollo",
+				"count": 1,
+				"value": 1920
+			}
+		],
+		"quickUse": {
+			"category": "trap",
+			"stats": [
+				{
+					"name": "stun",
+					"duration": 4,
+					"effect": "raider stun"
+				},
+				{
+					"name": "stun",
+					"duration": 10,
+					"effect": "ARC unit stun"
+				},
+				{
+					"name": "range",
+					"range": 5
+				}
+			]
+		}
+	},
+	{
+		"id": "jump_mine",
+		"name": "Jump Mine",
+		"description": "Proximity mines that launch into the air.",
+		"flavorText": "Pops up and explodes, damaging anything within its radius. Not set off by teammates.",
+		"icon": "",
+		"rarity": "common",
+		"value": 4000,
+		"weight": 0,
+		"maxStack": 1,
+		"category": "quick_use",
+		"recipeId": "recipe_jump_mine",
+		"quickUse": {
+			"category": "trap",
+			"stats": [
+				{
+					"name": "damage",
+					"value": 40
+				},
+				{
+					"name": "range",
+					"range": 7.5
+				}
+			]
+		}
 	},
 	{
 		"id": "light_impact_grenade",
 		"name": "Light Impact Grenade",
 		"description": "A small grenade designed for light impact and crowd control.",
+		"flavorText": "Detones on impact, dealing explosive damage in small radius.",
 		"icon": "",
 		"rarity": "common",
 		"value": 0,
 		"weight": 0,
 		"maxStack": 1,
 		"category": "quick_use",
-		"flavorText": null,
 		"recipeId": "recipe_light_impact_grenade",
 		"recycling": [
 			{
@@ -457,111 +653,288 @@
 				"id": "chemicals",
 				"count": 3
 			}
-		]
+		],
+		"sources": [
+			{
+				"type": "buy",
+				"trader": "Apollo",
+				"count": 1,
+				"value": 810
+			}
+		],
+		"quickUse": {
+			"category": "throwable",
+			"stats": [
+				{
+					"name": "damage",
+					"value": 30
+				},
+				{
+					"name": "range",
+					"range": 2.5
+				}
+			]
+		}
 	},
 	{
 		"id": "lure_grenade",
 		"name": "Lure Grenade",
 		"description": "A grenade that attracts attention.",
+		"flavorText": "A noisy device that sticks to surface distracting nearby ARC units and drawing their fire.",
 		"icon": "",
+		"rarity": "uncommon",
+		"value": 1000,
+		"weight": 0,
+		"maxStack": 1,
+		"category": "quick_use",
+		"recipeId": "recipe_lure_grenade",
+		"quickUse": {
+			"category": "throwable",
+			"stats": [
+				{
+					"name": "lure"
+				},
+				{
+					"name": "duration",
+					"duration": 15
+				},
+				{
+					"name": "range",
+					"range": 50
+				}
+			]
+		}
+	},
+	{
+		"id": "photoelectric_cloak",
+		"name": "Photoelectric Cloak",
+		"description": "A gadget that allows the user to conceal themselves from ARC ",
+		"flavorText": "Must be held to be used. Has a usage bar that slowly refills when not being used. Does not make the Raider invisible, just non-existent to ARC. Emits a loud beeping when being used.",
+		"icon": "SatelliteDish",
+		"rarity": "rare",
+		"value": 0,
+		"weight": 0,
+		"maxStack": 1,
+		"category": "quick_use",
+		"recipeId": "recipe_photoelectric_cloak"
+	},
+	{
+		"id": "showstopper",
+		"name": "Showstopper",
+		"description": "A small device that emits an EMP when thrown.",
+		"flavorText": "A grenade that detonates after a delay, stunning nearby Raiders and ARC units.",
+		"icon": "Ban",
+		"rarity": "rare",
+		"value": 3000,
+		"weight": 0,
+		"maxStack": 1,
+		"category": "quick_use",
+		"recipeId": "recipe_showstopper",
+		"quickUse": {
+			"category": "throwable",
+			"stats": [
+				{
+					"name": "stun",
+					"duration": 2,
+					"effect": "Raider stun"
+				},
+				{
+					"name": "stun",
+					"duration": 10,
+					"effect": "ARC unit stun"
+				},
+				{
+					"name": "range",
+					"range": 6
+				}
+			]
+		}
+	},
+	{
+		"id": "shield_recharger",
+		"name": "Shield Recharger",
+		"description": "A handheld repair kit that recharges a shield on use.",
+		"icon": "ShieldPlus",
 		"rarity": "uncommon",
 		"value": 0,
 		"weight": 0,
 		"maxStack": 1,
 		"category": "quick_use",
-		"flavorText": null,
-		"recipeId": null
+		"recipeId": "recipe_shield_recharger",
+		"quickUse": {
+			"category": "healing",
+			"stats": [
+				{
+					"name": "repair",
+					"value": 50,
+					"effect": "shield repair"
+				},
+				{
+					"name": "use_time",
+					"duration": 5
+				}
+			]
+		}
 	},
 	{
-		"id": "photoelectric_cloak",
-		"name": "Photoelectric Cloak",
-		"description": "A cloak that hides your from ARC",
+		"id": "smoke_grenade",
+		"name": "Smoke Grenade",
+		"description": "A grenade that creates a cloud of smoke.",
+		"flavorText": "A grenade that creates a lingering smoke cloud on impact, blocking visibility from other Raiders.",
 		"icon": "",
-		"rarity": "common",
-		"value": 0,
+		"rarity": "uncommon",
+		"value": 640,
 		"weight": 0,
 		"maxStack": 1,
 		"category": "quick_use",
-		"flavorText": null,
-		"recipeId": null
+		"recipeId": "recipe_smoke_grenade",
+		"sources": [
+			{
+				"type": "buy",
+				"trader": "Apollo",
+				"count": 1,
+				"value": 1920
+			}
+		],
+		"quickUse": {
+			"category": "throwable",
+			"stats": [
+				{
+					"name": "duration",
+					"duration": 20
+				},
+				{
+					"name": "range",
+					"range": 7.5
+				}
+			]
+		}
 	},
 	{
-		"id": "showstopper",
-		"name": "Showstopper",
-		"description": "Unknown",
-		"icon": "",
-		"rarity": "common",
-		"value": 0,
-		"weight": 0,
-		"maxStack": 1,
-		"category": "quick_use",
-		"flavorText": null,
-		"recipeId": null
-	},
-	{
-		"id": "snap_grenade",
-		"name": "Snap Grenade",
+		"id": "snap_blast_grenade",
+		"name": "Snap Blast Grenade",
 		"description": "A grenade that disorients targets.",
-		"icon": "",
+		"flavorText": "Sticks to surfaces when thrown, dealing damage after a delay",
+		"icon": "LoaderCircle",
 		"rarity": "common",
 		"value": 0,
 		"weight": 0,
 		"maxStack": 1,
 		"category": "quick_use",
-		"flavorText": null,
-		"recipeId": null
+		"recipeId": "recipe_snap_blast_grenade",
+		"sources": [
+			{
+				"type": "buy",
+				"trader": "Apollo",
+				"count": 1,
+				"value": 1920
+			}
+		],
+		"quickUse": {
+			"category": "throwable",
+			"stats": [
+				{
+					"name": "damage",
+					"value": 70
+				},
+				{
+					"name": "range",
+					"range": 7.5
+				}
+			]
+		}
 	},
 	{
 		"id": "snap_hook",
 		"name": "Snap Hook",
 		"description": "A sturdy metal hook with a spring-loaded gate, used for fast attachment.",
+		"flavorText": "Has a range of 20 meters. Has a usage bar that slowly refills when not being used. Has 3 uses when fully charged.",
 		"icon": "",
 		"rarity": "common",
 		"value": 0,
 		"weight": 0,
 		"maxStack": 1,
 		"category": "quick_use",
-		"flavorText": null,
-		"recipeId": null
+		"recipeId": "recipe_snap_hook",
+		"quickUse": {
+			"category": "utility",
+			"stats": [
+				{
+					"name": "range",
+					"range": 20
+				}
+			],
+			"charge": {
+				"type": "per_use",
+				"maxCharges": 3,
+				"chargeCost": 1,
+				"rechargeRate": 0.1
+			}
+		}
 	},
 	{
 		"id": "wolfpack",
 		"name": "WolfPack",
-		"description": "A compact bundle of high-explosive charges, commonly used by Raiders.",
-		"icon": "",
+		"description": "A grenade made of a compact bundle of missiles.",
+		"flavorText": "Scatters into multiple homing missiles, each targetting ARC and dealing explosive damage on impact",
+		"icon": "Command",
 		"rarity": "epic",
-		"value": 0,
+		"value": 5000,
 		"weight": 0,
 		"maxStack": 1,
 		"category": "quick_use",
-		"flavorText": null,
-		"recipeId": null
+		"recipeId": "recipe_wolfpack",
+		"quickUse": {
+			"category": "throwable",
+			"stats": [
+				{
+					"name": "damage",
+					"value": 450
+				},
+				{
+					"name": "total_damage",
+					"value": 5400
+				},
+				{
+					"name": "missiles",
+					"value": 12
+				},
+				{
+					"name": "range",
+					"range": 100
+				}
+			]
+		}
 	},
 	{
 		"id": "zipline",
 		"name": "Zipline",
 		"description": "A deployable zipline that allows you to quickly move between two locations.",
+		"flavorText": "Has a range of 50 meters. Line-of-sight is needed to deploy (excluding through smoke).",
 		"icon": "",
 		"rarity": "uncommon",
 		"value": 2000,
 		"weight": 0.8,
 		"maxStack": 1,
 		"category": "quick_use",
-		"flavorText": null,
-		"recipeId": null
-	},
-	{
-		"id": "burletta_recipe",
-		"name": "Burletta Recipe",
-		"description": "A recipe to craft the Burletta weapon.",
-		"icon": "",
-		"rarity": "legendary",
-		"value": 0,
-		"weight": 0,
-		"maxStack": 1,
-		"category": "recipe",
-		"flavorText": null,
-		"recipeId": null
+		"recipeId": "recipe_zipline",
+		"sources": [
+			{
+				"type": "buy",
+				"trader": "Apollo",
+				"count": 1,
+				"value": 1920
+			}
+		],
+		"quickUse": {
+			"category": "utility",
+			"stats": [
+				{
+					"name": "range",
+					"range": 50
+				}
+			]
+		}
 	},
 	{
 		"id": "accordion",
@@ -594,7 +967,7 @@
 		"description": "Specialized electrical parts required for advanced repairs and upgrades.",
 		"weight": 1,
 		"maxStack": 1,
-		"recipeId": null,
+		"recipeId": "recipe_advanced_electrical_components",
 		"value": 3000,
 		"recycling": [
 			{
@@ -690,7 +1063,7 @@
 		"description": "Advanced circuitry used in ARC technology.",
 		"weight": 1,
 		"maxStack": 1,
-		"recipeId": null,
+		"recipeId": "recipe_arc_circuitry",
 		"value": 1000,
 		"recycling": [
 			{
@@ -824,16 +1197,84 @@
 		]
 	},
 	{
+		"id": "barricade_kit",
+		"name": "Barricade Kit",
+		"category": "quick_use",
+		"icon": "BrickWall",
+		"rarity": "uncommon",
+		"description": "A deployable cover that can block incoming damage until it breaks",
+		"flavorText": "500 Health, Can be picked back up after deploying",
+		"weight": 1,
+		"maxStack": 1,
+		"recipeId": "recipe_barricade_kit",
+		"value": 250,
+		"sources": [
+			{
+				"type": "buy",
+				"trader": "Apollo",
+				"value": 1920,
+				"count": 1
+			}
+		],
+		"quickUse": {
+			"category": "utility",
+			"stats": [
+				{
+					"name": "health",
+					"value": 50
+				},
+				{
+					"name": "use_time",
+					"duration": 4
+				}
+			]
+		}
+	},
+	{
+		"id": "door_blocker",
+		"name": "Door Blocker",
+		"category": "quick_use",
+		"icon": "CircleSlash",
+		"rarity": "uncommon",
+		"description": "A locking mechanism that can be placed on large metal doors to limit access",
+		"flavorText": "Can be used on any door without a Raider placed or naturally spawning blocker ",
+		"weight": 1,
+		"maxStack": 1,
+		"recipeId": "recipe_door_blocker",
+		"value": 250,
+		"sources": [
+			{
+				"type": "buy",
+				"trader": "Apollo",
+				"value": 810,
+				"count": 1
+			}
+		]
+	},
+	{
 		"id": "bison_driver",
 		"name": "Bison Driver",
-		"category": "recyclable",
-		"icon": "Truck",
+		"category": "quick_use",
+		"icon": "CircleOff",
 		"rarity": "rare",
-		"description": "A critical control component from a Bison vehicle.",
+		"description": "Can be thrown to create a violent singularity.",
 		"weight": 1,
 		"maxStack": 1,
 		"recipeId": null,
-		"value": 5000
+		"value": 5000,
+		"quickUse": {
+			"category": "throwable",
+			"stats": [
+				{
+					"name": "damage",
+					"value": 100
+				},
+				{
+					"name": "range",
+					"range": 10
+				}
+			]
+		}
 	},
 	{
 		"id": "broken_flashlight",
@@ -1160,24 +1601,6 @@
 		]
 	},
 	{
-		"id": "damaged_wasp_drive",
-		"name": "Damaged Wasp Drive",
-		"category": "recyclable",
-		"icon": "Cog",
-		"rarity": "common",
-		"description": "No provided description for this item yet.",
-		"weight": 1,
-		"maxStack": 1,
-		"recipeId": null,
-		"value": 0,
-		"recycling": [
-			{
-				"id": "arc_alloy",
-				"count": 2
-			}
-		]
-	},
-	{
 		"id": "damaged_wasp_driver",
 		"name": "Damaged Wasp Driver",
 		"category": "recyclable",
@@ -1191,7 +1614,7 @@
 		"recycling": [
 			{
 				"id": "arc_alloy",
-				"count": 1
+				"count": 2
 			}
 		]
 	},
@@ -1329,6 +1752,7 @@
 		"icon": "Flame",
 		"rarity": "uncommon",
 		"description": "A burner module from a Fireball unit.",
+		"flavorText": "Can be thrown to create small fires that deal damage over time.",
 		"weight": 1,
 		"maxStack": 1,
 		"recipeId": null,
@@ -1342,7 +1766,23 @@
 				"id": "chemicals",
 				"count": 1
 			}
-		]
+		],
+		"quickUse": {
+			"category": "throwable",
+			"stats": [
+				{
+					"name": "damage",
+					"value": 5,
+					"perSecond": true,
+					"duration": 10,
+					"effect": "damage"
+				},
+				{
+					"name": "range",
+					"range": 2
+				}
+			]
+		}
 	},
 	{
 		"id": "flute",
@@ -1403,6 +1843,49 @@
 		]
 	},
 	{
+		"id": "gas_grenade",
+		"name": "Gas Grenade",
+		"category": "quick_use",
+		"icon": "FlaskRound",
+		"rarity": "uncommon",
+		"description": "A grenade that creates a toxic cloud on impact.",
+		"flavorText": "Can be thrown to create a lingering cloud of gas that drains the stamina of any Raiders within.",
+		"weight": 1,
+		"maxStack": 1,
+		"recipeId": "recipe_gas_grenade",
+		"value": 640,
+		"recycling": [
+			{
+				"id": "plastic_parts",
+				"count": 1
+			}
+		],
+		"sources": [
+			{
+				"type": "buy",
+				"trader": "Apollo",
+				"count": 1,
+				"value": 810
+			}
+		],
+		"quickUse": {
+			"category": "throwable",
+			"stats": [
+				{
+					"name": "debuff",
+					"value": 25,
+					"perSecond": true,
+					"duration": 20,
+					"effect": "stamina drain"
+				},
+				{
+					"name": "range",
+					"range": 7.5
+				}
+			]
+		}
+	},
+	{
 		"id": "heavy_gun_parts",
 		"name": "Heavy Gun Parts",
 		"category": "recyclable",
@@ -1411,7 +1894,7 @@
 		"description": "Specialized components salvaged from heavy firearms, used in advanced weapon crafting.",
 		"weight": 1,
 		"maxStack": 1,
-		"recipeId": null,
+		"recipeId": "recipe_heavy_gun_parts",
 		"value": 0,
 		"recycling": [
 			{
@@ -1426,7 +1909,8 @@
 		"category": "recyclable",
 		"icon": "Truck",
 		"rarity": "rare",
-		"description": "A control module used to operate Hornet drones or vehicles.",
+		"description": "Can be recycled into ARC Alloy.",
+		"flavorText": "Can be thrown to temporarily stun Raiders for a short amount of time or ARC units longer.",
 		"weight": 1,
 		"maxStack": 1,
 		"recipeId": null,
@@ -1436,7 +1920,26 @@
 				"id": "arc_alloy",
 				"count": 1
 			}
-		]
+		],
+		"quickUse": {
+			"category": "throwable",
+			"stats": [
+				{
+					"name": "stun",
+					"duration": 0.5,
+					"effect": "Raider stun"
+				},
+				{
+					"name": "stun",
+					"duration": 10,
+					"effect": "ARC unit stun"
+				},
+				{
+					"name": "range",
+					"range": 6
+				}
+			]
+		}
 	},
 	{
 		"id": "household_cleaner",
@@ -1583,6 +2086,122 @@
 		]
 	},
 	{
+		"id": "laser_trap_fire",
+		"name": "Laser Trap: Fire",
+		"category": "quick_use",
+		"icon": "Rat",
+		"rarity": "uncommon",
+		"description": "A deployable laser trip that detonates a Blaze Grenade",
+		"flavorText": "A trap that emits a faint laser, when triggered it deals fire damage to anything in its radius.",
+		"weight": 1,
+		"maxStack": 1,
+		"recipeId": "recipe_laser_trap_fire",
+		"value": 0,
+		"quickUse": {
+			"category": "trap",
+			"stats": [
+				{
+					"name": "Damage",
+					"value": 5,
+					"perSecond": true,
+					"duration": 10,
+					"effect": "fire damage"
+				},
+				{
+					"name": "Range",
+					"value": 10
+				}
+			]
+		}
+	},
+	{
+		"id": "laser_trap_gas",
+		"name": "Laser Trap: Gas",
+		"category": "quick_use",
+		"icon": "Rat",
+		"rarity": "uncommon",
+		"description": "A deployable laser trip that detonates a Gas Grenade",
+		"flavorText": "A trap that emits a faint laser, when triggered it creates a gas cloud that drains stamina of raiders within.",
+		"weight": 1,
+		"maxStack": 1,
+		"recipeId": "recipe_laser_trap_gas",
+		"value": 0,
+		"quickUse": {
+			"category": "trap",
+			"stats": [
+				{
+					"name": "debuff",
+					"value": 25,
+					"perSecond": true,
+					"duration": 20,
+					"effect": "stamina drain"
+				},
+				{
+					"name": "range",
+					"range": 7.5
+				}
+			]
+		}
+	},
+	{
+		"id": "laser_trap_lure",
+		"name": "Laser Trap: Lure",
+		"category": "quick_use",
+		"icon": "Rat",
+		"rarity": "uncommon",
+		"description": "A deployable laser trip that detonates a Lure Grenade",
+		"flavorText": "A trap that emits a faint laser, when triggered it sets off a loud lure.",
+		"weight": 1,
+		"maxStack": 1,
+		"recipeId": "recipe_laser_trap_lure",
+		"value": 0,
+		"quickUse": {
+			"category": "trap",
+			"stats": [
+				{
+					"name": "lure"
+				},
+				{
+					"name": "duration",
+					"duration": 15
+				},
+				{
+					"name": "range",
+					"range": 50
+				}
+			]
+		}
+	},
+	{
+		"id": "laser_trap_smoke",
+		"name": "Laser Trap: Smoke",
+		"category": "quick_use",
+		"icon": "Rat",
+		"rarity": "uncommon",
+		"description": "A deployable laser trip that detonates a Smoke Grenade",
+		"flavorText": "A trap that emits a faint laser, when triggered it sets off a smoke grenade.",
+		"weight": 1,
+		"maxStack": 1,
+		"recipeId": "recipe_laser_trap_smoke",
+		"value": 0,
+		"quickUse": {
+			"category": "trap",
+			"stats": [
+				{
+					"name": "smoke"
+				},
+				{
+					"name": "duration",
+					"duration": 20
+				},
+				{
+					"name": "range",
+					"range": 7.5
+				}
+			]
+		}
+	},
+	{
 		"id": "light_gun_parts",
 		"name": "Light Gun Parts",
 		"category": "recyclable",
@@ -1591,7 +2210,7 @@
 		"description": "No provided description for this item yet.",
 		"weight": 1,
 		"maxStack": 1,
-		"recipeId": null,
+		"recipeId": "recipe_light_gun_parts",
 		"value": 0,
 		"recycling": [
 			{
@@ -1649,7 +2268,7 @@
 		"description": "Components salvaged from medium firearms, used in weapon crafting.",
 		"weight": 1,
 		"maxStack": 1,
-		"recipeId": null,
+		"recipeId": "recipe_medium_gun_parts",
 		"value": 0,
 		"recycling": [
 			{
@@ -1715,7 +2334,7 @@
 		"description": "No provided description for this item yet.",
 		"weight": 1,
 		"maxStack": 1,
-		"recipeId": null,
+		"recipeId": "recipe_mod_components",
 		"value": 3000,
 		"recycling": [
 			{
@@ -1869,7 +2488,7 @@
 		"description": "Used to craft shields. Can be recycled into crafting materials.",
 		"weight": 1,
 		"maxStack": 1,
-		"recipeId": null,
+		"recipeId": "recipe_power_rod",
 		"value": 3000,
 		"recycling": [
 			{
@@ -1935,6 +2554,26 @@
 			{
 				"id": "sensors",
 				"count": 1
+			}
+		]
+	},
+	{
+		"id": "remote_raider_flare",
+		"name": "Remote Raider Flare",
+		"category": "quick_use",
+		"icon": "TestTube",
+		"rarity": "uncommon",
+		"description": "A deployable device that when manually triggered, launches a Raider Distress Flare",
+		"flavorText": "Can be deployed then detonated remotely. Shoots a flare identical to when a Raider is downed",
+		"weight": 1,
+		"maxStack": 1,
+		"recipeId": "recipe_remote_raider_flare",
+		"value": 0,
+		"sources": [
+			{
+				"type": "buy",
+				"trader": "Apollo",
+				"value": 810
 			}
 		]
 	},
@@ -2157,15 +2796,15 @@
 		]
 	},
 	{
-		"id": "shotgun_gun_parts",
-		"name": "Shotgun Gun Parts",
+		"id": "shotgun_parts",
+		"name": "Shotgun Parts",
 		"category": "recyclable",
 		"icon": "Target",
 		"rarity": "rare",
 		"description": "No provided description for this item yet.",
 		"weight": 1,
 		"maxStack": 1,
-		"recipeId": null,
+		"recipeId": "recipe_shotgun_parts",
 		"value": 0,
 		"recycling": [
 			{
@@ -2198,7 +2837,8 @@
 		"category": "recyclable",
 		"icon": "ScanSearch",
 		"rarity": "common",
-		"description": "A handheld scanner for detecting hidden transmitters.",
+		"description": "A scanner from a Snitch unit, used to call in backup.",
+		"flavorText": "Can be thrown to call in ARC (1 Wasp, 2 Hornets)",
 		"weight": 1,
 		"maxStack": 1,
 		"recipeId": null,
@@ -2275,10 +2915,11 @@
 	{
 		"id": "synthesized_fuel",
 		"name": "Synthesized Fuel",
-		"category": "recyclable",
+		"category": "quick_use",
 		"icon": "FlaskRound",
 		"rarity": "rare",
 		"description": "A canister of synthetic fuel blend.",
+		"flavorText": "Can be thrown, then shot to cause an explosion.",
 		"weight": 1,
 		"maxStack": 1,
 		"recipeId": null,
@@ -2292,7 +2933,20 @@
 				"id": "plastic_parts",
 				"count": 1
 			}
-		]
+		],
+		"quickUse": {
+			"category": "throwable",
+			"stats": [
+				{
+					"name": "damage",
+					"value": 80
+				},
+				{
+					"name": "range",
+					"range": 7.5
+				}
+			]
+		}
 	},
 	{
 		"id": "syringe",
@@ -2445,12 +3099,71 @@
 		]
 	},
 	{
+		"id": "vita_shot",
+		"name": "Vita Shot",
+		"category": "quick_use",
+		"icon": "PlusCircle",
+		"rarity": "rare",
+		"description": "A medical item that restores a large amount.",
+		"weight": 1,
+		"maxStack": 1,
+		"recipeId": null,
+		"value": 500,
+		"recycling": [
+			{
+				"id": "wires",
+				"count": 1
+			},
+			{
+				"id": "rubber_parts",
+				"count": 1
+			}
+		],
+		"quickUse": {
+			"category": "healing",
+			"stats": [
+				{
+					"name": "healing",
+					"value": 50
+				}
+			]
+		}
+	},
+	{
+		"id": "vita_spray",
+		"name": "Vita Spray",
+		"category": "quick_use",
+		"icon": "SprayCan",
+		"rarity": "rare",
+		"description": "A medical spray that restores health over time to you and anyone in close proximity.",
+		"weight": 1,
+		"maxStack": 1,
+		"recipeId": null,
+		"value": 0,
+		"quickUse": {
+			"category": "healing",
+			"stats": [
+				{
+					"name": "healing",
+					"value": 5,
+					"perSecond": true,
+					"duration": 10
+				},
+				{
+					"name": "range",
+					"range": 2
+				}
+			]
+		}
+	},
+	{
 		"id": "wasp_driver",
 		"name": "Wasp Driver",
-		"category": "recyclable",
+		"category": "quick_use",
 		"icon": "Rocket",
 		"rarity": "rare",
-		"description": "A control module used to operate Wasp drones or vehicles.",
+		"description": "A control module from Wasp Drones.",
+		"flavorText": "Can be thrown and shot to deal damage in a small area.",
 		"weight": 1,
 		"maxStack": 1,
 		"recipeId": null,
@@ -2460,7 +3173,20 @@
 				"id": "arc_alloy",
 				"count": 2
 			}
-		]
+		],
+		"quickUse": {
+			"category": "throwable",
+			"stats": [
+				{
+					"name": "damage",
+					"value": 80
+				},
+				{
+					"name": "range",
+					"range": 5
+				}
+			]
+		}
 	},
 	{
 		"id": "water_filter",
@@ -2535,6 +3261,32 @@
 		"maxStack": 1,
 		"recipeId": null,
 		"value": 0
+	},
+	{
+		"id": "defibrillator",
+		"name": "Defibrillator",
+		"category": "quick_use",
+		"icon": "HeartPulse",
+		"rarity": "rare",
+		"description": "Can be used to increase the speed and health at which you revive a Raider.",
+		"flavorText": "Can be used on Any downed raider, not just teammates.",
+		"weight": 1,
+		"maxStack": 1,
+		"recipeId": "recipe_defibrillator",
+		"value": 0,
+		"quickUse": {
+			"category": "healing",
+			"stats": [
+				{
+					"name": "healing",
+					"value": 50
+				},
+				{
+					"name": "use_time",
+					"duration": 3
+				}
+			]
+		}
 	},
 	{
 		"id": "arc_performance_steel",
@@ -2671,7 +3423,7 @@
 				"count": 6
 			},
 			{
-				"id": "speaker_components",
+				"id": "speaker_component",
 				"count": 2
 			}
 		]
@@ -2751,6 +3503,35 @@
 		"recycling": []
 	},
 	{
+		"id": "tagging_grenade",
+		"name": "Tagging Grenade",
+		"category": "quick_use",
+		"icon": "Tag",
+		"rarity": "uncommon",
+		"description": "A grenade that detonates after a delay.",
+		"flavorText": "Tags nearby raiders and ARC enemies allowing you to track them.",
+		"weight": 1,
+		"maxStack": 1,
+		"recipeId": "recipe_tagging_grenade",
+		"value": 1000,
+		"quickUse": {
+			"category": "throwable",
+			"stats": [
+				{
+					"name": "tag"
+				},
+				{
+					"name": "duration",
+					"duration": 30
+				},
+				{
+					"name": "range",
+					"range": 6
+				}
+			]
+		}
+	},
+	{
 		"id": "tattered_arc_lining",
 		"name": "Tattered ARC Lining",
 		"category": "recyclable",
@@ -2762,5 +3543,31 @@
 		"recipeId": null,
 		"value": 640,
 		"recycling": []
+	},
+	{
+		"id": "trigger_nade",
+		"name": "Trigger Nade",
+		"category": "quick_use",
+		"icon": "LoaderCircle",
+		"rarity": "uncommon",
+		"description": "A grenade that sticks to surfaces and ARC, and detonates when triggered.",
+		"flavorText": "Deals explosive damage when triggered.",
+		"weight": 1,
+		"maxStack": 1,
+		"recipeId": "recipe_trigger_nade",
+		"value": 640,
+		"quickUse": {
+			"category": "throwable",
+			"stats": [
+				{
+					"name": "damage",
+					"value": 90
+				},
+				{
+					"name": "range",
+					"range": 7.5
+				}
+			]
+		}
 	}
 ]
