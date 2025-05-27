@@ -1,5 +1,6 @@
 import { BaseItem } from "./base";
 import { QuickUseData } from "./quickuse";
+import { GearData } from "./gear";
 import { ItemCategory, ItemSource, Rarity, Recycling } from "./types";
 
 /**
@@ -47,4 +48,7 @@ export interface Item extends BaseItem {
 
 	/** Quick use item data encapsulator */
 	quickUse?: QuickUseData;
+
+	/** Gear item data encapsulator */
+	gear?: GearData;
 }

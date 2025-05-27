@@ -332,7 +332,7 @@
 		"workbench": [
 			{
 				"workbench": "basic_bench",
-				"tier": 0
+				"tier": 1
 			},
 			{
 				"workbench": "explosives_bench",
@@ -500,7 +500,10 @@
 		],
 		"craftTime": 0,
 		"outputCount": 1,
-		"recipeLocked": false
+		"recipeLocked": true,
+		"lockedType": {
+			"looted": true
+		}
 	},
 	{
 		"id": "recipe_sterilized_bandage",
@@ -561,6 +564,10 @@
 			{
 				"workbench": "medical_bench",
 				"tier": 1
+			},
+			{
+				"workbench": "basic_bench",
+				"tier": 1
 			}
 		],
 		"craftTime": 0,
@@ -578,6 +585,32 @@
 			{
 				"itemId": "antiseptic",
 				"count": 1
+			}
+		],
+		"workbench": [
+			{
+				"workbench": "medical_bench",
+				"tier": 3
+			}
+		],
+		"craftTime": 0,
+		"outputCount": 1,
+		"recipeLocked": true,
+		"lockedType": {
+			"looted": true
+		}
+	},
+	{
+		"id": "recipe_vita_spray",
+		"outputItemId": "vita_spray",
+		"requirements": [
+			{
+				"itemId": "canister",
+				"count": 4
+			},
+			{
+				"itemId": "antiseptic",
+				"count": 2
 			}
 		],
 		"workbench": [
@@ -632,7 +665,11 @@
 		"workbench": [
 			{
 				"workbench": "medical_bench",
-				"tier": 2
+				"tier": 1
+			},
+			{
+				"workbench": "basic_bench",
+				"tier": 1
 			}
 		],
 		"craftTime": 0,
@@ -867,5 +904,170 @@
 			"looted": true,
 			"event": "Harvester"
 		}
+	},
+	{
+		"id": "recipe_light_shield",
+		"outputItemId": "light_shield",
+		"requirements": [
+			{
+				"itemId": "arc_alloy",
+				"count": 1
+			},
+			{
+				"itemId": "fabric",
+				"count": 8
+			}
+		],
+		"workbench": [
+			{
+				"workbench": "basic_bench",
+				"tier": 1
+			},
+			{
+				"workbench": "equipment_bench",
+				"tier": 1
+			}
+		],
+		"craftTime": 0,
+		"outputCount": 1,
+		"recipeLocked": false
+	},
+	{
+		"id": "recipe_medium_shield",
+		"outputItemId": "medium_shield",
+		"requirements": [
+			{
+				"itemId": "arc_alloy",
+				"count": 4
+			},
+			{
+				"itemId": "voltage_converter",
+				"count": 2
+			}
+		],
+		"workbench": [
+			{
+				"workbench": "equipment_bench",
+				"tier": 2
+			}
+		],
+		"craftTime": 0,
+		"outputCount": 1,
+		"recipeLocked": false
+	},
+	{
+		"id": "recipe_heavy_shield",
+		"outputItemId": "heavy_shield",
+		"requirements": [
+			{
+				"itemId": "arc_alloy",
+				"count": 10
+			},
+			{
+				"itemId": "voltage_converter",
+				"count": 5
+			}
+		],
+		"workbench": [
+			{
+				"workbench": "equipment_bench",
+				"tier": 3
+			}
+		],
+		"craftTime": 0,
+		"outputCount": 1,
+		"recipeLocked": false
+	},
+	{
+		"id": "recipe_raider_augment_i",
+		"outputItemId": "raider_augment_i",
+		"requirements": [
+			{
+				"itemId": "rubber_parts",
+				"count": 12
+			},
+			{
+				"itemId": "plastic_parts",
+				"count": 9
+			}
+		],
+		"workbench": [
+			{
+				"workbench": "equipment_bench",
+				"tier": 1
+			}
+		],
+		"craftTime": 0,
+		"outputCount": 1,
+		"recipeLocked": false
+	},
+	{
+		"id": "recipe_raider_augment_ii",
+		"outputItemId": "raider_augment_ii",
+		"requirements": [
+			{
+				"itemId": "rubber_parts",
+				"count": 20
+			},
+			{
+				"itemId": "processor",
+				"count": 2
+			}
+		],
+		"workbench": [
+			{
+				"workbench": "equipment_bench",
+				"tier": 1
+			}
+		],
+		"craftTime": 0,
+		"outputCount": 1,
+		"recipeLocked": false
+	},
+	{
+		"id": "recipe_raider_augment_iii",
+		"outputItemId": "raider_augment_iii",
+		"requirements": [
+			{
+				"itemId": "electrical_components",
+				"count": 1
+			},
+			{
+				"itemId": "processor",
+				"count": 2
+			}
+		],
+		"workbench": [
+			{
+				"workbench": "equipment_bench",
+				"tier": 1
+			}
+		],
+		"craftTime": 0,
+		"outputCount": 1,
+		"recipeLocked": false
+	},
+	{
+		"id": "recipe_raider_augment_iv",
+		"outputItemId": "raider_augment_iv",
+		"requirements": [
+			{
+				"itemId": "power_rod",
+				"count": 1
+			},
+			{
+				"itemId": "processor",
+				"count": 4
+			}
+		],
+		"workbench": [
+			{
+				"workbench": "equipment_bench",
+				"tier": 1
+			}
+		],
+		"craftTime": 0,
+		"outputCount": 1,
+		"recipeLocked": false
 	}
 ]

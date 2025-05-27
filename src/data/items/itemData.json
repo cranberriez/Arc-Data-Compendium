@@ -14,7 +14,7 @@
 			"category": "healing",
 			"stats": [
 				{
-					"name": "stamina_regeneration",
+					"name": "stamina",
 					"value": 100,
 					"perSecond": true,
 					"duration": 10
@@ -36,8 +36,7 @@
 		"weight": 1,
 		"maxStack": 1,
 		"recipeId": null,
-		"value": 0,
-		"recycling": []
+		"value": 0
 	},
 	{
 		"id": "portable_tv",
@@ -71,8 +70,7 @@
 		"weight": 1,
 		"maxStack": 1,
 		"recipeId": null,
-		"value": 640,
-		"recycling": []
+		"value": 640
 	},
 	{
 		"id": "ruined_tactical_vest",
@@ -84,8 +82,7 @@
 		"weight": 1,
 		"maxStack": 1,
 		"recipeId": null,
-		"value": 0,
-		"recycling": []
+		"value": 0
 	},
 	{
 		"id": "heavy_ammo",
@@ -97,7 +94,6 @@
 		"weight": 0,
 		"maxStack": 1,
 		"category": "ammo",
-		"flavorText": null,
 		"recipeId": null
 	},
 	{
@@ -110,7 +106,6 @@
 		"weight": 0,
 		"maxStack": 1,
 		"category": "ammo",
-		"flavorText": null,
 		"recipeId": null
 	},
 	{
@@ -123,7 +118,6 @@
 		"weight": 0,
 		"maxStack": 1,
 		"category": "ammo",
-		"flavorText": null,
 		"recipeId": null
 	},
 	{
@@ -132,12 +126,19 @@
 		"description": "A basic medical item that restores a small amount of health over time.",
 		"icon": "Bandage",
 		"rarity": "common",
-		"value": 0,
+		"value": 200,
 		"weight": 0,
 		"maxStack": 5,
 		"category": "quick_use",
-		"flavorText": null,
 		"recipeId": "recipe_bandage",
+		"sources": [
+			{
+				"type": "buy",
+				"trader": "Lance",
+				"value": 810,
+				"count": 1
+			}
+		],
 		"quickUse": {
 			"category": "healing",
 			"stats": [
@@ -164,7 +165,6 @@
 		"weight": 0,
 		"maxStack": 5,
 		"category": "quick_use",
-		"flavorText": null,
 		"recipeId": "recipe_herbal_bandage",
 		"quickUse": {
 			"category": "healing",
@@ -192,7 +192,6 @@
 		"weight": 0,
 		"maxStack": 5,
 		"category": "quick_use",
-		"flavorText": null,
 		"recipeId": "recipe_sterilized_bandage",
 		"quickUse": {
 			"category": "healing",
@@ -214,92 +213,184 @@
 		"id": "light_shield",
 		"name": "Light Shield",
 		"description": "A lightweight shield that offers limited protection without severely impacting mobility.",
-		"icon": "",
-		"rarity": "rare",
-		"value": 0,
-		"weight": 0,
-		"maxStack": 1,
-		"category": "gear",
-		"flavorText": null,
-		"recipeId": "recipe_light_shield"
-	},
-	{
-		"id": "medium_shield",
-		"name": "Medium Shield",
-		"description": "A standard shield that offers fair protection at a moderate cost to mobility",
-		"icon": "",
-		"rarity": "rare",
-		"value": 2000,
-		"weight": 7,
-		"maxStack": 1,
-		"category": "gear",
-		"flavorText": null,
-		"recipeId": "recipe_medium_shield"
-	},
-	{
-		"id": "heavy_shield",
-		"name": "Heavy Shield",
-		"description": "A heavy shield that offers maximum protection at a high cost to mobility",
-		"icon": "",
-		"rarity": "rare",
-		"value": 2000,
-		"weight": 7,
-		"maxStack": 1,
-		"category": "gear",
-		"flavorText": null,
-		"recipeId": "recipe_heavy_shield"
-	},
-	{
-		"id": "raider_augment_i",
-		"name": "Raider Augment I",
-		"description": "Can be equipped to gain more loadout space and carry capacity. Allows you to equip better shields as well.",
-		"icon": "",
+		"flavorText": "Provided for free in every free kit.",
+		"icon": "Shield",
 		"rarity": "uncommon",
 		"value": 0,
 		"weight": 0,
 		"maxStack": 1,
 		"category": "gear",
-		"flavorText": null,
-		"recipeId": "recipe_raider_augment_i"
+		"recipeId": "recipe_light_shield",
+		"sources": [
+			{
+				"type": "buy",
+				"trader": "Lance",
+				"value": 2000,
+				"count": 1
+			}
+		],
+		"gear": {
+			"category": "shield",
+			"stats": {
+				"shield_charge": 50,
+				"damage_mitigation": 0.23,
+				"move_penalty": 0,
+				"segments": 5,
+				"minimumTier": 0
+			}
+		}
+	},
+	{
+		"id": "medium_shield",
+		"name": "Medium Shield",
+		"description": "A standard shield that offers fair protection at a moderate cost to mobility.",
+		"icon": "Shield",
+		"rarity": "rare",
+		"value": 3000,
+		"weight": 7,
+		"maxStack": 1,
+		"category": "gear",
+		"recipeId": "recipe_medium_shield",
+		"sources": [
+			{
+				"type": "buy",
+				"trader": "Lance",
+				"value": 6000,
+				"count": 1
+			}
+		],
+		"gear": {
+			"category": "shield",
+			"stats": {
+				"shield_charge": 80,
+				"damage_mitigation": 0.45,
+				"move_penalty": 0.05,
+				"segments": 8,
+				"minimumTier": 1
+			}
+		}
+	},
+	{
+		"id": "heavy_shield",
+		"name": "Heavy Shield",
+		"description": "A heavy shield that offers maximum protection at a high cost to mobility.",
+		"icon": "Shield",
+		"rarity": "epic",
+		"value": 7500,
+		"weight": 7,
+		"maxStack": 1,
+		"category": "gear",
+		"recipeId": "recipe_heavy_shield",
+		"sources": [
+			{
+				"type": "buy",
+				"trader": "Lance",
+				"value": 15000,
+				"count": 1
+			}
+		],
+		"gear": {
+			"category": "shield",
+			"stats": {
+				"shield_charge": 120,
+				"damage_mitigation": 0.65,
+				"move_penalty": 0.15,
+				"segments": 12,
+				"minimumTier": 3
+			}
+		}
+	},
+	{
+		"id": "raider_augment_i",
+		"name": "Raider Augment I",
+		"description": "Can be equipped to gain more loadout space and carry capacity. Allows you to equip better shields as well.",
+		"icon": "SquareAsterisk",
+		"rarity": "uncommon",
+		"value": 0,
+		"weight": 0,
+		"maxStack": 1,
+		"category": "gear",
+		"recipeId": "recipe_raider_augment_i",
+		"gear": {
+			"category": "augment",
+			"stats": {
+				"backpack_slots": 16,
+				"weight_limit": 50,
+				"safe_pocket_size": 2,
+				"quick_use_slots": 6,
+				"weapon_slots": 2,
+				"tier": 1
+			}
+		}
 	},
 	{
 		"id": "raider_augment_ii",
 		"name": "Raider Augment II",
 		"description": "Can be equipped to gain more loadout space and carry capacity. Allows you to equip better shields as well.",
-		"icon": "",
+		"icon": "SquareAsterisk",
 		"rarity": "rare",
 		"value": 0,
 		"weight": 0,
 		"maxStack": 1,
 		"category": "gear",
-		"flavorText": null,
-		"recipeId": "recipe_raider_augment_ii"
+		"recipeId": "recipe_raider_augment_ii",
+		"gear": {
+			"category": "augment",
+			"stats": {
+				"backpack_slots": 18,
+				"weight_limit": 55,
+				"safe_pocket_size": 2,
+				"quick_use_slots": 6,
+				"weapon_slots": 2,
+				"tier": 2
+			}
+		}
 	},
 	{
 		"id": "raider_augment_iii",
 		"name": "Raider Augment III",
 		"description": "Can be equipped to gain more loadout space and carry capacity. Allows you to equip better shields as well.",
-		"icon": "",
+		"icon": "SquareAsterisk",
 		"rarity": "epic",
 		"value": 0,
 		"weight": 0,
 		"maxStack": 1,
 		"category": "gear",
-		"flavorText": null,
-		"recipeId": "recipe_raider_augment_iii"
+		"recipeId": "recipe_raider_augment_iii",
+		"gear": {
+			"category": "augment",
+			"stats": {
+				"backpack_slots": 20,
+				"weight_limit": 55,
+				"safe_pocket_size": 2,
+				"quick_use_slots": 6,
+				"weapon_slots": 2,
+				"tier": 3
+			}
+		}
 	},
 	{
 		"id": "raider_augment_iv",
 		"name": "Raider Augment IV",
 		"description": "Can be equipped to gain more loadout space and carry capacity. Allows you to equip better shields as well.",
-		"icon": "",
+		"icon": "SquareAsterisk",
 		"rarity": "legendary",
 		"value": 0,
 		"weight": 0,
 		"maxStack": 1,
 		"category": "gear",
-		"flavorText": null,
-		"recipeId": "recipe_raider_augment_iv"
+		"recipeId": "recipe_raider_augment_iv",
+		"gear": {
+			"category": "augment",
+			"stats": {
+				"backpack_slots": 24,
+				"weight_limit": 60,
+				"safe_pocket_size": 3,
+				"quick_use_slots": 8,
+				"weapon_slots": 2,
+				"tier": 4
+			}
+		}
 	},
 	{
 		"id": "raider_hatch_key",
@@ -332,7 +423,20 @@
 		"weight": 0.2,
 		"maxStack": 10,
 		"recipeId": null,
-		"value": 640
+		"value": 640,
+		"quickUse": {
+			"category": "healing",
+			"stats": [
+				{
+					"name": "stamina",
+					"value": 20
+				},
+				{
+					"name": "use_time",
+					"duration": 1
+				}
+			]
+		}
 	},
 	{
 		"id": "lemon",
@@ -340,11 +444,24 @@
 		"category": "misc",
 		"icon": "Citrus",
 		"rarity": "common",
-		"description": "Can be consumed for a small amount of stamina",
+		"description": "Can be consumed for a small amount of stamina.",
 		"weight": 0.2,
 		"maxStack": 10,
 		"recipeId": null,
-		"value": 640
+		"value": 640,
+		"quickUse": {
+			"category": "healing",
+			"stats": [
+				{
+					"name": "stamina",
+					"value": 20
+				},
+				{
+					"name": "use_time",
+					"duration": 1
+				}
+			]
+		}
 	},
 	{
 		"id": "mushroom",
@@ -352,11 +469,24 @@
 		"category": "misc",
 		"icon": "Torus",
 		"rarity": "common",
-		"description": "Can be consumed for a small amount of stamina",
+		"description": "Can be consumed for a small amount of health.",
 		"weight": 0.2,
 		"maxStack": 10,
 		"recipeId": null,
-		"value": 1000
+		"value": 1000,
+		"quickUse": {
+			"category": "healing",
+			"stats": [
+				{
+					"name": "healing",
+					"value": 15
+				},
+				{
+					"name": "use_time",
+					"duration": 1
+				}
+			]
+		}
 	},
 	{
 		"id": "olives",
@@ -364,11 +494,24 @@
 		"category": "misc",
 		"icon": "Martini",
 		"rarity": "common",
-		"description": "Can be consumed for a small amount of stamina",
+		"description": "Can be consumed for a small amount of stamina.",
 		"weight": 0.2,
 		"maxStack": 10,
 		"recipeId": null,
-		"value": 640
+		"value": 640,
+		"quickUse": {
+			"category": "healing",
+			"stats": [
+				{
+					"name": "stamina",
+					"value": 20
+				},
+				{
+					"name": "use_time",
+					"duration": 1
+				}
+			]
+		}
 	},
 	{
 		"id": "prickly_pear",
@@ -386,66 +529,76 @@
 		"id": "agave",
 		"name": "Agave",
 		"category": "misc",
-		"icon": "",
+		"icon": "Flower",
 		"rarity": "common",
 		"description": "",
 		"weight": 1,
 		"maxStack": 1,
 		"recipeId": null,
-		"value": 1000,
-		"recycling": []
+		"value": 1000
 	},
 	{
 		"id": "fertilizer",
 		"name": "Fertilizer",
 		"category": "misc",
-		"icon": "",
+		"icon": "Bubbles",
 		"rarity": "common",
 		"description": "",
 		"weight": 1,
 		"maxStack": 1,
 		"recipeId": null,
-		"value": 1000,
-		"recycling": []
+		"value": 1000
 	},
 	{
 		"id": "resin",
 		"name": "Resin",
 		"category": "misc",
-		"icon": "",
+		"icon": "TreeDeciduous",
 		"rarity": "common",
-		"description": "",
+		"description": "Can be used to gradually restore a small amount of health over time.",
 		"weight": 1,
 		"maxStack": 1,
 		"recipeId": null,
 		"value": 0,
-		"recycling": []
+		"quickUse": {
+			"category": "healing",
+			"stats": [
+				{
+					"name": "healing",
+					"value": 1,
+					"perSecond": true,
+					"duration": 10
+				},
+				{
+					"name": "use_time",
+					"duration": 1
+				}
+			]
+		}
 	},
 	{
 		"id": "roots",
 		"name": "Roots",
 		"category": "misc",
-		"icon": "",
+		"icon": "TreeDeciduous",
 		"rarity": "common",
 		"description": "",
 		"weight": 1,
 		"maxStack": 1,
 		"recipeId": null,
-		"value": 0,
-		"recycling": []
+		"value": 0
 	},
 	{
 		"id": "volcanic_rock",
 		"name": "Volcanic Rock",
 		"category": "misc",
-		"icon": "",
+		"icon": "HandMetal",
 		"rarity": "common",
 		"description": "",
 		"weight": 1,
 		"maxStack": 1,
 		"recipeId": null,
-		"value": 0,
-		"recycling": []
+		"value": 0
 	},
 	{
 		"id": "binoculars",
@@ -457,7 +610,6 @@
 		"weight": 0,
 		"maxStack": 1,
 		"category": "quick_use",
-		"flavorText": null,
 		"recipeId": "recipe_binoculars",
 		"recycling": [
 			{
@@ -489,7 +641,6 @@
 		"weight": 0,
 		"maxStack": 1,
 		"category": "quick_use",
-		"flavorText": null,
 		"recipeId": "recipe_blaze_grenade",
 		"quickUse": {
 			"category": "throwable",
@@ -504,6 +655,32 @@
 				{
 					"name": "range",
 					"value": 10
+				}
+			]
+		}
+	},
+	{
+		"id": "bloated_tuna_can",
+		"name": "Bloated Tuna Can",
+		"description": "Something tells you that you don't want to open this...",
+		"flavorText": "Can be consumed for stamina? Or removes stamina?",
+		"icon": "Cylinder",
+		"rarity": "common",
+		"value": 0,
+		"weight": 0,
+		"maxStack": 1,
+		"category": "misc",
+		"recipeId": null,
+		"quickUse": {
+			"category": "healing",
+			"stats": [
+				{
+					"name": "stamina",
+					"value": 25
+				},
+				{
+					"name": "use_time",
+					"duration": 1
 				}
 			]
 		}
@@ -1132,11 +1309,25 @@
 		"category": "recyclable",
 		"icon": "BatteryFull",
 		"rarity": "common",
-		"description": "A powerful energy cell used in ARC technology.",
+		"description": "Drops from all ARC units.",
+		"flavorText": "Can be used to recharge shields in a pinch.",
 		"weight": 1,
 		"maxStack": 1,
 		"recipeId": null,
-		"value": 640
+		"value": 640,
+		"quickUse": {
+			"category": "healing",
+			"stats": [
+				{
+					"name": "repair",
+					"value": 20
+				},
+				{
+					"name": "use_time",
+					"duration": 3
+				}
+			]
+		}
 	},
 	{
 		"id": "arc_synthetic_resin",
@@ -1435,8 +1626,12 @@
 		"value": 640,
 		"recycling": [
 			{
-				"id": "fabric_3x_oil",
+				"id": "fabric",
 				"count": 8
+			},
+			{
+				"id": "oil",
+				"count": 3
 			}
 		]
 	},
@@ -1690,7 +1885,6 @@
 		"weight": 0,
 		"maxStack": 1,
 		"category": "recyclable",
-		"flavorText": null,
 		"recipeId": null
 	},
 	{
@@ -1714,6 +1908,31 @@
 				"count": 4
 			}
 		]
+	},
+	{
+		"id": "expired_pasta",
+		"name": "Expired Pasta",
+		"category": "misc",
+		"icon": "CookingPot",
+		"rarity": "common",
+		"description": "Can (reluctantly) be consumed to restore small amounts of health. ",
+		"weight": 1,
+		"maxStack": 1,
+		"recipeId": null,
+		"value": 0,
+		"quickUse": {
+			"category": "healing",
+			"stats": [
+				{
+					"name": "healing",
+					"value": 15
+				},
+				{
+					"name": "use_time",
+					"duration": 1
+				}
+			]
+		}
 	},
 	{
 		"id": "explosive_mixture",
@@ -1740,10 +1959,26 @@
 		"icon": "Shirt",
 		"rarity": "common",
 		"description": "A common crafting material.",
+		"flavorText": "Can be used to slowly restore small amounts of health.",
 		"weight": 1,
 		"maxStack": 1,
 		"recipeId": null,
-		"value": 50
+		"value": 50,
+		"quickUse": {
+			"category": "healing",
+			"stats": [
+				{
+					"name": "healing",
+					"value": 0.4,
+					"perSecond": true,
+					"duration": 25
+				},
+				{
+					"name": "use_time",
+					"duration": 1
+				}
+			]
+		}
 	},
 	{
 		"id": "fireball_burner",
@@ -2590,8 +2825,12 @@
 		"value": 1000,
 		"recycling": [
 			{
-				"id": "magnet_13x_fabric",
+				"id": "magnet",
 				"count": 2
+			},
+			{
+				"id": "fabric",
+				"count": 13
 			}
 		]
 	},
@@ -3135,23 +3374,19 @@
 		"category": "quick_use",
 		"icon": "SprayCan",
 		"rarity": "rare",
-		"description": "A medical spray that restores health over time to you and anyone in close proximity.",
+		"description": "A medical item that continuously restores health during use. Can be used on yourself or your allies.",
 		"weight": 1,
 		"maxStack": 1,
-		"recipeId": null,
+		"recipeId": "recipe_vita_spray",
 		"value": 0,
 		"quickUse": {
 			"category": "healing",
 			"stats": [
 				{
 					"name": "healing",
-					"value": 5,
+					"value": 10,
 					"perSecond": true,
 					"duration": 10
-				},
-				{
-					"name": "range",
-					"range": 2
 				}
 			]
 		}
@@ -3268,12 +3503,20 @@
 		"category": "quick_use",
 		"icon": "HeartPulse",
 		"rarity": "rare",
-		"description": "Can be used to increase the speed and health at which you revive a Raider.",
+		"description": "An injection that quickly revives downed raiders and restores some health.",
 		"flavorText": "Can be used on Any downed raider, not just teammates.",
 		"weight": 1,
 		"maxStack": 1,
+		"value": 640,
 		"recipeId": "recipe_defibrillator",
-		"value": 0,
+		"sources": [
+			{
+				"type": "buy",
+				"trader": "Lance",
+				"value": 1280,
+				"count": 1
+			}
+		],
 		"quickUse": {
 			"category": "healing",
 			"stats": [
@@ -3283,7 +3526,7 @@
 				},
 				{
 					"name": "use_time",
-					"duration": 3
+					"duration": 1.5
 				}
 			]
 		}
@@ -3298,8 +3541,7 @@
 		"weight": 1,
 		"maxStack": 1,
 		"recipeId": null,
-		"value": 1000,
-		"recycling": []
+		"value": 1000
 	},
 	{
 		"id": "arc_thermo_lining",
@@ -3311,8 +3553,7 @@
 		"weight": 1,
 		"maxStack": 1,
 		"recipeId": null,
-		"value": 1000,
-		"recycling": []
+		"value": 1000
 	},
 	{
 		"id": "bicycle_pump",
@@ -3346,8 +3587,7 @@
 		"weight": 1,
 		"maxStack": 1,
 		"recipeId": null,
-		"value": 270,
-		"recycling": []
+		"value": 270
 	},
 	{
 		"id": "broken_taser",
@@ -3359,8 +3599,7 @@
 		"weight": 1,
 		"maxStack": 1,
 		"recipeId": null,
-		"value": 640,
-		"recycling": []
+		"value": 640
 	},
 	{
 		"id": "diving_goggles",
@@ -3390,8 +3629,7 @@
 		"weight": 1,
 		"maxStack": 1,
 		"recipeId": null,
-		"value": 0,
-		"recycling": []
+		"value": 0
 	},
 	{
 		"id": "frying_pan",
@@ -3403,8 +3641,7 @@
 		"weight": 1,
 		"maxStack": 1,
 		"recipeId": null,
-		"value": 270,
-		"recycling": []
+		"value": 270
 	},
 	{
 		"id": "headphones",
@@ -3438,8 +3675,7 @@
 		"weight": 1,
 		"maxStack": 1,
 		"recipeId": null,
-		"value": 80,
-		"recycling": []
+		"value": 80
 	},
 	{
 		"id": "radio",
@@ -3451,8 +3687,7 @@
 		"weight": 1,
 		"maxStack": 1,
 		"recipeId": null,
-		"value": 640,
-		"recycling": []
+		"value": 640
 	},
 	{
 		"id": "rusted_gear",
@@ -3486,8 +3721,7 @@
 		"weight": 1,
 		"maxStack": 1,
 		"recipeId": null,
-		"value": 640,
-		"recycling": []
+		"value": 640
 	},
 	{
 		"id": "setinel_core",
@@ -3499,8 +3733,7 @@
 		"weight": 1,
 		"maxStack": 1,
 		"recipeId": null,
-		"value": 3000,
-		"recycling": []
+		"value": 3000
 	},
 	{
 		"id": "tagging_grenade",
@@ -3541,8 +3774,7 @@
 		"weight": 1,
 		"maxStack": 1,
 		"recipeId": null,
-		"value": 640,
-		"recycling": []
+		"value": 640
 	},
 	{
 		"id": "trigger_nade",
