@@ -84,19 +84,6 @@
 		"value": 1000
 	},
 	{
-		"id": "bloated_tuna_can",
-		"name": "Bloated Tuna Can",
-		"category": "valuable",
-		"icon": "Fish",
-		"rarity": "common",
-		"description": "A can of tuna, suspiciously bloated.",
-		"weight": 1,
-		"maxStack": 1,
-		"recipeId": null,
-		"sources": [],
-		"value": 1000
-	},
-	{
 		"id": "coffee_pot",
 		"name": "Coffee Pot",
 		"category": "valuable",

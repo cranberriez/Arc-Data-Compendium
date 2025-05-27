@@ -669,7 +669,7 @@
 		"value": 0,
 		"weight": 0,
 		"maxStack": 1,
-		"category": "misc",
+		"category": "valuable",
 		"recipeId": null,
 		"quickUse": {
 			"category": "healing",
@@ -1912,7 +1912,7 @@
 	{
 		"id": "expired_pasta",
 		"name": "Expired Pasta",
-		"category": "misc",
+		"category": "valuable",
 		"icon": "CookingPot",
 		"rarity": "common",
 		"description": "Can (reluctantly) be consumed to restore small amounts of health. ",
