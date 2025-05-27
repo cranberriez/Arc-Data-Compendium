@@ -1,10 +1,12 @@
 "use client";
 
+import { useState } from "react";
 import { Item } from "@/types";
 import { useItems } from "@/contexts/itemContext";
 import { SourceItem } from "./diagSourceItem";
-import { Link } from "lucide-react";
+import { Link, ChevronDown, ChevronUp } from "lucide-react";
 import { ScrollArea } from "@radix-ui/react-scroll-area";
+import { Button } from "../ui/button";
 
 type SourcesSectionProps = {
 	item: Item;
@@ -12,6 +14,7 @@ type SourcesSectionProps = {
 
 export function SourcesSection({ item }: SourcesSectionProps) {
 	const { getItemById } = useItems();
+	const [showAllSources, setShowAllSources] = useState(false);
 
 	if (!item.sources || item.sources.length === 0) return null;
 
@@ -20,10 +23,14 @@ export function SourcesSection({ item }: SourcesSectionProps) {
 		.filter((source) => source.type !== "buy")
 		.sort((a, b) => (b.count || 0) - (a.count || 0));
 
+	// Check if we need to show the "Show more/less" button
+	const shouldShowToggle = filteredSources.length > 4;
+	const displaySources = showAllSources ? filteredSources : filteredSources.slice(0, 4);
+
 	// Create two separate arrays for left and right columns
-	const halfLength = Math.ceil(filteredSources.length / 2);
-	const leftColumnSources = filteredSources.slice(0, halfLength);
-	const rightColumnSources = filteredSources.slice(halfLength);
+	const halfLength = Math.ceil(displaySources.length / 2);
+	const leftColumnSources = displaySources.slice(0, halfLength);
+	const rightColumnSources = displaySources.slice(halfLength);
 
 	return (
 		<div className="w-fit">
@@ -80,6 +87,26 @@ export function SourcesSection({ item }: SourcesSectionProps) {
 						})}
 					</div>
 				</div>
+				{shouldShowToggle && (
+					<Button
+						variant="ghost"
+						size="sm"
+						className="mt-2 w-full justify-center text-xs text-muted-foreground cursor-pointer"
+						onClick={() => setShowAllSources(!showAllSources)}
+					>
+						{showAllSources ? (
+							<>
+								<ChevronUp className="mr-1 h-3 w-3" />
+								Show less
+							</>
+						) : (
+							<>
+								<ChevronDown className="mr-1 h-3 w-3" />
+								Show {filteredSources.length - 4} more
+							</>
+						)}
+					</Button>
+				)}
 			</ScrollArea>
 		</div>
 	);

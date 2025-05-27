@@ -176,7 +176,7 @@
 						"count": 8
 					},
 					{
-						"itemId": "power_cables",
+						"itemId": "power_cable",
 						"count": 3
 					},
 					{
@@ -220,7 +220,7 @@
 						"count": 50
 					},
 					{
-						"itemId": "arc_alloys",
+						"itemId": "arc_alloy",
 						"count": 6
 					}
 				],
@@ -278,7 +278,7 @@
 						"count": 50
 					},
 					{
-						"itemId": "arc_alloys",
+						"itemId": "arc_alloy",
 						"count": 6
 					}
 				],
@@ -336,7 +336,7 @@
 						"count": 50
 					},
 					{
-						"itemId": "arc_alloys",
+						"itemId": "arc_alloy",
 						"count": 6
 					}
 				],

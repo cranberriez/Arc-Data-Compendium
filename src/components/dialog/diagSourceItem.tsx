@@ -26,7 +26,7 @@ export const SourceItem = ({
 		.filter((recycledItem) => recycledItem && recycledItem.id !== item.id);
 
 	return (
-		<div className="flex flex-row items-center gap-1 sm:gap-2">
+		<div className="flex flex-row items-center gap-1 sm:gap-2 cursor-default border-2 border-dashed border-accent rounded-md">
 			<ItemCard
 				item={sourceItem}
 				variant="icon"
