@@ -18,7 +18,7 @@ import {
 import { ItemCategory } from "@/types/items/types";
 import { useDialog } from "@/contexts/dialogContext";
 import { usePathname, useRouter } from "next/navigation";
-import getItemIcon from "./items/getItemIcon";
+import getItemIcon from "@/components/items/getItemIcon";
 
 export function SearchDialog({
 	open,
