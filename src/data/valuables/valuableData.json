@@ -305,19 +305,6 @@
 		"value": 0
 	},
 	{
-		"id": "dartboard",
-		"name": "Dartboard",
-		"category": "valuable",
-		"icon": "Club",
-		"rarity": "common",
-		"description": "No provided description for this item yet.",
-		"weight": 1,
-		"maxStack": 1,
-		"recipeId": null,
-		"sources": [],
-		"value": 0
-	},
-	{
 		"id": "lances_mixtape_5th_edition",
 		"name": "Lance\u2019s Mixtape (5th Edition)",
 		"category": "valuable",
@@ -340,8 +327,7 @@
 		"weight": 1,
 		"maxStack": 1,
 		"recipeId": null,
-		"value": 0,
-		"recycling": []
+		"value": 0
 	},
 	{
 		"id": "breathtaking_snow_globe",
@@ -353,8 +339,7 @@
 		"weight": 1,
 		"maxStack": 1,
 		"recipeId": null,
-		"value": 7000,
-		"recycling": []
+		"value": 7000
 	},
 	{
 		"id": "dartboard",
@@ -366,8 +351,7 @@
 		"weight": 1,
 		"maxStack": 1,
 		"recipeId": null,
-		"value": 2000,
-		"recycling": []
+		"value": 2000
 	},
 	{
 		"id": "painted_box",
@@ -379,8 +363,7 @@
 		"weight": 1,
 		"maxStack": 1,
 		"recipeId": null,
-		"value": 2000,
-		"recycling": []
+		"value": 2000
 	},
 	{
 		"id": "red_coral_jewlery",
@@ -392,8 +375,7 @@
 		"weight": 1,
 		"maxStack": 1,
 		"recipeId": null,
-		"value": 5000,
-		"recycling": []
+		"value": 5000
 	},
 	{
 		"id": "rosary",
@@ -405,8 +387,7 @@
 		"weight": 1,
 		"maxStack": 1,
 		"recipeId": null,
-		"value": 2000,
-		"recycling": []
+		"value": 2000
 	},
 	{
 		"id": "rubber_duck",
@@ -418,8 +399,7 @@
 		"weight": 1,
 		"maxStack": 1,
 		"recipeId": null,
-		"value": 1000,
-		"recycling": []
+		"value": 1000
 	},
 	{
 		"id": "bloated_tuna_can",
