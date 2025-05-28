@@ -4,8 +4,17 @@ import { Button } from "@/components/ui/button";
 import { SearchIcon, SlidersHorizontal, RefreshCwIcon } from "lucide-react";
 import { useItems } from "@/contexts/itemContext";
 import { useIsPageName } from "@/hooks/use-pagename";
+import { Popover, PopoverTrigger, PopoverContent } from "@/components/ui/popover";
+import FilterSort from "./tbFilterSort";
+import { cn } from "@/lib/utils";
 
-export default function Tools({ setSearchOpen }: { setSearchOpen: (open: boolean) => void }) {
+export default function Tools({
+	setSearchOpen,
+	className,
+}: {
+	setSearchOpen: (open: boolean) => void;
+	className?: string;
+}) {
 	const { resetFilters, filterState, isLoading } = useItems();
 
 	const onItemsPage = useIsPageName("items");
@@ -14,10 +23,13 @@ export default function Tools({ setSearchOpen }: { setSearchOpen: (open: boolean
 	const hasActiveFilters =
 		filterState.searchQuery !== "" ||
 		filterState.rarities.length > 0 ||
-		filterState.categories.length > 0;
+		filterState.categories.length > 0 ||
+		filterState.showRecyclable ||
+		filterState.showCraftable ||
+		filterState.showHasStats;
 
 	return (
-		<div className="flex items-center gap-1">
+		<div className={cn("flex items-center gap-1", className)}>
 			<Button
 				variant="ghost"
 				size="sm"
@@ -29,16 +41,37 @@ export default function Tools({ setSearchOpen }: { setSearchOpen: (open: boolean
 				<p className="hidden sm:inline">Search</p>
 			</Button>
 
-			{hasActiveFilters && onItemsPage && (
+			{onItemsPage && (
+				<Popover modal={true}>
+					<PopoverTrigger asChild>
+						<Button
+							variant="ghost"
+							size="sm"
+							aria-label="Sort & Filter Options"
+							className="cursor-pointer"
+						>
+							<SlidersHorizontal />
+							<p className="hidden sm:inline">Options</p>
+						</Button>
+					</PopoverTrigger>
+					<PopoverContent className="w-[400px] max-w-[95vw] min-w-[300px] max-h-[80vh] overflow-y-auto">
+						<FilterSort />
+					</PopoverContent>
+				</Popover>
+			)}
+
+			{onItemsPage && (
 				<Button
 					variant="ghost"
 					size="icon"
 					aria-label="Clear filters"
-					onClick={() => resetFilters()}
+					onClick={hasActiveFilters ? resetFilters : undefined}
 					className="relative cursor-pointer"
 				>
 					<RefreshCwIcon className={isLoading ? "animate-spin" : ""} />
-					<span className="absolute top-0 right-0 h-2 w-2 bg-red-500 rounded-full"></span>
+					{hasActiveFilters && (
+						<span className="absolute top-0 right-0 h-2 w-2 bg-red-500 rounded-full"></span>
+					)}
 				</Button>
 			)}
 		</div>

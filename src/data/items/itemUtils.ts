@@ -176,6 +176,10 @@ export const formatName = (type: string) => {
 		.join(" ");
 };
 
+export const formatCamelName = (type: string) => {
+	return type.replace(/([A-Z])/g, " $1").replace(/^./, (match) => match.toUpperCase());
+};
+
 export const formatValue = (value: number) => {
 	return value.toLocaleString("en-US", {
 		style: "currency",

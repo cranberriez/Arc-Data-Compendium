@@ -11,7 +11,7 @@ import {
 } from "react";
 import { applyItemFilters, sortItems, SortField, SortOrder } from "@/utils/items";
 
-import { Item } from "@/types";
+import { Item, ItemCategory, Rarity } from "@/types";
 import { addSources, composeProcessors, processItems } from "@/data/items/itemPreprocessor";
 import { fetchItems, fetchValuables } from "@/services/dataService";
 import { FilterOptions, SortOptions } from "@/utils/items/types";
@@ -24,10 +24,13 @@ interface ItemContextType {
 	isLoading: boolean;
 	error: string | null;
 	setSearchQuery: (query: string) => void;
-	setRarity: (rarity: string) => void;
-	setCategory: (category: string) => void;
-	toggleRarity: (rarity: string) => void;
-	toggleCategory: (category: string) => void;
+	setRarity: (rarities: Rarity[]) => void;
+	setCategory: (categories: ItemCategory[]) => void;
+	toggleRarity: (rarity: Rarity) => void;
+	toggleCategory: (category: ItemCategory) => void;
+	toggleRecyclable: () => void;
+	toggleCraftable: () => void;
+	toggleHasStats: () => void;
 	setSort: (field: SortField, order: SortOrder) => void;
 	resetFilters: () => void;
 	getItemById: (id: string) => Item | undefined;
@@ -37,6 +40,9 @@ const defaultFilterState: FilterOptions = {
 	searchQuery: "",
 	rarities: [],
 	categories: [],
+	showRecyclable: false,
+	showCraftable: false,
+	showHasStats: false,
 };
 
 const defaultSortState: SortOptions = {
@@ -91,11 +97,15 @@ export function ItemProvider({ children }: { children: ReactNode }) {
 	// Memoize the current items to prevent recalculation
 	const currentItems = useMemo(() => allItems, [allItems]);
 
-	const filteredItems = useMemo(() => {
-		const filtered = applyItemFilters(currentItems, filterState);
+	// Memoize the filtered items based on filter state only
+	const filteredByFilters = useMemo(() => {
+		return applyItemFilters(currentItems, filterState);
+	}, [currentItems, filterState]);
 
-		return sortItems(filtered, sortState);
-	}, [currentItems, filterState, sortState]);
+	// Memoize the sorted items based on the filtered items and sort state
+	const filteredItems = useMemo(() => {
+		return sortItems(filteredByFilters, sortState);
+	}, [filteredByFilters, sortState]);
 
 	const setSearchQuery = useCallback(
 		(query: string) => {
@@ -104,30 +114,59 @@ export function ItemProvider({ children }: { children: ReactNode }) {
 		[setFilterState]
 	);
 
-	const setRarity = useCallback((rarity: string) => {
-		setFilterState((prev) => ({ ...prev, rarities: [rarity] }));
+	const setRarity = useCallback((rarities: Rarity[]) => {
+		setFilterState((prev) => ({ ...prev, rarities }));
 	}, []);
 
-	const setCategory = useCallback((category: string) => {
-		setFilterState((prev) => ({ ...prev, categories: [category] }));
+	const setCategory = useCallback((categories: ItemCategory[]) => {
+		setFilterState((prev) => ({ ...prev, categories }));
 	}, []);
 
-	const toggleRarity = useCallback((rarity: string) => {
+	const toggleRarity = useCallback((rarity: Rarity) => {
 		setFilterState((prev) => {
-			const newRarities = prev.rarities.includes(rarity)
-				? prev.rarities.filter((r) => r !== rarity)
-				: [...prev.rarities, rarity];
-			return { ...prev, rarities: newRarities };
+			// Use a Set for more efficient inclusion check and filtering
+			const raritySet = new Set(prev.rarities);
+			if (raritySet.has(rarity)) {
+				raritySet.delete(rarity);
+			} else {
+				raritySet.add(rarity);
+			}
+			return { ...prev, rarities: Array.from(raritySet) };
 		});
 	}, []);
 
-	const toggleCategory = useCallback((category: string) => {
+	const toggleCategory = useCallback((category: ItemCategory) => {
 		setFilterState((prev) => {
-			const newCategories = prev.categories.includes(category)
-				? prev.categories.filter((c) => c !== category)
-				: [...prev.categories, category];
-			return { ...prev, categories: newCategories };
+			// Use a Set for more efficient inclusion check and filtering
+			const categorySet = new Set(prev.categories);
+			if (categorySet.has(category)) {
+				categorySet.delete(category);
+			} else {
+				categorySet.add(category);
+			}
+			return { ...prev, categories: Array.from(categorySet) };
 		});
+	}, []);
+
+	const toggleRecyclable = useCallback(() => {
+		setFilterState((prev) => ({
+			...prev,
+			showRecyclable: !prev.showRecyclable,
+		}));
+	}, []);
+
+	const toggleCraftable = useCallback(() => {
+		setFilterState((prev) => ({
+			...prev,
+			showCraftable: !prev.showCraftable,
+		}));
+	}, []);
+
+	const toggleHasStats = useCallback(() => {
+		setFilterState((prev) => ({
+			...prev,
+			showHasStats: !prev.showHasStats,
+		}));
 	}, []);
 
 	const setSort = useCallback((field: SortField, order: SortOrder) => {
@@ -135,15 +174,19 @@ export function ItemProvider({ children }: { children: ReactNode }) {
 	}, []);
 
 	const resetFilters = useCallback(() => {
+		// Use requestAnimationFrame instead of setTimeout for better performance
 		setIsLoading(true);
 
-		// Add a slight delay to allow visualization of loading, even though things lock up it looks more responsive
-		setTimeout(() => {
+		requestAnimationFrame(() => {
 			setFilterState(defaultFilterState);
 			setSortState(defaultSortState);
-			setIsLoading(false);
-		}, 50);
-	}, [setFilterState, setSortState]);
+
+			// Use another requestAnimationFrame to ensure UI updates before removing loading state
+			requestAnimationFrame(() => {
+				setIsLoading(false);
+			});
+		});
+	}, []);
 
 	const getItemById = useCallback(
 		(id: string): Item | undefined => {
@@ -165,6 +208,9 @@ export function ItemProvider({ children }: { children: ReactNode }) {
 			setCategory,
 			toggleRarity,
 			toggleCategory,
+			toggleRecyclable,
+			toggleCraftable,
+			toggleHasStats,
 			setSort,
 			resetFilters,
 			getItemById,
@@ -181,6 +227,9 @@ export function ItemProvider({ children }: { children: ReactNode }) {
 			setCategory,
 			toggleRarity,
 			toggleCategory,
+			toggleRecyclable,
+			toggleCraftable,
+			toggleHasStats,
 			setSort,
 			resetFilters,
 			getItemById,

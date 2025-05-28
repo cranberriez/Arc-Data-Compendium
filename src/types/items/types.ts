@@ -8,7 +8,7 @@ export type ItemCategory =
 	| "recyclable"
 	| "valuable"
 	| "quick_use"
-	| "ammunition"
+	| "ammo"
 	| "weapon"
 	| "gear"
 	| "misc"

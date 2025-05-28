@@ -232,9 +232,9 @@
 		"gear": {
 			"category": "shield",
 			"stats": {
-				"shield_charge": 50,
-				"damage_mitigation": 0.23,
-				"move_penalty": 0,
+				"shieldCharge": 50,
+				"damageMitigation": 0.23,
+				"movePenalty": 0,
 				"segments": 5,
 				"minimumTier": 0
 			}
@@ -262,9 +262,9 @@
 		"gear": {
 			"category": "shield",
 			"stats": {
-				"shield_charge": 80,
-				"damage_mitigation": 0.45,
-				"move_penalty": 0.05,
+				"shieldCharge": 80,
+				"damageMitigation": 0.45,
+				"movePenalty": 0.05,
 				"segments": 8,
 				"minimumTier": 1
 			}
@@ -292,9 +292,9 @@
 		"gear": {
 			"category": "shield",
 			"stats": {
-				"shield_charge": 120,
-				"damage_mitigation": 0.65,
-				"move_penalty": 0.15,
+				"shieldCharge": 120,
+				"damageMitigation": 0.65,
+				"movePenalty": 0.15,
 				"segments": 12,
 				"minimumTier": 3
 			}
@@ -314,11 +314,11 @@
 		"gear": {
 			"category": "augment",
 			"stats": {
-				"backpack_slots": 16,
-				"weight_limit": 50,
-				"safe_pocket_size": 2,
-				"quick_use_slots": 6,
-				"weapon_slots": 2,
+				"backpackSlots": 16,
+				"weightLimit": 50,
+				"safePocketSize": 2,
+				"quickUseSlots": 6,
+				"weaponSlots": 2,
 				"tier": 1
 			}
 		}
@@ -337,11 +337,11 @@
 		"gear": {
 			"category": "augment",
 			"stats": {
-				"backpack_slots": 18,
-				"weight_limit": 55,
-				"safe_pocket_size": 2,
-				"quick_use_slots": 6,
-				"weapon_slots": 2,
+				"backpackSlots": 18,
+				"weightLimit": 55,
+				"safePocketSize": 2,
+				"quickUseSlots": 6,
+				"weaponSlots": 2,
 				"tier": 2
 			}
 		}
@@ -360,11 +360,11 @@
 		"gear": {
 			"category": "augment",
 			"stats": {
-				"backpack_slots": 20,
-				"weight_limit": 55,
-				"safe_pocket_size": 2,
-				"quick_use_slots": 6,
-				"weapon_slots": 2,
+				"backpackSlots": 20,
+				"weightLimit": 55,
+				"safePocketSize": 2,
+				"quickUseSlots": 6,
+				"weaponSlots": 2,
 				"tier": 3
 			}
 		}
@@ -383,11 +383,11 @@
 		"gear": {
 			"category": "augment",
 			"stats": {
-				"backpack_slots": 24,
-				"weight_limit": 60,
-				"safe_pocket_size": 3,
-				"quick_use_slots": 8,
-				"weapon_slots": 2,
+				"backpackSlots": 24,
+				"weightLimit": 60,
+				"safePocketSize": 3,
+				"quickUseSlots": 8,
+				"weaponSlots": 2,
 				"tier": 4
 			}
 		}
@@ -650,11 +650,11 @@
 					"value": 5,
 					"perSecond": true,
 					"duration": 10,
-					"effect": "firedamage"
+					"effect": "Fire Damage"
 				},
 				{
 					"name": "range",
-					"value": 10
+					"range": 10
 				}
 			]
 		}
@@ -743,12 +743,12 @@
 				{
 					"name": "stun",
 					"duration": 4,
-					"effect": "raider stun"
+					"effect": "Raider Stun"
 				},
 				{
 					"name": "stun",
 					"duration": 10,
-					"effect": "ARC unit stun"
+					"effect": "ARC Unit Stun"
 				},
 				{
 					"name": "range",
@@ -843,7 +843,8 @@
 			"category": "throwable",
 			"stats": [
 				{
-					"name": "lure"
+					"name": "lure",
+					"effect": "Loud Alarm Sound"
 				},
 				{
 					"name": "duration",
@@ -867,7 +868,22 @@
 		"weight": 0,
 		"maxStack": 1,
 		"category": "quick_use",
-		"recipeId": "recipe_photoelectric_cloak"
+		"recipeId": "recipe_photoelectric_cloak",
+		"quickUse": {
+			"category": "utility",
+			"stats": [
+				{
+					"name": "use_time",
+					"duration": 1
+				}
+			],
+			"charge": {
+				"type": "usage_bar",
+				"maxCharges": 100,
+				"drainRate": 0.15,
+				"rechargeRate": 0.1
+			}
+		}
 	},
 	{
 		"id": "showstopper",
@@ -918,7 +934,7 @@
 				{
 					"name": "repair",
 					"value": 50,
-					"effect": "shield repair"
+					"effect": "Shield Repair"
 				},
 				{
 					"name": "use_time",
@@ -1001,7 +1017,7 @@
 		"description": "A sturdy metal hook with a spring-loaded gate, used for fast attachment.",
 		"flavorText": "Has a range of 20 meters. Has a usage bar that slowly refills when not being used. Has 3 uses when fully charged.",
 		"icon": "Webhook",
-		"rarity": "common",
+		"rarity": "rare",
 		"value": 0,
 		"weight": 0,
 		"maxStack": 1,
@@ -1019,7 +1035,7 @@
 				"type": "per_use",
 				"maxCharges": 3,
 				"chargeCost": 1,
-				"rechargeRate": 0.1
+				"rechargeRate": 0.05
 			}
 		}
 	},
@@ -1386,7 +1402,7 @@
 			"stats": [
 				{
 					"name": "health",
-					"value": 50
+					"value": 500
 				},
 				{
 					"name": "use_time",
@@ -1959,7 +1975,7 @@
 					"value": 5,
 					"perSecond": true,
 					"duration": 10,
-					"effect": "damage"
+					"effect": "Fire Damage"
 				},
 				{
 					"name": "range",
@@ -2060,7 +2076,7 @@
 					"value": 25,
 					"perSecond": true,
 					"duration": 20,
-					"effect": "stamina drain"
+					"effect": "Stamina Drain"
 				},
 				{
 					"name": "range",
@@ -2111,12 +2127,12 @@
 				{
 					"name": "stun",
 					"duration": 0.5,
-					"effect": "Raider stun"
+					"effect": "Raider Stun"
 				},
 				{
 					"name": "stun",
 					"duration": 10,
-					"effect": "ARC unit stun"
+					"effect": "ARC Unit Stun"
 				},
 				{
 					"name": "range",
@@ -2289,7 +2305,7 @@
 					"value": 5,
 					"perSecond": true,
 					"duration": 10,
-					"effect": "fire damage"
+					"effect": "Fire Damage"
 				},
 				{
 					"name": "Range",
@@ -2318,7 +2334,7 @@
 					"value": 25,
 					"perSecond": true,
 					"duration": 20,
-					"effect": "stamina drain"
+					"effect": "Stamina Drain"
 				},
 				{
 					"name": "range",
@@ -3700,7 +3716,8 @@
 			"category": "throwable",
 			"stats": [
 				{
-					"name": "tag"
+					"name": "tag",
+					"effect": "Raider is Visibly Marked"
 				},
 				{
 					"name": "duration",

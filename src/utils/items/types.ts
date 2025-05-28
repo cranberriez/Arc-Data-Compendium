@@ -1,7 +1,9 @@
+import { Rarity, ItemCategory } from "@/types";
+
 export interface FilterOptions {
 	searchQuery: string;
-	rarities: string[];
-	categories: string[];
+	rarities: Rarity[];
+	categories: ItemCategory[];
 	showRecyclable?: boolean;
 	showCraftable?: boolean;
 	showHasStats?: boolean;

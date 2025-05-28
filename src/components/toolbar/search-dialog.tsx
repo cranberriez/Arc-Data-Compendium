@@ -110,7 +110,7 @@ export function SearchDialog({
 
 		// Apply both search term and category filter
 		setSearchQuery(localSearch);
-		setCategory(category);
+		setCategory([category]);
 		onOpenChange(false);
 	};
 

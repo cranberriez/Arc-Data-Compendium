@@ -5,9 +5,13 @@ import { Dialog, DialogContent, DialogDescription } from "@/components/ui/dialog
 import { Item } from "@/types";
 import { useDialog } from "@/contexts/dialogContext";
 import { Button } from "@/components/ui/button";
-import { ItemHeader } from "../dialog/diagHeader";
-import { RecyclingSection } from "../dialog/diagRecycling";
-import { SourcesSection } from "../dialog/diagSource";
+import {
+	ItemHeader,
+	RecyclingSection,
+	SourcesSection,
+	QuickUseSection,
+	GearSection,
+} from "../dialog";
 
 type ItemDialogProps = {
 	data: Item;
@@ -24,6 +28,8 @@ export function ItemDialog({ data, isOpen, closeDialog, backDialog }: ItemDialog
 
 	const sourcesPresent = item.sources && item.sources.length > 0;
 	const recyclingPresent = item.recycling && item.recycling.length > 0;
+	const isQuickUse = item.quickUse;
+	const isGear = item.gear;
 
 	// Custom close handler to clear the queue
 	const handleCloseDialog = () => {
@@ -67,9 +73,15 @@ export function ItemDialog({ data, isOpen, closeDialog, backDialog }: ItemDialog
 
 				<DialogDescription>{item.description}</DialogDescription>
 
-				{sourcesPresent || recyclingPresent ? (
+				{sourcesPresent || recyclingPresent || isQuickUse || isGear ? (
 					<hr className="my-2 border-t border-t-secondary-foreground/20 dark:border-t-secondary-foreground/10" />
 				) : null}
+
+				{/* Quick Use Section */}
+				{isQuickUse && <QuickUseSection item={item} />}
+
+				{/* Gear Section */}
+				{isGear && <GearSection item={item} />}
 
 				{/* Recycling Section */}
 				{recyclingPresent && <RecyclingSection item={item} />}
