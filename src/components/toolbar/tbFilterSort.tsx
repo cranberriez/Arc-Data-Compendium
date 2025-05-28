@@ -7,8 +7,9 @@ import { Switch } from "@/components/ui/switch";
 import { Separator } from "@/components/ui/separator";
 import { memo } from "react";
 import { Button } from "@/components/ui/button";
-import { ChevronDownIcon, RefreshCwIcon } from "lucide-react";
+import { ChevronDownIcon } from "lucide-react";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { cn } from "@/lib/utils";
 
 // Define arrays of available options
 const rarityOptions: Rarity[] = ["common", "uncommon", "rare", "epic", "legendary"];
@@ -114,11 +115,9 @@ export default function FilterSort() {
 		str.charAt(0).toUpperCase() + str.replace("_", " ").slice(1);
 
 	return (
-		<div className="p-4 space-y-6 max-h-[80vh] overflow-y-auto">
+		<div className="mb-4 space-y-6">
 			{/* Sort Options */}
 			<div className="space-y-3">
-				<h3 className="font-medium text-sm">Sort Options</h3>
-
 				<div className="space-y-2">
 					<Label
 						htmlFor="sort-field"
@@ -212,7 +211,22 @@ export default function FilterSort() {
 
 			{/* Rarity Filter Section */}
 			<div className="space-y-2">
-				<h3 className="font-medium text-sm">Rarity</h3>
+				<div className="flex items-center justify-between">
+					<h3 className="font-medium text-sm">Rarity</h3>
+					<Button
+						variant="link"
+						size="sm"
+						aria-label="Clear filters"
+						onClick={() => setRarity([])}
+						className={cn(
+							"relative cursor-pointer",
+							filterState.rarities.length > 0 ? "text-red-400" : ""
+						)}
+						disabled={filterState.rarities.length === 0}
+					>
+						Reset
+					</Button>
+				</div>
 				<div className="grid grid-cols-2 gap-2">
 					{rarityOptions.map((rarity) => (
 						<CheckboxFilterItem
@@ -233,13 +247,17 @@ export default function FilterSort() {
 				<div className="flex items-center justify-between">
 					<h3 className="font-medium text-sm">Category</h3>
 					<Button
-						variant="ghost"
-						size="icon"
+						variant="link"
+						size="sm"
 						aria-label="Clear filters"
 						onClick={() => setCategory([])}
-						className="relative cursor-pointer"
+						className={cn(
+							"relative cursor-pointer",
+							filterState.categories.length > 0 ? "text-red-400" : ""
+						)}
+						disabled={filterState.categories.length === 0}
 					>
-						<RefreshCwIcon />
+						Reset
 					</Button>
 				</div>
 				<div className="grid grid-cols-2 gap-2">
