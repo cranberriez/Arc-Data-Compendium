@@ -23,7 +23,10 @@ export default function Tools({
 	const hasActiveFilters =
 		filterState.searchQuery !== "" ||
 		filterState.rarities.length > 0 ||
-		filterState.categories.length > 0;
+		filterState.categories.length > 0 ||
+		filterState.showRecyclable ||
+		filterState.showCraftable ||
+		filterState.showHasStats;
 
 	return (
 		<div className={cn("flex items-center gap-1", className)}>

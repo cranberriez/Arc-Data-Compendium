@@ -13,11 +13,7 @@ interface ItemListProps {
 export function ItemList({ initialItems }: ItemListProps) {
 	const { filterState, sortState } = useItems();
 	const items = sortItems(initialItems, sortState);
-	const filteredItems = applyItemFilters(items, {
-		searchQuery: filterState.searchQuery,
-		rarities: filterState.rarities,
-		categories: filterState.categories,
-	});
+	const filteredItems = applyItemFilters(items, filterState);
 
 	// Don't show headers for these sort fields
 	const noHeaders = ["none", "name"];

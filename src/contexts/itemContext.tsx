@@ -28,6 +28,9 @@ interface ItemContextType {
 	setCategory: (category: ItemCategory) => void;
 	toggleRarity: (rarity: Rarity) => void;
 	toggleCategory: (category: ItemCategory) => void;
+	toggleRecyclable: () => void;
+	toggleCraftable: () => void;
+	toggleHasStats: () => void;
 	setSort: (field: SortField, order: SortOrder) => void;
 	resetFilters: () => void;
 	getItemById: (id: string) => Item | undefined;
@@ -37,6 +40,9 @@ const defaultFilterState: FilterOptions = {
 	searchQuery: "",
 	rarities: [],
 	categories: [],
+	showRecyclable: false,
+	showCraftable: false,
+	showHasStats: false,
 };
 
 const defaultSortState: SortOptions = {
@@ -142,6 +148,27 @@ export function ItemProvider({ children }: { children: ReactNode }) {
 		});
 	}, []);
 
+	const toggleRecyclable = useCallback(() => {
+		setFilterState((prev) => ({
+			...prev,
+			showRecyclable: !prev.showRecyclable,
+		}));
+	}, []);
+
+	const toggleCraftable = useCallback(() => {
+		setFilterState((prev) => ({
+			...prev,
+			showCraftable: !prev.showCraftable,
+		}));
+	}, []);
+
+	const toggleHasStats = useCallback(() => {
+		setFilterState((prev) => ({
+			...prev,
+			showHasStats: !prev.showHasStats,
+		}));
+	}, []);
+
 	const setSort = useCallback((field: SortField, order: SortOrder) => {
 		setSortState((prev) => ({ ...prev, sortField: field, sortOrder: order }));
 	}, []);
@@ -149,11 +176,11 @@ export function ItemProvider({ children }: { children: ReactNode }) {
 	const resetFilters = useCallback(() => {
 		// Use requestAnimationFrame instead of setTimeout for better performance
 		setIsLoading(true);
-		
+
 		requestAnimationFrame(() => {
 			setFilterState(defaultFilterState);
 			setSortState(defaultSortState);
-			
+
 			// Use another requestAnimationFrame to ensure UI updates before removing loading state
 			requestAnimationFrame(() => {
 				setIsLoading(false);
@@ -181,6 +208,9 @@ export function ItemProvider({ children }: { children: ReactNode }) {
 			setCategory,
 			toggleRarity,
 			toggleCategory,
+			toggleRecyclable,
+			toggleCraftable,
+			toggleHasStats,
 			setSort,
 			resetFilters,
 			getItemById,
@@ -197,6 +227,9 @@ export function ItemProvider({ children }: { children: ReactNode }) {
 			setCategory,
 			toggleRarity,
 			toggleCategory,
+			toggleRecyclable,
+			toggleCraftable,
+			toggleHasStats,
 			setSort,
 			resetFilters,
 			getItemById,
