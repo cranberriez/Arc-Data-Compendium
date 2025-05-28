@@ -135,8 +135,14 @@ export function ItemProvider({ children }: { children: ReactNode }) {
 	}, []);
 
 	const resetFilters = useCallback(() => {
-		setFilterState(defaultFilterState);
-		setSortState(defaultSortState);
+		setIsLoading(true);
+
+		// Add a slight delay to allow visualization of loading, even though things lock up it looks more responsive
+		setTimeout(() => {
+			setFilterState(defaultFilterState);
+			setSortState(defaultSortState);
+			setIsLoading(false);
+		}, 50);
 	}, [setFilterState, setSortState]);
 
 	const getItemById = useCallback(

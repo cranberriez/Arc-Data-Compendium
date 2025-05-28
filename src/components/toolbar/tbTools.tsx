@@ -7,7 +7,7 @@ import { useItems } from "@/contexts/itemContext";
 import { useIsPageName } from "@/hooks/use-pagename";
 
 export default function Tools({ setSearchOpen }: { setSearchOpen: (open: boolean) => void }) {
-	const { resetFilters, filterState } = useItems();
+	const { resetFilters, filterState, isLoading } = useItems();
 
 	const onItemsPage = useIsPageName("items");
 
@@ -38,7 +38,7 @@ export default function Tools({ setSearchOpen }: { setSearchOpen: (open: boolean
 					onClick={() => resetFilters()}
 					className="relative cursor-pointer"
 				>
-					<RefreshCwIcon />
+					<RefreshCwIcon className={isLoading ? "animate-spin" : ""} />
 					<span className="absolute top-0 right-0 h-2 w-2 bg-red-500 rounded-full"></span>
 				</Button>
 			)}

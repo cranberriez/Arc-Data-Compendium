@@ -8,12 +8,10 @@ import {
 	BreadcrumbPage,
 	BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
-import { useItems } from "@/contexts/itemContext";
 import { usePageName } from "@/hooks/use-pagename";
 
 export default function ToolbarBreadcrumb() {
 	const pageTitle = usePageName();
-	const { filteredItems } = useItems();
 
 	return (
 		<div className="flex items-center justify-between gap-2 w-full">
