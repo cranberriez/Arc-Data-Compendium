@@ -1,7 +1,7 @@
 "use client";
 
 import { Item } from "@/types";
-import { ItemCard } from "./itemDisplay";
+import { ItemCard } from "@/components/items/itemDisplay";
 import { applyItemFilters, sortItems } from "@/utils/items";
 import { useItems } from "@/contexts/itemContext";
 import { Fragment } from "react";

@@ -1,5 +1,5 @@
 import { fetchItems, fetchValuables } from "@/services/dataService";
-import { ItemList } from "@/components/items/ItemsList";
+import { ItemList } from "./components/ItemsList";
 
 // Remove "use client" directive to make this a server component
 export default async function ItemsPage() {
