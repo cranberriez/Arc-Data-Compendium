@@ -650,7 +650,7 @@
 					"value": 5,
 					"perSecond": true,
 					"duration": 10,
-					"effect": "firedamage"
+					"effect": "fire damage"
 				},
 				{
 					"name": "range",
