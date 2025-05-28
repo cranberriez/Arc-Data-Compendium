@@ -10,6 +10,37 @@ export type DataTypes = {
 };
 
 /**
+ * Fetches a single workbench by ID from the API
+ */
+export async function getWorkbenchById(id: string): Promise<Workbench | null> {
+	try {
+		const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
+		const response = await fetch(`${baseUrl}/api/workbenches/${id}`, {
+			method: "GET",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			next: {
+				revalidate: 3600,
+			},
+		});
+
+		if (!response.ok) {
+			if (response.status === 404) {
+				return null; // Workbench not found
+			}
+			throw new Error(`Failed to fetch workbench: ${response.statusText}`);
+		}
+
+		const data = await response.json();
+		return data as Workbench;
+	} catch (error) {
+		console.error(`Error fetching workbench with ID ${id}:`, error);
+		throw error; // Re-throw to allow error handling by the caller
+	}
+}
+
+/**
  * Fetches items data from the API
  */
 export async function fetchItems(): Promise<Item[]> {

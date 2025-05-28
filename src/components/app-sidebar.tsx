@@ -100,31 +100,31 @@ const data: NavData = {
 					{
 						title: "Basic Bench",
 						icon: FlaskConical,
-						url: "/workshop/basic",
+						url: "/workshop/basic_bench",
 						enabled: true,
 					},
 					{
 						title: "Equipment Bench",
 						icon: FlaskConical,
-						url: "/workshop/equipment",
+						url: "/workshop/equipment_bench",
 						enabled: true,
 					},
 					{
 						title: "Weapon Bench",
 						icon: FlaskConical,
-						url: "/workshop/weapon",
+						url: "/workshop/weapon_bench",
 						enabled: true,
 					},
 					{
 						title: "Utility Bench",
 						icon: FlaskConical,
-						url: "/workshop/utility",
+						url: "/workshop/utility_bench",
 						enabled: true,
 					},
 					{
 						title: "Med Station",
 						icon: FlaskConical,
-						url: "/workshop/med",
+						url: "/workshop/medical_station",
 						enabled: true,
 					},
 					{
