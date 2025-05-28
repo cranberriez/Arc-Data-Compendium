@@ -1,8 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { SearchIcon } from "lucide-react";
-import { RefreshCwIcon } from "lucide-react";
+import { SearchIcon, SlidersHorizontal, RefreshCwIcon } from "lucide-react";
 import { useItems } from "@/contexts/itemContext";
 import { useIsPageName } from "@/hooks/use-pagename";
 
@@ -27,7 +26,18 @@ export default function Tools({ setSearchOpen }: { setSearchOpen: (open: boolean
 				onClick={() => setSearchOpen(true)}
 			>
 				<SearchIcon />
-				<p>Search</p>
+				<p className="hidden sm:inline">Search</p>
+			</Button>
+
+			<Button
+				variant="ghost"
+				size="sm"
+				aria-label="Sort & Filter Options"
+				className="cursor-pointer"
+				// onClick={() => setSearchOpen(true)}
+			>
+				<SlidersHorizontal />
+				<p className="hidden sm:inline">Options</p>
 			</Button>
 
 			{hasActiveFilters && onItemsPage && (
