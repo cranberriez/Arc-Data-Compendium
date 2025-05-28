@@ -1,6 +1,6 @@
 [
 	{
-		"id": "wb_scrappy",
+		"id": "scrappy",
 		"name": "Scrappy",
 		"type": "workbench",
 		"description": "The chicken brings you stuff!",
@@ -74,7 +74,7 @@
 		]
 	},
 	{
-		"id": "wb_basic",
+		"id": "basic_bench",
 		"name": "Basic Workbench",
 		"type": "workbench",
 		"description": "A basic workbench with general purpose crafting",
@@ -89,7 +89,7 @@
 		]
 	},
 	{
-		"id": "wb_weapon",
+		"id": "weapon_bench",
 		"name": "Weapon Bench",
 		"type": "workbench",
 		"description": "Craft and upgrade weapons",
@@ -147,7 +147,7 @@
 		]
 	},
 	{
-		"id": "wb_equipment",
+		"id": "equipment_bench",
 		"name": "Equipment Bench",
 		"type": "workbench",
 		"description": "Craft and upgrade equipment",
@@ -205,7 +205,7 @@
 		]
 	},
 	{
-		"id": "wb_med_station",
+		"id": "medical_station",
 		"name": "Med Station",
 		"type": "workbench",
 		"description": "Craft medical supplies and upgrades",
@@ -263,7 +263,7 @@
 		]
 	},
 	{
-		"id": "wb_explosives",
+		"id": "explosives_bench",
 		"name": "Explosives Bench",
 		"type": "workbench",
 		"description": "Craft explosives and related items",
@@ -321,7 +321,7 @@
 		]
 	},
 	{
-		"id": "wb_utility",
+		"id": "utility_bench",
 		"name": "Utility Bench",
 		"type": "workbench",
 		"description": "Craft utility items and tools",
@@ -379,7 +379,7 @@
 		]
 	},
 	{
-		"id": "wb_refiner",
+		"id": "refiner",
 		"name": "Refiner",
 		"type": "workbench",
 		"description": "Refine and process materials",
