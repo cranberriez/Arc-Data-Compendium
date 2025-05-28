@@ -1,4 +1,4 @@
-import { Item } from "@/types";
+import { Item, Rarity, ItemCategory } from "@/types";
 import { FilterOptions } from "./types";
 import { searchFunc } from "@/data/items/itemUtils";
 
@@ -7,11 +7,11 @@ const matchesSearch = (item: Item, query: string): boolean => {
 	return !query || searchFunc(item, query);
 };
 
-const matchesRarity = (item: Item, rarities: string[]): boolean => {
+const matchesRarity = (item: Item, rarities: Rarity[]): boolean => {
 	return !rarities?.length || rarities.includes(item.rarity);
 };
 
-const matchesCategory = (item: Item, categories: string[]): boolean => {
+const matchesCategory = (item: Item, categories: ItemCategory[]): boolean => {
 	return !categories?.length || categories.includes(item.category);
 };
 
@@ -47,10 +47,10 @@ export const applyItemFilters = (items: Item[], filters: FilterOptions): Item[] 
 export const filterBySearch = (items: Item[], query: string): Item[] =>
 	items.filter((item) => matchesSearch(item, query));
 
-export const filterByRarity = (items: Item[], rarities: string[]): Item[] =>
+export const filterByRarity = (items: Item[], rarities: Rarity[]): Item[] =>
 	items.filter((item) => matchesRarity(item, rarities));
 
-export const filterByCategory = (items: Item[], categories: string[]): Item[] =>
+export const filterByCategory = (items: Item[], categories: ItemCategory[]): Item[] =>
 	items.filter((item) => matchesCategory(item, categories));
 
 export const filterByRecyclable = (items: Item[]): Item[] => items.filter(isRecyclable);

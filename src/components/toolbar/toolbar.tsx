@@ -16,14 +16,20 @@ export default function Toolbar() {
 
 	return (
 		<>
-			<div className="flex items-center justify-between gap-2 px-4 w-full">
+			<div className="grid grid-cols-[2fr_1fr_2fr] items-center justify-between gap-2 px-4 w-full">
 				<div className="flex items-center gap-2">
 					<SidebarTrigger className="-ml-2 cursor-pointer" />
 					<ToolbarBreadcrumb />
 				</div>
-				<Tools setSearchOpen={setSearchOpen} />
+				<Tools
+					setSearchOpen={setSearchOpen}
+					className="justify-self-center"
+				/>
 
-				<ToolbarItemCount initialCount={allItems.length} />
+				<ToolbarItemCount
+					initialCount={allItems.length}
+					className="justify-self-end"
+				/>
 			</div>
 
 			<SearchDialog

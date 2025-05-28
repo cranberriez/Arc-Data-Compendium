@@ -11,7 +11,7 @@ import {
 } from "react";
 import { applyItemFilters, sortItems, SortField, SortOrder } from "@/utils/items";
 
-import { Item } from "@/types";
+import { Item, ItemCategory, Rarity } from "@/types";
 import { addSources, composeProcessors, processItems } from "@/data/items/itemPreprocessor";
 import { fetchItems, fetchValuables } from "@/services/dataService";
 import { FilterOptions, SortOptions } from "@/utils/items/types";
@@ -24,10 +24,10 @@ interface ItemContextType {
 	isLoading: boolean;
 	error: string | null;
 	setSearchQuery: (query: string) => void;
-	setRarity: (rarity: string) => void;
-	setCategory: (category: string) => void;
-	toggleRarity: (rarity: string) => void;
-	toggleCategory: (category: string) => void;
+	setRarity: (rarity: Rarity) => void;
+	setCategory: (category: ItemCategory) => void;
+	toggleRarity: (rarity: Rarity) => void;
+	toggleCategory: (category: ItemCategory) => void;
 	setSort: (field: SortField, order: SortOrder) => void;
 	resetFilters: () => void;
 	getItemById: (id: string) => Item | undefined;
@@ -104,15 +104,15 @@ export function ItemProvider({ children }: { children: ReactNode }) {
 		[setFilterState]
 	);
 
-	const setRarity = useCallback((rarity: string) => {
+	const setRarity = useCallback((rarity: Rarity) => {
 		setFilterState((prev) => ({ ...prev, rarities: [rarity] }));
 	}, []);
 
-	const setCategory = useCallback((category: string) => {
+	const setCategory = useCallback((category: ItemCategory) => {
 		setFilterState((prev) => ({ ...prev, categories: [category] }));
 	}, []);
 
-	const toggleRarity = useCallback((rarity: string) => {
+	const toggleRarity = useCallback((rarity: Rarity) => {
 		setFilterState((prev) => {
 			const newRarities = prev.rarities.includes(rarity)
 				? prev.rarities.filter((r) => r !== rarity)
@@ -121,7 +121,7 @@ export function ItemProvider({ children }: { children: ReactNode }) {
 		});
 	}, []);
 
-	const toggleCategory = useCallback((category: string) => {
+	const toggleCategory = useCallback((category: ItemCategory) => {
 		setFilterState((prev) => {
 			const newCategories = prev.categories.includes(category)
 				? prev.categories.filter((c) => c !== category)
