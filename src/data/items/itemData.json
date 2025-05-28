@@ -232,9 +232,9 @@
 		"gear": {
 			"category": "shield",
 			"stats": {
-				"shield_charge": 50,
-				"damage_mitigation": 0.23,
-				"move_penalty": 0,
+				"shieldCharge": 50,
+				"damageMitigation": 0.23,
+				"movePenalty": 0,
 				"segments": 5,
 				"minimumTier": 0
 			}
@@ -262,9 +262,9 @@
 		"gear": {
 			"category": "shield",
 			"stats": {
-				"shield_charge": 80,
-				"damage_mitigation": 0.45,
-				"move_penalty": 0.05,
+				"shieldCharge": 80,
+				"damageMitigation": 0.45,
+				"movePenalty": 0.05,
 				"segments": 8,
 				"minimumTier": 1
 			}
@@ -292,9 +292,9 @@
 		"gear": {
 			"category": "shield",
 			"stats": {
-				"shield_charge": 120,
-				"damage_mitigation": 0.65,
-				"move_penalty": 0.15,
+				"shieldCharge": 120,
+				"damageMitigation": 0.65,
+				"movePenalty": 0.15,
 				"segments": 12,
 				"minimumTier": 3
 			}
@@ -314,11 +314,11 @@
 		"gear": {
 			"category": "augment",
 			"stats": {
-				"backpack_slots": 16,
-				"weight_limit": 50,
-				"safe_pocket_size": 2,
-				"quick_use_slots": 6,
-				"weapon_slots": 2,
+				"backpackSlots": 16,
+				"weightLimit": 50,
+				"safePocketSize": 2,
+				"quickUseSlots": 6,
+				"weaponSlots": 2,
 				"tier": 1
 			}
 		}
@@ -337,11 +337,11 @@
 		"gear": {
 			"category": "augment",
 			"stats": {
-				"backpack_slots": 18,
-				"weight_limit": 55,
-				"safe_pocket_size": 2,
-				"quick_use_slots": 6,
-				"weapon_slots": 2,
+				"backpackSlots": 18,
+				"weightLimit": 55,
+				"safePocketSize": 2,
+				"quickUseSlots": 6,
+				"weaponSlots": 2,
 				"tier": 2
 			}
 		}
@@ -360,11 +360,11 @@
 		"gear": {
 			"category": "augment",
 			"stats": {
-				"backpack_slots": 20,
-				"weight_limit": 55,
-				"safe_pocket_size": 2,
-				"quick_use_slots": 6,
-				"weapon_slots": 2,
+				"backpackSlots": 20,
+				"weightLimit": 55,
+				"safePocketSize": 2,
+				"quickUseSlots": 6,
+				"weaponSlots": 2,
 				"tier": 3
 			}
 		}
@@ -383,11 +383,11 @@
 		"gear": {
 			"category": "augment",
 			"stats": {
-				"backpack_slots": 24,
-				"weight_limit": 60,
-				"safe_pocket_size": 3,
-				"quick_use_slots": 8,
-				"weapon_slots": 2,
+				"backpackSlots": 24,
+				"weightLimit": 60,
+				"safePocketSize": 3,
+				"quickUseSlots": 8,
+				"weaponSlots": 2,
 				"tier": 4
 			}
 		}

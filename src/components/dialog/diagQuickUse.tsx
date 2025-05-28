@@ -113,7 +113,10 @@ const Charge = ({ charge }: { charge: QuickUseCharge }) => {
 					displayValue = value.toString();
 				}
 
-				name = key.replace(/([A-Z])/g, " $1").replace(/^./, (match) => match.toUpperCase());
+				if (name === "")
+					name = key
+						.replace(/([A-Z])/g, " $1")
+						.replace(/^./, (match) => match.toUpperCase());
 
 				return (
 					<ChargeItem
