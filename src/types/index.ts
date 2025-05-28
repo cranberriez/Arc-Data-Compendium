@@ -6,6 +6,7 @@ export * from "./items/base";
 export * from "./items/workbench";
 export * from "./items/recipe";
 export * from "./items/quickuse";
+export * from "./items/gear";
 
 // Re-export commonly used types for convenience
 export type { BaseItem } from "./items/base";
@@ -13,6 +14,7 @@ export type { Item } from "./items/item";
 export type { Workbench, WorkbenchTier } from "./items/workbench";
 export type { Recipe, RecipeRequirement } from "./items/recipe";
 export type { QuickUseData, QuickUseStat, QuickUseCharge } from "./items/quickuse";
+export type { GearData, GearStat } from "./items/gear";
 
 export type {
 	Rarity,
