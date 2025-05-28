@@ -1,16 +1,16 @@
 "use client";
 
-import { type LucideIcon, ChevronDown, ChevronRight } from "lucide-react";
+import { type LucideIcon, ChevronDown } from "lucide-react";
 import {
 	SidebarGroup,
 	SidebarGroupLabel,
 	SidebarMenu,
 	SidebarMenuButton,
 	SidebarMenuItem,
-	SidebarContent,
+	SidebarGroupContent,
 } from "@/components/ui/sidebar";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import Link from "next/link";
-import { useState } from "react";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 
@@ -24,43 +24,38 @@ export type NavItem = {
 };
 
 function NavItem({ item, pathname }: { item: NavItem; pathname: string | null }) {
-	const [isOpen, setIsOpen] = useState(false);
 	const hasItems = item.items && item.items.length > 0;
 	const isActive = pathname ? pathname === item.url : false;
 	const isDisabled = !item.enabled;
 
-	const activeButton = "bg-background hover:bg-background focus:outline-none";
-	const disabledButton = "text-neutral-500 dark:text-neutral-500/80 cursor-not-allowed";
-	const activeClass = isActive ? "text-primary" : "";
+	const activeButton = "bg-accent text-accent-foreground";
+	const disabledButton = "text-muted-foreground/50 cursor-not-allowed";
+	const activeClass = isActive ? "font-medium" : "";
 
 	if (hasItems) {
 		return (
-			<div className="space-y-1">
+			<Collapsible
+				defaultOpen
+				className="group/collapsible"
+			>
 				<SidebarMenuItem>
-					<button
-						onClick={() => setIsOpen(!isOpen)}
+					<CollapsibleTrigger
 						className={cn(
-							"flex w-full items-center gap-2 rounded-md p-2 text-sm font-medium transition-colors",
-							"hover:bg-accent hover:text-accent-foreground",
+							"flex w-full items-center gap-2 rounded-md p-2 text-sm transition-colors hover:bg-accent hover:text-accent-foreground",
 							isDisabled ? disabledButton : "",
-							"justify-between"
+							"justify-between [&[data-state=open]>svg]:rotate-180"
 						)}
-						disabled={isDisabled}
 					>
 						<div className="flex items-center gap-2">
 							{item.icon && <item.icon className="h-4 w-4" />}
-							<span className="text-base">{item.title}</span>
+							<span className={cn("text-sm", activeClass)}>{item.title}</span>
 						</div>
-						{isOpen ? (
-							<ChevronDown className="h-4 w-4" />
-						) : (
-							<ChevronRight className="h-4 w-4" />
-						)}
-					</button>
+						<ChevronDown className="h-4 w-4 transition-transform duration-200" />
+					</CollapsibleTrigger>
 				</SidebarMenuItem>
-				{isOpen && item.items && (
-					<div className="ml-4 mt-1 space-y-1">
-						{item.items.map((subItem) => (
+				<CollapsibleContent>
+					<div className="ml-6 mt-1 space-y-1">
+						{item.items?.map((subItem) => (
 							<NavItem
 								key={subItem.title}
 								item={subItem}
@@ -68,8 +63,8 @@ function NavItem({ item, pathname }: { item: NavItem; pathname: string | null })
 							/>
 						))}
 					</div>
-				)}
-			</div>
+				</CollapsibleContent>
+			</Collapsible>
 		);
 	}
 
@@ -77,20 +72,20 @@ function NavItem({ item, pathname }: { item: NavItem; pathname: string | null })
 		<SidebarMenuItem>
 			<SidebarMenuButton
 				asChild
-				tooltip={item.title}
 				className={cn(
 					"flex flex-row items-center gap-2 h-auto",
 					isActive ? activeButton : "",
-					isDisabled ? disabledButton : ""
+					isDisabled ? disabledButton : "",
+					"hover:bg-accent hover:text-accent-foreground"
 				)}
 				disabled={isDisabled}
 			>
 				<Link
 					href={isDisabled ? "#" : item.url || "#"}
-					className={cn("w-full", activeClass)}
+					className={cn("w-full py-2 px-2 text-sm", activeClass)}
 				>
 					{item.icon && <item.icon className="h-4 w-4" />}
-					<span className="text-base">{item.title}</span>
+					<span>{item.title}</span>
 				</Link>
 			</SidebarMenuButton>
 		</SidebarMenuItem>
@@ -102,7 +97,9 @@ export function NavMain({ items, category }: { items: NavItem[]; category: strin
 
 	return (
 		<SidebarGroup>
-			<SidebarGroupLabel>{category}</SidebarGroupLabel>
+			<SidebarGroupLabel className="px-2 text-xs font-medium text-muted-foreground">
+				{category}
+			</SidebarGroupLabel>
 			<SidebarMenu>
 				{items.map((item) => (
 					<NavItem

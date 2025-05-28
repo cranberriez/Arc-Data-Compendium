@@ -82,7 +82,7 @@ const data: NavData = {
 		items: [
 			{
 				title: "Overview",
-				url: "/workshop/overview",
+				url: "/workshop",
 				icon: FlaskConical,
 				enabled: true,
 			},
