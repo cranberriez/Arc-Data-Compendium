@@ -1,10 +1,13 @@
 export interface FilterOptions {
-	searchQuery?: string;
-	rarities?: string[];
-	categories?: string[];
+	searchQuery: string;
+	rarities: string[];
+	categories: string[];
 }
 
 export interface SortOptions {
-	field: string;
-	order: "asc" | "desc" | "none";
+	sortField: SortField;
+	sortOrder: SortOrder;
 }
+
+export type SortField = "name" | "rarity" | "category" | "none";
+export type SortOrder = "asc" | "desc" | "none";

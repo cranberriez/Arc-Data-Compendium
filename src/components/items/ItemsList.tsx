@@ -10,8 +10,8 @@ interface ItemListProps {
 }
 
 export function ItemList({ initialItems }: ItemListProps) {
-	const { filterState, sortField, sortOrder } = useItems();
-	const items = sortItems(initialItems, sortField, sortOrder);
+	const { filterState, sortState } = useItems();
+	const items = sortItems(initialItems, sortState);
 	const filteredItems = applyItemFilters(items, {
 		searchQuery: filterState.searchQuery,
 		rarities: filterState.rarities,

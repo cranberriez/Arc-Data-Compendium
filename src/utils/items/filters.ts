@@ -19,8 +19,8 @@ export const filterByCategory = (items: Item[], categories: string[]): Item[] =>
 
 export const applyItemFilters = (items: Item[], filters: FilterOptions): Item[] => {
 	let result = [...items];
-	result = filterBySearch(result, filters.searchQuery || "");
-	result = filterByRarity(result, filters.rarities || []);
-	result = filterByCategory(result, filters.categories || []);
+	result = filterBySearch(result, filters.searchQuery);
+	result = filterByRarity(result, filters.rarities);
+	result = filterByCategory(result, filters.categories);
 	return result;
 };

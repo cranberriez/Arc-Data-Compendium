@@ -14,19 +14,13 @@ import { applyItemFilters, sortItems, SortField, SortOrder } from "@/utils/items
 import { Item } from "@/types";
 import { addSources, composeProcessors, processItems } from "@/data/items/itemPreprocessor";
 import { fetchItems, fetchValuables } from "@/services/dataService";
-
-interface FilterState {
-	searchQuery: string;
-	rarities: string[];
-	categories: string[]; // replaces 'types' from legacy Item
-}
+import { FilterOptions, SortOptions } from "@/utils/items/types";
 
 interface ItemContextType {
 	allItems: Item[];
 	filteredItems: Item[];
-	filterState: FilterState;
-	sortField: SortField;
-	sortOrder: SortOrder;
+	filterState: FilterOptions;
+	sortState: SortOptions;
 	isLoading: boolean;
 	error: string | null;
 	setSearchQuery: (query: string) => void;
@@ -39,10 +33,15 @@ interface ItemContextType {
 	getItemById: (id: string) => Item | undefined;
 }
 
-const defaultFilterState: FilterState = {
+const defaultFilterState: FilterOptions = {
 	searchQuery: "",
 	rarities: [],
 	categories: [],
+};
+
+const defaultSortState: SortOptions = {
+	sortField: "none",
+	sortOrder: "none",
 };
 
 const ItemContext = createContext<ItemContextType | undefined>(undefined);
@@ -86,22 +85,17 @@ export function ItemProvider({ children }: { children: ReactNode }) {
 	}, [itemProcessor]);
 
 	// State for filter and sort
-	const [filterState, setFilterState] = useState<FilterState>(defaultFilterState);
-	const [sortField, setSortField] = useState<SortField>("none");
-	const [sortOrder, setSortOrder] = useState<SortOrder>("none");
+	const [filterState, setFilterState] = useState<FilterOptions>(defaultFilterState);
+	const [sortState, setSortState] = useState<SortOptions>(defaultSortState);
 
 	// Memoize the current items to prevent recalculation
 	const currentItems = useMemo(() => allItems, [allItems]);
 
 	const filteredItems = useMemo(() => {
-		const filtered = applyItemFilters(currentItems, {
-			searchQuery: filterState.searchQuery,
-			rarities: filterState.rarities,
-			categories: filterState.categories,
-		});
+		const filtered = applyItemFilters(currentItems, filterState);
 
-		return sortItems(filtered, sortField, sortOrder);
-	}, [currentItems, filterState, sortField, sortOrder]);
+		return sortItems(filtered, sortState);
+	}, [currentItems, filterState, sortState]);
 
 	const setSearchQuery = useCallback(
 		(query: string) => {
@@ -137,15 +131,13 @@ export function ItemProvider({ children }: { children: ReactNode }) {
 	}, []);
 
 	const setSort = useCallback((field: SortField, order: SortOrder) => {
-		setSortField(field);
-		setSortOrder(order);
+		setSortState((prev) => ({ ...prev, sortField: field, sortOrder: order }));
 	}, []);
 
 	const resetFilters = useCallback(() => {
 		setFilterState(defaultFilterState);
-		setSortField("none");
-		setSortOrder("none");
-	}, [setSortField, setSortOrder]);
+		setSortState(defaultSortState);
+	}, [setFilterState, setSortState]);
 
 	const getItemById = useCallback(
 		(id: string): Item | undefined => {
@@ -159,8 +151,7 @@ export function ItemProvider({ children }: { children: ReactNode }) {
 			allItems,
 			filteredItems,
 			filterState,
-			sortField,
-			sortOrder,
+			sortState,
 			isLoading,
 			error,
 			setSearchQuery,
@@ -176,8 +167,7 @@ export function ItemProvider({ children }: { children: ReactNode }) {
 			allItems,
 			filteredItems,
 			filterState,
-			sortField,
-			sortOrder,
+			sortState,
 			isLoading,
 			error,
 			setSearchQuery,

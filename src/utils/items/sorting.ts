@@ -1,4 +1,5 @@
 import { Item } from "@/types";
+import { SortOptions, SortOrder } from "./types";
 
 /**
  * Defines the order of rarity values for sorting purposes
@@ -10,16 +11,6 @@ const rarityOrder = {
 	epic: 4,
 	legendary: 5,
 };
-
-/**
- * Type definition for valid sort fields
- */
-export type SortField = "name" | "rarity" | "category" | "none";
-
-/**
- * Type definition for valid sort orders
- */
-export type SortOrder = "asc" | "desc" | "none";
 
 /**
  * Compares two items by name (alphabetically)
@@ -79,18 +70,17 @@ export const sortByRarityThenName =
  * - Default sorting: When sortField is "none" or undefined, use rarity sorting
  *
  * @param items Array of items to sort
- * @param sortField Primary field to sort by (name, rarity, category, or none)
- * @param sortOrder Direction to sort (asc, desc, or none - defaults to asc)
+ * @param sortOptions Sort options containing field and order
  * @returns New sorted array of items
  */
-export const sortItems = (items: Item[], sortField: SortField, sortOrder: SortOrder): Item[] => {
+export const sortItems = (items: Item[], sortOptions: SortOptions): Item[] => {
 	// Use ascending order as default when sortOrder is "none" or undefined
 	const effectiveSortOrder: "asc" | "desc" =
-		sortOrder === "none" || !sortOrder ? "asc" : sortOrder;
+		sortOptions.sortOrder === "none" || !sortOptions.sortOrder ? "asc" : sortOptions.sortOrder;
 
 	return [...items].sort((a, b) => {
 		// Handle each sort field with cascading logic
-		switch (sortField) {
+		switch (sortOptions.sortField) {
 			case "name":
 				// Name sorting: Sort only by name
 				return compareByName(a, b, effectiveSortOrder);
