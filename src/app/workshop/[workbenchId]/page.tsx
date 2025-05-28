@@ -1,16 +1,16 @@
-import { getWorkbenchById } from "@/services/dataService";
+import { fetchWorkbenchById } from "@/services/dataService";
 
 interface WorkbenchPageProps {
-	params: {
+	params: Promise<{
 		workbenchId: string;
-	};
+	}>;
 }
 
 export default async function WorkbenchPage({ params }: WorkbenchPageProps) {
 	const { workbenchId } = await params;
 
 	// You can fetch workbench data here based on the workbench param
-	const workbenchData = await getWorkbenchById(workbenchId);
+	const workbenchData = await fetchWorkbenchById(workbenchId);
 	if (!workbenchData) {
 		// Handle not found case
 		return (

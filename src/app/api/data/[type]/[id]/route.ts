@@ -25,10 +25,10 @@ const headers = {
 };
 
 type RouteParams = {
-	params: {
+	params: Promise<{
 		type: DataType;
 		id: string;
-	};
+	}>;
 };
 
 export async function GET(request: Request, { params }: RouteParams) {
@@ -53,7 +53,7 @@ export async function GET(request: Request, { params }: RouteParams) {
 
 		return NextResponse.json(item, { headers });
 	} catch (error) {
-		console.error(`Error fetching ${params.type} with ID ${params.id}:`, error);
+		console.error(`Error fetching data:`, error);
 		return NextResponse.json({ error: "Internal server error" }, { headers, status: 500 });
 	}
 }
