@@ -42,7 +42,7 @@ export default function Tools({
 			</Button>
 
 			{onItemsPage && (
-				<Popover>
+				<Popover modal={true}>
 					<PopoverTrigger asChild>
 						<Button
 							variant="ghost"

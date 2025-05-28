@@ -4,15 +4,11 @@ import { SortField, SortOrder } from "@/utils/items";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
-import {
-	Select,
-	SelectContent,
-	SelectItem,
-	SelectTrigger,
-	SelectValue,
-} from "@/components/ui/select";
 import { Separator } from "@/components/ui/separator";
 import { memo } from "react";
+import { Button } from "@/components/ui/button";
+import { ChevronDownIcon, RefreshCwIcon } from "lucide-react";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 
 // Define arrays of available options
 const rarityOptions: Rarity[] = ["common", "uncommon", "rare", "epic", "legendary"];
@@ -20,7 +16,7 @@ const categoryOptions: ItemCategory[] = [
 	"recyclable",
 	"valuable",
 	"quick_use",
-	"ammunition",
+	"ammo",
 	"weapon",
 	"gear",
 	"misc",
@@ -103,6 +99,8 @@ export default function FilterSort() {
 	const {
 		filterState,
 		sortState,
+		setRarity,
+		setCategory,
 		toggleRarity,
 		toggleCategory,
 		toggleRecyclable,
@@ -128,32 +126,41 @@ export default function FilterSort() {
 					>
 						Sort By
 					</Label>
-					<Select
-						value={sortState.sortField}
-						onValueChange={(value: SortField) => setSort(value, sortState.sortOrder)}
-					>
-						<SelectTrigger
-							id="sort-field"
-							className="w-full"
-							onClick={(e) => e.stopPropagation()}
+					<Popover>
+						<PopoverTrigger asChild>
+							<Button
+								id="sort-field"
+								variant="outline"
+								className="w-full justify-between"
+							>
+								{sortFieldOptions.find(
+									(option) => option.value === sortState.sortField
+								)?.label || "Select field"}
+								<ChevronDownIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+							</Button>
+						</PopoverTrigger>
+						<PopoverContent
+							className="w-[var(--radix-popover-trigger-width)] p-0"
+							align="start"
 						>
-							<SelectValue placeholder="Select field" />
-						</SelectTrigger>
-						<SelectContent
-							position="popper"
-							sideOffset={5}
-							onCloseAutoFocus={(e) => e.preventDefault()}
-						>
-							{sortFieldOptions.map((option) => (
-								<SelectItem
-									key={option.value}
-									value={option.value}
-								>
-									{option.label}
-								</SelectItem>
-							))}
-						</SelectContent>
-					</Select>
+							<div className="flex flex-col">
+								{sortFieldOptions.map((option) => (
+									<Button
+										key={option.value}
+										variant={
+											sortState.sortField === option.value
+												? "secondary"
+												: "ghost"
+										}
+										className="justify-start"
+										onClick={() => setSort(option.value, sortState.sortOrder)}
+									>
+										{option.label}
+									</Button>
+								))}
+							</div>
+						</PopoverContent>
+					</Popover>
 				</div>
 
 				<div className="space-y-2">
@@ -163,32 +170,41 @@ export default function FilterSort() {
 					>
 						Sort Order
 					</Label>
-					<Select
-						value={sortState.sortOrder}
-						onValueChange={(value: SortOrder) => setSort(sortState.sortField, value)}
-					>
-						<SelectTrigger
-							id="sort-order"
-							className="w-full"
-							onClick={(e) => e.stopPropagation()}
+					<Popover>
+						<PopoverTrigger asChild>
+							<Button
+								id="sort-order"
+								variant="outline"
+								className="w-full justify-between"
+							>
+								{sortOrderOptions.find(
+									(option) => option.value === sortState.sortOrder
+								)?.label || "Select order"}
+								<ChevronDownIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+							</Button>
+						</PopoverTrigger>
+						<PopoverContent
+							className="w-[var(--radix-popover-trigger-width)] p-0"
+							align="start"
 						>
-							<SelectValue placeholder="Select order" />
-						</SelectTrigger>
-						<SelectContent
-							position="popper"
-							sideOffset={5}
-							onCloseAutoFocus={(e) => e.preventDefault()}
-						>
-							{sortOrderOptions.map((option) => (
-								<SelectItem
-									key={option.value}
-									value={option.value}
-								>
-									{option.label}
-								</SelectItem>
-							))}
-						</SelectContent>
-					</Select>
+							<div className="flex flex-col">
+								{sortOrderOptions.map((option) => (
+									<Button
+										key={option.value}
+										variant={
+											sortState.sortOrder === option.value
+												? "secondary"
+												: "ghost"
+										}
+										className="justify-start"
+										onClick={() => setSort(sortState.sortField, option.value)}
+									>
+										{option.label}
+									</Button>
+								))}
+							</div>
+						</PopoverContent>
+					</Popover>
 				</div>
 			</div>
 
@@ -214,7 +230,18 @@ export default function FilterSort() {
 
 			{/* Category Filter Section */}
 			<div className="space-y-2">
-				<h3 className="font-medium text-sm">Category</h3>
+				<div className="flex items-center justify-between">
+					<h3 className="font-medium text-sm">Category</h3>
+					<Button
+						variant="ghost"
+						size="icon"
+						aria-label="Clear filters"
+						onClick={() => setCategory([])}
+						className="relative cursor-pointer"
+					>
+						<RefreshCwIcon />
+					</Button>
+				</div>
 				<div className="grid grid-cols-2 gap-2">
 					{categoryOptions.map((category) => (
 						<CheckboxFilterItem

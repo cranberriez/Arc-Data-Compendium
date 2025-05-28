@@ -24,8 +24,8 @@ interface ItemContextType {
 	isLoading: boolean;
 	error: string | null;
 	setSearchQuery: (query: string) => void;
-	setRarity: (rarity: Rarity) => void;
-	setCategory: (category: ItemCategory) => void;
+	setRarity: (rarities: Rarity[]) => void;
+	setCategory: (categories: ItemCategory[]) => void;
 	toggleRarity: (rarity: Rarity) => void;
 	toggleCategory: (category: ItemCategory) => void;
 	toggleRecyclable: () => void;
@@ -114,12 +114,12 @@ export function ItemProvider({ children }: { children: ReactNode }) {
 		[setFilterState]
 	);
 
-	const setRarity = useCallback((rarity: Rarity) => {
-		setFilterState((prev) => ({ ...prev, rarities: [rarity] }));
+	const setRarity = useCallback((rarities: Rarity[]) => {
+		setFilterState((prev) => ({ ...prev, rarities }));
 	}, []);
 
-	const setCategory = useCallback((category: ItemCategory) => {
-		setFilterState((prev) => ({ ...prev, categories: [category] }));
+	const setCategory = useCallback((categories: ItemCategory[]) => {
+		setFilterState((prev) => ({ ...prev, categories }));
 	}, []);
 
 	const toggleRarity = useCallback((rarity: Rarity) => {
