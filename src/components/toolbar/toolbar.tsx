@@ -18,7 +18,7 @@ export default function Toolbar() {
 		<>
 			<div className="flex items-center justify-between gap-2 px-4 w-full">
 				<div className="flex items-center gap-2">
-					<SidebarTrigger className="-ml-1 cursor-pointer" />
+					<SidebarTrigger className="-ml-2 cursor-pointer" />
 					<ToolbarBreadcrumb />
 				</div>
 				<Tools setSearchOpen={setSearchOpen} />
