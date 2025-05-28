@@ -68,7 +68,12 @@ const ItemCardComponent = React.memo(
 
 			return getItemIcon(
 				item.icon,
-				cn("w-8 h-8", size === "sm" && "w-6 h-6", getRarityColor(item.rarity, "text"))
+				cn(
+					"w-8 h-8",
+					size === "sm" && "w-6 h-6",
+					hideText ? "w-12 h-12" : "",
+					getRarityColor(item.rarity, "text")
+				)
 			);
 		}, [item, imageError, size]);
 
