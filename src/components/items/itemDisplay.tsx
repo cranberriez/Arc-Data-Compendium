@@ -3,7 +3,7 @@
 import * as React from "react";
 import { useMemo } from "react";
 import Image from "next/image";
-import { Card } from "@/components/ui/card";
+import { Card, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { Book, BadgeCent, Weight } from "lucide-react";
 import { Item } from "@/types";
@@ -88,6 +88,7 @@ const ItemCardComponent = React.memo(
 						borderClass,
 						className
 					)}
+					aria-label={item.name}
 					onClick={handleClick}
 				>
 					<div className="flex items-center gap-1">
@@ -116,6 +117,7 @@ const ItemCardComponent = React.memo(
 					"flex flex-row items-center gap-2 p-1 pr-2 max-w-full sm:max-w-[300px] md:max-w-[400px] rounded-lg w-full h-16 bg-transparent border-zinc-700 cursor-pointer hover:bg-zinc-100 dark:hover:bg-zinc-800",
 					className
 				)}
+				aria-label={item.name}
 			>
 				{/* Item Image/Icon */}
 				<div
@@ -129,7 +131,9 @@ const ItemCardComponent = React.memo(
 				</div>
 				<div className="flex flex-col flex-1 h-full min-w-0">
 					<div className="flex flex-1 flex-row items-center justify-between">
-						<div className="text-nowrap truncate max-w-[85%]">{item.name}</div>
+						<CardTitle className="text-nowrap truncate max-w-[85%] font-normal h-full line-height-[1.2]">
+							{item.name}
+						</CardTitle>
 						<TooltipProvider>
 							<Tooltip>
 								<TooltipTrigger>
