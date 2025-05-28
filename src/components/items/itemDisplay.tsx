@@ -23,6 +23,7 @@ type ItemCardProps = {
 	onClick?: () => void;
 	className?: string;
 	size?: "sm" | "md" | "lg" | "default";
+	hideText?: boolean;
 };
 
 const ItemCardComponent = React.memo(
@@ -33,6 +34,7 @@ const ItemCardComponent = React.memo(
 		onClick,
 		className,
 		size,
+		hideText = false,
 	}: ItemCardProps) {
 		const { openDialog } = useDialog();
 		const { getItemById } = useItems();
@@ -98,12 +100,14 @@ const ItemCardComponent = React.memo(
 							</span>
 						)}
 					</div>
-					<span
-						className="text-xs font-mono text-center w-[70px] h-[32px] leading-tight break-words line-clamp-2 overflow-hidden"
-						title={item.name}
-					>
-						{item.name}
-					</span>
+					{!hideText && (
+						<span
+							className="text-xs font-mono text-center w-[70px] h-[32px] leading-tight break-words line-clamp-2 overflow-hidden"
+							title={item.name}
+						>
+							{item.name}
+						</span>
+					)}
 				</div>
 			);
 		}
