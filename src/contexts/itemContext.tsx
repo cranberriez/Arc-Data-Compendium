@@ -9,14 +9,11 @@ import {
 	useContext,
 	useEffect,
 } from "react";
-import { applyItemFilters, sortItems } from "@/utils/items";
+import { applyItemFilters, sortItems, SortField, SortOrder } from "@/utils/items";
 
 import { Item } from "@/types";
 import { addSources, composeProcessors, processItems } from "@/data/items/itemPreprocessor";
 import { fetchItems, fetchValuables } from "@/services/dataService";
-
-type SortOrder = "asc" | "desc" | "none";
-type SortField = "name" | "rarity" | "category" | "value" | "none"; // 'category' replaces 'type' from legacy Item
 
 interface FilterState {
 	searchQuery: string;
