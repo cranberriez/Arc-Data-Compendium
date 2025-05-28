@@ -91,11 +91,15 @@ export function ItemProvider({ children }: { children: ReactNode }) {
 	// Memoize the current items to prevent recalculation
 	const currentItems = useMemo(() => allItems, [allItems]);
 
-	const filteredItems = useMemo(() => {
-		const filtered = applyItemFilters(currentItems, filterState);
+	// Memoize the filtered items based on filter state only
+	const filteredByFilters = useMemo(() => {
+		return applyItemFilters(currentItems, filterState);
+	}, [currentItems, filterState]);
 
-		return sortItems(filtered, sortState);
-	}, [currentItems, filterState, sortState]);
+	// Memoize the sorted items based on the filtered items and sort state
+	const filteredItems = useMemo(() => {
+		return sortItems(filteredByFilters, sortState);
+	}, [filteredByFilters, sortState]);
 
 	const setSearchQuery = useCallback(
 		(query: string) => {
@@ -114,19 +118,27 @@ export function ItemProvider({ children }: { children: ReactNode }) {
 
 	const toggleRarity = useCallback((rarity: Rarity) => {
 		setFilterState((prev) => {
-			const newRarities = prev.rarities.includes(rarity)
-				? prev.rarities.filter((r) => r !== rarity)
-				: [...prev.rarities, rarity];
-			return { ...prev, rarities: newRarities };
+			// Use a Set for more efficient inclusion check and filtering
+			const raritySet = new Set(prev.rarities);
+			if (raritySet.has(rarity)) {
+				raritySet.delete(rarity);
+			} else {
+				raritySet.add(rarity);
+			}
+			return { ...prev, rarities: Array.from(raritySet) };
 		});
 	}, []);
 
 	const toggleCategory = useCallback((category: ItemCategory) => {
 		setFilterState((prev) => {
-			const newCategories = prev.categories.includes(category)
-				? prev.categories.filter((c) => c !== category)
-				: [...prev.categories, category];
-			return { ...prev, categories: newCategories };
+			// Use a Set for more efficient inclusion check and filtering
+			const categorySet = new Set(prev.categories);
+			if (categorySet.has(category)) {
+				categorySet.delete(category);
+			} else {
+				categorySet.add(category);
+			}
+			return { ...prev, categories: Array.from(categorySet) };
 		});
 	}, []);
 
@@ -135,15 +147,19 @@ export function ItemProvider({ children }: { children: ReactNode }) {
 	}, []);
 
 	const resetFilters = useCallback(() => {
+		// Use requestAnimationFrame instead of setTimeout for better performance
 		setIsLoading(true);
-
-		// Add a slight delay to allow visualization of loading, even though things lock up it looks more responsive
-		setTimeout(() => {
+		
+		requestAnimationFrame(() => {
 			setFilterState(defaultFilterState);
 			setSortState(defaultSortState);
-			setIsLoading(false);
-		}, 50);
-	}, [setFilterState, setSortState]);
+			
+			// Use another requestAnimationFrame to ensure UI updates before removing loading state
+			requestAnimationFrame(() => {
+				setIsLoading(false);
+			});
+		});
+	}, []);
 
 	const getItemById = useCallback(
 		(id: string): Item | undefined => {

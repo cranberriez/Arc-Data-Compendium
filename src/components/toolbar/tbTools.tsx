@@ -51,7 +51,7 @@ export default function Tools({
 							<p className="hidden sm:inline">Options</p>
 						</Button>
 					</PopoverTrigger>
-					<PopoverContent>
+					<PopoverContent className="w-[400px]">
 						<FilterSort />
 					</PopoverContent>
 				</Popover>
