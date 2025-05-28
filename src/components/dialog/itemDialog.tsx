@@ -5,13 +5,7 @@ import { Dialog, DialogContent, DialogDescription } from "@/components/ui/dialog
 import { Item } from "@/types";
 import { useDialog } from "@/contexts/dialogContext";
 import { Button } from "@/components/ui/button";
-import {
-	ItemHeader,
-	RecyclingSection,
-	SourcesSection,
-	QuickUseSection,
-	GearSection,
-} from "../dialog";
+import { ItemHeader, RecyclingSection, SourcesSection, QuickUseSection, GearSection } from ".";
 
 type ItemDialogProps = {
 	data: Item;

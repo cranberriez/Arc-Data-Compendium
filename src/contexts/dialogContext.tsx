@@ -15,7 +15,7 @@ interface DialogContextType {
 	dialogQueue: Item[];
 }
 
-import { ItemDialog } from "../components/items/itemDialog";
+import { ItemDialog } from "../components/dialog/itemDialog";
 
 const DialogContext = createContext<DialogContextType | undefined>(undefined);
 
@@ -51,7 +51,7 @@ export function DialogProvider({ children }: { children: React.ReactNode }) {
 				// Add previous data to queue before updating state
 				setDialogQueue((prevQueue) => {
 					// Remove any existing instance of this item from the queue
-					const filteredQueue = prevQueue.filter(item => item.id !== prevState.data.id);
+					const filteredQueue = prevQueue.filter((item) => item.id !== prevState.data.id);
 					// Add the item to the end of the queue
 					return [...filteredQueue, prevState.data];
 				});
