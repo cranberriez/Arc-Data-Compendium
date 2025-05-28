@@ -4,7 +4,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 export default function WorkbenchesPage() {
 	return (
 		<main className="flex relative">
-			<h1 className="sr-only">Workbenches</h1>
+			<h1 className="sr-only">Workbenches Loading...</h1>
 			{/* Navigation Skeleton */}
 			<nav
 				className="flex flex-col w-48 gap-4 p-4 sticky top-0 r-0 h-full overflow-hidden"
