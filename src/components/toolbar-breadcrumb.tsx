@@ -35,7 +35,7 @@ export function ToolbarBreadcrumb() {
 		filterState.categories.length > 0;
 
 	return (
-		<div className="flex items-center gap-2 w-full">
+		<div className="flex items-center justify-between gap-2 w-full">
 			<Breadcrumb>
 				<BreadcrumbList>
 					<BreadcrumbItem className="hidden md:block">
@@ -51,12 +51,6 @@ export function ToolbarBreadcrumb() {
 					)}
 				</BreadcrumbList>
 			</Breadcrumb>
-
-			{pageTitle.toLowerCase() === "items" && (
-				<p className="text-sm text-muted-foreground ml-auto">
-					Viewing {filteredItems.length} items
-				</p>
-			)}
 
 			<div className="flex items-center gap-1">
 				<Button
@@ -83,6 +77,12 @@ export function ToolbarBreadcrumb() {
 					</Button>
 				)}
 			</div>
+
+			{pageTitle.toLowerCase() === "items" && (
+				<p className="text-sm text-muted-foreground">
+					Viewing {filteredItems.length} items
+				</p>
+			)}
 
 			<SearchDialog
 				open={searchOpen}
