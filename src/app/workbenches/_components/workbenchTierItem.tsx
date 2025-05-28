@@ -24,7 +24,7 @@ export default function WorkbenchTierItem({ tier }: WorkbenchTierItemProps) {
 		<Card
 			key={tier.tier}
 			className={cn(
-				"flex-1 w-fit xl:max-w-1/3 px-2 gap-1 min-h-[178px] rounded-sm ",
+				"flex-1 w-fit 2xl:max-w-1/3 px-2 gap-1 min-h-[178px] min-w-[320px] rounded-sm ",
 				startsUnlocked && "bg-green-300/10 border-green-300/20"
 			)}
 		>

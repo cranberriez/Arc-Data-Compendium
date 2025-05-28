@@ -49,7 +49,7 @@ export function WorkbenchDisplay({ workbench }: WorkbenchDisplayProps) {
 
 			<Separator className="my-4" />
 
-			<div className="grid grid-rows-1 gap-6">
+			<div className="flex flex-col gap-6">
 				<div className="space-y-4">
 					<h3 className="text-xl font-semibold">Tiers & Requirements</h3>
 					<div className="flex flex-wrap gap-2">
