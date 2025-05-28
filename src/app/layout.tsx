@@ -3,7 +3,7 @@ import type { Metadata, Viewport } from "next";
 import { AppSidebar } from "@/components/app-sidebar";
 import { Separator } from "@/components/ui/separator";
 import { SidebarInset, SidebarTrigger } from "@/components/ui/sidebar";
-import { ToolbarBreadcrumb } from "@/components/toolbar-breadcrumb";
+import { ToolbarBreadcrumb } from "@/components/toolbar";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { AppProviders } from "@/components/app-providers";
 
