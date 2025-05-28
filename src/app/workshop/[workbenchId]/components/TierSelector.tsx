@@ -5,8 +5,9 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { Lock } from "lucide-react";
-import { ItemIconSkeleton } from "@/components/items/itemIconSkeleton";
+import { ItemCard } from "@/components/items/itemDisplay";
 import { Recipe } from "./RecipeSheet";
+import { useItems } from "@/contexts/itemContext";
 
 export interface Tier {
 	tier: number;
@@ -27,6 +28,7 @@ interface TierSelectorProps {
 
 export function TierSelector({ tiers, currentTier, recipes, onRecipeSelect }: TierSelectorProps) {
 	const [selectedTier, setSelectedTier] = useState<number>(currentTier);
+	const { getItemById } = useItems();
 
 	// Sort tiers by tier number if not already sorted
 	const sortedTiers = [...tiers].sort((a, b) => a.tier - b.tier);
@@ -35,9 +37,10 @@ export function TierSelector({ tiers, currentTier, recipes, onRecipeSelect }: Ti
 		<Tabs
 			value={selectedTier.toString()}
 			onValueChange={(value) => setSelectedTier(Number.parseInt(value))}
+			className="w-full"
 		>
 			<TabsList
-				className="grid w-full"
+				className="grid w-full mb-4"
 				style={{ gridTemplateColumns: `repeat(${sortedTiers.length}, 1fr)` }}
 			>
 				{sortedTiers.map((tier) => (
@@ -64,25 +67,32 @@ export function TierSelector({ tiers, currentTier, recipes, onRecipeSelect }: Ti
 					<div className="space-y-3">
 						<h4 className="font-semibold">Requirements</h4>
 						<div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-							{tier.requiredItems.map((item) => (
-								<div
-									key={item.itemId}
-									className="flex items-center gap-3 rounded-lg border p-3"
-								>
-									<ItemIconSkeleton size="default" />
-									<div className="flex-1">
-										<p className="font-medium">
-											{item.name || item.itemId.replace(/_/g, " ")}
-										</p>
-										<Badge
-											variant="secondary"
-											className="text-xs bg-blue-500 text-white"
-										>
-											{item.count}x
-										</Badge>
+							{tier.requiredItems.map((item) => {
+								const itemData = getItemById(item.itemId);
+								return (
+									<div
+										key={item.itemId}
+										className="flex items-center gap-2"
+									>
+										<ItemCard
+											item={itemData}
+											variant="icon"
+											hideText={true}
+										/>
+										<div className="flex-1">
+											<p className="font-medium text-lg">
+												{itemData?.name || item.itemId.replace(/_/g, " ")}
+											</p>
+											<Badge
+												variant="secondary"
+												className="text-base"
+											>
+												{item.count}x
+											</Badge>
+										</div>
 									</div>
-								</div>
-							))}
+								);
+							})}
 						</div>
 						{tier.raidsRequired && (
 							<Badge
@@ -111,33 +121,37 @@ export function TierSelector({ tiers, currentTier, recipes, onRecipeSelect }: Ti
 										} transition-colors`}
 										onClick={() => onRecipeSelect(recipe)}
 									>
-										<div className="flex items-start gap-3">
-											<ItemIconSkeleton size="sm" />
-											<div className="flex-1">
-												<h5 className="font-medium">{recipe.name}</h5>
+										<div className="flex flex-col gap-2">
+											<h5 className="font-medium">{recipe.name}</h5>
+											{recipe.description && (
 												<p className="text-sm text-muted-foreground">
 													{recipe.description}
 												</p>
-												<div className="mt-2 flex flex-wrap gap-1">
-													{recipe.materials.map((material) => (
-														<Badge
+											)}
+											<div className="mt-2 grid grid-cols-2 gap-2">
+												{recipe.materials.map((material) => {
+													const materialData = getItemById(
+														material.itemId
+													);
+													return (
+														<ItemCard
 															key={material.itemId}
-															variant="outline"
-															className="text-xs"
-														>
-															{material.count}x{" "}
-															{material.name ||
-																material.itemId.replace(/_/g, " ")}
-														</Badge>
-													))}
-												</div>
-												{!recipe.unlocked && (
-													<div className="mt-2 flex items-center gap-1 text-muted-foreground">
-														<Lock className="h-3 w-3" />
-														<span className="text-xs">Locked</span>
-													</div>
-												)}
+															item={materialData}
+															count={material.count}
+															variant="icon"
+															size="sm"
+															className="h-full"
+															hideText={false}
+														/>
+													);
+												})}
 											</div>
+											{!recipe.unlocked && (
+												<div className="mt-2 flex items-center gap-1 text-muted-foreground text-sm">
+													<Lock className="h-3 w-3" />
+													<span>Locked</span>
+												</div>
+											)}
 										</div>
 									</div>
 								))}
