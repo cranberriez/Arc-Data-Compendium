@@ -2,6 +2,9 @@ export interface FilterOptions {
 	searchQuery: string;
 	rarities: string[];
 	categories: string[];
+	showRecyclable?: boolean;
+	showCraftable?: boolean;
+	showHasStats?: boolean;
 }
 
 export interface SortOptions {
