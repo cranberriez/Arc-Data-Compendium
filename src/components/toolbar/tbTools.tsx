@@ -29,6 +29,17 @@ export default function Tools({ setSearchOpen }: { setSearchOpen: (open: boolean
 				<p className="hidden sm:inline">Search</p>
 			</Button>
 
+			<Button
+				variant="ghost"
+				size="sm"
+				aria-label="Sort & Filter Options"
+				className="cursor-pointer"
+				// onClick={() => setSearchOpen(true)}
+			>
+				<SlidersHorizontal />
+				<p className="hidden sm:inline">Options</p>
+			</Button>
+
 			{hasActiveFilters && onItemsPage && (
 				<Button
 					variant="ghost"
