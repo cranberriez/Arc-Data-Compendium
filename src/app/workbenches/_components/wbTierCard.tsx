@@ -1,9 +1,33 @@
 import { Card, CardHeader, CardTitle } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
-import { WorkbenchTier } from "@/types/items/workbench";
+import { Workbench, WorkbenchTier } from "@/types";
 import { useItems } from "@/contexts/itemContext";
 import { useDialog } from "@/contexts/dialogContext";
 import { WorkbenchTierContent } from "./wbTierContent";
+
+interface WorkbenchTierContainerProps {
+	workbench: Workbench;
+}
+
+export function WorkbenchTierContainer({ workbench }: WorkbenchTierContainerProps) {
+	return (
+		<div className="flex flex-col gap-6">
+			<div className="space-y-4">
+				<h3 className="text-xl font-semibold">Tiers & Requirements</h3>
+				<div className="flex flex-wrap gap-2">
+					{workbench.tiers.map((tier) => {
+						return (
+							<WorkbenchTierCard
+								key={tier.tier}
+								tier={tier}
+							/>
+						);
+					})}
+				</div>
+			</div>
+		</div>
+	);
+}
 
 interface WorkbenchTierProps {
 	tier: WorkbenchTier;

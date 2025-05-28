@@ -6,6 +6,7 @@ import { useIsMobile } from "@/hooks/use-mobile";
 import { cn } from "@/lib/utils";
 import { Workbench } from "@/types/index";
 import { WorkbenchDisplay } from "./workbenchDisplay";
+import { WorkbenchTierContainer } from "./wbTierCard";
 
 type WorkbenchClientProps = {
 	workbenches: Workbench[];
@@ -70,7 +71,9 @@ export function WorkbenchClient({ workbenches }: WorkbenchClientProps) {
 								>
 									{workbench.name}
 								</h2>
-								<WorkbenchDisplay workbench={workbench} />
+								<WorkbenchDisplay workbench={workbench}>
+									<WorkbenchTierContainer workbench={workbench} />
+								</WorkbenchDisplay>
 							</div>
 						);
 					})}

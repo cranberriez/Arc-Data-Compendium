@@ -5,6 +5,7 @@ import { ScrollArea } from "@radix-ui/react-scroll-area";
 import { useRef } from "react";
 import { Workbench } from "@/types";
 import { Badge } from "@/components/ui/badge";
+import { WorkbenchDisplay } from "../_components/workbenchDisplay";
 
 interface WorkbenchRecipesClientProps {
 	workbenches: Workbench[];
@@ -69,21 +70,9 @@ export function WorkbenchRecipesClient({ workbenches }: WorkbenchRecipesClientPr
 								>
 									{workbench.name}
 								</h2>
-								<div className="flex flex-col gap-2">
-									<h2 className="text-3xl font-bold tracking-tight">
-										{workbench.name}
-									</h2>
-									<div className="flex items-center gap-3">
-										{/* {startsWithBadge(workbench.baseTier)} */}
-										<Badge
-											variant="secondary"
-											className="text-sm"
-										>
-											{workbench.tiers.length} Tier
-											{workbench.tiers.length !== 1 ? "s" : ""}
-										</Badge>
-									</div>
-								</div>
+								<WorkbenchDisplay workbench={workbench}>
+									<></>
+								</WorkbenchDisplay>
 							</div>
 						);
 					})}

@@ -1,10 +1,11 @@
 import { Workbench } from "@/types/items/workbench";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
-import { WorkbenchTierCard } from "./wbTierCard";
+import { WorkbenchTierContainer } from "./wbTierCard";
 
 interface WorkbenchDisplayProps {
 	workbench: Workbench;
+	children: React.ReactNode;
 }
 
 const startsWithBadge = (baseTier: number) => {
@@ -27,7 +28,7 @@ const startsWithBadge = (baseTier: number) => {
 	);
 };
 
-export function WorkbenchDisplay({ workbench }: WorkbenchDisplayProps) {
+export function WorkbenchDisplay({ workbench, children }: WorkbenchDisplayProps) {
 	return (
 		<div>
 			<div className="flex flex-col gap-2">
@@ -46,21 +47,7 @@ export function WorkbenchDisplay({ workbench }: WorkbenchDisplayProps) {
 
 			<Separator className="my-4" />
 
-			<div className="flex flex-col gap-6">
-				<div className="space-y-4">
-					<h3 className="text-xl font-semibold">Tiers & Requirements</h3>
-					<div className="flex flex-wrap gap-2">
-						{workbench.tiers.map((tier) => {
-							return (
-								<WorkbenchTierCard
-									key={tier.tier}
-									tier={tier}
-								/>
-							);
-						})}
-					</div>
-				</div>
-			</div>
+			{children}
 		</div>
 	);
 }
