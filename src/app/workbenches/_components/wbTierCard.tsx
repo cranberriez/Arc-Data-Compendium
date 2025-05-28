@@ -1,15 +1,15 @@
 import { Card, CardHeader, CardTitle } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import { WorkbenchTier } from "@/types/items/workbench";
-import WorkbenchRequirement from "./workbenchRequirement";
 import { useItems } from "@/contexts/itemContext";
 import { useDialog } from "@/contexts/dialogContext";
+import { WorkbenchTierContent } from "./wbTierContent";
 
-interface WorkbenchTierItemProps {
+interface WorkbenchTierProps {
 	tier: WorkbenchTier;
 }
 
-export default function WorkbenchTierItem({ tier }: WorkbenchTierItemProps) {
+export function WorkbenchTierCard({ tier }: WorkbenchTierProps) {
 	const { getItemById } = useItems();
 	const { openDialog } = useDialog();
 	const startsUnlocked = tier.raidsRequired === undefined && tier.requiredItems.length === 0;
@@ -24,8 +24,8 @@ export default function WorkbenchTierItem({ tier }: WorkbenchTierItemProps) {
 		<Card
 			key={tier.tier}
 			className={cn(
-				"flex-1 w-fit 2xl:max-w-1/3 px-2 gap-1 min-h-[178px] min-w-[320px] rounded-sm ",
-				startsUnlocked && "bg-green-300/10 border-green-300/20"
+				"flex-1 w-fit px-2 gap-1 min-h-[178px] min-w-[320px] rounded-sm ",
+				startsUnlocked && "bg-green-300/10 border-green-300/20 min-w-[100px]"
 			)}
 		>
 			<CardHeader className="px-4 [container-type:normal]">
@@ -42,7 +42,7 @@ export default function WorkbenchTierItem({ tier }: WorkbenchTierItemProps) {
 				</div>
 			</CardHeader>
 
-			<WorkbenchRequirement
+			<WorkbenchTierContent
 				key={tier.tier}
 				tier={tier}
 				getItemById={getItemById}

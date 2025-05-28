@@ -1,10 +1,7 @@
 import { Workbench } from "@/types/items/workbench";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
-import WorkbenchRequirement from "./workbenchTierItem";
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import { LinkIcon } from "lucide-react";
+import { WorkbenchTierCard } from "./wbTierCard";
 
 interface WorkbenchDisplayProps {
 	workbench: Workbench;
@@ -55,7 +52,7 @@ export function WorkbenchDisplay({ workbench }: WorkbenchDisplayProps) {
 					<div className="flex flex-wrap gap-2">
 						{workbench.tiers.map((tier) => {
 							return (
-								<WorkbenchRequirement
+								<WorkbenchTierCard
 									key={tier.tier}
 									tier={tier}
 								/>
@@ -64,25 +61,6 @@ export function WorkbenchDisplay({ workbench }: WorkbenchDisplayProps) {
 					</div>
 				</div>
 			</div>
-
-			{false && (
-				<div className="flex mt-2">
-					<Link
-						className=""
-						aria-label="View recipes"
-						aria-labelledby={`${workbench.name}-recipes`}
-						href={`#`}
-					>
-						<Button
-							variant="secondary"
-							className="text-sm cursor-pointer"
-						>
-							Go to Recipes
-							<LinkIcon className="ml-2 h-4 w-4" />
-						</Button>
-					</Link>
-				</div>
-			)}
 		</div>
 	);
 }

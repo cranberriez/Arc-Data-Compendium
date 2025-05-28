@@ -72,9 +72,9 @@ const data = {
 			},
 			{
 				title: "Workbench Recipes",
-				url: "/crafting",
+				url: "/workbenches/recipes",
 				icon: Hammer,
-				enabled: false,
+				enabled: true,
 			},
 		],
 	},

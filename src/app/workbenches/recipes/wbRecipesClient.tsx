@@ -1,19 +1,18 @@
 "use client";
 
-import { useRef } from "react";
-import { ScrollArea } from "@radix-ui/react-scroll-area";
-import { useIsMobile } from "@/hooks/use-mobile";
 import { cn } from "@/lib/utils";
-import { Workbench } from "@/types/index";
-import { WorkbenchDisplay } from "./workbenchDisplay";
+import { ScrollArea } from "@radix-ui/react-scroll-area";
+import { useRef } from "react";
+import { Workbench } from "@/types";
+import { Badge } from "@/components/ui/badge";
 
-type WorkbenchClientProps = {
+interface WorkbenchRecipesClientProps {
 	workbenches: Workbench[];
-};
+}
 
-export function WorkbenchClient({ workbenches }: WorkbenchClientProps) {
-	const mobile = useIsMobile();
+export function WorkbenchRecipesClient({ workbenches }: WorkbenchRecipesClientProps) {
 	const workbenchRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
+	const mobile = false;
 
 	const scrollToWorkbench = (id: string) => {
 		workbenchRefs.current[id]?.scrollIntoView({
@@ -70,7 +69,21 @@ export function WorkbenchClient({ workbenches }: WorkbenchClientProps) {
 								>
 									{workbench.name}
 								</h2>
-								<WorkbenchDisplay workbench={workbench} />
+								<div className="flex flex-col gap-2">
+									<h2 className="text-3xl font-bold tracking-tight">
+										{workbench.name}
+									</h2>
+									<div className="flex items-center gap-3">
+										{/* {startsWithBadge(workbench.baseTier)} */}
+										<Badge
+											variant="secondary"
+											className="text-sm"
+										>
+											{workbench.tiers.length} Tier
+											{workbench.tiers.length !== 1 ? "s" : ""}
+										</Badge>
+									</div>
+								</div>
 							</div>
 						);
 					})}

@@ -8,19 +8,19 @@ import { useIsMobile } from "@/hooks/use-mobile";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { ItemIconSkeleton } from "@/components/items/itemIconSkeleton";
 
-interface WorkbenchRequirementProps {
+interface WorkbenchTierContentProps {
 	tier: WorkbenchTier;
 	getItemById: (id: string) => Item | undefined;
 	openDialog: (type: string, item: Item) => void;
 	startsUnlocked: boolean;
 }
 
-export default function WorkbenchRequirement({
+export function WorkbenchTierContent({
 	tier,
 	getItemById,
 	openDialog,
 	startsUnlocked,
-}: WorkbenchRequirementProps) {
+}: WorkbenchTierContentProps) {
 	const isMobile = useIsMobile();
 
 	return (
