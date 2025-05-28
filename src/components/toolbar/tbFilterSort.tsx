@@ -66,6 +66,7 @@ const CheckboxFilterItem = memo(
 		</div>
 	)
 );
+CheckboxFilterItem.displayName = "CheckboxFilterItem";
 
 // Toggle switch component for additional filters
 const ToggleFilterItem = memo(
@@ -95,6 +96,7 @@ const ToggleFilterItem = memo(
 		</div>
 	)
 );
+ToggleFilterItem.displayName = "ToggleFilterItem";
 
 export default function FilterSort() {
 	const {

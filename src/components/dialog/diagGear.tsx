@@ -217,7 +217,7 @@ export const AugmentSection = ({ stats }: { stats: GearStat }) => {
 export const GearSection = ({ item }: { item: Item }) => {
 	if (!item.gear) return null;
 	const gearType = item.gear.category;
-	const gearStats: GearStat | {} = item.gear.stats || {};
+	const gearStats: GearStat | undefined = item.gear.stats;
 
 	// Early return if no stats
 	if (!gearStats || Object.keys(gearStats).length === 0) return null;
