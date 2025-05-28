@@ -8,6 +8,7 @@ import { Lock } from "lucide-react";
 import { ItemCard } from "@/components/items/itemDisplay";
 import { Recipe } from "./RecipeSheet";
 import { useItems } from "@/contexts/itemContext";
+import { ItemIconSkeleton } from "@/components/items/itemIconSkeleton";
 
 export interface Tier {
 	tier: number;
@@ -28,7 +29,7 @@ interface TierSelectorProps {
 
 export function TierSelector({ tiers, currentTier, recipes, onRecipeSelect }: TierSelectorProps) {
 	const [selectedTier, setSelectedTier] = useState<number>(currentTier);
-	const { getItemById } = useItems();
+	const { getItemById, isLoading } = useItems();
 
 	// Sort tiers by tier number if not already sorted
 	const sortedTiers = [...tiers].sort((a, b) => a.tier - b.tier);
@@ -40,7 +41,7 @@ export function TierSelector({ tiers, currentTier, recipes, onRecipeSelect }: Ti
 			className="w-full"
 		>
 			<TabsList
-				className="grid w-full mb-4"
+				className="grid w-full mb-4 gap-1"
 				style={{ gridTemplateColumns: `repeat(${sortedTiers.length}, 1fr)` }}
 			>
 				{sortedTiers.map((tier) => (
@@ -49,7 +50,7 @@ export function TierSelector({ tiers, currentTier, recipes, onRecipeSelect }: Ti
 						value={tier.tier.toString()}
 						className={
 							tier.tier === currentTier
-								? "bg-blue-500 text-white data-[state=active]:bg-blue-500 data-[state=active]:text-white"
+								? "bg-blue-500 text-primary data-[state=active]:bg-red-500"
 								: ""
 						}
 					>
@@ -69,16 +70,21 @@ export function TierSelector({ tiers, currentTier, recipes, onRecipeSelect }: Ti
 						<div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
 							{tier.requiredItems.map((item) => {
 								const itemData = getItemById(item.itemId);
+
 								return (
 									<div
 										key={item.itemId}
 										className="flex items-center gap-2"
 									>
-										<ItemCard
-											item={itemData}
-											variant="icon"
-											hideText={true}
-										/>
+										{isLoading ? (
+											<ItemIconSkeleton className="h-16 w-16" />
+										) : (
+											<ItemCard
+												item={itemData}
+												variant="icon"
+												hideText={true}
+											/>
+										)}
 										<div className="flex-1">
 											<p className="font-medium text-lg">
 												{itemData?.name || item.itemId.replace(/_/g, " ")}
