@@ -35,8 +35,24 @@ import {
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-// This is sample data.
-const data = {
+export interface NavItem {
+	title: string;
+	url?: string;
+	icon: React.ComponentType<{ className?: string }>;
+	enabled: boolean;
+	items?: NavItem[]; // For nested items
+}
+
+// Category type
+export interface NavCategory {
+	category: string;
+	items: NavItem[];
+}
+
+// Type for the entire navigation data structure
+export type NavData = Record<string, NavCategory>;
+
+const data: NavData = {
 	Home: {
 		category: "Home",
 		items: [
@@ -61,20 +77,63 @@ const data = {
 		],
 	},
 
-	Crafting: {
-		category: "Crafting",
+	Workshop: {
+		category: "Workshop",
 		items: [
 			{
-				title: "Workbenches",
-				url: "/workbenches",
+				title: "Overview",
+				url: "/workshop/overview",
 				icon: FlaskConical,
 				enabled: true,
 			},
 			{
-				title: "Workbench Recipes",
-				url: "/workbenches/recipes",
+				title: "Workbenches",
 				icon: Hammer,
 				enabled: true,
+				items: [
+					{
+						title: "Scrappy",
+						icon: FlaskConical,
+						url: "/workshop/scrappy",
+						enabled: true,
+					},
+					{
+						title: "Basic Bench",
+						icon: FlaskConical,
+						url: "/workshop/basic",
+						enabled: true,
+					},
+					{
+						title: "Equipment Bench",
+						icon: FlaskConical,
+						url: "/workshop/equipment",
+						enabled: true,
+					},
+					{
+						title: "Weapon Bench",
+						icon: FlaskConical,
+						url: "/workshop/weapon",
+						enabled: true,
+					},
+					{
+						title: "Utility Bench",
+						icon: FlaskConical,
+						url: "/workshop/utility",
+						enabled: true,
+					},
+					{
+						title: "Med Station",
+						icon: FlaskConical,
+						url: "/workshop/med",
+						enabled: true,
+					},
+					{
+						title: "Refiner",
+						icon: FlaskConical,
+						url: "/workshop/refiner",
+						enabled: true,
+					},
+				],
 			},
 		],
 	},
