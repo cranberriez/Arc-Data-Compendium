@@ -27,7 +27,7 @@ interface ItemContextType {
 	setRarity: (rarity: string) => void;
 	setCategory: (category: string) => void;
 	toggleRarity: (rarity: string) => void;
-	toggleCategory: (category: string) => void; // replaces toggleType
+	toggleCategory: (category: string) => void;
 	setSort: (field: SortField, order: SortOrder) => void;
 	resetFilters: () => void;
 	getItemById: (id: string) => Item | undefined;
