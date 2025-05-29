@@ -8,14 +8,13 @@ import itemData from "@/data/items/itemData.json";
 import recipeData from "@/data/recipes/recipeData.json";
 import workbenchData from "@/data/workbenches/workbenchData.json";
 
-type DataType = "items" | "recipes" | "workbenches" | "valuables";
+type DataType = "items" | "recipes" | "workbenches";
 
 // Map data types to their corresponding data sources
 const dataMap: Record<DataType, any> = {
 	items: itemData as Item[],
 	recipes: recipeData as Recipe[],
 	workbenches: workbenchData as Workbench[],
-	valuables: [] as Item[],
 };
 
 const headers = {

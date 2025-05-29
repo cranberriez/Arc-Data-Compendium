@@ -2,7 +2,7 @@ import { Item } from "@/types/items/item";
 import { Recipe } from "@/types/items/recipe";
 import { Workbench } from "@/types/items/workbench";
 
-type DataType = "items" | "recipes" | "workbenches" | "valuables";
+type DataType = "items" | "recipes" | "workbenches";
 
 /**
  * Generic function to fetch data from the API
