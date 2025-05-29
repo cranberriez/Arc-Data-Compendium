@@ -1,21 +1,12 @@
 "use client";
 
 import * as React from "react";
-import { useMemo } from "react";
-import Image from "next/image";
-import { Card } from "@/components/ui/card";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import { Book, BadgeCent, Weight } from "lucide-react";
 import { Item } from "@/types";
-import { formatName, getRarityColor, getTypeIcon } from "@/data/items/itemUtils";
-import { cn } from "@/lib/utils";
-import { useDialog } from "@/contexts/dialogContext";
-import { getItemImagePath } from "@/utils/itemImage";
-import getItemIcon from "./getItemIcon";
-import { useItems } from "@/contexts/itemContext";
 
-const USE_ACTUAL_IMAGES = false;
+// Import new components
+import { ItemCard as NewItemCard } from "./ItemCard";
 
+// Legacy support type - maps to the new expanded ItemCardProps
 type ItemCardProps = {
 	item?: Item;
 	variant?: "default" | "icon";
@@ -26,6 +17,11 @@ type ItemCardProps = {
 	hideText?: boolean;
 };
 
+/**
+ * ItemCardComponent (Legacy)
+ * @deprecated Use ItemCard component instead with expanded features
+ * This component is maintained for backward compatibility
+ */
 const ItemCardComponent = React.memo(
 	function ItemCard({
 		item,
@@ -33,162 +29,39 @@ const ItemCardComponent = React.memo(
 		count = undefined,
 		onClick,
 		className,
-		size,
+		size = "default",
 		hideText = false,
 	}: ItemCardProps) {
-		const { openDialog } = useDialog();
-		const { getItemById } = useItems();
-		const handleClick =
-			onClick ||
-			(() => {
-				if (item) openDialog("item", getItemById(item.id));
-			});
-		const [imageError, setImageError] = React.useState(false);
-
-		// Check if item has an image, otherwise use the icon
-		const itemImage = useMemo(() => {
-			if (!item) return null;
-
-			const imagePath = getItemImagePath(item.id);
-			if (USE_ACTUAL_IMAGES && imagePath && !imageError) {
-				return (
-					<div className="relative w-full h-full">
-						<Image
-							src={imagePath}
-							alt={item.name}
-							fill
-							className="object-contain"
-							sizes="64px"
-							unoptimized={process.env.NODE_ENV !== "production"}
-							onError={() => setImageError(true)}
-						/>
-					</div>
-				);
+		// Map old size values to new size system
+		const newSize = React.useMemo(() => {
+			switch (size) {
+				case "sm":
+					return "sm";
+				case "md":
+					return "md";
+				case "lg":
+					return "lg";
+				case "default":
+					return "md";
+				default:
+					return "md";
 			}
+		}, [size]);
 
-			return getItemIcon(
-				item.icon,
-				cn(
-					"w-8 h-8",
-					size === "sm" && "w-6 h-6",
-					hideText ? "w-12 h-12" : "",
-					getRarityColor(item.rarity, "text")
-				)
-			);
-		}, [item, imageError, size]);
-
-		// Memoize the border color for icon variant
-		const borderClass = useMemo(
-			() => (item ? getRarityColor(item.rarity, "border") : undefined),
-			[item]
-		);
-
+		// Use the new ItemCard component with appropriate props mapping
+		// Only render if item exists
 		if (!item) return null;
 
-		if (variant === "icon") {
-			return (
-				<div
-					className={cn(
-						"flex flex-col items-center justify-between border-2 hover:border-primary/60 rounded p-2 min-w-[60px] aspect-square cursor-pointer",
-						"border-secondary-foreground/20",
-						size === "sm" && "max-h-[80px]",
-						borderClass,
-						className
-					)}
-					onClick={handleClick}
-				>
-					<div className="flex items-center gap-1">
-						{itemImage}
-						{count !== undefined && (
-							<span className="text-lg font-mono text-center">
-								x{count > 0 ? count : "?"}
-							</span>
-						)}
-					</div>
-					{!hideText && (
-						<span
-							className="text-xs font-mono text-center w-[70px] h-[32px] leading-tight break-words line-clamp-2 overflow-hidden"
-							title={item.name}
-						>
-							{item.name}
-						</span>
-					)}
-				</div>
-			);
-		}
-
-		// Variant: Default
 		return (
-			<Card
-				onClick={handleClick}
-				className={cn(
-					"flex flex-row items-center gap-2 p-1 pr-2 max-w-full sm:max-w-[300px] md:max-w-[400px] rounded-lg w-full h-16 bg-transparent border-zinc-700 cursor-pointer hover:bg-zinc-100 dark:hover:bg-zinc-800",
-					className
-				)}
-			>
-				{/* Item Image/Icon */}
-				<div
-					className={cn(
-						"flex items-center justify-center rounded-sm h-full aspect-square border-2 p-[2px]",
-						getRarityColor(item.rarity, "border"),
-						`${getRarityColor(item.rarity, "bg")}/10`
-					)}
-				>
-					{itemImage}
-				</div>
-				<div className="flex flex-col flex-1 h-full min-w-0">
-					<div className="flex flex-1 flex-row items-center justify-between">
-						<div className="text-nowrap truncate max-w-[85%]">{item.name}</div>
-						<TooltipProvider>
-							<Tooltip>
-								<TooltipTrigger>
-									{React.createElement(getTypeIcon(item.category), {
-										size: 16,
-									})}
-								</TooltipTrigger>
-								<TooltipContent side="right">
-									<span>{formatName(item.category)}</span>
-								</TooltipContent>
-							</Tooltip>
-						</TooltipProvider>
-					</div>
-					<div className="min-w-fit flex flex-1 flex-row items-center gap-3">
-						<div className="text-sm text-muted-foreground flex items-center gap-1">
-							<Weight
-								size={14}
-								strokeWidth={3}
-							/>
-							<span className="text-sm font-mono tabular-nums">{item.weight}kg</span>
-						</div>
-						<div className="text-sm text-muted-foreground flex items-center gap-1">
-							<div className="text-sm text-muted-foreground flex items-center gap-1">
-								<BadgeCent
-									size={14}
-									strokeWidth={3}
-								/>
-								<span className="text-sm font-mono tabular-nums">{item.value}</span>
-							</div>
-						</div>
-						{item.recipeId && (
-							<div className="ml-auto text-amber-600 dark:text-amber-300">
-								<TooltipProvider>
-									<Tooltip>
-										<TooltipTrigger className="w-4 h-4 flex items-center justify-center">
-											<Book
-												className="w-3 h-3"
-												strokeWidth={4}
-											/>
-										</TooltipTrigger>
-										<TooltipContent side="right">
-											<span>Craftable</span>
-										</TooltipContent>
-									</Tooltip>
-								</TooltipProvider>
-							</div>
-						)}
-					</div>
-				</div>
-			</Card>
+			<NewItemCard
+				item={item}
+				variant={variant === "icon" ? "icon" : "default"}
+				size={newSize}
+				orientation="horizontal"
+				count={count}
+				onClick={onClick}
+				className={className}
+			/>
 		);
 	},
 	(prevProps, nextProps) => {
@@ -201,4 +74,15 @@ const ItemCardComponent = React.memo(
 	}
 );
 
+// Re-export the new ItemCard and its subcomponents
+export { ItemImage } from "./ItemImage";
+export { ItemContent } from "./ItemContent";
+export { ItemHeader } from "./ItemHeader";
+export { ItemDetails } from "./ItemDetails";
+export { ItemBadges } from "./ItemBadges";
+
+// Default export for new code
+export { NewItemCard as default };
+
+// Legacy export for backward compatibility
 export { ItemCardComponent as ItemCard };

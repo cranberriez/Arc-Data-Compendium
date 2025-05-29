@@ -1,7 +1,7 @@
 "use client";
 
 import { Item } from "@/types";
-import { ItemCard } from "@/components/items/itemDisplay";
+import ItemCard from "@/components/items/ItemCard";
 import { applyItemFilters, sortItems } from "@/utils/items";
 import { useItems } from "@/contexts/itemContext";
 import { Fragment } from "react";
@@ -44,7 +44,11 @@ export function ItemList({ initialItems }: ItemListProps) {
 								{capitalized || "Unknown"}
 							</div>
 						)}
-						<ItemCard item={item} />
+						<ItemCard
+							item={item}
+							variant="default"
+							size="md"
+						/>
 					</Fragment>
 				);
 			})}

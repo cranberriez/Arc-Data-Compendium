@@ -39,28 +39,6 @@
 		"value": 0
 	},
 	{
-		"id": "portable_tv",
-		"name": "Portable TV",
-		"category": "recyclable",
-		"icon": "Tv",
-		"rarity": "common",
-		"description": "",
-		"weight": 1,
-		"maxStack": 1,
-		"recipeId": null,
-		"value": 1000,
-		"recycling": [
-			{
-				"id": "wires",
-				"count": 7
-			},
-			{
-				"id": "battery",
-				"count": 3
-			}
-		]
-	},
-	{
 		"id": "projector",
 		"name": "Projector",
 		"category": "recyclable",
@@ -3778,7 +3756,6 @@
 		"weight": 1,
 		"maxStack": 1,
 		"recipeId": null,
-		"sources": [],
 		"value": 640
 	},
 	{
@@ -3791,8 +3768,17 @@
 		"weight": 1,
 		"maxStack": 1,
 		"recipeId": null,
-		"sources": [],
-		"value": 1000
+		"value": 1000,
+		"recycling": [
+			{
+				"id": "wires",
+				"count": 7
+			},
+			{
+				"id": "battery",
+				"count": 3
+			}
+		]
 	},
 	{
 		"id": "deflated_football",
@@ -3804,7 +3790,6 @@
 		"weight": 1,
 		"maxStack": 1,
 		"recipeId": null,
-		"sources": [],
 		"value": 1000,
 		"recycling": [
 			{
@@ -3823,7 +3808,6 @@
 		"weight": 1,
 		"maxStack": 1,
 		"recipeId": null,
-		"sources": [],
 		"value": 1000
 	},
 	{
@@ -3836,7 +3820,6 @@
 		"weight": 1,
 		"maxStack": 1,
 		"recipeId": null,
-		"sources": [],
 		"value": 1000
 	},
 	{
@@ -3849,7 +3832,6 @@
 		"weight": 1,
 		"maxStack": 1,
 		"recipeId": null,
-		"sources": [],
 		"value": 1000
 	},
 	{
@@ -3862,7 +3844,6 @@
 		"weight": 1,
 		"maxStack": 1,
 		"recipeId": null,
-		"sources": [],
 		"value": 2000
 	},
 	{
@@ -3875,7 +3856,6 @@
 		"weight": 1,
 		"maxStack": 1,
 		"recipeId": null,
-		"sources": [],
 		"value": 2000
 	},
 	{
@@ -3888,7 +3868,6 @@
 		"weight": 1,
 		"maxStack": 1,
 		"recipeId": null,
-		"sources": [],
 		"value": 2000
 	},
 	{
@@ -3901,7 +3880,6 @@
 		"weight": 1,
 		"maxStack": 1,
 		"recipeId": null,
-		"sources": [],
 		"value": 2000
 	},
 	{
@@ -3914,7 +3892,6 @@
 		"weight": 1,
 		"maxStack": 1,
 		"recipeId": null,
-		"sources": [],
 		"value": 2000
 	},
 	{
@@ -3927,7 +3904,6 @@
 		"weight": 1,
 		"maxStack": 1,
 		"recipeId": null,
-		"sources": [],
 		"value": 2000
 	},
 	{
@@ -3940,7 +3916,6 @@
 		"weight": 1,
 		"maxStack": 1,
 		"recipeId": null,
-		"sources": [],
 		"value": 2000
 	},
 	{
@@ -3953,7 +3928,6 @@
 		"weight": 1,
 		"maxStack": 1,
 		"recipeId": null,
-		"sources": [],
 		"value": 3000
 	},
 	{
@@ -3966,7 +3940,6 @@
 		"weight": 1,
 		"maxStack": 1,
 		"recipeId": null,
-		"sources": [],
 		"value": 3000
 	},
 	{
@@ -3979,7 +3952,6 @@
 		"weight": 1,
 		"maxStack": 1,
 		"recipeId": null,
-		"sources": [],
 		"value": 3000
 	},
 	{
@@ -3992,7 +3964,6 @@
 		"weight": 1,
 		"maxStack": 1,
 		"recipeId": null,
-		"sources": [],
 		"value": 3000
 	},
 	{
@@ -4005,7 +3976,6 @@
 		"weight": 1,
 		"maxStack": 1,
 		"recipeId": null,
-		"sources": [],
 		"value": 3000
 	},
 	{
@@ -4018,7 +3988,6 @@
 		"weight": 1,
 		"maxStack": 1,
 		"recipeId": null,
-		"sources": [],
 		"value": 5000
 	},
 	{
@@ -4031,7 +4000,6 @@
 		"weight": 1,
 		"maxStack": 1,
 		"recipeId": null,
-		"sources": [],
 		"value": 5000
 	},
 	{
@@ -4044,7 +4012,6 @@
 		"weight": 1,
 		"maxStack": 1,
 		"recipeId": null,
-		"sources": [],
 		"value": 5000
 	},
 	{
@@ -4057,21 +4024,7 @@
 		"weight": 1,
 		"maxStack": 1,
 		"recipeId": null,
-		"sources": [],
 		"value": 7000
-	},
-	{
-		"id": "portable_tv_set",
-		"name": "Portable TV set",
-		"category": "valuable",
-		"icon": "Tv",
-		"rarity": "common",
-		"description": "No provided description for this item yet.",
-		"weight": 1,
-		"maxStack": 1,
-		"recipeId": null,
-		"sources": [],
-		"value": 0
 	},
 	{
 		"id": "lances_mixtape_5th_edition",
@@ -4083,7 +4036,6 @@
 		"weight": 1,
 		"maxStack": 1,
 		"recipeId": null,
-		"sources": [],
 		"value": 10000
 	},
 	{
