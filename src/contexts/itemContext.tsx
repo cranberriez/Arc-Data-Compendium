@@ -13,7 +13,7 @@ import { applyItemFilters, sortItems, SortField, SortOrder } from "@/utils/items
 
 import { Item, ItemCategory, Rarity } from "@/types";
 import { addSources, composeProcessors, processItems } from "@/data/items/itemPreprocessor";
-import { fetchItems, fetchValuables } from "@/services/dataService";
+import { fetchItems } from "@/services/dataService";
 import { FilterOptions, SortOptions } from "@/utils/items/types";
 
 interface ItemContextType {
@@ -67,16 +67,10 @@ export function ItemProvider({ children }: { children: ReactNode }) {
 		async function loadData() {
 			setIsLoading(true);
 			try {
-				const [fetchedItems, fetchedValuables] = await Promise.all([
-					fetchItems(),
-					fetchValuables(),
-				]);
+				const fetchedItems = await fetchItems();
 
 				// Process items with the processor if needed
-				const processedItems = processItems(
-					[...fetchedItems, ...fetchedValuables],
-					itemProcessor
-				);
+				const processedItems = processItems(fetchedItems, itemProcessor);
 				setAllItems(processedItems);
 				setError(null);
 			} catch (err) {

@@ -65,25 +65,6 @@ export async function fetchItemById(id: string): Promise<Item | null> {
 }
 
 /**
- * Fetches all valuables from the API
- * @returns Promise that resolves to an array of valuables
- */
-export async function fetchValuables(): Promise<Item[]> {
-	const result = await fetchData<Item>("valuables");
-	return Array.isArray(result) ? result : [];
-}
-
-/**
- * Fetches a single valuable by ID from the API
- * @param id The ID of the valuable to fetch
- * @returns Promise that resolves to the valuable or null if not found
- */
-export async function fetchValuableById(id: string): Promise<Item | null> {
-	const result = await fetchData<Item>("valuables", id);
-	return result && !Array.isArray(result) ? result : null;
-}
-
-/**
  * Fetches all recipes from the API
  * @returns Promise that resolves to an array of recipes
  */
@@ -126,5 +107,4 @@ export type DataTypes = {
 	workbench: Workbench;
 	item: Item;
 	recipe: Recipe;
-	valuable: Item;
 };
