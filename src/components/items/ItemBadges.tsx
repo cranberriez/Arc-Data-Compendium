@@ -5,6 +5,7 @@ import { Item } from "@/types";
 import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 import { getRarityColor } from "@/data/items/itemUtils";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 export interface ItemBadgesProps {
 	/** The item to display */
@@ -78,12 +79,24 @@ export const ItemBadges = React.memo(function ItemBadges({
 			aria-label="Item badges"
 		>
 			{count !== undefined && (
-				<Badge
-					variant="secondary"
-					className={cn("flex items-center justify-center font-mono", sizeClasses)}
-				>
-					{typeof count === "number" && count > 99 ? "99+" : count}
-				</Badge>
+				<TooltipProvider>
+					<Tooltip>
+						<TooltipTrigger asChild>
+							<Badge
+								variant="secondary"
+								className={cn(
+									"flex items-center justify-center font-mono",
+									sizeClasses
+								)}
+							>
+								{typeof count === "number" && count > 99 ? "99+" : count}
+							</Badge>
+						</TooltipTrigger>
+						<TooltipContent>
+							<p># of Items Produced/Consumed</p>
+						</TooltipContent>
+					</Tooltip>
+				</TooltipProvider>
 			)}
 
 			{showRarity && typeof item.rarity === "number" && item.rarity > 0 && (

@@ -18,6 +18,8 @@ export interface ItemCardProps {
 	orientation?: "horizontal" | "vertical";
 	/** Item count to display */
 	count?: number;
+	/** Item count to display inside the card */
+	innerCount?: boolean;
 	/** Click handler */
 	onClick?: () => void;
 	/** Additional class names */
@@ -37,6 +39,7 @@ export const ItemCard = React.memo(
 		size = "md",
 		orientation = "horizontal",
 		count,
+		innerCount,
 		onClick,
 		className,
 		onRenderComplete,
@@ -81,6 +84,7 @@ export const ItemCard = React.memo(
 						item={item}
 						size={size}
 						count={count}
+						innerCount={innerCount}
 						onClick={handleClick}
 						className={className}
 					/>

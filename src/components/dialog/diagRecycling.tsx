@@ -1,7 +1,7 @@
 import { Item } from "@/types";
 import { useItems } from "@/contexts/itemContext";
-import { ItemCard } from "../items/itemDisplay";
-import { Recycle } from "lucide-react";
+import { ItemCard } from "@/components/items/ItemCard";
+import { Recycle, ArrowRight } from "lucide-react";
 
 export const RecyclingSection = ({ item }: { item: Item }) => {
 	const { getItemById } = useItems();
@@ -9,7 +9,7 @@ export const RecyclingSection = ({ item }: { item: Item }) => {
 	if (!item.recycling || item.recycling.length === 0) return null;
 
 	return (
-		<div className="w-fit min-w-full">
+		<div className="flex flex-col w-fit min-w-full gap-2">
 			<div className="font-mono font-light w-full flex items-center gap-2 mb-2">
 				<Recycle
 					className="inline-block"
@@ -29,6 +29,17 @@ export const RecyclingSection = ({ item }: { item: Item }) => {
 				</div>
 			</div>
 			<div className="flex flex-row items-center gap-2">
+				<ItemCard
+					item={item}
+					variant="compact"
+					onClick={() => {}}
+					innerCount={true}
+					size="sm"
+					className={
+						"cursor-default bg-accent border-2 border-accent hover:border-accent/50"
+					}
+				/>
+				<ArrowRight className="size-4" />
 				{item.recycling.map((recycle, idx) => {
 					const recycledItem = getItemById(recycle.id);
 					if (!recycledItem) return null;
@@ -36,7 +47,8 @@ export const RecyclingSection = ({ item }: { item: Item }) => {
 						<ItemCard
 							key={recycle.id + idx}
 							item={recycledItem}
-							variant="icon"
+							variant="compact"
+							size="sm"
 							count={recycle.count}
 						/>
 					);

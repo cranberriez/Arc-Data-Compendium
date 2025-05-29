@@ -1,7 +1,7 @@
 // Component for a single source item
 import { Item } from "@/types";
 import { useItems } from "@/contexts/itemContext";
-import { ItemCard } from "../items/itemDisplay";
+import { ItemCard } from "@/components/items/ItemCard";
 import { ArrowRight } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { cn } from "@/lib/utils";
@@ -17,7 +17,7 @@ export const SourceItem = ({
 }) => {
 	const { getItemById } = useItems();
 	const isMobile = useIsMobile();
-	const size = isMobile ? "sm" : "default";
+	const size = isMobile ? "sm" : "sm";
 
 	// Get recycle products for this sourceItem
 	const recycleProducts = (sourceItem.recycling || [])
@@ -29,15 +29,16 @@ export const SourceItem = ({
 		<div className="flex flex-row items-center gap-1 sm:gap-2 cursor-default border-2 border-dashed border-accent rounded-md">
 			<ItemCard
 				item={sourceItem}
-				variant="icon"
+				variant="compact"
 				size={size}
 			/>
 			<ArrowRight className="size-4" />
 			<ItemCard
 				item={item}
-				variant="icon"
+				variant="compact"
 				onClick={() => {}}
 				count={source.count}
+				innerCount={true}
 				size={size}
 				className={"cursor-default bg-accent border-2 border-accent hover:border-accent/50"}
 			/>
@@ -49,8 +50,9 @@ export const SourceItem = ({
 							<ItemCard
 								key={recycledItem.id}
 								item={recycledItem}
-								variant="icon"
+								variant="compact"
 								count={source.count}
+								innerCount={true}
 								size={size}
 							/>
 						);

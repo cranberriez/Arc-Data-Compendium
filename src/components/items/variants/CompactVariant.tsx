@@ -5,11 +5,13 @@ import { Item } from "@/types";
 import { cn } from "@/lib/utils";
 import { ItemImage } from "../ItemImage";
 import { ItemBadges } from "../ItemBadges";
+import { getRarityColor } from "@/data/items/itemUtils";
 
 export interface CompactVariantProps {
 	item: Item;
 	size?: "sm" | "md" | "lg" | "xl";
 	count?: number;
+	innerCount?: boolean;
 	onClick?: () => void;
 	className?: string;
 }
@@ -21,15 +23,16 @@ export const CompactVariant = React.memo(function CompactVariant({
 	item,
 	size = "md",
 	count,
+	innerCount,
 	onClick,
 	className,
 }: CompactVariantProps) {
 	// Size mappings for the container
 	const sizeClasses = {
-		sm: "min-w-[60px] max-h-[100px] p-1.5",
-		md: "min-w-[70px] max-h-[120px] p-2",
-		lg: "min-w-[80px] max-h-[140px] p-2.5",
-		xl: "min-w-[90px] max-h-[160px] p-3",
+		sm: "min-w-[60px] h-[80px] max-h-[100px] p-1.5",
+		md: "min-w-[70px] h-[100px] max-h-[120px] p-2",
+		lg: "min-w-[80px] h-[120px] max-h-[140px] p-2.5",
+		xl: "min-w-[90px] h-[140px] max-h-[160px] p-3",
 	};
 
 	// Text size mappings
@@ -47,7 +50,7 @@ export const CompactVariant = React.memo(function CompactVariant({
 			className={cn(
 				"flex flex-col items-center justify-between relative",
 				"border-2 hover:border-primary/60 rounded aspect-square cursor-pointer",
-				"border-secondary-foreground/20",
+				getRarityColor(item.rarity, "border"),
 				sizeClasses[size],
 				className
 			)}
@@ -62,7 +65,7 @@ export const CompactVariant = React.memo(function CompactVariant({
 				}
 			}}
 		>
-			<div className="flex items-center justify-center mt-1">
+			<div className="flex items-center justify-center">
 				<ItemImage
 					item={item}
 					size={size === "sm" ? "md" : size === "md" ? "lg" : size === "lg" ? "xl" : "xl"}
@@ -74,7 +77,7 @@ export const CompactVariant = React.memo(function CompactVariant({
 				<ItemBadges
 					item={item}
 					count={count}
-					size={size}
+					size={size === "sm" ? "md" : size === "md" ? "lg" : size === "lg" ? "xl" : "xl"}
 					position="top-right"
 				/>
 			)}
