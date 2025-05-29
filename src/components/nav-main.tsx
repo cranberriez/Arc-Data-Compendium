@@ -7,12 +7,12 @@ import {
 	SidebarMenu,
 	SidebarMenuButton,
 	SidebarMenuItem,
-	SidebarGroupContent,
 } from "@/components/ui/sidebar";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
+import { useSidebar } from "@/components/ui/sidebar";
 
 export type NavItem = {
 	title: string;
@@ -24,6 +24,8 @@ export type NavItem = {
 };
 
 function NavItem({ item, pathname }: { item: NavItem; pathname: string | null }) {
+	const { state } = useSidebar();
+	const isCollapsed = state === "collapsed";
 	const hasItems = item.items && item.items.length > 0;
 	const isActive = pathname ? pathname === item.url : false;
 	const isDisabled = !item.enabled;
@@ -31,6 +33,11 @@ function NavItem({ item, pathname }: { item: NavItem; pathname: string | null })
 	const activeButton = "bg-accent text-accent-foreground";
 	const disabledButton = "text-muted-foreground/50 cursor-not-allowed";
 	const activeClass = isActive ? "font-medium" : "";
+
+	// If sidebar is collapsed and item has no icon, don't render it
+	if (isCollapsed && !item.icon) {
+		return null;
+	}
 
 	if (hasItems) {
 		return (
@@ -43,27 +50,36 @@ function NavItem({ item, pathname }: { item: NavItem; pathname: string | null })
 						className={cn(
 							"flex w-full items-center gap-2 rounded-md p-2 text-sm transition-colors hover:bg-accent hover:text-accent-foreground",
 							isDisabled ? disabledButton : "",
-							"justify-between [&[data-state=open]>svg]:rotate-180"
+							"justify-between [&[data-state=open]>svg]:rotate-180",
+							isCollapsed && "justify-center"
 						)}
 					>
 						<div className="flex items-center gap-2">
-							{item.icon && <item.icon className="h-4 w-4" />}
-							<span className={cn("text-sm", activeClass)}>{item.title}</span>
+							{item.icon && <item.icon className="h-4 w-4 flex-shrink-0" />}
+							{!isCollapsed && (
+								<span className={cn("text-sm truncate", activeClass)}>
+									{item.title}
+								</span>
+							)}
 						</div>
-						<ChevronDown className="h-4 w-4 transition-transform duration-200" />
+						{!isCollapsed && (
+							<ChevronDown className="h-4 w-4 transition-transform duration-200" />
+						)}
 					</CollapsibleTrigger>
 				</SidebarMenuItem>
-				<CollapsibleContent>
-					<div className="ml-6 mt-1 space-y-1">
-						{item.items?.map((subItem) => (
-							<NavItem
-								key={subItem.title}
-								item={subItem}
-								pathname={pathname}
-							/>
-						))}
-					</div>
-				</CollapsibleContent>
+				{!isCollapsed && (
+					<CollapsibleContent>
+						<div className="ml-6 mt-1 space-y-1">
+							{item.items?.map((subItem) => (
+								<NavItem
+									key={subItem.title}
+									item={subItem}
+									pathname={pathname}
+								/>
+							))}
+						</div>
+					</CollapsibleContent>
+				)}
 			</Collapsible>
 		);
 	}
@@ -82,10 +98,10 @@ function NavItem({ item, pathname }: { item: NavItem; pathname: string | null })
 			>
 				<Link
 					href={isDisabled ? "#" : item.url || "#"}
-					className={cn("w-full py-2 px-2 text-sm", activeClass)}
+					className={cn("w-full py-2 px-2 text-sm flex items-center gap-2", activeClass)}
 				>
-					{item.icon && <item.icon className="h-4 w-4" />}
-					<span>{item.title}</span>
+					{item.icon && <item.icon className="h-4 w-4 flex-shrink-0" />}
+					{!isCollapsed && <span className="truncate">{item.title}</span>}
 				</Link>
 			</SidebarMenuButton>
 		</SidebarMenuItem>
