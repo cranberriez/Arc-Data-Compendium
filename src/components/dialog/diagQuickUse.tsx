@@ -37,7 +37,7 @@ export const QuickUseSection = ({ item }: { item: Item }) => {
 			)}
 
 			<div className="flex flex-col gap-2">
-				<div className="flex flex-col gap-2 py-2 px-4 bg-amber-100 text-amber-900 dark:text-amber-100 dark:bg-amber-900/10 rounded-md">
+				<div className="flex flex-col gap-2 py-4 px-4 bg-amber-100 text-amber-900 dark:text-amber-100 dark:bg-amber-900/10 rounded-md">
 					{item.quickUse?.stats?.map((stat, index) => (
 						<StatItem
 							key={index}
@@ -97,7 +97,7 @@ const StatItem = ({ stat }: { stat: QuickUseStat }) => {
 
 const Charge = ({ charge }: { charge: QuickUseCharge }) => {
 	return (
-		<div className="flex flex-col gap-2 py-2 px-4 bg-blue-100 text-blue-900 dark:text-blue-100 dark:bg-blue-900/10 rounded-md">
+		<div className="flex flex-col gap-2 p-4 bg-blue-100 text-blue-900 dark:text-blue-100 dark:bg-blue-900/10 rounded-md">
 			{Object.entries(charge).map(([key, value]) => {
 				let displayValue = "";
 				let name = "";
