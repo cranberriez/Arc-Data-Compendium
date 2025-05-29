@@ -15,7 +15,7 @@ export default function Tools({
 	setSearchOpen: (open: boolean) => void;
 	className?: string;
 }) {
-	const { resetFilters, filterState, isLoading } = useItems();
+	const { resetFilters, filterState, sortState, isLoading } = useItems();
 
 	const onItemsPage = useIsPageName("items");
 
@@ -26,7 +26,9 @@ export default function Tools({
 		filterState.categories.length > 0 ||
 		filterState.showRecyclable ||
 		filterState.showCraftable ||
-		filterState.showHasStats;
+		filterState.showHasStats ||
+		sortState.sortField !== "none" ||
+		sortState.sortOrder !== "none";
 
 	return (
 		<div className={cn("flex items-center gap-1", className)}>
