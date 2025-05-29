@@ -12,6 +12,8 @@ import { UpgradeButtons } from "./UpgradeButtons";
 import { TierSelector, Tier } from "./TierSelector";
 import { RecipesList } from "./RecipesList";
 import { RecipeSheet, Recipe } from "./RecipeSheet";
+import ItemCard from "@/components/items/ItemCard";
+import { useItems } from "@/contexts/itemContext";
 
 interface WorkbenchData {
 	id: string;
@@ -36,6 +38,7 @@ interface WorkbenchClientProps {
 
 export function WorkbenchClient({ workbench, recipes }: WorkbenchClientProps) {
 	const [selectedRecipe, setSelectedRecipe] = useState<Recipe | null>(null);
+	const { getItemById } = useItems();
 
 	// Calculate derived values
 	const currentTier = workbench.baseTier;
@@ -125,23 +128,33 @@ export function WorkbenchClient({ workbench, recipes }: WorkbenchClientProps) {
 											Next Tier Requirements
 										</h4>
 										<div className="flex flex-col gap-2">
-											{nextTier.requiredItems.map((item) => (
-												<div
-													key={item.itemId}
-													className="flex items-center gap-2"
-												>
-													<div className="h-6 w-6 rounded bg-muted" />
-													<span className="text-sm">
-														{item.itemId.replace(/_/g, " ")}
-													</span>
-													<Badge
-														variant="secondary"
-														className="bg-blue-500 text-white text-xs"
+											{nextTier.requiredItems.map((item) => {
+												const itemData = getItemById(item.itemId);
+
+												return (
+													<div
+														key={item.itemId}
+														className="flex items-center gap-2"
 													>
-														{item.count}x
-													</Badge>
-												</div>
-											))}
+														<ItemCard
+															item={itemData}
+															variant="icon"
+															size="sm"
+															className="border-0 opacity-60 hover:opacity-100 transition-opacity"
+														/>
+														<span className="text-sm">
+															{itemData?.name ||
+																item.itemId.replace(/_/g, " ")}
+														</span>
+														<Badge
+															variant="secondary"
+															className="bg-blue-500 text-white text-xs"
+														>
+															{item.count}x
+														</Badge>
+													</div>
+												);
+											})}
 											{nextTier.raidsRequired && (
 												<Badge className="mt-1 bg-blue-600 text-white w-fit">
 													{nextTier.raidsRequired} raids required

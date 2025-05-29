@@ -9,7 +9,7 @@ import { IconVariant, CompactVariant, DetailedVariant, DefaultVariant } from "./
 
 export interface ItemCardProps {
 	/** The item data to display */
-	item: Item;
+	item: Item | undefined;
 	/** Visual variant of the card */
 	variant?: "default" | "icon" | "compact" | "detailed";
 	/** Size of the card */
@@ -26,6 +26,8 @@ export interface ItemCardProps {
 	className?: string;
 	/** Performance metrics callback */
 	onRenderComplete?: () => void;
+	/** Whether to show the border */
+	showBorder?: boolean;
 }
 
 /**
@@ -43,6 +45,7 @@ export const ItemCard = React.memo(
 		onClick,
 		className,
 		onRenderComplete,
+		showBorder = true,
 	}: ItemCardProps) {
 		const { openDialog } = useDialog();
 		const { getItemById } = useItems();
@@ -76,6 +79,7 @@ export const ItemCard = React.memo(
 						count={count}
 						onClick={handleClick}
 						className={className}
+						showBorder={showBorder}
 					/>
 				);
 			case "compact":

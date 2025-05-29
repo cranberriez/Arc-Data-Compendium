@@ -5,10 +5,11 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { Lock } from "lucide-react";
-import { ItemCard } from "@/components/items/itemDisplay";
+import { ItemCard } from "@/components/items/ItemCard";
 import { Recipe } from "./RecipeSheet";
 import { useItems } from "@/contexts/itemContext";
 import { ItemIconSkeleton } from "@/components/items/itemIconSkeleton";
+import { cn } from "@/lib/utils";
 
 export interface Tier {
 	tier: number;
@@ -41,20 +42,19 @@ export function TierSelector({ tiers, currentTier, recipes, onRecipeSelect }: Ti
 			className="w-full"
 		>
 			<TabsList
-				className="grid w-full mb-4 gap-1"
+				className="grid w-full mb-4 gap-1 h-fit"
 				style={{ gridTemplateColumns: `repeat(${sortedTiers.length}, 1fr)` }}
 			>
 				{sortedTiers.map((tier) => (
 					<TabsTrigger
 						key={tier.tier}
 						value={tier.tier.toString()}
-						className={
-							tier.tier === currentTier
-								? "bg-blue-500 text-primary data-[state=active]:bg-red-500"
-								: ""
-						}
+						className={cn(
+							"cursor-pointer border-2 border-transparent",
+							tier.tier === currentTier ? "border-blue-400/50! text-primary!" : ""
+						)}
 					>
-						Tier {tier.tier}
+						<span>Tier {tier.tier}</span>
 					</TabsTrigger>
 				))}
 			</TabsList>
@@ -70,6 +70,7 @@ export function TierSelector({ tiers, currentTier, recipes, onRecipeSelect }: Ti
 						<div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
 							{tier.requiredItems.map((item) => {
 								const itemData = getItemById(item.itemId);
+								if (!itemData) return null;
 
 								return (
 									<div
@@ -81,8 +82,10 @@ export function TierSelector({ tiers, currentTier, recipes, onRecipeSelect }: Ti
 										) : (
 											<ItemCard
 												item={itemData}
+												key={item.itemId}
 												variant="icon"
-												hideText={true}
+												size="xl"
+												showBorder={false}
 											/>
 										)}
 										<div className="flex-1">
@@ -140,15 +143,16 @@ export function TierSelector({ tiers, currentTier, recipes, onRecipeSelect }: Ti
 														material.itemId
 													);
 													return (
-														<ItemCard
-															key={material.itemId}
-															item={materialData}
-															count={material.count}
-															variant="icon"
-															size="sm"
-															className="h-full"
-															hideText={false}
-														/>
+														<></>
+														// <ItemCard
+														// 	key={material.itemId}
+														// 	item={materialData}
+														// 	count={material.count}
+														// 	variant="icon"
+														// 	size="sm"
+														// 	className="h-full"
+														// 	hideText={false}
+														// />
 													);
 												})}
 											</div>

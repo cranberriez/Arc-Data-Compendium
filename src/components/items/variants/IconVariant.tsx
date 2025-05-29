@@ -13,6 +13,7 @@ export interface IconVariantProps {
 	count?: number;
 	onClick?: () => void;
 	className?: string;
+	showBorder?: boolean;
 }
 
 /**
@@ -24,6 +25,7 @@ export const IconVariant = React.memo(function IconVariant({
 	count,
 	onClick,
 	className,
+	showBorder,
 }: IconVariantProps) {
 	const iconSizeMap = {
 		sm: "h-8 w-8",
@@ -59,7 +61,7 @@ export const IconVariant = React.memo(function IconVariant({
 			<ItemImage
 				item={item}
 				size={size === "sm" ? "sm" : size === "md" ? "md" : size === "lg" ? "lg" : "xl"}
-				showBorder={true}
+				showBorder={showBorder}
 				containerClassName="p-0"
 			/>
 

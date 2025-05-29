@@ -23,7 +23,7 @@ export function UpgradeButtons({
 		<div className="flex gap-3">
 			<Button
 				disabled={!canUpgrade}
-				className="flex-1 bg-blue-600 hover:bg-blue-700"
+				className="flex-1 bg-blue-300 hover:bg-blue-400 dark:bg-blue-700 hover:dark:bg-blue-600 border-1 text-primary cursor-pointer"
 				onClick={onUpgrade}
 			>
 				<Plus className="mr-2 h-4 w-4" />
@@ -32,6 +32,7 @@ export function UpgradeButtons({
 			<Button
 				variant="outline"
 				disabled={!canDowngrade}
+				className="cursor-pointer"
 				onClick={onDowngrade}
 			>
 				<Minus className="mr-2 h-4 w-4" />

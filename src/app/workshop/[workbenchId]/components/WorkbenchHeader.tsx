@@ -24,12 +24,21 @@ export function WorkbenchHeader({ currentTier }: WorkbenchHeaderProps) {
 						Back to Workshop
 					</Button>
 				</Link>
-				<Badge
-					variant="secondary"
-					className="bg-blue-500 text-white"
-				>
-					Tier {currentTier}
-				</Badge>
+				{currentTier ? (
+					<Badge
+						variant="default"
+						className="bg-blue-500 text-white"
+					>
+						Tier {currentTier}
+					</Badge>
+				) : (
+					<Badge
+						variant="destructive"
+						className="bg-red-500 text-white"
+					>
+						Not Unlocked
+					</Badge>
+				)}
 			</div>
 			<TooltipProvider>
 				<Tooltip>
