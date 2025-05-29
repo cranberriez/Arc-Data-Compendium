@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Item } from "@/types";
 import { useItems } from "@/contexts/itemContext";
 import { SourceItem } from "./diagSourceItem";
-import { Link, ChevronDown, ChevronUp, MoveRight, CircleDollarSign } from "lucide-react";
+import { Link, ChevronDown, ChevronUp, MoveRight, BadgeCent } from "lucide-react";
 import { ScrollArea } from "@radix-ui/react-scroll-area";
 import { Button } from "../ui/button";
 
@@ -71,7 +71,7 @@ export function SourcesSection({ item }: SourcesSectionProps) {
 									/>
 								</span>
 								<span className="flex items-center gap-1">
-									<CircleDollarSign
+									<BadgeCent
 										className="block"
 										size={20}
 									/>
