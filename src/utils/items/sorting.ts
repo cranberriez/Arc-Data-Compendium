@@ -50,6 +50,11 @@ const compareByCategory = (a: Item, b: Item, sortOrder: SortOrder): number => {
 	return sortOrder === "desc" ? -result : result;
 };
 
+const compareByValue = (a: Item, b: Item, sortOrder: SortOrder): number => {
+	const result = a.value - b.value;
+	return sortOrder === "desc" ? -result : result;
+};
+
 /**
  * Legacy function for backward compatibility
  * @deprecated Use the new comparison functions instead
@@ -84,6 +89,11 @@ export const sortItems = (items: Item[], sortOptions: SortOptions): Item[] => {
 			case "name":
 				// Name sorting: Sort only by name
 				return compareByName(a, b, effectiveSortOrder);
+
+			case "value":
+				// Value sorting: Sort by value, then by rarity, then by name
+				const valueResult = compareByValue(a, b, effectiveSortOrder);
+				return valueResult !== 0 ? valueResult : compareByRarity(a, b, "asc");
 
 			case "rarity":
 				// Rarity sorting: Sort by rarity, then by name

@@ -14,5 +14,5 @@ export interface SortOptions {
 	sortOrder: SortOrder;
 }
 
-export type SortField = "name" | "rarity" | "category" | "none";
+export type SortField = "name" | "value" | "rarity" | "category" | "none";
 export type SortOrder = "asc" | "desc" | "none";

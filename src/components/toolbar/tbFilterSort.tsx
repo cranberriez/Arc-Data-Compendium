@@ -25,6 +25,7 @@ const categoryOptions: ItemCategory[] = [
 ];
 const sortFieldOptions: { value: SortField; label: string }[] = [
 	{ value: "name", label: "Name" },
+	{ value: "value", label: "Value" },
 	{ value: "rarity", label: "Rarity" },
 	{ value: "category", label: "Category" },
 	{ value: "none", label: "Default" },
