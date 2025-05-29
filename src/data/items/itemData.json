@@ -2279,15 +2279,15 @@
 			"category": "trap",
 			"stats": [
 				{
-					"name": "Damage",
+					"name": "damage",
 					"value": 5,
 					"perSecond": true,
 					"duration": 10,
 					"effect": "Fire Damage"
 				},
 				{
-					"name": "Range",
-					"value": 10
+					"name": "range",
+					"range": 10
 				}
 			]
 		}
@@ -2337,7 +2337,8 @@
 			"category": "trap",
 			"stats": [
 				{
-					"name": "lure"
+					"name": "lure",
+					"effect": "Loud Alarm Sound"
 				},
 				{
 					"name": "duration",
