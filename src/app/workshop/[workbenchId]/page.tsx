@@ -45,32 +45,8 @@ export default async function WorkbenchPage({ params }: WorkbenchPageProps) {
 		);
 	}
 
-	// Sort tiers by tier number
-	const sortedTiers = [...workbench.tiers].sort((a, b) => a.tier - b.tier);
-
-	// Create recipes for each tier with the structure expected by client components
-	const recipes = sortedTiers.flatMap((tier) =>
-		// Create some placeholder recipes for each tier
-		Array(3 + tier.tier)
-			.fill(0)
-			.map((_, i) => ({
-				id: `recipe-${tier.tier}-${i}`,
-				name: `Tier ${tier.tier} Item ${i + 1}`,
-				description: `A craftable item from tier ${tier.tier}`,
-				materials: [
-					{ itemId: "material_1", count: 2 * tier.tier },
-					{ itemId: "material_2", count: tier.tier },
-				],
-				unlockTier: tier.tier,
-				unlocked: tier.tier <= workbench.baseTier,
-			}))
-	);
-
 	return (
 		// Render the client component with the server-fetched data
-		<WorkbenchClient
-			workbench={workbench}
-			recipes={recipes}
-		/>
+		<WorkbenchClient workbench={workbench} />
 	);
 }

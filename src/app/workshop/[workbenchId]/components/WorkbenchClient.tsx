@@ -10,10 +10,10 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { WorkbenchHeader } from "./WorkbenchHeader";
 import { UpgradeButtons } from "./UpgradeButtons";
 import { TierSelector, Tier } from "./TierSelector";
-import { RecipesList } from "./RecipesList";
-import { RecipeSheet, Recipe } from "./RecipeSheet";
+import { Recipe } from "@/types/items/recipe";
 import ItemCard from "@/components/items/ItemCard";
 import { useItems } from "@/contexts/itemContext";
+import { useRecipes } from "@/contexts/recipeContext";
 
 interface WorkbenchData {
 	id: string;
@@ -33,12 +33,12 @@ interface WorkbenchData {
 
 interface WorkbenchClientProps {
 	workbench: WorkbenchData;
-	recipes: Recipe[];
 }
 
-export function WorkbenchClient({ workbench, recipes }: WorkbenchClientProps) {
+export function WorkbenchClient({ workbench }: WorkbenchClientProps) {
 	const [selectedRecipe, setSelectedRecipe] = useState<Recipe | null>(null);
 	const { getItemById } = useItems();
+	const recipes = useRecipes().getRecipesByWorkbench(workbench.id);
 
 	// Calculate derived values
 	const currentTier = workbench.baseTier;
@@ -205,24 +205,25 @@ export function WorkbenchClient({ workbench, recipes }: WorkbenchClientProps) {
 								currentTier={currentTier}
 								recipes={recipes}
 								onRecipeSelect={setSelectedRecipe}
+								workbenchId={workbench.id}
 							/>
 						</CardContent>
 					</Card>
 
 					{/* Crafting Section */}
-					<RecipesList
+					{/* <RecipesList
 						recipes={recipes}
 						currentTier={currentTier}
-						onRecipeSelect={setSelectedRecipe}
-					/>
+						// onRecipeSelect={setSelectedRecipe}
+					/> */}
 				</div>
 			</div>
 
 			{/* Recipe Details Sheet */}
-			<RecipeSheet
+			{/* <RecipeSheet
 				selectedRecipe={selectedRecipe}
 				onOpenChange={(open) => !open && setSelectedRecipe(null)}
-			/>
+			/> */}
 		</TooltipProvider>
 	);
 }

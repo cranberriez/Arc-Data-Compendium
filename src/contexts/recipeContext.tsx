@@ -9,6 +9,8 @@ interface RecipeContextType {
 	loading: boolean;
 	error: Error | null;
 	refreshRecipes: () => Promise<void>;
+	getRecipeById: (id: string) => Recipe | undefined;
+	getRecipesByWorkbench: (workbenchId: string) => Recipe[];
 }
 
 const RecipeContext = createContext<RecipeContextType | undefined>(undefined);
@@ -40,8 +42,27 @@ export function RecipeProvider({ children }: { children: React.ReactNode }) {
 		await fetchRecipeData();
 	};
 
+	const getRecipeById = (id: string) => {
+		return recipes.find((recipe) => recipe.id === id);
+	};
+
+	const getRecipesByWorkbench = (workbenchId: string) => {
+		return recipes.filter(
+			(recipe) => recipe.workbench?.some((wb) => wb.workbench === workbenchId) ?? false
+		);
+	};
+
 	return (
-		<RecipeContext.Provider value={{ recipes, loading, error, refreshRecipes }}>
+		<RecipeContext.Provider
+			value={{
+				recipes,
+				loading,
+				error,
+				refreshRecipes,
+				getRecipeById,
+				getRecipesByWorkbench,
+			}}
+		>
 			{children}
 		</RecipeContext.Provider>
 	);
