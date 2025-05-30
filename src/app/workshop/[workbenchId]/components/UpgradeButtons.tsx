@@ -22,14 +22,6 @@ export function UpgradeButtons({
 	return (
 		<div className="flex gap-3">
 			<Button
-				disabled={!canUpgrade}
-				className="flex-1 bg-blue-300 hover:bg-blue-400 dark:bg-blue-700 hover:dark:bg-blue-600 border-1 text-primary cursor-pointer"
-				onClick={onUpgrade}
-			>
-				<Plus className="mr-2 h-4 w-4" />
-				{canUpgrade ? `Upgrade to Tier ${currentTier + 1}` : "Max Tier Reached"}
-			</Button>
-			<Button
 				variant="outline"
 				disabled={!canDowngrade}
 				className="cursor-pointer"
@@ -37,6 +29,14 @@ export function UpgradeButtons({
 			>
 				<Minus className="mr-2 h-4 w-4" />
 				Downgrade
+			</Button>
+			<Button
+				disabled={!canUpgrade}
+				className="flex-1 bg-green-300 hover:bg-green-400 dark:bg-green-700 hover:dark:bg-green-600 border-1 text-primary cursor-pointer"
+				onClick={onUpgrade}
+			>
+				<Plus className="mr-2 h-4 w-4" />
+				{canUpgrade ? `Upgrade to Tier ${currentTier + 1}` : "Max Tier Reached"}
 			</Button>
 		</div>
 	);
