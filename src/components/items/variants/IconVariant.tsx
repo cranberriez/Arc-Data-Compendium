@@ -41,10 +41,9 @@ export const IconVariant = React.memo(function IconVariant({
 			className={cn(
 				"flex items-center justify-center",
 				"border hover:border-primary/60 rounded",
-				"cursor-pointer relative",
-				"border-secondary-foreground/20",
+				"cursor-pointer relative border-2",
+				showBorder ? `${getRarityColor(item.rarity, "border")}` : `border-transparent`,
 				iconSizeMap[size],
-				`${getRarityColor(item.rarity, "bg")}/10`,
 				className
 			)}
 			onClick={onClick}
@@ -61,7 +60,7 @@ export const IconVariant = React.memo(function IconVariant({
 			<ItemImage
 				item={item}
 				size={size === "sm" ? "sm" : size === "md" ? "md" : size === "lg" ? "lg" : "xl"}
-				showBorder={showBorder}
+				showBorder={false}
 				containerClassName="p-0"
 			/>
 

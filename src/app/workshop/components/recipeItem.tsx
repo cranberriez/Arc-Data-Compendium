@@ -30,9 +30,8 @@ export function RecipeItem({ recipe, onSelect, className }: RecipeItemProps) {
 			className={cn(
 				"rounded-lg border p-4 transition-colors",
 				{
-					"cursor-pointer hover:border-blue-500": !isLocked && onSelect,
+					"hover:border-blue-500": !isLocked && onSelect,
 					"opacity-70 border-dashed": isLocked,
-					"cursor-not-allowed": isLocked,
 				},
 				className
 			)}
@@ -46,6 +45,7 @@ export function RecipeItem({ recipe, onSelect, className }: RecipeItemProps) {
 							item={outputItem}
 							variant="icon"
 							size="lg"
+							showBorder={false}
 						/>
 						<div>
 							<h5 className="font-medium">
@@ -75,6 +75,7 @@ export function RecipeItem({ recipe, onSelect, className }: RecipeItemProps) {
 											item={item}
 											count={req.count}
 											variant="compact"
+											orientation="horizontal"
 											size="sm"
 										/>
 									</div>

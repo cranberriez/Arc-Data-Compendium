@@ -1,5 +1,5 @@
 import { fetchWorkbenchById } from "@/services/dataService";
-import { WorkbenchClient } from "./components/WorkbenchClient";
+import { WorkbenchClient } from "../components/workbenchClient";
 import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
@@ -20,8 +20,7 @@ export default async function WorkbenchPage({ params }: WorkbenchPageProps) {
 	// Handle not found case
 	if (!workbench) {
 		return (
-			<div className="container mx-auto px-4 py-8 relative">
-				<div className="absolute top-0 left-0 w-full h-64 bg-gradient-to-b from-blue-500/10 to-transparent -z-10 opacity-50"></div>
+			<div className="mx-auto max-w-6xl">
 				<div className="flex items-center space-x-2 mb-8">
 					<Link href="/workshop">
 						<Button
@@ -47,6 +46,8 @@ export default async function WorkbenchPage({ params }: WorkbenchPageProps) {
 
 	return (
 		// Render the client component with the server-fetched data
-		<WorkbenchClient workbench={workbench} />
+		<main className="w-full py-8">
+			<WorkbenchClient workbench={workbench} />
+		</main>
 	);
 }
