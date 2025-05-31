@@ -2,7 +2,7 @@
 
 import React, { createContext, useContext, useEffect, useState, useCallback } from "react";
 import { fetchWorkbenches } from "@/services/dataService";
-import { Workbench } from "@/types/items/workbench";
+import { Workbench, WorkbenchUpgradeSummary } from "@/types/items/workbench";
 import { getWorkbenchData, saveWorkbenchData, WorkbenchUserData } from "@/utils/cookieUtils";
 
 interface WorkshopContextType {
@@ -12,6 +12,7 @@ interface WorkshopContextType {
 	error: Error | null;
 	refreshWorkshop: () => Promise<void>;
 	updateWorkbenchTier: (workbenchId: string, currentTier: number) => void;
+	getWorkbenchUpgradeSummary: () => Record<string, WorkbenchUpgradeSummary>;
 }
 
 const WorkshopContext = createContext<WorkshopContextType | undefined>(undefined);
@@ -54,6 +55,42 @@ export function WorkshopProvider({ children }: { children: React.ReactNode }) {
 		saveWorkbenchData(newData);
 	}, []);
 
+	// Get a summary of all of the items needed to upgrade all workbenches 1 level
+	const getWorkbenchUpgradeSummary = () => {
+		return workbenches.reduce((summary, workbench) => {
+			const currentTier =
+				workbenchUserData.find((wb) => wb.workbenchId === workbench.id)?.currentTier ??
+				workbench.baseTier;
+			const nextTier = currentTier + 1;
+			const nextTierData = workbench.tiers.find((t) => t.tier === nextTier);
+
+			if (!nextTierData) return summary;
+
+			// For each required item in the next tier, update the summary
+			nextTierData.requiredItems.forEach((item) => {
+				if (!summary[item.itemId]) {
+					summary[item.itemId] = {
+						count: 0,
+						usedIn: [],
+					};
+				}
+				summary[item.itemId].count += item.count;
+
+				// Add workbench info with target tier
+				const workbenchInfo = {
+					workbenchId: workbench.id,
+					targetTier: nextTier,
+				};
+
+				if (!summary[item.itemId].usedIn.some((wb) => wb.workbenchId === workbench.id)) {
+					summary[item.itemId].usedIn.push(workbenchInfo);
+				}
+			});
+
+			return summary;
+		}, {} as Record<string, WorkbenchUpgradeSummary>);
+	};
+
 	const fetchWorkshopData = async () => {
 		try {
 			setLoading(true);
@@ -90,6 +127,7 @@ export function WorkshopProvider({ children }: { children: React.ReactNode }) {
 				error,
 				refreshWorkshop,
 				updateWorkbenchTier,
+				getWorkbenchUpgradeSummary,
 			}}
 		>
 			{children}
