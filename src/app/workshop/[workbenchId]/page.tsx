@@ -1,5 +1,5 @@
 import { fetchWorkbenchById } from "@/services/dataService";
-import { WorkbenchClient } from "../components/workbenchClient";
+import { WorkbenchClient } from "./components/workbenchClient";
 import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
