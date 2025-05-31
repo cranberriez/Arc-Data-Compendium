@@ -39,7 +39,7 @@ export const ItemCard = React.memo(
 		item,
 		variant = "default",
 		size = "md",
-		orientation = "horizontal",
+		orientation = "vertical",
 		count,
 		innerCount,
 		onClick,
@@ -90,6 +90,8 @@ export const ItemCard = React.memo(
 						count={count}
 						innerCount={innerCount}
 						onClick={handleClick}
+						showBorder={showBorder}
+						orientation={orientation}
 						className={className + " group/itemcard"}
 					/>
 				);

@@ -13,6 +13,8 @@ export interface CompactVariantProps {
 	count?: number;
 	innerCount?: boolean;
 	onClick?: () => void;
+	showBorder?: boolean;
+	orientation?: string;
 	className?: string;
 }
 
@@ -25,14 +27,23 @@ export const CompactVariant = React.memo(function CompactVariant({
 	count,
 	innerCount,
 	onClick,
+	showBorder,
+	orientation,
 	className,
 }: CompactVariantProps) {
 	// Size mappings for the container
 	const sizeClasses = {
-		sm: "min-w-[60px] h-[80px] max-h-[100px] p-1.5",
-		md: "min-w-[70px] h-[100px] max-h-[120px] p-2",
-		lg: "min-w-[80px] h-[120px] max-h-[140px] p-2.5",
-		xl: "min-w-[90px] h-[140px] max-h-[160px] p-3",
+		sm: "min-w-[60px] h-[80px] max-h-[100px]",
+		md: "min-w-[70px] h-[100px] max-h-[120px]",
+		lg: "min-w-[80px] h-[120px] max-h-[140px]",
+		xl: "min-w-[90px] h-[140px] max-h-[160px]",
+	};
+
+	const paddingClasses = {
+		sm: "p-1.5",
+		md: "p-2",
+		lg: "p-2.5",
+		xl: "p-3",
 	};
 
 	// Text size mappings
@@ -48,10 +59,15 @@ export const CompactVariant = React.memo(function CompactVariant({
 	return (
 		<div
 			className={cn(
-				"flex flex-col items-center justify-between relative",
-				"border-2 hover:border-primary/60 rounded aspect-square cursor-pointer",
-				getRarityColor(item.rarity, "border"),
-				sizeClasses[size],
+				`${
+					orientation === "horizontal"
+						? "flex flex-row h-fit items-center gap-2"
+						: "flex flex-col items-center justify-between aspect-square gap-1"
+				}`,
+				"relative border-2 hover:border-primary/60 rounded cursor-pointer",
+				showBorder ? getRarityColor(item.rarity, "border") : "border-transparent",
+				orientation === "horizontal" ? "" : sizeClasses[size],
+				paddingClasses[size],
 				className
 			)}
 			onClick={onClick}
@@ -73,7 +89,7 @@ export const CompactVariant = React.memo(function CompactVariant({
 				/>
 			</div>
 
-			{count !== undefined && (
+			{count !== undefined && orientation === "vertical" && (
 				<ItemBadges
 					item={item}
 					count={count}
@@ -82,9 +98,20 @@ export const CompactVariant = React.memo(function CompactVariant({
 				/>
 			)}
 
+			{orientation === "horizontal" && (
+				<span
+					className={cn(
+						"text-center font-mono leading-tight break-words overflow-hidden",
+						textClasses[size]
+					)}
+				>
+					{count}x
+				</span>
+			)}
+
 			<span
 				className={cn(
-					"text-center font-mono leading-tight break-words overflow-hidden mt-1",
+					"text-center font-mono leading-tight break-words overflow-hidden",
 					textClasses[size]
 				)}
 				title={item.name}
