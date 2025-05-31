@@ -75,7 +75,6 @@ export function RecipeItem({ recipe, onSelect, className }: RecipeItemProps) {
 											item={item}
 											count={req.count}
 											variant="compact"
-											orientation="horizontal"
 											size="sm"
 										/>
 									</div>
