@@ -15,6 +15,15 @@ export function getCookie(name: string): string | null {
 }
 
 /**
+ * Delete a cookie by name
+ */
+export function deleteCookie(name: string): void {
+	if (typeof document === "undefined") return;
+
+	document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+}
+
+/**
  * Set a cookie
  */
 export function setCookie(name: string, value: string, days = 365): void {
@@ -51,6 +60,25 @@ export function saveWorkbenchData(data: WorkbenchUserData): void {
 		setCookie(`workbench_${data.workbenchId}`, JSON.stringify(data));
 	} catch (error) {
 		console.error("Error saving workbench data:", error);
+	}
+}
+
+/**
+ * Clear all workbench cookies
+ */
+export function clearAllWorkbenchCookies(): void {
+	if (typeof document === "undefined") return;
+
+	// Get all cookies
+	const cookies = document.cookie.split(";");
+
+	// Delete cookies that start with 'workbench_'
+	for (let i = 0; i < cookies.length; i++) {
+		const cookie = cookies[i].trim();
+		if (cookie.startsWith("workbench_")) {
+			const cookieName = cookie.split("=")[0];
+			deleteCookie(cookieName);
+		}
 	}
 }
 
