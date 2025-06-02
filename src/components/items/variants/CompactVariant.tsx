@@ -49,9 +49,9 @@ export const CompactVariant = React.memo(function CompactVariant({
 	// Text size mappings
 	const textClasses = {
 		sm: "text-xs line-clamp-2",
-		md: "text-xs line-clamp-2",
-		lg: "text-sm line-clamp-2",
-		xl: "text-base line-clamp-2",
+		md: "text-sm line-clamp-2",
+		lg: "text-base line-clamp-2",
+		xl: "text-lg line-clamp-2",
 	};
 
 	if (!item) return null;
@@ -101,17 +101,19 @@ export const CompactVariant = React.memo(function CompactVariant({
 			{orientation === "horizontal" && (
 				<span
 					className={cn(
-						"text-center font-mono leading-tight break-words overflow-hidden",
-						textClasses[size]
+						"leading-tight text-nowrap w-[30px]",
+						textClasses[size],
+						"text-md"
 					)}
 				>
-					{count}x
+					{count}
 				</span>
 			)}
 
 			<span
 				className={cn(
-					"text-center font-mono leading-tight break-words overflow-hidden",
+					"font-mono leading-tight break-words overflow-hidden",
+					orientation === "horizontal" ? "text-left" : "text-center",
 					textClasses[size]
 				)}
 				title={item.name}

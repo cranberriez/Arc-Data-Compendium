@@ -80,6 +80,7 @@ export const ItemCard = React.memo(
 						onClick={handleClick}
 						className={className + " group/itemcard"}
 						showBorder={showBorder}
+						orientation={orientation}
 					/>
 				);
 			case "compact":
