@@ -2,16 +2,14 @@ import { Item } from "@/types";
 import { ItemSource } from "@/types/items/types";
 import {
 	Cog,
-	Gem,
 	Heart,
 	Info,
 	LucideIcon as LucideIconType,
 	MapPin,
 	Package,
 	Shield,
-	ShoppingCart,
-	Sparkles,
 	Sword,
+	Trophy,
 	Wrench,
 	Zap,
 } from "lucide-react";
@@ -152,8 +150,8 @@ export const getTypeIcon = (category: string): LucideIconType => {
 			return Sword;
 		case "gear":
 			return Shield;
-		case "valuable":
-			return Gem;
+		case "trinket":
+			return Trophy;
 		case "consumable":
 			return Heart;
 		case "recyclable":
