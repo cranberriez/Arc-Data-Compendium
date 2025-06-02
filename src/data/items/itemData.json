@@ -3750,7 +3750,7 @@
 	{
 		"id": "faded_photograph",
 		"name": "Faded Photograph",
-		"category": "valuable",
+		"category": "trinket",
 		"icon": "Camera",
 		"rarity": "common",
 		"description": "A photograph whose details have faded with time.",
@@ -3762,7 +3762,7 @@
 	{
 		"id": "portable_television",
 		"name": "Portable Television",
-		"category": "valuable",
+		"category": "trinket",
 		"icon": "Tv",
 		"rarity": "common",
 		"description": "A small, outdated portable TV.",
@@ -3784,7 +3784,7 @@
 	{
 		"id": "deflated_football",
 		"name": "Deflated Football",
-		"category": "valuable",
+		"category": "trinket",
 		"icon": "CircleDashed",
 		"rarity": "uncommon",
 		"description": "A football that has seen better days.",
@@ -3802,7 +3802,7 @@
 	{
 		"id": "empty_wine_bottle",
 		"name": "Empty Wine Bottle",
-		"category": "valuable",
+		"category": "trinket",
 		"icon": "Wine",
 		"rarity": "common",
 		"description": "An empty bottle that once held fine wine.",
@@ -3814,7 +3814,7 @@
 	{
 		"id": "rubber_ducky",
 		"name": "Rubber Ducky",
-		"category": "valuable",
+		"category": "trinket",
 		"icon": "Bird",
 		"rarity": "common",
 		"description": "NA classic yellow rubber ducky.",
@@ -3826,7 +3826,7 @@
 	{
 		"id": "cat_bed",
 		"name": "Cat Bed",
-		"category": "valuable",
+		"category": "trinket",
 		"icon": "PawPrint",
 		"rarity": "common",
 		"description": "A cozy bed for a beloved feline.",
@@ -3838,7 +3838,7 @@
 	{
 		"id": "coffee_pot",
 		"name": "Coffee Pot",
-		"category": "valuable",
+		"category": "trinket",
 		"icon": "Coffee",
 		"rarity": "common",
 		"description": "No provided description for this item yet.",
@@ -3850,7 +3850,7 @@
 	{
 		"id": "very_comfortable_pillow",
 		"name": "Very Comfortable Pillow",
-		"category": "valuable",
+		"category": "trinket",
 		"icon": "BedDouble",
 		"rarity": "common",
 		"description": "A pillow that's softer than most.",
@@ -3862,7 +3862,7 @@
 	{
 		"id": "pottery",
 		"name": "Pottery",
-		"category": "valuable",
+		"category": "trinket",
 		"icon": "CupSoda",
 		"rarity": "common",
 		"description": "A piece of hand-crafted pottery.",
@@ -3874,7 +3874,7 @@
 	{
 		"id": "film_reel",
 		"name": "Film Reel",
-		"category": "valuable",
+		"category": "trinket",
 		"icon": "Film",
 		"rarity": "common",
 		"description": "A reel of old film, possibly containing memories.",
@@ -3886,7 +3886,7 @@
 	{
 		"id": "air_freshener",
 		"name": "Air Freshener",
-		"category": "valuable",
+		"category": "trinket",
 		"icon": "Sprout",
 		"rarity": "common",
 		"description": "A scented air freshener, barely fragrant.",
@@ -3898,7 +3898,7 @@
 	{
 		"id": "poster_of_natural_wonder",
 		"name": "Poster of Natural Wonder",
-		"category": "valuable",
+		"category": "trinket",
 		"icon": "Image",
 		"rarity": "common",
 		"description": "A poster depicting a breathtaking natural scene.",
@@ -3910,7 +3910,7 @@
 	{
 		"id": "light_bulb",
 		"name": "Light Bulb",
-		"category": "valuable",
+		"category": "trinket",
 		"icon": "Lightbulb",
 		"rarity": "common",
 		"description": "A fragile glass bulb for lighting.",
@@ -3922,7 +3922,7 @@
 	{
 		"id": "statuette",
 		"name": "Statuette",
-		"category": "valuable",
+		"category": "trinket",
 		"icon": "Mountain",
 		"rarity": "common",
 		"description": "A small decorative statuette.",
@@ -3934,7 +3934,7 @@
 	{
 		"id": "silver_teaspoon_set",
 		"name": "Silver Teaspoon Set",
-		"category": "valuable",
+		"category": "trinket",
 		"icon": "UtensilsCrossed",
 		"rarity": "common",
 		"description": "A set of ornate silver teaspoons.",
@@ -3946,7 +3946,7 @@
 	{
 		"id": "music_album",
 		"name": "Music Album",
-		"category": "valuable",
+		"category": "trinket",
 		"icon": "Music",
 		"rarity": "common",
 		"description": "A classic music album, still in its sleeve.",
@@ -3958,7 +3958,7 @@
 	{
 		"id": "fine_wristwatch",
 		"name": "Fine Wristwatch",
-		"category": "valuable",
+		"category": "trinket",
 		"icon": "Watch",
 		"rarity": "common",
 		"description": "A wristwatch that has stopped ticking.",
@@ -3970,7 +3970,7 @@
 	{
 		"id": "vase",
 		"name": "Vase",
-		"category": "valuable",
+		"category": "trinket",
 		"icon": "Flower2",
 		"rarity": "common",
 		"description": "A decorative vase, possibly valuable.",
@@ -3982,7 +3982,7 @@
 	{
 		"id": "music_box",
 		"name": "Music Box",
-		"category": "valuable",
+		"category": "trinket",
 		"icon": "Music2",
 		"rarity": "common",
 		"description": "A music box that plays a haunting tune.",
@@ -3994,7 +3994,7 @@
 	{
 		"id": "red_coral_jewelry",
 		"name": "Red Coral Jewelry",
-		"category": "valuable",
+		"category": "trinket",
 		"icon": "Gem",
 		"rarity": "common",
 		"description": "A piece of jewelry made from red coral.",
@@ -4006,7 +4006,7 @@
 	{
 		"id": "playing_cards",
 		"name": "Playing Cards",
-		"category": "valuable",
+		"category": "trinket",
 		"icon": "Club",
 		"rarity": "common",
 		"description": "A deck of playing cards, some missing.",
@@ -4018,7 +4018,7 @@
 	{
 		"id": "snow_globe",
 		"name": "Snow Globe",
-		"category": "valuable",
+		"category": "trinket",
 		"icon": "Globe",
 		"rarity": "common",
 		"description": "A globe containing a snowy scene.",
@@ -4030,7 +4030,7 @@
 	{
 		"id": "lances_mixtape_5th_edition",
 		"name": "Lance\u2019s Mixtape (5th Edition)",
-		"category": "valuable",
+		"category": "trinket",
 		"icon": "CassetteTape",
 		"rarity": "epic",
 		"description": "A rare mixtape, highly sought after by collectors.",
@@ -4042,7 +4042,7 @@
 	{
 		"id": "blown_fuses",
 		"name": "Blown Fuses",
-		"category": "valuable",
+		"category": "trinket",
 		"icon": "TicketX",
 		"rarity": "common",
 		"description": "",
@@ -4054,7 +4054,7 @@
 	{
 		"id": "breathtaking_snow_globe",
 		"name": "Breathtaking Snow Globe",
-		"category": "valuable",
+		"category": "trinket",
 		"icon": "Snowflake",
 		"rarity": "common",
 		"description": "",
@@ -4066,7 +4066,7 @@
 	{
 		"id": "dartboard",
 		"name": "Dartboard",
-		"category": "valuable",
+		"category": "trinket",
 		"icon": "Target",
 		"rarity": "common",
 		"description": "",
@@ -4078,7 +4078,7 @@
 	{
 		"id": "painted_box",
 		"name": "Painted Box",
-		"category": "valuable",
+		"category": "trinket",
 		"icon": "Brush",
 		"rarity": "common",
 		"description": "",
@@ -4090,7 +4090,7 @@
 	{
 		"id": "red_coral_jewlery",
 		"name": "Red Coral Jewlery",
-		"category": "valuable",
+		"category": "trinket",
 		"icon": "Gem",
 		"rarity": "common",
 		"description": "",
@@ -4102,7 +4102,7 @@
 	{
 		"id": "rosary",
 		"name": "Rosary",
-		"category": "valuable",
+		"category": "trinket",
 		"icon": "Cross",
 		"rarity": "common",
 		"description": "",
@@ -4121,7 +4121,7 @@
 		"value": 0,
 		"weight": 0,
 		"maxStack": 1,
-		"category": "valuable",
+		"category": "trinket",
 		"recipeId": null,
 		"quickUse": {
 			"category": "healing",
@@ -4140,7 +4140,7 @@
 	{
 		"id": "expired_pasta",
 		"name": "Expired Pasta",
-		"category": "valuable",
+		"category": "trinket",
 		"icon": "CookingPot",
 		"rarity": "common",
 		"description": "Can (reluctantly) be consumed to restore small amounts of health. ",

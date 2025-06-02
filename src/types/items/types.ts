@@ -6,7 +6,7 @@ export type ItemSourceType = "drop" | "buy" | "quest" | "found" | "event" | "cra
 
 export type ItemCategory =
 	| "recyclable"
-	| "valuable"
+	| "trinket"
 	| "quick_use"
 	| "ammo"
 	| "weapon"
