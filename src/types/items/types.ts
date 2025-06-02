@@ -12,7 +12,8 @@ export type ItemCategory =
 	| "weapon"
 	| "gear"
 	| "misc"
-	| "topside_material";
+	| "topside_material"
+	| "refined_material";
 
 export type ShieldType = "light" | "medium" | "heavy";
 

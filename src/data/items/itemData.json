@@ -1172,7 +1172,7 @@
 	{
 		"id": "antiseptic",
 		"name": "Antiseptic",
-		"category": "recyclable",
+		"category": "refined_material",
 		"icon": "FlaskConical",
 		"rarity": "rare",
 		"description": "A bottle of antiseptic liquid for cleaning wounds.",
@@ -1190,7 +1190,7 @@
 	{
 		"id": "arc_alloy",
 		"name": "ARC Alloy",
-		"category": "recyclable",
+		"category": "topside_material",
 		"icon": "Layers",
 		"rarity": "uncommon",
 		"description": "No provided description for this item yet.",
@@ -1202,7 +1202,7 @@
 	{
 		"id": "arc_circuitry",
 		"name": "ARC Circuitry",
-		"category": "recyclable",
+		"category": "topside_material",
 		"icon": "Zap",
 		"rarity": "rare",
 		"description": "Advanced circuitry used in ARC technology.",
@@ -1256,7 +1256,7 @@
 	{
 		"id": "arc_motion_core",
 		"name": "ARC Motion Core",
-		"category": "recyclable",
+		"category": "topside_material",
 		"icon": "Cpu",
 		"rarity": "rare",
 		"description": "A powerful core used in ARC machinery.",
@@ -1340,7 +1340,7 @@
 	{
 		"id": "battery",
 		"name": "Battery",
-		"category": "recyclable",
+		"category": "topside_material",
 		"icon": "BatteryFull",
 		"rarity": "uncommon",
 		"description": "No provided description for this item yet.",
@@ -1554,7 +1554,7 @@
 	{
 		"id": "canister",
 		"name": "Canister",
-		"category": "recyclable",
+		"category": "topside_material",
 		"icon": "Droplet",
 		"rarity": "uncommon",
 		"description": "A metal container used for storing pressurized gas or fuel, essential for certain advanced weapons and devices.",
@@ -1806,7 +1806,7 @@
 	{
 		"id": "duct_tape",
 		"name": "Duct Tape",
-		"category": "recyclable",
+		"category": "topside_material",
 		"icon": "Scissors",
 		"rarity": "uncommon",
 		"description": "A roll of strong, multipurpose adhesive tape. Useful for all kinds of repairs.",
@@ -1824,7 +1824,7 @@
 	{
 		"id": "electrical_components",
 		"name": "Electrical Components",
-		"category": "recyclable",
+		"category": "refined_material",
 		"icon": "Plug",
 		"rarity": "rare",
 		"description": "A collection of wires, chips, and connectors for electrical repairs.",
@@ -1880,7 +1880,7 @@
 	{
 		"id": "explosive_mixture",
 		"name": "Explosive Mixture",
-		"category": "recyclable",
+		"category": "refined_material",
 		"icon": "Flame",
 		"rarity": "rare",
 		"description": "A volatile crafting component.",
@@ -2066,7 +2066,7 @@
 	{
 		"id": "heavy_gun_parts",
 		"name": "Heavy Gun Parts",
-		"category": "recyclable",
+		"category": "topside_material",
 		"icon": "Target",
 		"rarity": "rare",
 		"description": "Specialized components salvaged from heavy firearms, used in advanced weapon crafting.",
@@ -2383,7 +2383,7 @@
 	{
 		"id": "light_gun_parts",
 		"name": "Light Gun Parts",
-		"category": "recyclable",
+		"category": "topside_material",
 		"icon": "Target",
 		"rarity": "rare",
 		"description": "No provided description for this item yet.",
@@ -2401,7 +2401,7 @@
 	{
 		"id": "magnet",
 		"name": "Magnet",
-		"category": "recyclable",
+		"category": "topside_material",
 		"icon": "MagnetIcon",
 		"rarity": "uncommon",
 		"description": "No provided description for this item yet.",
@@ -2419,7 +2419,7 @@
 	{
 		"id": "mechanical_components",
 		"name": "Mechanical Components",
-		"category": "recyclable",
+		"category": "refined_material",
 		"icon": "Cog",
 		"rarity": "rare",
 		"description": "A set of quick_uses, springs, and metal parts used in weapon and device crafting.",
@@ -2441,7 +2441,7 @@
 	{
 		"id": "medium_gun_parts",
 		"name": "Medium Gun Parts",
-		"category": "recyclable",
+		"category": "topside_material",
 		"icon": "Target",
 		"rarity": "rare",
 		"description": "Components salvaged from medium firearms, used in weapon crafting.",
@@ -2529,7 +2529,7 @@
 	{
 		"id": "moss",
 		"name": "Moss",
-		"category": "recyclable",
+		"category": "topside_material",
 		"icon": "Flower",
 		"rarity": "rare",
 		"description": "No provided description for this item yet.",
@@ -2569,7 +2569,7 @@
 	{
 		"id": "oil",
 		"name": "Oil",
-		"category": "recyclable",
+		"category": "topside_material",
 		"icon": "Droplet",
 		"rarity": "uncommon",
 		"description": "A small container of multipurpose oil, useful for maintenance and crafting.",
@@ -2683,7 +2683,7 @@
 	{
 		"id": "processor",
 		"name": "Processor",
-		"category": "recyclable",
+		"category": "topside_material",
 		"icon": "Zap",
 		"rarity": "rare",
 		"description": "No provided description for this item yet.",
@@ -2815,7 +2815,7 @@
 	{
 		"id": "rope",
 		"name": "Rope",
-		"category": "recyclable",
+		"category": "topside_material",
 		"icon": "Scissors",
 		"rarity": "rare",
 		"description": "No provided description for this item yet.",
@@ -2941,7 +2941,7 @@
 	{
 		"id": "sensors",
 		"name": "Sensors",
-		"category": "recyclable",
+		"category": "topside_material",
 		"icon": "Radar",
 		"rarity": "rare",
 		"description": "A sensitive electronic sensor used for environmental monitoring.",
@@ -2981,7 +2981,7 @@
 	{
 		"id": "shotgun_parts",
 		"name": "Shotgun Parts",
-		"category": "recyclable",
+		"category": "topside_material",
 		"icon": "Target",
 		"rarity": "rare",
 		"description": "No provided description for this item yet.",
@@ -2999,7 +2999,7 @@
 	{
 		"id": "simple_gun_parts",
 		"name": "Simple Gun Parts",
-		"category": "recyclable",
+		"category": "topside_material",
 		"icon": "Target",
 		"rarity": "uncommon",
 		"description": "Basic components salvaged from common firearms, used in weapon crafting.",
@@ -3036,7 +3036,7 @@
 	{
 		"id": "speaker_component",
 		"name": "Speaker Component",
-		"category": "recyclable",
+		"category": "topside_material",
 		"icon": "Music",
 		"rarity": "rare",
 		"description": "No provided description for this item yet.",
@@ -3080,7 +3080,7 @@
 	{
 		"id": "steel_spring",
 		"name": "Steel Spring",
-		"category": "recyclable",
+		"category": "topside_material",
 		"icon": "RotateCcw",
 		"rarity": "uncommon",
 		"description": "A tightly wound coil of metal, useful for crafting mechanisms.",
@@ -3098,7 +3098,7 @@
 	{
 		"id": "synthesized_fuel",
 		"name": "Synthesized Fuel",
-		"category": "quick_use",
+		"category": "topside_material",
 		"icon": "FlaskRound",
 		"rarity": "rare",
 		"description": "A canister of synthetic fuel blend.",
@@ -3134,7 +3134,7 @@
 	{
 		"id": "syringe",
 		"name": "Syringe",
-		"category": "recyclable",
+		"category": "topside_material",
 		"icon": "Syringe",
 		"rarity": "rare",
 		"description": "A sterile syringe for medical use.",
@@ -3226,7 +3226,7 @@
 	{
 		"id": "torch_ginger",
 		"name": "Torch Ginger",
-		"category": "recyclable",
+		"category": "topside_material",
 		"icon": "Flower2",
 		"rarity": "uncommon",
 		"description": "No provided description for this item yet.",
@@ -3262,7 +3262,7 @@
 	{
 		"id": "voltage_converter",
 		"name": "Voltage Converter",
-		"category": "recyclable",
+		"category": "topside_material",
 		"icon": "Plug",
 		"rarity": "rare",
 		"description": "A device that adjusts electrical voltage for various crafting purposes.",
@@ -3414,7 +3414,7 @@
 	{
 		"id": "wires",
 		"name": "Wires",
-		"category": "recyclable",
+		"category": "topside_material",
 		"icon": "Cable",
 		"rarity": "uncommon",
 		"description": "A bundle of conductive wires for crafting.",

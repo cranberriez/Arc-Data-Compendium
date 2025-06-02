@@ -1,6 +1,7 @@
 import { Item } from "@/types";
 import { ItemSource } from "@/types/items/types";
 import {
+	Anvil,
 	Cog,
 	Heart,
 	Info,
@@ -156,12 +157,14 @@ export const getTypeIcon = (category: string): LucideIconType => {
 			return Heart;
 		case "recyclable":
 			return Wrench;
-		case "crafting_material":
+		case "base_material":
 			return Cog;
 		case "misc":
 			return Package;
 		case "topside_material":
 			return MapPin;
+		case "refined_material":
+			return Anvil;
 		default:
 			return Info;
 	}
