@@ -13,6 +13,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { useSidebar } from "@/components/ui/sidebar";
+import { useEffect } from "react";
 
 export type NavItem = {
 	title: string;
@@ -39,19 +40,25 @@ function NavItem({ item, pathname }: { item: NavItem; pathname: string | null })
 		return null;
 	}
 
+	useEffect(() => {
+		if (isCollapsed) {
+			console.log("is collapsed");
+		}
+	}, [isCollapsed]);
+
 	if (hasItems) {
 		return (
 			<Collapsible
 				defaultOpen
-				className="group/collapsible"
+				className="group/collapsible z-10"
 			>
 				<SidebarMenuItem>
 					<CollapsibleTrigger
 						className={cn(
-							"flex w-full items-center gap-2 rounded-md p-2 text-sm transition-colors hover:bg-accent hover:text-accent-foreground",
+							"flex w-full h-full items-center gap-2 rounded-md p-2 text-sm transition-colors hover:bg-accent hover:text-accent-foreground",
 							isDisabled ? disabledButton : "",
 							"justify-between [&[data-state=open]>svg]:rotate-180",
-							isCollapsed && "justify-center"
+							isCollapsed && "justify-start cursor-pointer"
 						)}
 					>
 						<div className="flex items-center gap-2">

@@ -15,11 +15,11 @@ import {
 	Zap,
 	BadgeCent,
 	LayoutDashboard,
-	Vault,
 	Scale,
 	Home,
 	Shirt,
 	Heart,
+	Vault,
 } from "lucide-react";
 
 import { NavMain } from "@/components/nav-main";
@@ -36,6 +36,7 @@ import {
 } from "@/components/ui/sidebar";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { cn } from "@/lib/utils";
 
 export interface NavItem {
 	title: string;
@@ -199,31 +200,15 @@ const data: NavData = {
 			},
 		],
 	},
-
-	// Tools: {
-	// 	category: "Tools",
-	// 	items: [
-	// 		{
-	// 			title: "Search",
-	// 			url: "/search",
-	// 			icon: Search,
-	// 		},
-	// 		{
-	// 			title: "Unknown Data",
-	// 			url: "/unknown",
-	// 			icon: FileQuestion,
-	// 		},
-	// 	],
-	// },
 };
 
 const settingsPages = {
-	Legal: {
-		category: "Legal",
+	About: {
+		category: "About",
 		items: [
 			{
-				title: "Legal Information",
-				url: "/legal",
+				title: "About",
+				url: "/about",
 				icon: Scale,
 				enabled: true,
 			},
@@ -240,32 +225,76 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 		>
 			<SidebarHeader>
 				<SidebarMenu>
-					<SidebarMenuItem>
+					<SidebarMenuItem className="p-0">
 						<SidebarMenuButton
 							asChild
-							className="h-12 [&>svg]:size-8"
+							className={cn(
+								"[&>svg]:size-8 group/home p-0",
+								usePathname() === "/" ? "" : ""
+							)}
 							size="lg"
 							isActive={usePathname() === "/"}
 						>
 							<Link
 								href="/"
-								className="relative"
+								className="relative group h-fit transition-all"
 							>
-								<Vault
-									className={`text-blue-600 group-hover:text-blue-500 dark:text-blue-500 dark:group-hover:text-blue-400 transition-colors ${
-										usePathname() === "/" ? "dark:text-blue-400" : ""
-									}`}
-								/>
+								<div className="flex items-center justify-center gap-2 min-w-8 min-h-8 aspect-square transition-all duration-500 rounded-lg bg-gradient-to-r from-teal-400 to-yellow-200 bg-[length:200%_100%] bg-[position:0_0] group-hover/home:bg-[position:100%_100%]">
+									<svg
+										xmlns="http://www.w3.org/2000/svg"
+										width="24"
+										height="24"
+										viewBox="0 0 24 24"
+										fill="none"
+										stroke="currentColor"
+										strokeWidth="1.5"
+										strokeLinecap="round"
+										strokeLinejoin="round"
+										className="text-sidebar scale-150 transition-transform duration-500 group-hover/home:rotate-90"
+										aria-hidden="true"
+									>
+										<circle
+											cx="7.5"
+											cy="7.5"
+											r=".5"
+											fill="currentColor"
+										></circle>
+										<path d="m7.9 7.9 2.7 2.7"></path>
+										<circle
+											cx="16.5"
+											cy="7.5"
+											r=".5"
+											fill="currentColor"
+										></circle>
+										<path d="m13.4 10.6 2.7-2.7"></path>
+										<circle
+											cx="7.5"
+											cy="16.5"
+											r=".5"
+											fill="currentColor"
+										></circle>
+										<path d="m7.9 16.1 2.7-2.7"></path>
+										<circle
+											cx="16.5"
+											cy="16.5"
+											r=".5"
+											fill="currentColor"
+										></circle>
+										<path d="m13.4 13.4 2.7 2.7"></path>
+										<circle
+											cx="12"
+											cy="12"
+											r="2"
+										></circle>
+									</svg>
+								</div>
 								<span
-									className={`text-xl font-semibold text-blue-600 group-hover:text-blue-500 dark:text-blue-500 dark:group-hover:text-blue-400 transition-colors ${
-										usePathname() === "/" ? "dark:text-blue-400 font-bold" : ""
+									className={`text-xl tracking-wider transition-colors whitespace-nowrap ${
+										usePathname() === "/" ? "" : ""
 									}`}
 								>
-									ARC Vault
+									ARC VAULT
 								</span>
-								{usePathname() === "/" && (
-									<span className="absolute -left-1 top-1/2 h-6 w-1 -translate-y-1/2 rounded-full bg-blue-500" />
-								)}
 							</Link>
 						</SidebarMenuButton>
 					</SidebarMenuItem>

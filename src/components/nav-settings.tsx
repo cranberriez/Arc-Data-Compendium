@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Moon, Sun, Scale } from "lucide-react";
+import { Moon, Sun, InfoIcon } from "lucide-react";
 import { useTheme } from "next-themes";
 import Link from "next/link";
 
@@ -57,9 +57,9 @@ export function NavSettings({ pages }: { pages: any }) {
 						className="w-full flex items-center justify-start gap-2 text-left cursor-pointer"
 						asChild
 					>
-						<Link href={pages.Legal.items[0].url}>
-							<Scale />
-							<span>Legal</span>
+						<Link href={pages.About.items[0].url}>
+							<InfoIcon />
+							<span>About</span>
 						</Link>
 					</SidebarMenuButton>
 				</SidebarMenuItem>
