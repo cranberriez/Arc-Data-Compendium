@@ -172,7 +172,7 @@ const data: NavData = {
 				title: "Quests",
 				url: "/quests",
 				icon: BookMarked,
-				enabled: false,
+				enabled: true,
 			},
 			{
 				title: "Store",

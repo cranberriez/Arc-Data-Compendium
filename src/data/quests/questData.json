@@ -1,0 +1,56 @@
+[
+	{
+		"id": "quest-001",
+		"trader": "Shani",
+		"name": "Wasp Hunt",
+		"prereq": [],
+		"next": ["quest-002"],
+		"requirements": [
+			{
+				"description": "Destroy a Wasp",
+				"count": 1,
+				"links": [{ "type": "enemy", "id": "wasp" }]
+			},
+			{
+				"description": "Get a Wasp Driver for Shani",
+				"count": 1,
+				"links": [{ "type": "item", "id": "wasp-driver" }]
+			},
+			{
+				"description": "Loot 3 containers in any Raider camp",
+				"count": 3
+			},
+			{
+				"description": "Destroy a Turret using Light Impact Grenades",
+				"links": [
+					{ "type": "enemy", "id": "turret" },
+					{ "type": "item", "id": "light-impact-grenade" }
+				]
+			}
+		],
+		"rewards": [
+			{
+				"description": "XP",
+				"count": 9000
+			},
+			{
+				"description": "Wasp Driver",
+				"count": 1,
+				"links": [{ "type": "item", "id": "wasp-driver" }]
+			},
+			{
+				"description": "Mechanical Components",
+				"count": 2,
+				"links": [{ "type": "item", "id": "mechanical-components" }]
+			},
+			{
+				"description": "Electrical Components",
+				"count": 2,
+				"links": [{ "type": "item", "id": "electrical-components" }]
+			}
+		],
+		"dialog": "Thank you for helping with the wasps.",
+		"location": "any",
+		"link": "https://arcraiders.fandom.com/wiki/Wasp_Hunt"
+	}
+]
