@@ -67,18 +67,6 @@ export const ItemDetails = React.memo(function ItemDetails({
 
 	if (!item) return null;
 
-	/**
-	 * Badge Pseudocode
-	 *
-	 * Array created
-	 * array elements are added based on the following tags, if it equates to true, the tag is added
-	 *  - recyclable (does the item recycle into something)
-	 *  - craftable (does the item have a recipe)
-	 *  - used in upgrade (is the item used to upgrade a workbench)
-	 *  - used in quest (is the item used in a quest)
-	 *  -
-	 */
-
 	const badges = getDescriptorBadges(item);
 
 	return (
@@ -112,7 +100,7 @@ export const ItemDetails = React.memo(function ItemDetails({
 							key={badge.key}
 							label={badge.label}
 							icon={badge.icon}
-							color={badge.color}
+							colorClass={badge.colorClass}
 							size={size}
 						/>
 					))}
