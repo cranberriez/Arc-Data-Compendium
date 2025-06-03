@@ -15,13 +15,14 @@ import { cn } from "@/lib/utils";
 const rarityOptions: Rarity[] = ["common", "uncommon", "rare", "epic", "legendary"];
 const categoryOptions: ItemCategory[] = [
 	"recyclable",
-	"valuable",
+	"trinket",
 	"quick_use",
 	"ammo",
 	"weapon",
 	"gear",
 	"misc",
 	"topside_material",
+	"refined_material",
 ];
 const sortFieldOptions: { value: SortField; label: string }[] = [
 	{ value: "name", label: "Name" },
