@@ -15,6 +15,26 @@ export type DescriptorBadgeData = {
 export function getDescriptorBadges(item: Item): DescriptorBadgeData[] {
 	const badges: DescriptorBadgeData[] = [];
 
+	// Badge for quest use
+	if (item.uses && item.uses.some((use) => use.type === "quest")) {
+		badges.push({
+			key: "use-quest",
+			label: "Quest Item",
+			icon: Scroll,
+			colorClass: "text-purple-800 dark:text-purple-200",
+		});
+	}
+
+	// Badge for workbench use
+	if (item.uses && item.uses.some((use) => use.type === "workbench")) {
+		badges.push({
+			key: "use-workbench",
+			label: "Workbench Upgrade Item",
+			icon: Hammer,
+			colorClass: "text-lime-800 dark:text-lime-200",
+		});
+	}
+
 	if (item.recycling && item.recycling.length > 0) {
 		badges.push({
 			key: "recyclable",
@@ -23,6 +43,7 @@ export function getDescriptorBadges(item: Item): DescriptorBadgeData[] {
 			colorClass: "text-green-800 dark:text-green-200",
 		});
 	}
+
 	if (item.recipeId) {
 		badges.push({
 			key: "craftable",
@@ -51,25 +72,6 @@ export function getDescriptorBadges(item: Item): DescriptorBadgeData[] {
 				colorClass: "text-amber-800 dark:text-amber-200",
 			});
 		}
-	}
-
-	// Badge for workbench use
-	if (item.uses && item.uses.some((use) => use.type === "workbench")) {
-		badges.push({
-			key: "use-workbench",
-			label: "Workbench Upgrade Item",
-			icon: Hammer,
-			colorClass: "text-lime-800 dark:text-lime-200",
-		});
-	}
-	// Badge for quest use
-	if (item.uses && item.uses.some((use) => use.type === "quest")) {
-		badges.push({
-			key: "use-quest",
-			label: "Quest Item",
-			icon: Scroll,
-			colorClass: "text-purple-800 dark:text-purple-200",
-		});
 	}
 
 	return badges;
