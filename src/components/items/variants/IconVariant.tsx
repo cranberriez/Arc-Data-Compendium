@@ -83,11 +83,12 @@ export const IconVariant = React.memo(function IconVariant({
 			)}
 		</div>
 	) : (
+		// Horizontal Variant
 		<div
 			className={cn(
 				"flex items-center justify-start gap-2",
 				"border hover:border-primary/40 hover:bg-primary/10 rounded",
-				"cursor-pointer relative border-2 py-2 transition-colors",
+				"cursor-pointer relative border-2 p-2 transition-colors",
 				showBorder ? `${getRarityColor(item.rarity, "border")}` : `border-transparent`,
 				iconWideSizeMap[size],
 				className
