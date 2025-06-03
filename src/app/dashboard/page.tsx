@@ -18,7 +18,7 @@ export default async function DashboardPage() {
 		totalItems: items.length,
 		weapons: items.filter((item) => item.category === "weapon").length,
 		equipment: items.filter((item) => ["gear", "ammunition"].includes(item.category)).length,
-		valuables: items.filter((item) => item.category === "valuable").length,
+		trinkets: items.filter((item) => item.category === "trinket").length,
 	};
 
 	// Generate recent items on the server
@@ -69,8 +69,8 @@ export default async function DashboardPage() {
 					color="text-green-500"
 				/>
 				<StatCard
-					title="Valuables"
-					value={stats.valuables}
+					title="Trinkets"
+					value={stats.trinkets}
 					icon={Zap}
 					color="text-yellow-500"
 				/>
