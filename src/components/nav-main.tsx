@@ -40,12 +40,6 @@ function NavItem({ item, pathname }: { item: NavItem; pathname: string | null })
 		return null;
 	}
 
-	useEffect(() => {
-		if (isCollapsed) {
-			console.log("is collapsed");
-		}
-	}, [isCollapsed]);
-
 	if (hasItems) {
 		return (
 			<Collapsible
