@@ -239,7 +239,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 								href="/"
 								className="relative group h-fit transition-all"
 							>
-								<div className="flex items-center justify-center gap-2 min-w-8 min-h-8 aspect-square transition-all duration-500 rounded-lg bg-gradient-to-r from-teal-400 to-yellow-200 bg-[length:200%_100%] bg-[position:0_0] group-hover/home:bg-[position:100%_100%]">
+								<div className="flex items-center justify-center gap-2 min-w-8 min-h-8 aspect-square transition-all duration-500 rounded-lg bg-gradient-to-r from-blue-400 to-purple-400 dark:from-teal-400 dark:to-yellow-200 bg-[length:200%_100%] bg-[position:0_0] group-hover/home:bg-[position:100%_100%]">
 									<svg
 										xmlns="http://www.w3.org/2000/svg"
 										width="24"
