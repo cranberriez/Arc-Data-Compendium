@@ -6,6 +6,8 @@ import { Item } from "@/types";
 import { useDialog } from "@/contexts/dialogContext";
 import { Button } from "@/components/ui/button";
 import { ItemHeader, RecyclingSection, SourcesSection, QuickUseSection, GearSection } from ".";
+import DevTools from "./diagDevTools";
+import DiagDescription from "./diagDescription";
 
 type ItemDialogProps = {
 	data: Item;
@@ -59,13 +61,7 @@ export function ItemDialog({ data, isOpen, closeDialog, backDialog }: ItemDialog
 				{/* Dialog Header */}
 				<ItemHeader item={item} />
 
-				{/* Screen Reader Stuff */}
-				<DialogDescription className="sr-only">
-					Details for {item.name}, {item.rarity} {item.category}
-					{item.recipeId ? ", Recipe" : ""}
-				</DialogDescription>
-
-				<DialogDescription>{item.description}</DialogDescription>
+				<DiagDescription item={item} />
 
 				{sourcesPresent || recyclingPresent || isQuickUse || isGear ? (
 					<hr className="my-2 border-t border-t-secondary-foreground/20 dark:border-t-secondary-foreground/10" />
@@ -82,6 +78,12 @@ export function ItemDialog({ data, isOpen, closeDialog, backDialog }: ItemDialog
 
 				{/* Sources Section (with two columns) */}
 				{sourcesPresent && <SourcesSection item={item} />}
+
+				{/* TODO: Recipe Section */}
+				{/* TODO: Uses Section quests/workshop */}
+
+				{/* Dev Tools */}
+				<DevTools item={item} />
 			</DialogContent>
 		</Dialog>
 	);

@@ -3009,7 +3009,7 @@
 		"value": 330,
 		"recycling": [
 			{
-				"id": "metals_parts",
+				"id": "metal_parts",
 				"count": 3
 			}
 		]
