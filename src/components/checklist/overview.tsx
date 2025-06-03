@@ -24,7 +24,7 @@ const WorkshopItemChecklist = () => {
 		<div>
 			<h2>Item Checklist</h2>
 			<div className="flex flex-col items-start relative">
-				{true ? (
+				{wbLoading ? (
 					<>
 						{[...Array(8)].map((_, i) => (
 							<Skeleton
