@@ -78,7 +78,7 @@
 		"name": "Basic Workbench",
 		"type": "workbench",
 		"description": "A basic workbench with general purpose crafting",
-		"icon": "Egg",
+		"icon": "Anvil",
 		"baseTier": 0,
 		"tiers": [
 			{
