@@ -5,6 +5,7 @@ import { Item } from "@/types";
 import { cn } from "@/lib/utils";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { Weight, BadgeCent, Book } from "lucide-react";
+import { DescriptorBadge, getDescriptorBadges } from "./descBadges";
 
 export interface ItemDetailsProps {
 	/** The item to display */
@@ -66,9 +67,23 @@ export const ItemDetails = React.memo(function ItemDetails({
 
 	if (!item) return null;
 
+	/**
+	 * Badge Pseudocode
+	 *
+	 * Array created
+	 * array elements are added based on the following tags, if it equates to true, the tag is added
+	 *  - recyclable (does the item recycle into something)
+	 *  - craftable (does the item have a recipe)
+	 *  - used in upgrade (is the item used to upgrade a workbench)
+	 *  - used in quest (is the item used in a quest)
+	 *  -
+	 */
+
+	const badges = getDescriptorBadges(item);
+
 	return (
 		<div className={cn("flex flex-row items-center gap-3", "text-muted-foreground", className)}>
-			{showWeight && (
+			{/* {showWeight && (
 				<div className={cn("flex items-center gap-1", textSizeClass)}>
 					<Weight
 						size={iconSize}
@@ -88,36 +103,20 @@ export const ItemDetails = React.memo(function ItemDetails({
 					/>
 					<span className="font-mono tabular-nums">{item.value}</span>
 				</div>
-			)}
+			)} */}
 
-			{showCraftable && item.recipeId && (
-				<div className="ml-auto text-amber-600 dark:text-amber-300">
-					<TooltipProvider>
-						<Tooltip delayDuration={300}>
-							<TooltipTrigger asChild>
-								<div
-									className="flex items-center justify-center"
-									aria-label="Craftable item"
-								>
-									<Book
-										className={cn(
-											"w-3 h-3",
-											size === "lg" && "w-4 h-4",
-											size === "xl" && "w-5 h-5"
-										)}
-										strokeWidth={4}
-									/>
-								</div>
-							</TooltipTrigger>
-							<TooltipContent
-								side="right"
-								align="center"
-							>
-								<span>Craftable</span>
-							</TooltipContent>
-						</Tooltip>
-					</TooltipProvider>
-				</div>
+			{badges && (
+				<TooltipProvider>
+					{badges.map((badge) => (
+						<DescriptorBadge
+							key={badge.key}
+							label={badge.label}
+							icon={badge.icon}
+							color={badge.color}
+							size={size}
+						/>
+					))}
+				</TooltipProvider>
 			)}
 		</div>
 	);

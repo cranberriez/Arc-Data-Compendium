@@ -78,7 +78,7 @@ export const ItemCard = React.memo(
 						size={size}
 						count={count}
 						onClick={handleClick}
-						className={className}
+						className={className + " group/itemcard"}
 						showBorder={showBorder}
 					/>
 				);
@@ -90,7 +90,7 @@ export const ItemCard = React.memo(
 						count={count}
 						innerCount={innerCount}
 						onClick={handleClick}
-						className={className}
+						className={className + " group/itemcard"}
 					/>
 				);
 			case "detailed":
@@ -101,7 +101,7 @@ export const ItemCard = React.memo(
 						orientation={orientation}
 						count={count}
 						onClick={handleClick}
-						className={className}
+						className={className + " group/itemcard"}
 					/>
 				);
 			default:
@@ -111,7 +111,7 @@ export const ItemCard = React.memo(
 						size={size}
 						count={count}
 						onClick={handleClick}
-						className={className}
+						className={className + " group/itemcard"}
 					/>
 				);
 		}
