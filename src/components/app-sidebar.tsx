@@ -289,7 +289,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 									</svg>
 								</div>
 								<span
-									className={`text-xl tracking-wider transition-colors whitespace-nowrap ${
+									className={`text-xl tracking-wider transition-colors whitespace-nowrap mb-1 ${
 										usePathname() === "/" ? "" : ""
 									}`}
 								>
