@@ -29,15 +29,7 @@ const WorkshopItemChecklist = () => {
 				{wbLoading ? "Loading..." : "Click an Item to view details about source and uses."}
 			</p>
 			<div>
-				<div
-					// Use CSS Multi-column Layout
-					// className was "grid gap-x-4 gap-y-2"
-					style={{
-						columnWidth: "20rem", // Assuming w-xs is 20rem (320px)
-						columnGap: "1rem", // Was gap-x-4
-						height: "100%", // Fill the scroll container height
-					}}
-				>
+				<div className="grid grid-cols-[repeat(auto-fill,minmax(20rem,1fr))] gap-1rem justify-items-center">
 					{false
 						? Array.from({ length: 16 }).map((_, idx) => (
 								<ItemChecklistSkeleton key={idx} />
@@ -86,8 +78,8 @@ const ChecklistItem = ({
 	return (
 		<div
 			key={item.id}
-			className="flex items-center justify-between gap-2 w-xs mb-2" // Added mb-2 for vertical gap
-			style={{ breakInside: "avoid-column" }} // Prevent item from breaking across columns
+			className="flex items-center justify-between gap-2 w-xs mb-2"
+			style={{ breakInside: "avoid-column" }}
 		>
 			<div className="flex items-center gap-2">
 				<span className="text-md font-semibold w-6 text-right">{itemSummary.count}</span>

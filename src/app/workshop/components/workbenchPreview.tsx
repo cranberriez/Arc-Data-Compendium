@@ -8,10 +8,11 @@ import ItemCard from "@/components/items/ItemCard";
 import { useItems } from "@/contexts/itemContext";
 import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
 
 export const WorkbenchList = ({ workbenches }: { workbenches: Workbench[] }) => {
 	return (
-		<div className="grid gap-4 [grid-template-columns:repeat(auto-fit,minmax(448px,1fr))]">
+		<div className="grid gap-4 [grid-template-columns:repeat(auto-fit,minmax(min(100%,448px),1fr))]">
 			{workbenches.map((workbench) => (
 				<WorkbenchPreview
 					key={workbench.id}
@@ -33,7 +34,7 @@ export const WorkbenchPreview = ({ workbench }: { workbench: Workbench }) => {
 	return (
 		<div
 			key={workbench.id}
-			className="flex border-2 rounded p-2 min-w-md"
+			className="flex flex-col sm:flex-row gap-4 sm:gap-2 border-2 rounded p-2 min-w-0 w-full"
 		>
 			<div className="flex flex-col gap-2 flex-1">
 				<div className="flex flex-col flex-1 gap-2">
@@ -47,12 +48,12 @@ export const WorkbenchPreview = ({ workbench }: { workbench: Workbench }) => {
 				</div>
 				<Link
 					href={`/workshop/${workbench.id}`}
-					className="text-blue-500 hover:underline"
+					className="text-blue-500 hover:underline hidden sm:block"
 				>
 					Go To Workbench
 				</Link>
 			</div>
-			<div className="flex w-[220px] flex-col gap-2 mx-2">
+			<div className="flex w-full sm:max-w-[220px] max-w-full flex-col gap-2">
 				<WorkbenchTier
 					currentTier={curWbTier}
 					maxTier={workbench.tiers.length}
@@ -68,7 +69,7 @@ export const WorkbenchPreview = ({ workbench }: { workbench: Workbench }) => {
 								key={req.itemId}
 								className="flex items-center gap-2 w-full"
 							>
-								<span className="text-sm w-4">{req.count}</span>
+								<span className="text-sm w-4 text-right">{req.count}</span>
 								{itemsLoading ? (
 									<>
 										<Skeleton className="min-w-10 h-10" />
@@ -89,6 +90,15 @@ export const WorkbenchPreview = ({ workbench }: { workbench: Workbench }) => {
 					</div>
 				)}
 			</div>
+			<Link href={`/workshop/${workbench.id}`}>
+				<Button
+					variant="outline"
+					size="sm"
+					className="block sm:hidden cursor-pointer"
+				>
+					Go To Workbench
+				</Button>
+			</Link>
 		</div>
 	);
 };
@@ -115,7 +125,7 @@ export const WorkbenchTier = ({
 					onClick={() => upgradeWorkbench(workbenchId)}
 					className={cn(
 						genericClasses,
-						"border-red-400/40 border-dashed group hover:border-accent transition-colors cursor-pointer px-2"
+						"border-red-400/40 border-dashed group hover:border-accent transition-colors cursor-pointer p-2"
 					)}
 				>
 					<p className="text-red-400/60 group-hover:hidden">Not Built</p>
@@ -125,7 +135,7 @@ export const WorkbenchTier = ({
 		case currentTier === maxTier:
 			return (
 				<div className={cn(genericClasses, "border-green-500/40")}>
-					<p className="text-green-500 px-2">Bench Fully Upgraded</p>
+					<p className="text-green-500 p-2">Bench Fully Upgraded</p>
 				</div>
 			);
 		default:
