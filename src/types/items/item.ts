@@ -5,7 +5,8 @@ import { ItemCategory, ItemSource, Rarity, Recycling } from "./types";
 
 export type ItemUse =
 	| { type: "workbench"; id: string; name: string; extra: { tier: number } }
-	| { type: "recipe"; id: string; name: string };
+	| { type: "recipe"; id: string; name: string }
+	| { type: "quest"; id: string; name: string; extra: { count: number } };
 
 /**
  * Base interface that all items must implement

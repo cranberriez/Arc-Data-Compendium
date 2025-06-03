@@ -5,7 +5,7 @@ import { Item } from "@/types";
 import { cn } from "@/lib/utils";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { Weight, BadgeCent, Book } from "lucide-react";
-import { DescriptorBadge, getDescriptorBadges } from "./descBadges";
+import { DescriptorBadge, getDescriptorBadges } from "./itemTagBadges";
 
 export interface ItemDetailsProps {
 	/** The item to display */
