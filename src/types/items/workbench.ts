@@ -12,10 +12,12 @@ export interface Workbench extends BaseItem {
 	tiers: WorkbenchTier[];
 }
 
+export type WorkbenchUpgradeSummaryItem = {
+	workbenchId: string;
+	targetTier: number;
+};
+
 export interface WorkbenchUpgradeSummary {
 	count: number;
-	usedIn: Array<{
-		workbenchId: string;
-		targetTier: number;
-	}>;
+	usedIn: Array<WorkbenchUpgradeSummaryItem>;
 }

@@ -1,6 +1,7 @@
 import { fetchWorkbenches } from "@/services/dataService";
-import Link from "next/link";
 import ItemChecklist from "@/components/checklist/overview";
+import { InfoIcon } from "lucide-react";
+import { WorkbenchList } from "./components/workbenchPreview";
 
 export default async function WorkshopOverview() {
 	const workbenches = await fetchWorkbenches();
@@ -10,14 +11,18 @@ export default async function WorkshopOverview() {
 			<div className="mx-auto max-w-6xl">
 				<h1 className="text-2xl font-bold text-center mb-6">Workshop Overview</h1>
 				<div className="flex flex-col gap-6">
+					<div className="w-full flex flex-col sm:flex-row sm:items-center sm:justify-center gap-2 bg-amber-200 p-2 rounded dark:text-background border-2 border-amber-100">
+						<InfoIcon
+							size={24}
+							className="text-lg min-w-8"
+						/>
+						<h3 className="text-lg">
+							Workbench levels can be pinned in game to see a live counter of the # of
+							items you need.
+						</h3>
+					</div>
 					<ItemChecklist />
-					{workbenches.map((workbench) => (
-						<div key={workbench.id}>
-							<h2 className="text-xl font-semibold">{workbench.name}</h2>
-							<p>{workbench.description}</p>
-							<Link href={`/workshop/${workbench.id}`}>View Workbench</Link>
-						</div>
-					))}
+					<WorkbenchList workbenches={workbenches} />
 				</div>
 			</div>
 		</main>

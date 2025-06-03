@@ -13,6 +13,8 @@ interface WorkshopContextType {
 	refreshWorkshop: () => Promise<void>;
 	updateWorkbenchTier: (workbenchId: string, currentTier: number) => void;
 	getWorkbenchUpgradeSummary: () => Record<string, WorkbenchUpgradeSummary>;
+	upgradeWorkbench: (workbenchId: string) => void;
+	downgradeWorkbench: (workbenchId: string) => void;
 }
 
 const WorkshopContext = createContext<WorkshopContextType | undefined>(undefined);
@@ -91,6 +93,66 @@ export function WorkshopProvider({ children }: { children: React.ReactNode }) {
 		}, {} as Record<string, WorkbenchUpgradeSummary>);
 	};
 
+	// Upgrade workbench tier and update cookie
+	const upgradeWorkbench = useCallback(
+		(workbenchId: string) => {
+			setWorkbenchUserData((prevData) => {
+				const wbIndex = prevData.findIndex((item) => item.workbenchId === workbenchId);
+				let currentTier = 0;
+				let maxTier = 0;
+				const workbench = workbenches.find((wb) => wb.id === workbenchId);
+				if (workbench) {
+					maxTier = Math.max(...workbench.tiers.map((t) => t.tier));
+					currentTier = wbIndex >= 0 ? prevData[wbIndex].currentTier : workbench.baseTier;
+					if (currentTier < maxTier) {
+						const newTier = currentTier + 1;
+						const newData: WorkbenchUserData = { workbenchId, currentTier: newTier };
+						const newDataArray = wbIndex >= 0 ? [...prevData] : prevData;
+						if (wbIndex >= 0) {
+							newDataArray[wbIndex] = newData;
+						} else {
+							newDataArray.push(newData);
+						}
+						saveWorkbenchData(newData);
+						return newDataArray;
+					}
+				}
+				return prevData;
+			});
+		},
+		[workbenches]
+	);
+
+	// Downgrade workbench tier and update cookie
+	const downgradeWorkbench = useCallback(
+		(workbenchId: string) => {
+			setWorkbenchUserData((prevData) => {
+				const wbIndex = prevData.findIndex((item) => item.workbenchId === workbenchId);
+				let currentTier = 0;
+				let minTier = 0;
+				const workbench = workbenches.find((wb) => wb.id === workbenchId);
+				if (workbench) {
+					minTier = Math.min(...workbench.tiers.map((t) => t.tier));
+					currentTier = wbIndex >= 0 ? prevData[wbIndex].currentTier : workbench.baseTier;
+					if (currentTier > minTier) {
+						const newTier = currentTier - 1;
+						const newData: WorkbenchUserData = { workbenchId, currentTier: newTier };
+						const newDataArray = wbIndex >= 0 ? [...prevData] : prevData;
+						if (wbIndex >= 0) {
+							newDataArray[wbIndex] = newData;
+						} else {
+							newDataArray.push(newData);
+						}
+						saveWorkbenchData(newData);
+						return newDataArray;
+					}
+				}
+				return prevData;
+			});
+		},
+		[workbenches]
+	);
+
 	const fetchWorkshopData = async () => {
 		try {
 			setLoading(true);
@@ -128,6 +190,8 @@ export function WorkshopProvider({ children }: { children: React.ReactNode }) {
 				refreshWorkshop,
 				updateWorkbenchTier,
 				getWorkbenchUpgradeSummary,
+				upgradeWorkbench,
+				downgradeWorkbench,
 			}}
 		>
 			{children}
