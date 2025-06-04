@@ -32,7 +32,7 @@ export function WorkbenchClient({ workbench }: WorkbenchClientProps) {
 
 	// --- Tabs state and helpers ---
 	const [mode, setMode] = React.useState<"recipes" | "requirements">("recipes");
-	const [selectedTier, setSelectedTier] = React.useState<number>(1);
+	const [selectedTier, setSelectedTier] = React.useState<number | "all">("all");
 	const tabValue = `${mode}-${selectedTier}`;
 
 	const tabClasses = "px-4 py-2 cursor-pointer";
@@ -97,6 +97,13 @@ export function WorkbenchClient({ workbench }: WorkbenchClientProps) {
 						</TabsTrigger>
 					</TabsList>
 					<TabsList>
+						<TabsTrigger
+							value={`${mode}-all`}
+							onClick={() => setSelectedTier("all")}
+							className={tabClasses}
+						>
+							All
+						</TabsTrigger>
 						{workbench.tiers.map((_, idx) => (
 							<TabsTrigger
 								key={idx}
@@ -109,20 +116,35 @@ export function WorkbenchClient({ workbench }: WorkbenchClientProps) {
 						))}
 					</TabsList>
 					<TabsContent value={`recipes-${selectedTier}`}>
-						{filterRecipeByWorkbenchTier(recipes, selectedTier).map((recipe) => (
-							<div
-								key={recipe.id}
-								className="flex items-center gap-2"
-							>
-								{recipe.outputItemId}
-							</div>
-						))}
+						{selectedTier === "all"
+							? recipes.map((recipe) => (
+									<div
+										key={recipe.id}
+										className="flex items-center gap-2"
+									>
+										{recipe.outputItemId}
+									</div>
+							  ))
+							: filterRecipeByWorkbenchTier(recipes, selectedTier).map((recipe) => (
+									<div
+										key={recipe.id}
+										className="flex items-center gap-2"
+									>
+										{recipe.outputItemId}
+									</div>
+							  ))}
 					</TabsContent>
 					<TabsContent value={`requirements-${selectedTier}`}>
 						{/* Replace with actual requirements logic */}
-						<span className="text-muted-foreground">
-							Requirements for Tier {selectedTier} go here.
-						</span>
+						{selectedTier === "all" ? (
+							<span className="text-muted-foreground">
+								Requirements for ALL Tiers go here.
+							</span>
+						) : (
+							<span className="text-muted-foreground">
+								Requirements for Tier {selectedTier} go here.
+							</span>
+						)}
 					</TabsContent>
 				</Tabs>
 			</div>
