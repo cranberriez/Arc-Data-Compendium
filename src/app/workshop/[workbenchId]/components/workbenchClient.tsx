@@ -62,7 +62,10 @@ export function WorkbenchClient({ workbench }: WorkbenchClientProps) {
 				</div>
 			</Card>
 
-			<WorkbenchTiers workbench={workbench} />
+			<WorkbenchTiers
+				workbench={workbench}
+				curWbTier={curWbTier}
+			/>
 		</div>
 	);
 }

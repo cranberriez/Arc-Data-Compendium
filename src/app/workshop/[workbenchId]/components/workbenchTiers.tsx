@@ -10,12 +10,14 @@ import {
 import { Book, Boxes, Egg } from "lucide-react";
 import { useRecipes } from "@/contexts/recipeContext";
 import { Recipe, Workbench } from "@/types";
+import { ScrappyOutput } from "./scrappyOutput";
 
 interface WorkbenchTiersProps {
 	workbench: Workbench;
+	curWbTier: number;
 }
 
-export default function WorkbenchTiers({ workbench }: WorkbenchTiersProps) {
+export default function WorkbenchTiers({ workbench, curWbTier }: WorkbenchTiersProps) {
 	const recipes = useRecipes().getRecipesByWorkbench(workbench.id);
 
 	// --- Tabs state and helpers ---
@@ -57,29 +59,34 @@ export default function WorkbenchTiers({ workbench }: WorkbenchTiersProps) {
 						Requirements
 					</TabsTrigger>
 				</TabsList>
-				<TabsList>
-					<TabsTrigger
-						value={`${mode}-all`}
-						onClick={() => setSelectedTier("all")}
-						className={tabClasses}
-					>
-						{workbench.id !== "scrappy" ? "All" : "Current"}
-					</TabsTrigger>
-					{workbench.tiers.map((_, idx) => (
+
+				{workbench.id !== "basic_bench" && (
+					<TabsList>
 						<TabsTrigger
-							key={idx}
-							value={`${mode}-${idx + 1}`}
-							onClick={() => setSelectedTier(idx + 1)}
+							value={`${mode}-all`}
+							onClick={() => setSelectedTier("all")}
 							className={tabClasses}
 						>
-							Tier {idx + 1}
+							{workbench.id !== "scrappy" ? "All" : "Current"}
 						</TabsTrigger>
-					))}
-				</TabsList>
+						{workbench.tiers.map((_, idx) => (
+							<TabsTrigger
+								key={idx}
+								value={`${mode}-${idx + 1}`}
+								onClick={() => setSelectedTier(idx + 1)}
+								className={tabClasses}
+							>
+								Tier {idx + 1}
+							</TabsTrigger>
+						))}
+					</TabsList>
+				)}
+
 				<TabsContent value={`recipes-${selectedTier}`}>
 					<WorkbenchRecipeContainer
 						selectedTier={selectedTier}
 						workbenchId={workbench.id}
+						currentTier={curWbTier}
 						recipes={recipes}
 					/>
 				</TabsContent>
@@ -94,14 +101,21 @@ export default function WorkbenchTiers({ workbench }: WorkbenchTiersProps) {
 function WorkbenchRecipeContainer({
 	selectedTier,
 	workbenchId,
+	currentTier,
 	recipes,
 }: {
 	selectedTier: number | "all";
 	workbenchId: string;
+	currentTier: number;
 	recipes: Recipe[];
 }) {
 	if (workbenchId === "scrappy") {
-		return <ScrappyOutput selectedTier={selectedTier as number} />;
+		return (
+			<ScrappyOutput
+				selectedTier={selectedTier}
+				currentTier={currentTier}
+			/>
+		);
 	}
 
 	return selectedTier === "all" ? (
@@ -124,10 +138,6 @@ function WorkbenchRecipes({ recipes }: { recipes: Recipe[] }) {
 			))}
 		</div>
 	);
-}
-
-function ScrappyOutput({ selectedTier }: { selectedTier: number }) {
-	return <div>Scrappy Outputs</div>;
 }
 
 function WorkbenchRequirements({ selectedTier }: { selectedTier: number | "all" }) {
