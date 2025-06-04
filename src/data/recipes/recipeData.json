@@ -12,12 +12,9 @@
 				"count": 4
 			}
 		],
-		"workbench": [
-			{
-				"workbench": "utility_bench",
-				"tier": 1
-			}
-		],
+		"workbench": {
+			"utility_bench": 1
+		},
 		"craftTime": 0,
 		"outputCount": 1,
 		"recipeLocked": false
@@ -35,12 +32,9 @@
 				"count": 1
 			}
 		],
-		"workbench": [
-			{
-				"workbench": "utility_bench",
-				"tier": 1
-			}
-		],
+		"workbench": {
+			"utility_bench": 1
+		},
 		"craftTime": 0,
 		"outputCount": 1,
 		"recipeLocked": true,
@@ -61,12 +55,9 @@
 				"count": 2
 			}
 		],
-		"workbench": [
-			{
-				"workbench": "utility_bench",
-				"tier": 1
-			}
-		],
+		"workbench": {
+			"utility_bench": 1
+		},
 		"craftTime": 0,
 		"outputCount": 1,
 		"recipeLocked": true,
@@ -87,12 +78,9 @@
 				"count": 3
 			}
 		],
-		"workbench": [
-			{
-				"workbench": "utility_bench",
-				"tier": 3
-			}
-		],
+		"workbench": {
+			"utility_bench": 3
+		},
 		"craftTime": 0,
 		"outputCount": 1,
 		"recipeLocked": false
@@ -122,12 +110,9 @@
 				"count": 4
 			}
 		],
-		"workbench": [
-			{
-				"workbench": "utility_bench",
-				"tier": 3
-			}
-		],
+		"workbench": {
+			"utility_bench": 3
+		},
 		"craftTime": 0,
 		"outputCount": 1,
 		"recipeLocked": false
@@ -136,12 +121,9 @@
 		"id": "recipe_snap_hook",
 		"outputItemId": "snap_hook",
 		"requirements": [],
-		"workbench": [
-			{
-				"workbench": "utility_bench",
-				"tier": 3
-			}
-		],
+		"workbench": {
+			"utility_bench": 3
+		},
 		"craftTime": 0,
 		"outputCount": 1,
 		"recipeLocked": true,
@@ -162,12 +144,9 @@
 				"count": 7
 			}
 		],
-		"workbench": [
-			{
-				"workbench": "utility_bench",
-				"tier": 1
-			}
-		],
+		"workbench": {
+			"utility_bench": 1
+		},
 		"craftTime": 0,
 		"outputCount": 1,
 		"recipeLocked": false
@@ -185,12 +164,9 @@
 				"count": 7
 			}
 		],
-		"workbench": [
-			{
-				"workbench": "explosives_bench",
-				"tier": 3
-			}
-		],
+		"workbench": {
+			"explosives_bench": 3
+		},
 		"craftTime": 0,
 		"outputCount": 1,
 		"recipeLocked": false
@@ -208,12 +184,9 @@
 				"count": 2
 			}
 		],
-		"workbench": [
-			{
-				"workbench": "explosives_bench",
-				"tier": 1
-			}
-		],
+		"workbench": {
+			"explosives_bench": 1
+		},
 		"craftTime": 0,
 		"outputCount": 1,
 		"recipeLocked": false
@@ -231,12 +204,9 @@
 				"count": 2
 			}
 		],
-		"workbench": [
-			{
-				"workbench": "explosives_bench",
-				"tier": 3
-			}
-		],
+		"workbench": {
+			"explosives_bench": 3
+		},
 		"craftTime": 0,
 		"outputCount": 1,
 		"recipeLocked": true,
@@ -329,16 +299,10 @@
 				"count": 3
 			}
 		],
-		"workbench": [
-			{
-				"workbench": "basic_bench",
-				"tier": 1
-			},
-			{
-				"workbench": "explosives_bench",
-				"tier": 1
-			}
-		],
+		"workbench": {
+			"basic_bench": 1,
+			"explosives_bench": 1
+		},
 		"craftTime": 0,
 		"outputCount": 1,
 		"inRaid": true,
@@ -357,12 +321,9 @@
 				"count": 2
 			}
 		],
-		"workbench": [
-			{
-				"workbench": "utility_bench",
-				"tier": 2
-			}
-		],
+		"workbench": {
+			"utility_bench": 2
+		},
 		"craftTime": 0,
 		"outputCount": 1,
 		"recipeLocked": true,
@@ -395,12 +356,9 @@
 				"count": 7
 			}
 		],
-		"workbench": [
-			{
-				"workbench": "utility_bench",
-				"tier": 1
-			}
-		],
+		"workbench": {
+			"utility_bench": 1
+		},
 		"craftTime": 0,
 		"outputCount": 1,
 		"inRaid": true,
@@ -419,12 +377,9 @@
 				"count": 7
 			}
 		],
-		"workbench": [
-			{
-				"workbench": "explosives_bench",
-				"tier": 2
-			}
-		],
+		"workbench": {
+			"explosives_bench": 2
+		},
 		"craftTime": 0,
 		"outputCount": 1,
 		"recipeLocked": false
@@ -442,12 +397,9 @@
 				"count": 2
 			}
 		],
-		"workbench": [
-			{
-				"workbench": "utility_bench",
-				"tier": 3
-			}
-		],
+		"workbench": {
+			"utility_bench": 3
+		},
 		"craftTime": 0,
 		"outputCount": 1,
 		"recipeLocked": true,
@@ -492,12 +444,9 @@
 				"count": 1
 			}
 		],
-		"workbench": [
-			{
-				"workbench": "medical_station",
-				"tier": 2
-			}
-		],
+		"workbench": {
+			"medical_station": 2
+		},
 		"craftTime": 0,
 		"outputCount": 1,
 		"recipeLocked": true,
@@ -518,12 +467,9 @@
 				"count": 1
 			}
 		],
-		"workbench": [
-			{
-				"workbench": "medical_station",
-				"tier": 2
-			}
-		],
+		"workbench": {
+			"medical_station": 2
+		},
 		"craftTime": 0,
 		"outputCount": 1,
 		"recipeLocked": false
@@ -541,12 +487,9 @@
 				"count": 1
 			}
 		],
-		"workbench": [
-			{
-				"workbench": "medical_station",
-				"tier": 2
-			}
-		],
+		"workbench": {
+			"medical_station": 2
+		},
 		"craftTime": 0,
 		"outputCount": 1,
 		"recipeLocked": false
@@ -560,16 +503,10 @@
 				"count": 4
 			}
 		],
-		"workbench": [
-			{
-				"workbench": "medical_station",
-				"tier": 1
-			},
-			{
-				"workbench": "basic_bench",
-				"tier": 1
-			}
-		],
+		"workbench": {
+			"medical_station": 1,
+			"basic_bench": 1
+		},
 		"craftTime": 0,
 		"outputCount": 1,
 		"recipeLocked": false
@@ -587,12 +524,9 @@
 				"count": 1
 			}
 		],
-		"workbench": [
-			{
-				"workbench": "medical_station",
-				"tier": 3
-			}
-		],
+		"workbench": {
+			"medical_station": 3
+		},
 		"craftTime": 0,
 		"outputCount": 1,
 		"recipeLocked": true,
@@ -613,12 +547,9 @@
 				"count": 2
 			}
 		],
-		"workbench": [
-			{
-				"workbench": "medical_station",
-				"tier": 3
-			}
-		],
+		"workbench": {
+			"medical_station": 3
+		},
 		"craftTime": 0,
 		"outputCount": 1,
 		"recipeLocked": true,
@@ -639,12 +570,9 @@
 				"count": 2
 			}
 		],
-		"workbench": [
-			{
-				"workbench": "medical_station",
-				"tier": 1
-			}
-		],
+		"workbench": {
+			"medical_station": 1
+		},
 		"craftTime": 0,
 		"outputCount": 1,
 		"recipeLocked": false
@@ -662,16 +590,10 @@
 				"count": 5
 			}
 		],
-		"workbench": [
-			{
-				"workbench": "medical_station",
-				"tier": 1
-			},
-			{
-				"workbench": "basic_bench",
-				"tier": 1
-			}
-		],
+		"workbench": {
+			"medical_station": 1,
+			"basic_bench": 1
+		},
 		"craftTime": 0,
 		"outputCount": 1,
 		"recipeLocked": false
@@ -680,12 +602,9 @@
 		"id": "recipe_arc_circuitry",
 		"outputItemId": "arc_circuitry",
 		"requirements": [],
-		"workbench": [
-			{
-				"workbench": "refiner",
-				"tier": 2
-			}
-		],
+		"workbench": {
+			"refiner": 2
+		},
 		"craftTime": 0,
 		"outputCount": 1,
 		"recipeLocked": true,
@@ -706,12 +625,9 @@
 				"count": 8
 			}
 		],
-		"workbench": [
-			{
-				"workbench": "refiner",
-				"tier": 2
-			}
-		],
+		"workbench": {
+			"refiner": 2
+		},
 		"craftTime": 0,
 		"outputCount": 1,
 		"recipeLocked": true,
@@ -732,12 +648,9 @@
 				"count": 8
 			}
 		],
-		"workbench": [
-			{
-				"workbench": "refiner",
-				"tier": 2
-			}
-		],
+		"workbench": {
+			"refiner": 2
+		},
 		"craftTime": 0,
 		"outputCount": 1,
 		"recipeLocked": true,
@@ -758,12 +671,9 @@
 				"count": 8
 			}
 		],
-		"workbench": [
-			{
-				"workbench": "refiner",
-				"tier": 2
-			}
-		],
+		"workbench": {
+			"refiner": 2
+		},
 		"craftTime": 0,
 		"outputCount": 1,
 		"recipeLocked": true,
@@ -784,12 +694,9 @@
 				"count": 8
 			}
 		],
-		"workbench": [
-			{
-				"workbench": "refiner",
-				"tier": 2
-			}
-		],
+		"workbench": {
+			"refiner": 2
+		},
 		"craftTime": 0,
 		"outputCount": 1,
 		"recipeLocked": true,
@@ -810,12 +717,9 @@
 				"count": 1
 			}
 		],
-		"workbench": [
-			{
-				"workbench": "refiner",
-				"tier": 3
-			}
-		],
+		"workbench": {
+			"refiner": 3
+		},
 		"craftTime": 0,
 		"outputCount": 1,
 		"recipeLocked": true,
@@ -837,12 +741,9 @@
 				"count": 1
 			}
 		],
-		"workbench": [
-			{
-				"workbench": "refiner",
-				"tier": 3
-			}
-		],
+		"workbench": {
+			"refiner": 3
+		},
 		"craftTime": 0,
 		"outputCount": 1,
 		"recipeLocked": true,
@@ -864,12 +765,9 @@
 				"count": 1
 			}
 		],
-		"workbench": [
-			{
-				"workbench": "refiner",
-				"tier": 3
-			}
-		],
+		"workbench": {
+			"refiner": 3
+		},
 		"craftTime": 0,
 		"outputCount": 1,
 		"recipeLocked": true,
@@ -891,12 +789,9 @@
 				"count": 1
 			}
 		],
-		"workbench": [
-			{
-				"workbench": "refiner",
-				"tier": 3
-			}
-		],
+		"workbench": {
+			"refiner": 3
+		},
 		"craftTime": 0,
 		"outputCount": 1,
 		"recipeLocked": true,
@@ -918,16 +813,10 @@
 				"count": 8
 			}
 		],
-		"workbench": [
-			{
-				"workbench": "basic_bench",
-				"tier": 1
-			},
-			{
-				"workbench": "equipment_bench",
-				"tier": 1
-			}
-		],
+		"workbench": {
+			"basic_bench": 1,
+			"equipment_bench": 1
+		},
 		"craftTime": 0,
 		"outputCount": 1,
 		"recipeLocked": false
@@ -945,12 +834,9 @@
 				"count": 2
 			}
 		],
-		"workbench": [
-			{
-				"workbench": "equipment_bench",
-				"tier": 2
-			}
-		],
+		"workbench": {
+			"equipment_bench": 2
+		},
 		"craftTime": 0,
 		"outputCount": 1,
 		"recipeLocked": false
@@ -968,12 +854,9 @@
 				"count": 5
 			}
 		],
-		"workbench": [
-			{
-				"workbench": "equipment_bench",
-				"tier": 3
-			}
-		],
+		"workbench": {
+			"equipment_bench": 3
+		},
 		"craftTime": 0,
 		"outputCount": 1,
 		"recipeLocked": false
@@ -991,12 +874,9 @@
 				"count": 9
 			}
 		],
-		"workbench": [
-			{
-				"workbench": "equipment_bench",
-				"tier": 1
-			}
-		],
+		"workbench": {
+			"equipment_bench": 1
+		},
 		"craftTime": 0,
 		"outputCount": 1,
 		"recipeLocked": false
@@ -1014,12 +894,9 @@
 				"count": 2
 			}
 		],
-		"workbench": [
-			{
-				"workbench": "equipment_bench",
-				"tier": 1
-			}
-		],
+		"workbench": {
+			"equipment_bench": 1
+		},
 		"craftTime": 0,
 		"outputCount": 1,
 		"recipeLocked": false
@@ -1037,12 +914,9 @@
 				"count": 2
 			}
 		],
-		"workbench": [
-			{
-				"workbench": "equipment_bench",
-				"tier": 1
-			}
-		],
+		"workbench": {
+			"equipment_bench": 1
+		},
 		"craftTime": 0,
 		"outputCount": 1,
 		"recipeLocked": false
@@ -1060,12 +934,9 @@
 				"count": 4
 			}
 		],
-		"workbench": [
-			{
-				"workbench": "equipment_bench",
-				"tier": 1
-			}
-		],
+		"workbench": {
+			"equipment_bench": 1
+		},
 		"craftTime": 0,
 		"outputCount": 1,
 		"recipeLocked": false

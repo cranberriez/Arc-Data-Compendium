@@ -47,7 +47,19 @@ export default async function WorkbenchPage({ params }: WorkbenchPageProps) {
 
 	return (
 		// Render the client component with the server-fetched data
-		<main className="mx-auto max-w-[1600px] mt-12">
+		<main className="mx-auto max-w-[1600px] px-4 py-8">
+			<div className="flex items-center mb-6">
+				<Link href="/workshop">
+					<Button
+						variant="outline"
+						size="sm"
+						className="cursor-pointer"
+					>
+						<ArrowLeft className="h-4 w-4 mr-2" />
+						Back to Workshop
+					</Button>
+				</Link>
+			</div>
 			<WorkbenchClient workbench={workbench} />
 		</main>
 	);

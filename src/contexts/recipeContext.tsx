@@ -47,9 +47,7 @@ export function RecipeProvider({ children }: { children: React.ReactNode }) {
 	};
 
 	const getRecipesByWorkbench = (workbenchId: string) => {
-		return recipes.filter(
-			(recipe) => recipe.workbench?.some((wb) => wb.workbench === workbenchId) ?? false
-		);
+		return recipes.filter((recipe) => recipe.workbench && workbenchId in recipe.workbench);
 	};
 
 	return (
