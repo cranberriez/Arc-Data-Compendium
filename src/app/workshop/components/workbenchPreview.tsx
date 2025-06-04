@@ -9,7 +9,7 @@ import { useItems } from "@/contexts/itemContext";
 import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { MoveRight } from "lucide-react";
+import { MoveRight, PlusIcon } from "lucide-react";
 
 export const WorkbenchList = ({ workbenches }: { workbenches: Workbench[] }) => {
 	return (
@@ -31,6 +31,7 @@ export const WorkbenchPreview = ({ workbench }: { workbench: Workbench }) => {
 	const curWbTier =
 		workbenchUserData.find((wb) => wb.workbenchId === workbench.id)?.currentTier ??
 		workbench.baseTier;
+	const isMaxed = curWbTier === workbench.tiers.length;
 
 	return (
 		<div
@@ -62,8 +63,8 @@ export const WorkbenchPreview = ({ workbench }: { workbench: Workbench }) => {
 					upgradeWorkbench={upgradeWorkbench}
 					downgradeWorkbench={downgradeWorkbench}
 				/>
-				{curWbTier !== workbench.tiers.length && (
-					<div className="flex flex-col gap-1">
+				{!isMaxed && (
+					<div className="flex flex-col gap-1 min-h-[128px]">
 						{/* <p className="text-gray-500">Upgrade Requirements:</p> */}
 						{workbench.tiers[curWbTier].requiredItems.map((req) => (
 							<div
@@ -126,16 +127,33 @@ export const WorkbenchTier = ({
 					onClick={() => upgradeWorkbench(workbenchId)}
 					className={cn(
 						genericClasses,
-						"border-red-400/40 border-dashed group hover:border-accent transition-colors cursor-pointer p-2"
+						"flex justify-center border-blue-400/40 border-dashed group hover:border-accent transition-colors cursor-pointer p-2"
 					)}
 				>
-					<p className="text-red-400/60 group-hover:hidden">Not Built</p>
-					<p className="hidden group-hover:block text-primary/80">Click to build</p>
+					<p className="text-blue-400/60 group-hover:hidden flex items-center gap-1">
+						<PlusIcon
+							size={16}
+							className="mt-1"
+						/>
+						<span>Not Built</span>
+					</p>
+					<p className="hidden group-hover:flex text-primary/80 items-center gap-1">
+						<PlusIcon
+							size={16}
+							className="mt-1"
+						/>
+						<span>Click to build</span>
+					</p>
 				</div>
 			);
 		case currentTier === maxTier:
 			return (
-				<div className={cn(genericClasses, "border-green-500 dark:border-green-500/40")}>
+				<div
+					className={cn(
+						genericClasses,
+						"flex justify-center border-green-500 dark:border-green-500/40"
+					)}
+				>
 					<p className="text-green-500 p-2">Bench Fully Upgraded</p>
 				</div>
 			);
@@ -144,8 +162,10 @@ export const WorkbenchTier = ({
 				<div className={cn(genericClasses, "border-transparent flex items-center")}>
 					<p>Level {currentTier}</p>
 					<MoveRight />
-					<p>{currentTier + 1}</p>
-					<p className="text-xs text-muted-foreground">/ {maxTier}</p>
+					<p>
+						{currentTier + 1}
+						<span className="text-xs text-muted-foreground ml-2">/ {maxTier}</span>
+					</p>
 				</div>
 			);
 	}

@@ -2,6 +2,7 @@ import { fetchWorkbenches } from "@/services/dataService";
 import ItemChecklist from "@/components/checklist/overview";
 import { InfoIcon } from "lucide-react";
 import { WorkbenchList } from "./components/workbenchPreview";
+import ResetUserData from "./components/resetUserData";
 
 export default async function WorkshopOverview() {
 	const workbenches = await fetchWorkbenches();
@@ -23,6 +24,9 @@ export default async function WorkshopOverview() {
 					</div>
 					<ItemChecklist />
 					<WorkbenchList workbenches={workbenches} />
+				</div>
+				<div className="flex my-8">
+					<ResetUserData />
 				</div>
 			</div>
 		</main>

@@ -18,9 +18,9 @@ export default function ItemChecklist() {
 }
 
 const WorkshopItemChecklist = () => {
-	const { loading: wbLoading, getWorkbenchUpgradeSummary } = useWorkshop();
+	const { loading: wbLoading, workbenchUpgradeSummary } = useWorkshop();
 	const { getItemById } = useItems();
-	const summary: Record<string, WorkbenchUpgradeSummary> = getWorkbenchUpgradeSummary();
+	const summary = workbenchUpgradeSummary;
 
 	return (
 		<div className="flex flex-col gap-4 border-2 rounded p-2 w-full">

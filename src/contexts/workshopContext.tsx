@@ -1,6 +1,6 @@
 "use client";
 
-import React, { createContext, useContext, useEffect, useState, useCallback } from "react";
+import React, { createContext, useContext, useEffect, useState, useCallback, useMemo } from "react";
 import { fetchWorkbenches } from "@/services/dataService";
 import { Workbench, WorkbenchUpgradeSummary } from "@/types/items/workbench";
 import { getWorkbenchData, saveWorkbenchData, WorkbenchUserData } from "@/utils/cookieUtils";
@@ -12,9 +12,10 @@ interface WorkshopContextType {
 	error: Error | null;
 	refreshWorkshop: () => Promise<void>;
 	updateWorkbenchTier: (workbenchId: string, currentTier: number) => void;
-	getWorkbenchUpgradeSummary: () => Record<string, WorkbenchUpgradeSummary>;
+	workbenchUpgradeSummary: Record<string, WorkbenchUpgradeSummary>;
 	upgradeWorkbench: (workbenchId: string) => void;
 	downgradeWorkbench: (workbenchId: string) => void;
+	resetWorkbenches: () => void;
 }
 
 const WorkshopContext = createContext<WorkshopContextType | undefined>(undefined);
@@ -58,7 +59,7 @@ export function WorkshopProvider({ children }: { children: React.ReactNode }) {
 	}, []);
 
 	// Get a summary of all of the items needed to upgrade all workbenches 1 level
-	const getWorkbenchUpgradeSummary = () => {
+	const getWorkbenchUpgradeSummary = useCallback(() => {
 		return workbenches.reduce((summary, workbench) => {
 			const currentTier =
 				workbenchUserData.find((wb) => wb.workbenchId === workbench.id)?.currentTier ??
@@ -68,7 +69,6 @@ export function WorkshopProvider({ children }: { children: React.ReactNode }) {
 
 			if (!nextTierData) return summary;
 
-			// For each required item in the next tier, update the summary
 			nextTierData.requiredItems.forEach((item) => {
 				if (!summary[item.itemId]) {
 					summary[item.itemId] = {
@@ -78,7 +78,6 @@ export function WorkshopProvider({ children }: { children: React.ReactNode }) {
 				}
 				summary[item.itemId].count += item.count;
 
-				// Add workbench info with target tier
 				const workbenchInfo = {
 					workbenchId: workbench.id,
 					targetTier: nextTier,
@@ -91,31 +90,36 @@ export function WorkshopProvider({ children }: { children: React.ReactNode }) {
 
 			return summary;
 		}, {} as Record<string, WorkbenchUpgradeSummary>);
-	};
+	}, [workbenchUserData, workbenches]);
+
+	const workbenchUpgradeSummary = useMemo(
+		() => getWorkbenchUpgradeSummary(),
+		[getWorkbenchUpgradeSummary]
+	);
 
 	// Upgrade workbench tier and update cookie
 	const upgradeWorkbench = useCallback(
 		(workbenchId: string) => {
+			// Get the latest workbenches here, not inside setState
+			const workbench = workbenches.find((wb) => wb.id === workbenchId);
+			if (!workbench) return;
+
 			setWorkbenchUserData((prevData) => {
 				const wbIndex = prevData.findIndex((item) => item.workbenchId === workbenchId);
-				let currentTier = 0;
-				let maxTier = 0;
-				const workbench = workbenches.find((wb) => wb.id === workbenchId);
-				if (workbench) {
-					maxTier = Math.max(...workbench.tiers.map((t) => t.tier));
-					currentTier = wbIndex >= 0 ? prevData[wbIndex].currentTier : workbench.baseTier;
-					if (currentTier < maxTier) {
-						const newTier = currentTier + 1;
-						const newData: WorkbenchUserData = { workbenchId, currentTier: newTier };
-						const newDataArray = wbIndex >= 0 ? [...prevData] : prevData;
-						if (wbIndex >= 0) {
-							newDataArray[wbIndex] = newData;
-						} else {
-							newDataArray.push(newData);
-						}
-						saveWorkbenchData(newData);
-						return newDataArray;
+				const maxTier = Math.max(...workbench.tiers.map((t) => t.tier));
+				const currentTier =
+					wbIndex >= 0 ? prevData[wbIndex].currentTier : workbench.baseTier;
+				if (currentTier < maxTier) {
+					const newTier = currentTier + 1;
+					const newData: WorkbenchUserData = { workbenchId, currentTier: newTier };
+					const newDataArray = wbIndex >= 0 ? [...prevData] : prevData;
+					if (wbIndex >= 0) {
+						newDataArray[wbIndex] = newData;
+					} else {
+						newDataArray.push(newData);
 					}
+					saveWorkbenchData(newData);
+					return newDataArray;
 				}
 				return prevData;
 			});
@@ -126,32 +130,43 @@ export function WorkshopProvider({ children }: { children: React.ReactNode }) {
 	// Downgrade workbench tier and update cookie
 	const downgradeWorkbench = useCallback(
 		(workbenchId: string) => {
+			// Get the latest workbench outside setState
+			const workbench = workbenches.find((wb) => wb.id === workbenchId);
+			if (!workbench) return;
+
 			setWorkbenchUserData((prevData) => {
 				const wbIndex = prevData.findIndex((item) => item.workbenchId === workbenchId);
-				let currentTier = 0;
-				let minTier = 0;
-				const workbench = workbenches.find((wb) => wb.id === workbenchId);
-				if (workbench) {
-					minTier = Math.min(...workbench.tiers.map((t) => t.tier));
-					currentTier = wbIndex >= 0 ? prevData[wbIndex].currentTier : workbench.baseTier;
-					if (currentTier > minTier) {
-						const newTier = currentTier - 1;
-						const newData: WorkbenchUserData = { workbenchId, currentTier: newTier };
-						const newDataArray = wbIndex >= 0 ? [...prevData] : prevData;
-						if (wbIndex >= 0) {
-							newDataArray[wbIndex] = newData;
-						} else {
-							newDataArray.push(newData);
-						}
-						saveWorkbenchData(newData);
-						return newDataArray;
+				const minTier = Math.min(...workbench.tiers.map((t) => t.tier));
+				const currentTier =
+					wbIndex >= 0 ? prevData[wbIndex].currentTier : workbench.baseTier;
+				if (currentTier > minTier) {
+					const newTier = currentTier - 1;
+					const newData: WorkbenchUserData = { workbenchId, currentTier: newTier };
+					const newDataArray = wbIndex >= 0 ? [...prevData] : prevData;
+					if (wbIndex >= 0) {
+						newDataArray[wbIndex] = newData;
+					} else {
+						newDataArray.push(newData);
 					}
+					saveWorkbenchData(newData);
+					return newDataArray;
 				}
 				return prevData;
 			});
 		},
 		[workbenches]
 	);
+
+	const resetWorkbenches = () => {
+		if (typeof window !== "undefined") {
+			const resetData = workbenches.map((workbench) => ({
+				workbenchId: workbench.id,
+				currentTier: workbench.baseTier,
+			}));
+			setWorkbenchUserData(resetData);
+			resetData.forEach(saveWorkbenchData);
+		}
+	};
 
 	const fetchWorkshopData = async () => {
 		try {
@@ -189,9 +204,10 @@ export function WorkshopProvider({ children }: { children: React.ReactNode }) {
 				error,
 				refreshWorkshop,
 				updateWorkbenchTier,
-				getWorkbenchUpgradeSummary,
+				workbenchUpgradeSummary,
 				upgradeWorkbench,
 				downgradeWorkbench,
+				resetWorkbenches,
 			}}
 		>
 			{children}
