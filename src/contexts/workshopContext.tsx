@@ -136,7 +136,7 @@ export function WorkshopProvider({ children }: { children: React.ReactNode }) {
 
 			setWorkbenchUserData((prevData) => {
 				const wbIndex = prevData.findIndex((item) => item.workbenchId === workbenchId);
-				const minTier = Math.min(...workbench.tiers.map((t) => t.tier));
+				const minTier = workbench.baseTier;
 				const currentTier =
 					wbIndex >= 0 ? prevData[wbIndex].currentTier : workbench.baseTier;
 				if (currentTier > minTier) {
