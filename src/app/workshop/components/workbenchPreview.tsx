@@ -165,7 +165,9 @@ export const WorkbenchTier = ({
 		default:
 			return (
 				<div className={cn(genericClasses, "border-transparent flex items-center")}>
-					<p className="font-semibold">Level {currentTier}</p>
+					<p className="font-semibold">
+						Level <span className="font-mono">{currentTier}</span>
+					</p>
 					<Button
 						variant="outline"
 						onClick={() => downgradeWorkbench(workbenchId)}
