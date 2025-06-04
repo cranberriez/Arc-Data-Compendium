@@ -47,17 +47,18 @@ export function WorkbenchClient({ workbench }: WorkbenchClientProps) {
 							{workbench.description}
 						</h2>
 					</div>
-
-					<div className="min-h-[240px] w-sm p-2 border-1 bg-background rounded-lg flex flex-col">
-						<WorkbenchUpgrades
-							curWbTier={curWbTier}
-							workbench={workbench}
-							upgradeWorkbench={upgradeWorkbench}
-							downgradeWorkbench={downgradeWorkbench}
-							isMaxed={isMaxed}
-							className="w-full sm:max-w-full flex-col-reverse justify-between flex-1"
-						/>
-					</div>
+					{workbench.id !== "basic_bench" && (
+						<div className="min-h-[240px] w-sm p-2 border-1 bg-background rounded-lg flex flex-col">
+							<WorkbenchUpgrades
+								curWbTier={curWbTier}
+								workbench={workbench}
+								upgradeWorkbench={upgradeWorkbench}
+								downgradeWorkbench={downgradeWorkbench}
+								isMaxed={isMaxed}
+								className="w-full sm:max-w-full flex-col-reverse justify-between flex-1"
+							/>
+						</div>
+					)}
 				</div>
 			</Card>
 

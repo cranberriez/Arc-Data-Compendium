@@ -7,9 +7,9 @@ import {
 	filterRecipeByWorkbenchTier,
 	filterRecipesAvailableByTier,
 } from "@/data/recipes/recipeUtils";
-import { Book, BookOpen, Boxes } from "lucide-react";
+import { Book, Boxes, Egg } from "lucide-react";
 import { useRecipes } from "@/contexts/recipeContext";
-import { Workbench } from "@/types";
+import { Recipe, Workbench } from "@/types";
 
 interface WorkbenchTiersProps {
 	workbench: Workbench;
@@ -36,8 +36,17 @@ export default function WorkbenchTiers({ workbench }: WorkbenchTiersProps) {
 						onClick={() => setMode("recipes")}
 						className={tabClasses}
 					>
-						<Book />
-						Recipes
+						{workbench.id !== "scrappy" ? (
+							<>
+								<Book />
+								Recipes
+							</>
+						) : (
+							<>
+								<Egg />
+								Outputs
+							</>
+						)}
 					</TabsTrigger>
 					<TabsTrigger
 						value={`requirements-${selectedTier}`}
@@ -54,7 +63,7 @@ export default function WorkbenchTiers({ workbench }: WorkbenchTiersProps) {
 						onClick={() => setSelectedTier("all")}
 						className={tabClasses}
 					>
-						All
+						{workbench.id !== "scrappy" ? "All" : "Current"}
 					</TabsTrigger>
 					{workbench.tiers.map((_, idx) => (
 						<TabsTrigger
@@ -68,23 +77,11 @@ export default function WorkbenchTiers({ workbench }: WorkbenchTiersProps) {
 					))}
 				</TabsList>
 				<TabsContent value={`recipes-${selectedTier}`}>
-					{selectedTier === "all"
-						? recipes.map((recipe) => (
-								<div
-									key={recipe.id}
-									className="flex items-center gap-2"
-								>
-									{recipe.outputItemId}
-								</div>
-						  ))
-						: filterRecipeByWorkbenchTier(recipes, selectedTier).map((recipe) => (
-								<div
-									key={recipe.id}
-									className="flex items-center gap-2"
-								>
-									{recipe.outputItemId}
-								</div>
-						  ))}
+					<WorkbenchRecipeContainer
+						selectedTier={selectedTier}
+						workbenchId={workbench.id}
+						recipes={recipes}
+					/>
 				</TabsContent>
 				<TabsContent value={`requirements-${selectedTier}`}>
 					<WorkbenchRequirements selectedTier={selectedTier} />
@@ -92,6 +89,45 @@ export default function WorkbenchTiers({ workbench }: WorkbenchTiersProps) {
 			</Tabs>
 		</div>
 	);
+}
+
+function WorkbenchRecipeContainer({
+	selectedTier,
+	workbenchId,
+	recipes,
+}: {
+	selectedTier: number | "all";
+	workbenchId: string;
+	recipes: Recipe[];
+}) {
+	if (workbenchId === "scrappy") {
+		return <ScrappyOutput selectedTier={selectedTier as number} />;
+	}
+
+	return selectedTier === "all" ? (
+		<WorkbenchRecipes recipes={recipes} />
+	) : (
+		<WorkbenchRecipes recipes={filterRecipeByWorkbenchTier(recipes, selectedTier)} />
+	);
+}
+
+function WorkbenchRecipes({ recipes }: { recipes: Recipe[] }) {
+	return (
+		<div>
+			{recipes.map((recipe) => (
+				<div
+					key={recipe.id}
+					className="flex items-center gap-2"
+				>
+					{recipe.outputItemId}
+				</div>
+			))}
+		</div>
+	);
+}
+
+function ScrappyOutput({ selectedTier }: { selectedTier: number }) {
+	return <div>Scrappy Outputs</div>;
 }
 
 function WorkbenchRequirements({ selectedTier }: { selectedTier: number | "all" }) {

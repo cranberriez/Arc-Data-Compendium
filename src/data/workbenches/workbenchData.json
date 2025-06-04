@@ -79,7 +79,7 @@
 		"type": "workbench",
 		"description": "A basic workbench with general purpose crafting",
 		"icon": "Anvil",
-		"baseTier": 0,
+		"baseTier": 1,
 		"tiers": [
 			{
 				"tier": 1,
