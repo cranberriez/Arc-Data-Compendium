@@ -32,7 +32,7 @@ export function WorkbenchClient({ workbench }: WorkbenchClientProps) {
 
 	// --- Tabs state and helpers ---
 	const [mode, setMode] = React.useState<"recipes" | "requirements">("recipes");
-	const [selectedTier, setSelectedTier] = React.useState<number | "all">("all");
+	const [selectedTier, setSelectedTier] = React.useState<number>(1);
 	const tabValue = `${mode}-${selectedTier}`;
 
 	const tabClasses = "px-4 py-2 cursor-pointer";
@@ -97,13 +97,6 @@ export function WorkbenchClient({ workbench }: WorkbenchClientProps) {
 						</TabsTrigger>
 					</TabsList>
 					<TabsList>
-						<TabsTrigger
-							value="all"
-							onClick={() => setSelectedTier("all")}
-							className={tabClasses}
-						>
-							All
-						</TabsTrigger>
 						{workbench.tiers.map((_, idx) => (
 							<TabsTrigger
 								key={idx}
