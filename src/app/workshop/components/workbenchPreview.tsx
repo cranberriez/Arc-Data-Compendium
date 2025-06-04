@@ -9,6 +9,7 @@ import { useItems } from "@/contexts/itemContext";
 import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
+import { MoveRight } from "lucide-react";
 
 export const WorkbenchList = ({ workbenches }: { workbenches: Workbench[] }) => {
 	return (
@@ -63,7 +64,7 @@ export const WorkbenchPreview = ({ workbench }: { workbench: Workbench }) => {
 				/>
 				{curWbTier !== workbench.tiers.length && (
 					<div className="flex flex-col gap-1">
-						<p className="text-gray-500">Upgrade Requirements:</p>
+						{/* <p className="text-gray-500">Upgrade Requirements:</p> */}
 						{workbench.tiers[curWbTier].requiredItems.map((req) => (
 							<div
 								key={req.itemId}
@@ -134,15 +135,17 @@ export const WorkbenchTier = ({
 			);
 		case currentTier === maxTier:
 			return (
-				<div className={cn(genericClasses, "border-green-500/40")}>
+				<div className={cn(genericClasses, "border-green-500 dark:border-green-500/40")}>
 					<p className="text-green-500 p-2">Bench Fully Upgraded</p>
 				</div>
 			);
 		default:
 			return (
-				<div className={cn(genericClasses, "border-transparent")}>
+				<div className={cn(genericClasses, "border-transparent flex items-center")}>
 					<p>Level {currentTier}</p>
-					<p className="text-xs text-muted-foreground">max {maxTier}</p>
+					<MoveRight />
+					<p>{currentTier + 1}</p>
+					<p className="text-xs text-muted-foreground">/ {maxTier}</p>
 				</div>
 			);
 	}

@@ -20,7 +20,7 @@ export default async function WorkbenchPage({ params }: WorkbenchPageProps) {
 	// Handle not found case
 	if (!workbench) {
 		return (
-			<div className="mx-auto max-w-6xl">
+			<div className="mx-auto max-w-[1600px]">
 				<div className="flex items-center space-x-2 mb-8">
 					<Link href="/workshop">
 						<Button
