@@ -5,7 +5,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Workbench } from "@/types";
 import Link from "next/link";
 import { useWorkshop } from "@/contexts/workshopContext";
-import { WorkbenchUpgrades } from "@/components/workbench/workbenchUpgrade";
+import { WorkbenchUpgrades } from "@/app/workshop/components/workbenchUpgrade";
 
 export const WorkbenchPreview = ({ workbench }: { workbench: Workbench }) => {
 	const icon = getItemIcon(workbench.icon);

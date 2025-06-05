@@ -3,10 +3,8 @@
 import React from "react";
 import { Card } from "@/components/ui/card";
 
-import { useRecipes } from "@/contexts/recipeContext";
 import { Workbench } from "@/types";
 import getItemIcon from "@/components/items/getItemIcon";
-import { WorkbenchUpgrades } from "@/components/workbench/workbenchUpgrade";
 import { useWorkshop } from "@/contexts/workshopContext";
 import WorkbenchTiers from "./workbenchTiers";
 
