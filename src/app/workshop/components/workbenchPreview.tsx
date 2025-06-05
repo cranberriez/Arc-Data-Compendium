@@ -1,42 +1,57 @@
 "use client";
 
 import getItemIcon from "@/components/items/getItemIcon";
+import { Skeleton } from "@/components/ui/skeleton";
 import { Workbench } from "@/types";
 import Link from "next/link";
 import { useWorkshop } from "@/contexts/workshopContext";
-import { useItems } from "@/contexts/itemContext";
 import { WorkbenchUpgrades } from "@/components/workbench/workbenchUpgrade";
-
-export const WorkbenchList = ({ workbenches }: { workbenches: Workbench[] }) => {
-	return (
-		<div className="grid gap-4 [grid-template-columns:repeat(auto-fit,minmax(min(100%,448px),1fr))]">
-			{workbenches.map((workbench) => (
-				<WorkbenchPreview
-					key={workbench.id}
-					workbench={workbench}
-				/>
-			))}
-		</div>
-	);
-};
 
 export const WorkbenchPreview = ({ workbench }: { workbench: Workbench }) => {
 	const icon = getItemIcon(workbench.icon);
-	const { workbenchUserData, upgradeWorkbench, downgradeWorkbench } = useWorkshop();
+	const { loading, workbenchUserData, upgradeWorkbench, downgradeWorkbench } = useWorkshop();
 	const curWbTier =
 		workbenchUserData.find((wb) => wb.workbenchId === workbench.id)?.currentTier ??
 		workbench.baseTier;
 	const isMaxed = curWbTier === workbench.tiers.length;
 
+	if (loading) {
+		return (
+			<div className="flex flex-col gap-2 border-2 rounded p-2 min-w-0 w-full min-h-60 animate-pulse">
+				<div className="flex flex-col sm:flex-row gap-4 sm:gap-2">
+					<div className="flex flex-col gap-2 flex-1">
+						<div className="flex flex-col flex-1 gap-2">
+							<div className="flex items-center gap-2 h-11">
+								<div className="w-10 h-10 p-2 flex items-center justify-center rounded bg-muted">
+									<Skeleton className="w-6 h-6 rounded-full" />
+								</div>
+								<Skeleton className="h-6 w-32" />
+							</div>
+							<Skeleton className="h-4 w-full" />
+							<Skeleton className="h-4 w-3/4" />
+						</div>
+					</div>
+					{/* Upgrades Skeleton */}
+					<div className="flex flex-col gap-2 w-40">
+						<Skeleton className="h-6 w-24 mb-2" />
+						<Skeleton className="h-4 w-32 mb-1" />
+						<Skeleton className="h-4 w-20" />
+					</div>
+				</div>
+				<Skeleton className="h-6 w-32 mt-2" />
+			</div>
+		);
+	}
+
 	return (
-		<div className="flex flex-col gap-2 border-2 rounded p-2 min-w-0 w-full">
+		<div className="flex flex-col gap-2 border-2 rounded p-2 min-w-0 w-full min-h-60">
 			<div
 				key={workbench.id}
 				className="flex flex-col sm:flex-row gap-4 sm:gap-2"
 			>
 				<div className="flex flex-col gap-2 flex-1">
 					<div className="flex flex-col flex-1 gap-2">
-						<div className="flex items-center gap-2">
+						<div className="flex items-center gap-2 h-11">
 							<div className="w-10 h-10 p-2 flex items-center justify-center rounded bg-muted">
 								{icon}
 							</div>

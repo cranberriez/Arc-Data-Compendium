@@ -2,7 +2,7 @@ import { PlusIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { MoveLeft, MoveRight, Trash } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { Workbench } from "@/types";
+import { Item, Workbench } from "@/types";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ItemCard } from "@/components/items/ItemCard";
 import { useItems } from "@/contexts/itemContext";
@@ -22,8 +22,6 @@ export const WorkbenchUpgrades = ({
 	isMaxed: boolean;
 	className?: string;
 }) => {
-	const { isLoading: itemsLoading, getItemById } = useItems();
-
 	return (
 		<div className={cn("flex w-full max-w-full sm:max-w-[220px] flex-col gap-2", className)}>
 			<WorkbenchTier
@@ -35,32 +33,10 @@ export const WorkbenchUpgrades = ({
 				downgradeWorkbench={downgradeWorkbench}
 			/>
 			{!isMaxed && (
-				<div className="flex flex-col gap-1 min-h-[128px]">
-					{/* <p className="text-gray-500">Upgrade Requirements:</p> */}
-					{workbench.tiers[curWbTier].requiredItems.map((req) => (
-						<div
-							key={req.itemId}
-							className="flex items-center gap-2 w-full"
-						>
-							<span className="text-sm w-4 text-right">{req.count}</span>
-							{itemsLoading ? (
-								<>
-									<Skeleton className="min-w-10 h-10" />
-									<Skeleton className="w-full h-10" />
-								</>
-							) : (
-								<ItemCard
-									item={getItemById(req.itemId)}
-									variant="icon"
-									orientation="horizontal"
-									size="sm"
-									showBorder={false}
-									className="w-full"
-								/>
-							)}
-						</div>
-					))}
-				</div>
+				<WorkbenchUpgradeReqs
+					workbench={workbench}
+					curWbTier={curWbTier}
+				/>
 			)}
 		</div>
 	);
@@ -157,4 +133,42 @@ export const WorkbenchTier = ({
 				</div>
 			);
 	}
+};
+
+export const WorkbenchUpgradeReqs = ({
+	workbench,
+	curWbTier,
+}: {
+	workbench: Workbench;
+	curWbTier: number;
+}) => {
+	const { isLoading: itemsLoading, getItemById } = useItems();
+
+	return (
+		<div className="flex flex-col gap-1 min-h-[128px]">
+			{workbench.tiers[curWbTier].requiredItems.map((req) => (
+				<div
+					key={req.itemId}
+					className="flex items-center gap-2 w-full px-2"
+				>
+					<span className="text-sm w-4 text-right">{req.count}</span>
+					{itemsLoading ? (
+						<>
+							<Skeleton className="min-w-10 h-10" />
+							<Skeleton className="w-full h-10" />
+						</>
+					) : (
+						<ItemCard
+							item={getItemById(req.itemId)}
+							variant="icon"
+							orientation="horizontal"
+							size="sm"
+							showBorder={false}
+							className="w-full"
+						/>
+					)}
+				</div>
+			))}
+		</div>
+	);
 };

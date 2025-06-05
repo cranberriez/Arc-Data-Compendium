@@ -23,11 +23,8 @@ const WorkshopItemChecklist = () => {
 	const summary = workbenchUpgradeSummary;
 
 	return (
-		<div className="flex flex-col gap-4 border-2 rounded p-2 w-full">
-			<h2 className="text-lg font-semibold text-center">Workbench Item Checklist</h2>
-			<p className="text-center text-muted-foreground">
-				{wbLoading ? "Loading..." : "Click an Item to view details about source and uses."}
-			</p>
+		<div className="flex flex-col gap-4 border-2 rounded p-2 w-fit h-full">
+			<h2 className="text-lg font-semibold text-center">Item Checklist</h2>
 			<div>
 				<div className="grid grid-cols-[repeat(auto-fill,minmax(20rem,1fr))] gap-1rem justify-items-center">
 					{false
@@ -49,6 +46,16 @@ const WorkshopItemChecklist = () => {
 									);
 								})}
 				</div>
+			</div>
+			<div className="w-full flex flex-col sm:flex-row sm:items-center sm:justify-center gap-2 p-2 rounded dark:text-amber-200 text-cyan-600">
+				<InfoIcon
+					size={16}
+					className="min-w-8"
+				/>
+				<h3 className="text-sm">
+					Pin Workbench levels in <br />
+					game for live item counters!
+				</h3>
 			</div>
 		</div>
 	);
