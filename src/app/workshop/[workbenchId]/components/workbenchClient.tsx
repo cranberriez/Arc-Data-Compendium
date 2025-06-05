@@ -28,7 +28,7 @@ export function WorkbenchClient({ workbench }: WorkbenchClientProps) {
 				<div className="flex flex-col justify-between gap-8">
 					<div className="flex flex-col gap-2">
 						<div className="flex items-center gap-4">
-							<div className="flex-shrink-0 bg-blue-400 dark:bg-teal-300 text-secondary rounded-lg p-2 w-16 h-16">
+							<div className="flex-shrink-0 bg-blue-400 dark:bg-blue-500 text-background rounded-lg p-2 w-16 h-16">
 								{React.cloneElement(icon, {
 									className: "w-full h-full",
 								})}
