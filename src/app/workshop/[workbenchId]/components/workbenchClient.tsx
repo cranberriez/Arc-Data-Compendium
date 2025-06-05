@@ -26,10 +26,9 @@ export function WorkbenchClient({ workbench }: WorkbenchClientProps) {
 
 	return (
 		<div className="space-y-6">
-			<Card className="p-6">
+			<Card className="p-6 flex flex-wrap flex-row">
 				<div className="flex flex-col justify-between gap-8">
-					{/* Gradient header with icon */}
-					<div>
+					<div className="flex flex-col gap-2">
 						<div className="flex items-center gap-4">
 							<div className="flex-shrink-0 bg-blue-400 dark:bg-teal-300 text-secondary rounded-lg p-2 w-16 h-16">
 								{React.cloneElement(icon, {
@@ -47,19 +46,9 @@ export function WorkbenchClient({ workbench }: WorkbenchClientProps) {
 							{workbench.description}
 						</h2>
 					</div>
-					{workbench.id !== "basic_bench" && (
-						<div className="min-h-[240px] w-sm p-2 border-1 bg-background rounded-lg flex flex-col">
-							<WorkbenchUpgrades
-								curWbTier={curWbTier}
-								workbench={workbench}
-								upgradeWorkbench={upgradeWorkbench}
-								downgradeWorkbench={downgradeWorkbench}
-								isMaxed={isMaxed}
-								className="w-full sm:max-w-full flex-col-reverse justify-between flex-1"
-							/>
-						</div>
-					)}
 				</div>
+				<div className="ml-auto">Upgrade menu goes here</div>
+				<div>Items to upgrade from current level here</div>
 			</Card>
 
 			<WorkbenchTiers
