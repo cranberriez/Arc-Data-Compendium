@@ -10,25 +10,21 @@ import { InfoIcon } from "lucide-react";
 import { Item, WorkbenchUpgradeSummary, WorkbenchUpgradeSummaryItem } from "@/types";
 
 export default function ItemChecklist() {
-	return (
-		<div>
-			<WorkshopItemChecklist />
-		</div>
-	);
+	return <WorkshopItemChecklist />;
 }
 
 const WorkshopItemChecklist = () => {
-	const { loading: wbLoading, workbenchUpgradeSummary } = useWorkshop();
+	const { loading, workbenchUpgradeSummary } = useWorkshop();
 	const { getItemById } = useItems();
 	const summary = workbenchUpgradeSummary;
 
 	return (
-		<div className="flex flex-col gap-4 border-2 rounded p-2 w-fit h-full">
+		<div className="flex flex-col gap-4 border-2 rounded p-2 w-full h-fit lg:w-fit lg:h-full">
 			<h2 className="text-lg font-semibold text-center">Item Checklist</h2>
 			<div>
 				<div className="grid grid-cols-[repeat(auto-fill,minmax(20rem,1fr))] gap-1rem justify-items-center">
-					{false
-						? Array.from({ length: 16 }).map((_, idx) => (
+					{loading
+						? Array.from({ length: 12 }).map((_, idx) => (
 								<ItemChecklistSkeleton key={idx} />
 						  ))
 						: Object.entries(summary)
@@ -52,9 +48,8 @@ const WorkshopItemChecklist = () => {
 					size={16}
 					className="min-w-8"
 				/>
-				<h3 className="text-sm">
-					Pin Workbench levels in <br />
-					game for live item counters!
+				<h3 className="text-sm lg:max-w-[260px]">
+					Pin Workbench levels in game for live item counters!
 				</h3>
 			</div>
 		</div>
@@ -67,10 +62,8 @@ const ItemChecklistSkeleton = () => {
 			className="flex items-center gap-2 mb-2 w-xs"
 			style={{ breakInside: "avoid-column" }}
 		>
-			<Skeleton className="w-8 h-8" />
-			<Skeleton className="w-8 h-8" />
-			<Skeleton className="w-full h-8" />
-			<Skeleton className="w-8 h-8" />
+			<Skeleton className="min-w-8 h-8" />
+			<Skeleton className="flex-1 h-8" />
 		</div>
 	);
 };

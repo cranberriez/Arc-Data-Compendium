@@ -7,10 +7,10 @@ export default async function WorkshopOverview() {
 	const workbenches = await fetchWorkbenches();
 
 	return (
-		<main className="w-full py-8 px-4">
+		<main className="w-full py-4 px-4">
 			<div className="mx-auto max-w-[1600px]">
 				<h1 className="text-2xl font-bold text-center mb-6">Workshop Overview</h1>
-				<div className="flex gap-6">
+				<div className="flex flex-col-reverse lg:grid lg:grid-cols-[1fr_auto] gap-6 items-stretch">
 					<WorkbenchList workbenches={workbenches} />
 					<ItemChecklist />
 				</div>
