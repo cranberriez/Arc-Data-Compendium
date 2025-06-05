@@ -10,6 +10,7 @@ import { Recipe, Workbench } from "@/types";
 import { ScrappyOutput } from "./scrappyOutput";
 import {
 	getAllWorkbenchRequirements,
+	getWorkbenchRequirementsRange,
 	WorkbenchRequirement,
 } from "@/data/workbenches/workbenchUtils";
 import { Card } from "@/components/ui/card";
@@ -30,17 +31,14 @@ export default function WorkbenchTiers({ workbench, curWbTier }: WorkbenchTiersP
 
 	const tabClasses = "px-4 py-2 cursor-pointer";
 
-	// --- Requirements ---
-	const allRequirements = getAllWorkbenchRequirements([workbench]);
-
 	return (
-		<Card className="gap-2 p-6 relative mt-18">
+		<Card className="gap-2 p-1 sm:p-6 relative mt-18">
 			{/* Mode and Tier Tabs */}
 			<Tabs
 				value={tabValue}
 				className="w-full"
 			>
-				<TabsList className="absolute -top-12 left-6">
+				<TabsList className="absolute -top-12 left-1 sm:left-6">
 					<TabsTrigger
 						value={`recipes-${selectedTier}`}
 						onClick={() => setMode("recipes")}
@@ -106,9 +104,9 @@ export default function WorkbenchTiers({ workbench, curWbTier }: WorkbenchTiersP
 				>
 					<WorkbenchRequirements
 						selectedTier={selectedTier}
-						allRequirements={allRequirements}
 						totalTiers={workbench.tiers.length}
 						curWbTier={curWbTier}
+						workbench={workbench}
 					/>
 				</TabsContent>
 			</Tabs>
@@ -160,15 +158,18 @@ function WorkbenchRecipes({ recipes }: { recipes: Recipe[] }) {
 
 function WorkbenchRequirements({
 	selectedTier,
-	allRequirements,
 	totalTiers,
 	curWbTier,
+	workbench,
 }: {
 	selectedTier: number | "all";
-	allRequirements: WorkbenchRequirement[];
 	totalTiers: number;
 	curWbTier: number;
+	workbench: Workbench;
 }) {
+	// --- Requirements ---
+	const allRequirements = getAllWorkbenchRequirements([workbench]);
+
 	return (
 		<div>
 			{selectedTier === "all" ? (
@@ -178,23 +179,65 @@ function WorkbenchRequirements({
 					</div>
 					<div className="p-2 bg-background rounded-lg">
 						<WorkbenchItemReqTable
-							allRequirements={allRequirements}
+							requirements={allRequirements}
 							totalTiers={totalTiers}
-							curWbTier={curWbTier}
+							highlightTier={curWbTier}
 						/>
 					</div>
 				</>
 			) : (
-				<div>
-					<div className="text-muted-foreground p-2">
-						Required items for Tier {selectedTier} &gt; {selectedTier + 1} go here.
+				<div className="flex flex-wrap items-stretch gap-2">
+					<div className="flex flex-col flex-1 min-w-fit">
+						<div className="text-muted-foreground p-2">
+							Upgrading from {selectedTier - 1 > 0 ? selectedTier - 1 : "Unbuilt"} to
+							Tier {selectedTier}
+						</div>
+
+						<div className="p-2 bg-background rounded-lg flex-1">
+							<WorkbenchUpgradeReqTableRange
+								workbench={workbench}
+								range={[selectedTier, selectedTier]}
+								totalTiers={0}
+							/>
+						</div>
 					</div>
-					<div className="text-muted-foreground p-2">
-						Cumulative required items to go from Base Tier to Tier {selectedTier} go
-						here.
-					</div>
+					{selectedTier > curWbTier + 1 && (
+						<div className="flex flex-col flex-1 min-w-fit">
+							<div className="text-muted-foreground p-2">
+								Upgrading from {selectedTier - 1 > 0 ? selectedTier - 1 : "Unbuilt"}{" "}
+								to Tier {selectedTier}
+							</div>
+							<div className="p-2 bg-background rounded-lg flex-1">
+								<WorkbenchUpgradeReqTableRange
+									workbench={workbench}
+									range={[curWbTier, selectedTier]}
+									totalTiers={selectedTier - curWbTier}
+								/>
+							</div>
+						</div>
+					)}
 				</div>
 			)}
 		</div>
+	);
+}
+
+function WorkbenchUpgradeReqTableRange({
+	workbench,
+	range,
+	totalTiers,
+}: {
+	workbench: Workbench;
+	range: [number, number];
+	totalTiers: number;
+}) {
+	let [min, max] = range;
+	const requirements = getWorkbenchRequirementsRange([workbench], min, max);
+
+	return (
+		<WorkbenchItemReqTable
+			requirements={requirements}
+			totalTiers={totalTiers}
+		/>
 	);
 }

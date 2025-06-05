@@ -16,24 +16,24 @@ import { useItems } from "@/contexts/itemContext";
 import { Skeleton } from "@/components/ui/skeleton";
 
 export function WorkbenchItemReqTable({
-	allRequirements,
+	requirements,
 	totalTiers,
-	curWbTier,
+	highlightTier,
 }: {
-	allRequirements: WorkbenchRequirement[];
+	requirements: WorkbenchRequirement[];
 	totalTiers: number;
-	curWbTier: number;
+	highlightTier?: number;
 }) {
 	const { openDialog } = useDialog();
 	const { isLoading, getItemById } = useItems();
 	return (
-		<Table>
+		<Table className="text-xs lg:text-lg h-full table-fixed sm:table-auto">
 			<TableHeader>
 				<TableRow>
 					<TableHead className="w-10"></TableHead>
-					<TableHead className="w-1/4">Item</TableHead>
+					<TableHead>Item</TableHead>
 					{Array.from({ length: totalTiers }).map((_, i) => {
-						const isCurTier = curWbTier === i + 1;
+						const isCurTier = highlightTier === i + 1;
 						return (
 							<TableHead
 								key={i}
@@ -49,7 +49,7 @@ export function WorkbenchItemReqTable({
 				</TableRow>
 			</TableHeader>
 			<TableBody>
-				{allRequirements.map((requirement) => {
+				{requirements.map((requirement) => {
 					const item = getItemById(requirement.itemId);
 					return (
 						<TableRow
@@ -67,13 +67,13 @@ export function WorkbenchItemReqTable({
 									<Skeleton className="w-6 h-6 mx-auto" />
 								) : null}
 							</TableCell>
-							<TableCell className="font-medium">
+							<TableCell className="font-medium sm:pr-6 truncate sm:max-w-60">
 								{formatName(requirement.itemId)}
 							</TableCell>
 							{Array.from({ length: totalTiers }).map((_, i) => {
 								const tier = i + 1;
 								const count = requirement.perTier[tier] || 0;
-								const isCurTier = curWbTier === tier;
+								const isCurTier = highlightTier === tier;
 								return (
 									<TableCell
 										key={tier}
