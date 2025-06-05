@@ -58,14 +58,16 @@ export default function WorkbenchTiers({ workbench, curWbTier }: WorkbenchTiersP
 							</>
 						)}
 					</TabsTrigger>
-					<TabsTrigger
-						value={`requirements-${selectedTier}`}
-						onClick={() => setMode("requirements")}
-						className={tabClasses}
-					>
-						<Boxes />
-						Requirements
-					</TabsTrigger>
+					{workbench.tiers.length > 1 && (
+						<TabsTrigger
+							value={`requirements-${selectedTier}`}
+							onClick={() => setMode("requirements")}
+							className={tabClasses}
+						>
+							<Boxes />
+							Requirements
+						</TabsTrigger>
+					)}
 				</TabsList>
 
 				{workbench.id !== "basic_bench" && (
