@@ -109,11 +109,19 @@ function NavItem({ item, pathname }: { item: NavItem; pathname: string | null })
 	);
 }
 
-export function NavMain({ items, category }: { items: NavItem[]; category: string }) {
+export function NavMain({
+	items,
+	category,
+	index,
+}: {
+	items: NavItem[];
+	category: string;
+	index: number;
+}) {
 	const pathname = usePathname();
 
 	return (
-		<SidebarGroup>
+		<SidebarGroup style={{ zIndex: 99 - index }}>
 			<SidebarGroupLabel className="px-2 text-xs font-medium text-muted-foreground">
 				{category}
 			</SidebarGroupLabel>

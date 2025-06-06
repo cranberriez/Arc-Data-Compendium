@@ -301,11 +301,12 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 				</SidebarMenu>
 			</SidebarHeader>
 			<SidebarContent className="gap-0">
-				{Object.values(data).map((category) => (
+				{Object.values(data).map((category, index) => (
 					<NavMain
 						key={category.category}
 						items={category.items}
 						category={category.category}
+						index={index}
 					/>
 				))}
 			</SidebarContent>
