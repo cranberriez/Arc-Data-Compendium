@@ -1,10 +1,4 @@
-export function ScrappyOutput({
-	selectedTier,
-	currentTier,
-}: {
-	selectedTier: number | "all";
-	currentTier: number;
-}) {
+export function ScrappyOutput({ currentTier }: { currentTier: number }) {
 	type MaterialReward = {
 		common: number;
 		uncommon: number;
@@ -37,8 +31,7 @@ export function ScrappyOutput({
 	};
 
 	// Determine which tier's data to use
-	const tier = selectedTier === "all" ? currentTier : selectedTier;
-	const rewards = scrappyRaidRewards[tier];
+	const rewards = scrappyRaidRewards[currentTier];
 
 	if (!rewards) {
 		return <div>No data available for this tier.</div>;

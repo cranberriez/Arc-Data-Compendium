@@ -47,39 +47,3 @@ export function getAllWorkbenchRequirements(workbenches: Workbench[]): Workbench
 
 	return result;
 }
-
-// Returns requirements for a specified tier range (inclusive) for the given workbenches.
-// fromTier and toTier are inclusive bounds (e.g. fromTier=2, toTier=4 returns requirements for tiers 2, 3, and 4)
-export function getWorkbenchRequirementsRange(
-	workbenches: Workbench[],
-	fromTier: number,
-	toTier: number
-): WorkbenchRequirement[] {
-	const itemMap: {
-		[itemId: string]: { totalCount: number; perTier: { [tier: number]: number } };
-	} = {};
-
-	for (const workbench of workbenches) {
-		if (!workbench.tiers) continue;
-		for (const tier of workbench.tiers) {
-			if (!tier.requiredItems) continue;
-			if (tier.tier < fromTier || tier.tier > toTier) continue;
-			for (const req of tier.requiredItems) {
-				if (!itemMap[req.itemId]) {
-					itemMap[req.itemId] = { totalCount: 0, perTier: {} };
-				}
-				itemMap[req.itemId].totalCount += req.count;
-				itemMap[req.itemId].perTier[tier.tier] =
-					(itemMap[req.itemId].perTier[tier.tier] || 0) + req.count;
-			}
-		}
-	}
-
-	const result: WorkbenchRequirement[] = Object.entries(itemMap).map(([itemId, data]) => ({
-		itemId,
-		totalCount: data.totalCount,
-		perTier: data.perTier,
-	}));
-
-	return result;
-}

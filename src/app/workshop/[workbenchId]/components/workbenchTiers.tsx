@@ -3,18 +3,21 @@
 import React from "react";
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { filterRecipeByWorkbenchTier } from "@/data/recipes/recipeUtils";
+import {
+	filterRecipeByWorkbenchTier,
+	groupRecipesByWorkbenchTier,
+} from "@/data/recipes/recipeUtils";
 import { Book, Boxes, Egg } from "lucide-react";
 import { useRecipes } from "@/contexts/recipeContext";
 import { Recipe, Workbench } from "@/types";
 import { ScrappyOutput } from "./scrappyOutput";
-import {
-	getAllWorkbenchRequirements,
-	getWorkbenchRequirementsRange,
-	WorkbenchRequirement,
-} from "@/data/workbenches/workbenchUtils";
+import { getAllWorkbenchRequirements } from "@/data/workbenches/workbenchUtils";
 import { Card } from "@/components/ui/card";
 import { WorkbenchItemReqTable } from "./workbenchItemReqTable";
+import ItemCard from "@/components/items/ItemCard";
+import { useItems } from "@/contexts/itemContext";
+import getItemIcon from "@/components/items/getItemIcon";
+import { getRarityColor } from "@/data/items/itemUtils";
 
 interface WorkbenchTiersProps {
 	workbench: Workbench;
@@ -26,21 +29,19 @@ export default function WorkbenchTiers({ workbench, curWbTier }: WorkbenchTiersP
 
 	// --- Tabs state and helpers ---
 	const [mode, setMode] = React.useState<"recipes" | "requirements">("recipes");
-	const [selectedTier, setSelectedTier] = React.useState<number | "all">("all");
-	const tabValue = `${mode}-${selectedTier}`;
+	const tabValue = `${mode}-all`;
 
 	const tabClasses = "px-4 py-2 cursor-pointer";
 
 	return (
 		<Card className="gap-2 p-1 sm:p-6 relative mt-18">
-			{/* Mode and Tier Tabs */}
 			<Tabs
 				value={tabValue}
 				className="w-full"
 			>
 				<TabsList className="absolute -top-12 left-1 sm:left-6">
 					<TabsTrigger
-						value={`recipes-${selectedTier}`}
+						value={`recipes-all`}
 						onClick={() => setMode("recipes")}
 						className={tabClasses}
 					>
@@ -58,7 +59,7 @@ export default function WorkbenchTiers({ workbench, curWbTier }: WorkbenchTiersP
 					</TabsTrigger>
 					{workbench.tiers.length > 1 && (
 						<TabsTrigger
-							value={`requirements-${selectedTier}`}
+							value={`requirements-all`}
 							onClick={() => setMode("requirements")}
 							className={tabClasses}
 						>
@@ -68,42 +69,18 @@ export default function WorkbenchTiers({ workbench, curWbTier }: WorkbenchTiersP
 					)}
 				</TabsList>
 
-				{workbench.id !== "basic_bench" && (
-					<TabsList>
-						<TabsTrigger
-							value={`${mode}-all`}
-							onClick={() => setSelectedTier("all")}
-							className={tabClasses}
-						>
-							{workbench.id !== "scrappy" ? "All" : "Current"}
-						</TabsTrigger>
-						{workbench.tiers.map((_, idx) => (
-							<TabsTrigger
-								key={idx}
-								value={`${mode}-${idx + 1}`}
-								onClick={() => setSelectedTier(idx + 1)}
-								className={tabClasses}
-							>
-								Tier {idx + 1}
-							</TabsTrigger>
-						))}
-					</TabsList>
-				)}
-
-				<TabsContent value={`recipes-${selectedTier}`}>
-					<WorkbenchRecipeContainer
-						selectedTier={selectedTier}
-						workbenchId={workbench.id}
-						currentTier={curWbTier}
-						recipes={recipes}
-					/>
+				<TabsContent value={`recipes-all`}>
+					{workbench.id === "scrappy" ? (
+						<ScrappyOutput currentTier={curWbTier} />
+					) : (
+						<WorkbenchRecipes recipes={recipes} />
+					)}
 				</TabsContent>
 				<TabsContent
-					value={`requirements-${selectedTier}`}
+					value={`requirements-all`}
 					className="w-full"
 				>
 					<WorkbenchRequirements
-						selectedTier={selectedTier}
 						totalTiers={workbench.tiers.length}
 						curWbTier={curWbTier}
 						workbench={workbench}
@@ -114,55 +91,81 @@ export default function WorkbenchTiers({ workbench, curWbTier }: WorkbenchTiersP
 	);
 }
 
-function WorkbenchRecipeContainer({
-	selectedTier,
-	workbenchId,
-	currentTier,
-	recipes,
-}: {
-	selectedTier: number | "all";
-	workbenchId: string;
-	currentTier: number;
-	recipes: Recipe[];
-}) {
-	if (workbenchId === "scrappy") {
-		return (
-			<ScrappyOutput
-				selectedTier={selectedTier}
-				currentTier={currentTier}
-			/>
-		);
-	}
-
-	return selectedTier === "all" ? (
-		<WorkbenchRecipes recipes={recipes} />
-	) : (
-		<WorkbenchRecipes recipes={filterRecipeByWorkbenchTier(recipes, selectedTier)} />
-	);
-}
-
 function WorkbenchRecipes({ recipes }: { recipes: Recipe[] }) {
+	const groupedRecipes = groupRecipesByWorkbenchTier(recipes);
+
 	return (
-		<div>
-			{recipes.map((recipe) => (
+		<div className="flex flex-col gap-6">
+			{Object.entries(groupedRecipes).map(([tier, recipes]) => (
 				<div
-					key={recipe.id}
-					className="flex items-center gap-2"
+					key={tier}
+					className="flex flex-wrap items-center gap-2"
 				>
-					{recipe.outputItemId}
+					<div className="flex items-center gap-2 w-full">
+						<p>Tier {tier}</p>
+					</div>
+					<div className="flex flex-wrap items-center gap-4">
+						{recipes.map((recipe) => (
+							<RecipeItem
+								key={recipe.id}
+								recipe={recipe}
+							/>
+						))}
+					</div>
 				</div>
 			))}
 		</div>
 	);
 }
 
+function RecipeItem({ recipe }: { recipe: Recipe }) {
+	const { getItemById } = useItems();
+	const outputItem = getItemById(recipe.outputItemId);
+
+	if (!outputItem) return null;
+
+	return (
+		<div
+			key={recipe.id}
+			className="flex items-center gap-4 border-2 p-2"
+		>
+			<div className="flex items-center gap-2">
+				{getItemIcon(
+					outputItem.icon,
+					`w-6 h-6 ${getRarityColor(outputItem.rarity, "text")}`
+				)}
+				<p className="mb-[2px]">{recipe.outputCount}</p>
+				<p className="mb-[2px]">{outputItem.name}</p>
+			</div>
+			<div className="flex flex-col gap-2 text-sm">
+				{recipe.requirements.map((requirement) => {
+					const reqItem = getItemById(requirement.itemId);
+					if (!reqItem) return null;
+
+					return (
+						<div
+							key={requirement.itemId}
+							className="flex items-center gap-2"
+						>
+							{getItemIcon(
+								reqItem.icon,
+								`w-4 h-4 ${getRarityColor(reqItem.rarity, "text")}`
+							)}
+							<p className="mb-[2px]">{requirement.count}</p>
+							<p className="mb-[2px]">{reqItem.name}</p>
+						</div>
+					);
+				})}
+			</div>
+		</div>
+	);
+}
+
 function WorkbenchRequirements({
-	selectedTier,
 	totalTiers,
 	curWbTier,
 	workbench,
 }: {
-	selectedTier: number | "all";
 	totalTiers: number;
 	curWbTier: number;
 	workbench: Workbench;
@@ -172,72 +175,16 @@ function WorkbenchRequirements({
 
 	return (
 		<div>
-			{selectedTier === "all" ? (
-				<>
-					<div className="text-muted-foreground p-2">
-						Required items across all tiers with total needed to reach max level.
-					</div>
-					<div className="p-2 bg-background rounded-lg">
-						<WorkbenchItemReqTable
-							requirements={allRequirements}
-							totalTiers={totalTiers}
-							highlightTier={curWbTier}
-						/>
-					</div>
-				</>
-			) : (
-				<div className="flex flex-wrap items-stretch gap-2">
-					<div className="flex flex-col flex-1 min-w-fit">
-						<div className="text-muted-foreground p-2">
-							Upgrading from {selectedTier - 1 > 0 ? selectedTier - 1 : "Unbuilt"} to
-							Tier {selectedTier}
-						</div>
-
-						<div className="p-2 bg-background rounded-lg flex-1">
-							<WorkbenchUpgradeReqTableRange
-								workbench={workbench}
-								range={[selectedTier, selectedTier]}
-								totalTiers={0}
-							/>
-						</div>
-					</div>
-					{selectedTier > curWbTier + 1 && (
-						<div className="flex flex-col flex-1 min-w-fit">
-							<div className="text-muted-foreground p-2">
-								Upgrading from {selectedTier - 1 > 0 ? selectedTier - 1 : "Unbuilt"}{" "}
-								to Tier {selectedTier}
-							</div>
-							<div className="p-2 bg-background rounded-lg flex-1">
-								<WorkbenchUpgradeReqTableRange
-									workbench={workbench}
-									range={[curWbTier, selectedTier]}
-									totalTiers={selectedTier - curWbTier}
-								/>
-							</div>
-						</div>
-					)}
-				</div>
-			)}
+			<div className="text-muted-foreground p-2">
+				Required items across all tiers with total needed to reach max level.
+			</div>
+			<div className="p-2 bg-background rounded-lg">
+				<WorkbenchItemReqTable
+					requirements={allRequirements}
+					totalTiers={totalTiers}
+					highlightTier={curWbTier}
+				/>
+			</div>
 		</div>
-	);
-}
-
-function WorkbenchUpgradeReqTableRange({
-	workbench,
-	range,
-	totalTiers,
-}: {
-	workbench: Workbench;
-	range: [number, number];
-	totalTiers: number;
-}) {
-	let [min, max] = range;
-	const requirements = getWorkbenchRequirementsRange([workbench], min, max);
-
-	return (
-		<WorkbenchItemReqTable
-			requirements={requirements}
-			totalTiers={totalTiers}
-		/>
 	);
 }
