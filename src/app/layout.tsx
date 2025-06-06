@@ -32,14 +32,6 @@ export const metadata: Metadata = {
 			"Your ultimate resource for ARC Raiders with detailed item stats and recycle chains, quests, tracking, and more.",
 		url: "https://arcvault.app",
 		siteName: "ARC Data Compendium",
-		images: [
-			{
-				url: "/og-image.jpg",
-				width: 1200,
-				height: 630,
-				alt: "ARC Data Compendium",
-			},
-		],
 		locale: "en_US",
 		type: "website",
 	},
