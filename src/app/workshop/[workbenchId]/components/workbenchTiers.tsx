@@ -2,23 +2,20 @@
 
 import React from "react";
 
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import type { WorkbenchId } from "@/types/items/recipe";
-import {
-	filterRecipeByWorkbenchTier,
-	groupRecipesByWorkbenchTier,
-} from "@/data/recipes/recipeUtils";
 import { Book, Boxes, Egg, Lock } from "lucide-react";
-import { useRecipes } from "@/contexts/recipeContext";
-import { Recipe, Workbench } from "@/types";
-import { ScrappyOutput } from "./scrappyOutput";
-import { getAllWorkbenchRequirements } from "@/data/workbenches/workbenchUtils";
 import { Card } from "@/components/ui/card";
-import { WorkbenchItemReqTable } from "./workbenchItemReqTable";
-import { useItems } from "@/contexts/itemContext";
-import getItemIcon from "@/components/items/getItemIcon";
+import { getAllWorkbenchRequirements } from "@/data/workbenches/workbenchUtils";
+import { cn } from "@/lib/utils";
 import { formatName, getRarityColor } from "@/data/items/itemUtils";
+import { groupRecipesByWorkbenchTier } from "@/data/recipes/recipeUtils";
+import getItemIcon from "@/components/items/getItemIcon";
+import { Recipe, RecipeLock, Workbench, WorkbenchId } from "@/types";
+import { ScrappyOutput } from "./scrappyOutput";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useDialog } from "@/contexts/dialogContext";
+import { useItems } from "@/contexts/itemContext";
+import { useRecipes } from "@/contexts/recipeContext";
+import { WorkbenchItemReqTable } from "./workbenchItemReqTable";
 
 interface WorkbenchTiersProps {
 	workbench: Workbench;
@@ -128,7 +125,7 @@ function WorkbenchRecipes({
 	);
 }
 
-function RecipeItem({ recipe }: { recipe: Recipe }) {
+function RecipeItem({ recipe, className }: { recipe: Recipe; className?: string }) {
 	const { getItemById } = useItems();
 	const { openDialog } = useDialog();
 	const outputItem = getItemById(recipe.outputItemId);
@@ -138,68 +135,84 @@ function RecipeItem({ recipe }: { recipe: Recipe }) {
 	return (
 		<div
 			key={recipe.id}
-			className="flex flex-col items-start p-2"
+			className={cn(
+				"flex flex-col justify-between items-start gap-2 p-2 border-2 rounded-lg min-h-48 min-w-80",
+				className
+			)}
 		>
-			<div
-				className="flex items-center gap-2 pr-2 rounded hover:bg-primary/10 cursor-pointer"
-				onClick={() => {
-					openDialog("item", outputItem);
-				}}
-			>
-				{getItemIcon(
-					outputItem.icon,
-					`w-12 h-12 p-2 rounded text-card ${getRarityColor(outputItem.rarity, "bg")}`
-				)}
-				<p className="mb-[2px] font-mono">{recipe.outputCount}</p>
-				<p className="mb-[2px]">{outputItem.name}</p>
-			</div>
-			<div className="flex flex-col gap-2 text-md p-3">
-				{recipe.requirements.length === 0 ? (
-					<div className="flex items-center gap-2 text-muted-foreground">
-						<p className="mb-[2px] font-bold font-mono">Unknown Requirements</p>
-					</div>
-				) : (
-					recipe.requirements.map((requirement) => {
-						const reqItem = getItemById(requirement.itemId);
-						if (!reqItem) return null;
+			<div className="flex flex-col items-start">
+				<div
+					className="flex items-center gap-2 pr-2 rounded hover:bg-primary/10 cursor-pointer"
+					onClick={() => {
+						openDialog("item", outputItem);
+					}}
+				>
+					{getItemIcon(
+						outputItem.icon,
+						`w-12 h-12 p-2 rounded text-card ${getRarityColor(outputItem.rarity, "bg")}`
+					)}
+					<p className="mb-[2px] font-mono">{recipe.outputCount}</p>
+					<p className="mb-[2px]">{outputItem.name}</p>
+				</div>
+				<div className="flex flex-col gap-2 text-md p-3">
+					{recipe.requirements.length === 0 ? (
+						<div className="flex items-center gap-2 text-muted-foreground">
+							<p className="mb-[2px] font-bold font-mono">Unknown Requirements</p>
+						</div>
+					) : (
+						recipe.requirements.map((requirement) => {
+							const reqItem = getItemById(requirement.itemId);
+							if (!reqItem) return null;
 
-						return (
-							<div
-								key={requirement.itemId}
-								className="flex items-center gap-2 text-muted-foreground hover:text-primary cursor-pointer"
-								onClick={() => {
-									openDialog("item", reqItem);
-								}}
-							>
-								{getItemIcon(
-									reqItem.icon,
-									`w-6 h-6 ${getRarityColor(reqItem.rarity, "text")}`
-								)}
-								<p className="mb-[2px] font-bold font-mono">{requirement.count}</p>
-								<p className="mb-[2px]">{reqItem.name}</p>
-							</div>
-						);
-					})
-				)}
+							return (
+								<div
+									key={requirement.itemId}
+									className="flex items-center gap-2 text-muted-foreground hover:text-primary cursor-pointer"
+									onClick={() => {
+										openDialog("item", reqItem);
+									}}
+								>
+									{getItemIcon(
+										reqItem.icon,
+										`w-6 h-6 ${getRarityColor(reqItem.rarity, "text")}`
+									)}
+									<p className="mb-[2px] font-bold font-mono">
+										{requirement.count}
+									</p>
+									<p className="mb-[2px]">{reqItem.name}</p>
+								</div>
+							);
+						})
+					)}
+				</div>
 			</div>
 			{recipe.isLocked && (
-				<div className="flex items-center gap-2 text-red-400 px-3">
-					<Lock size={14} />
-					{Object.entries(recipe.lockedType ?? {}).map(([key, value]) => {
-						if (typeof value === "boolean") {
-							return <p key={key}>{formatName(key)}</p>;
-						}
+				<div className="flex items-center gap-2 pl-4.5 w-full">
+					<Lock
+						size={14}
+						className="text-red-600 dark:text-red-400"
+					/>
+					<div className="flex items-center gap-2 w-full mb-[2px]">
+						{Object.entries(recipe.lockedType ?? {}).map(([key, value]) => {
+							if (typeof value === "boolean") {
+								return <p key={key}>{formatName(key)}</p>;
+							}
 
-						return (
-							<p key={key}>
-								{value === "Mastery" ? "" : value} {formatName(key)}
-							</p>
-						);
-					})}
+							return (
+								<p key={key}>
+									{value === "Mastery" ? "" : value} {formatName(key)}
+								</p>
+							);
+						})}
+					</div>
 				</div>
 			)}
 		</div>
 	);
+}
+
+function RecipeUnlockType({ recipeLock }: { recipeLock: RecipeLock }) {
+	return <div className="flex items-center gap-2 w-full mb-[2px]"></div>;
 }
 
 function WorkbenchRequirements({
