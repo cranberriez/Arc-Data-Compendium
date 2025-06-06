@@ -5,8 +5,10 @@ export interface RecipeRequirement {
 
 export interface RecipeLock {
 	looted?: boolean;
-	quest?: string;
 	mastery?: string;
+	quest?: string;
+	battlepass?: string;
+	skill?: string;
 	event?: string;
 	unsure?: boolean;
 }
@@ -29,6 +31,6 @@ export interface Recipe {
 	craftTime: number;
 	inRaid: boolean;
 	outputCount: number;
-	recipeLocked: boolean;
+	isLocked: boolean;
 	lockedType?: RecipeLock;
 }

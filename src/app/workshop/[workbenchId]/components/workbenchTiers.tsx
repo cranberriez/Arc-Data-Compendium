@@ -8,17 +8,16 @@ import {
 	filterRecipeByWorkbenchTier,
 	groupRecipesByWorkbenchTier,
 } from "@/data/recipes/recipeUtils";
-import { Book, Boxes, Egg } from "lucide-react";
+import { Book, Boxes, Egg, Lock } from "lucide-react";
 import { useRecipes } from "@/contexts/recipeContext";
 import { Recipe, Workbench } from "@/types";
 import { ScrappyOutput } from "./scrappyOutput";
 import { getAllWorkbenchRequirements } from "@/data/workbenches/workbenchUtils";
 import { Card } from "@/components/ui/card";
 import { WorkbenchItemReqTable } from "./workbenchItemReqTable";
-import ItemCard from "@/components/items/ItemCard";
 import { useItems } from "@/contexts/itemContext";
 import getItemIcon from "@/components/items/getItemIcon";
-import { getRarityColor } from "@/data/items/itemUtils";
+import { formatName, getRarityColor } from "@/data/items/itemUtils";
 import { useDialog } from "@/contexts/dialogContext";
 
 interface WorkbenchTiersProps {
@@ -183,6 +182,22 @@ function RecipeItem({ recipe }: { recipe: Recipe }) {
 					})
 				)}
 			</div>
+			{recipe.isLocked && (
+				<div className="flex items-center gap-2 text-red-400 px-3">
+					<Lock size={14} />
+					{Object.entries(recipe.lockedType ?? {}).map(([key, value]) => {
+						if (typeof value === "boolean") {
+							return <p key={key}>{formatName(key)}</p>;
+						}
+
+						return (
+							<p key={key}>
+								{value === "Mastery" ? "" : value} {formatName(key)}
+							</p>
+						);
+					})}
+				</div>
+			)}
 		</div>
 	);
 }

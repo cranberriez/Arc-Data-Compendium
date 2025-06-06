@@ -17,7 +17,7 @@
 		},
 		"craftTime": 0,
 		"outputCount": 1,
-		"recipeLocked": false
+		"isLocked": false
 	},
 	{
 		"id": "recipe_barricade_kit",
@@ -37,7 +37,7 @@
 		},
 		"craftTime": 0,
 		"outputCount": 1,
-		"recipeLocked": true,
+		"isLocked": true,
 		"lockedType": {
 			"unsure": true
 		}
@@ -60,7 +60,7 @@
 		},
 		"craftTime": 0,
 		"outputCount": 1,
-		"recipeLocked": true,
+		"isLocked": true,
 		"lockedType": {
 			"unsure": true
 		}
@@ -83,7 +83,7 @@
 		},
 		"craftTime": 0,
 		"outputCount": 1,
-		"recipeLocked": false
+		"isLocked": false
 	},
 	{
 		"id": "recipe_raider_hatch_key",
@@ -92,7 +92,7 @@
 		"workbench": null,
 		"craftTime": 0,
 		"outputCount": 1,
-		"recipeLocked": true,
+		"isLocked": true,
 		"lockedType": {
 			"unsure": true
 		}
@@ -115,7 +115,7 @@
 		},
 		"craftTime": 0,
 		"outputCount": 1,
-		"recipeLocked": false
+		"isLocked": false
 	},
 	{
 		"id": "recipe_snap_hook",
@@ -126,7 +126,7 @@
 		},
 		"craftTime": 0,
 		"outputCount": 1,
-		"recipeLocked": true,
+		"isLocked": true,
 		"lockedType": {
 			"mastery": "Mastery"
 		}
@@ -149,7 +149,7 @@
 		},
 		"craftTime": 0,
 		"outputCount": 1,
-		"recipeLocked": false
+		"isLocked": false
 	},
 	{
 		"id": "recipe_blaze_grenade",
@@ -169,7 +169,7 @@
 		},
 		"craftTime": 0,
 		"outputCount": 1,
-		"recipeLocked": false
+		"isLocked": false
 	},
 	{
 		"id": "recipe_gas_grenade",
@@ -189,7 +189,7 @@
 		},
 		"craftTime": 0,
 		"outputCount": 1,
-		"recipeLocked": false
+		"isLocked": false
 	},
 	{
 		"id": "recipe_jump_mine",
@@ -209,7 +209,7 @@
 		},
 		"craftTime": 0,
 		"outputCount": 1,
-		"recipeLocked": true,
+		"isLocked": true,
 		"lockedType": {
 			"unsure": true
 		}
@@ -226,7 +226,7 @@
 		"workbench": null,
 		"craftTime": 0,
 		"outputCount": 1,
-		"recipeLocked": true,
+		"isLocked": true,
 		"inRaid": true,
 		"lockedType": {
 			"unsure": true
@@ -244,7 +244,7 @@
 		"workbench": null,
 		"craftTime": 0,
 		"outputCount": 1,
-		"recipeLocked": true,
+		"isLocked": true,
 		"inRaid": true,
 		"lockedType": {
 			"unsure": true
@@ -262,7 +262,7 @@
 		"workbench": null,
 		"craftTime": 0,
 		"outputCount": 1,
-		"recipeLocked": true,
+		"isLocked": true,
 		"inRaid": true,
 		"lockedType": {
 			"unsure": true
@@ -280,7 +280,7 @@
 		"workbench": null,
 		"craftTime": 0,
 		"outputCount": 1,
-		"recipeLocked": true,
+		"isLocked": true,
 		"inRaid": true,
 		"lockedType": {
 			"unsure": true
@@ -306,7 +306,7 @@
 		"craftTime": 0,
 		"outputCount": 1,
 		"inRaid": true,
-		"recipeLocked": false
+		"isLocked": false
 	},
 	{
 		"id": "recipe_lure_grenade",
@@ -326,7 +326,7 @@
 		},
 		"craftTime": 0,
 		"outputCount": 1,
-		"recipeLocked": true,
+		"isLocked": true,
 		"lockedType": {
 			"unsure": true
 		}
@@ -338,7 +338,7 @@
 		"workbench": null,
 		"craftTime": 0,
 		"outputCount": 1,
-		"recipeLocked": true,
+		"isLocked": true,
 		"lockedType": {
 			"mastery": "Mastery"
 		}
@@ -362,7 +362,7 @@
 		"craftTime": 0,
 		"outputCount": 1,
 		"inRaid": true,
-		"recipeLocked": false
+		"isLocked": false
 	},
 	{
 		"id": "recipe_snap_blast_grenade",
@@ -382,7 +382,7 @@
 		},
 		"craftTime": 0,
 		"outputCount": 1,
-		"recipeLocked": false
+		"isLocked": false
 	},
 	{
 		"id": "recipe_tagging_grenade",
@@ -402,7 +402,7 @@
 		},
 		"craftTime": 0,
 		"outputCount": 1,
-		"recipeLocked": true,
+		"isLocked": true,
 		"lockedType": {
 			"unsure": true
 		}
@@ -414,7 +414,7 @@
 		"workbench": null,
 		"craftTime": 0,
 		"outputCount": 1,
-		"recipeLocked": true,
+		"isLocked": true,
 		"lockedType": {
 			"unsure": true
 		}
@@ -426,7 +426,7 @@
 		"workbench": null,
 		"craftTime": 0,
 		"outputCount": 1,
-		"recipeLocked": true,
+		"isLocked": true,
 		"lockedType": {
 			"mastery": "Mastery"
 		}
@@ -449,7 +449,7 @@
 		},
 		"craftTime": 0,
 		"outputCount": 1,
-		"recipeLocked": true,
+		"isLocked": true,
 		"lockedType": {
 			"looted": true
 		}
@@ -472,7 +472,7 @@
 		},
 		"craftTime": 0,
 		"outputCount": 1,
-		"recipeLocked": false
+		"isLocked": false
 	},
 	{
 		"id": "recipe_herbal_bandage",
@@ -492,7 +492,7 @@
 		},
 		"craftTime": 0,
 		"outputCount": 1,
-		"recipeLocked": false
+		"isLocked": false
 	},
 	{
 		"id": "recipe_bandage",
@@ -509,7 +509,7 @@
 		},
 		"craftTime": 0,
 		"outputCount": 1,
-		"recipeLocked": false
+		"isLocked": false
 	},
 	{
 		"id": "recipe_vita_shot",
@@ -529,7 +529,7 @@
 		},
 		"craftTime": 0,
 		"outputCount": 1,
-		"recipeLocked": true,
+		"isLocked": true,
 		"lockedType": {
 			"looted": true
 		}
@@ -552,7 +552,7 @@
 		},
 		"craftTime": 0,
 		"outputCount": 1,
-		"recipeLocked": true,
+		"isLocked": true,
 		"lockedType": {
 			"looted": true
 		}
@@ -575,7 +575,7 @@
 		},
 		"craftTime": 0,
 		"outputCount": 1,
-		"recipeLocked": false
+		"isLocked": false
 	},
 	{
 		"id": "recipe_shield_recharger",
@@ -596,7 +596,7 @@
 		},
 		"craftTime": 0,
 		"outputCount": 1,
-		"recipeLocked": false
+		"isLocked": false
 	},
 	{
 		"id": "recipe_arc_circuitry",
@@ -607,7 +607,7 @@
 		},
 		"craftTime": 0,
 		"outputCount": 1,
-		"recipeLocked": true,
+		"isLocked": true,
 		"lockedType": {
 			"looted": true
 		}
@@ -630,7 +630,7 @@
 		},
 		"craftTime": 0,
 		"outputCount": 1,
-		"recipeLocked": true,
+		"isLocked": true,
 		"lockedType": {
 			"looted": true
 		}
@@ -653,7 +653,7 @@
 		},
 		"craftTime": 0,
 		"outputCount": 1,
-		"recipeLocked": true,
+		"isLocked": true,
 		"lockedType": {
 			"looted": true
 		}
@@ -676,7 +676,7 @@
 		},
 		"craftTime": 0,
 		"outputCount": 1,
-		"recipeLocked": true,
+		"isLocked": true,
 		"lockedType": {
 			"looted": true
 		}
@@ -699,7 +699,7 @@
 		},
 		"craftTime": 0,
 		"outputCount": 1,
-		"recipeLocked": true,
+		"isLocked": true,
 		"lockedType": {
 			"looted": true
 		}
@@ -722,7 +722,7 @@
 		},
 		"craftTime": 0,
 		"outputCount": 1,
-		"recipeLocked": true,
+		"isLocked": true,
 		"lockedType": {
 			"looted": true,
 			"event": "Harvester"
@@ -746,7 +746,7 @@
 		},
 		"craftTime": 0,
 		"outputCount": 1,
-		"recipeLocked": true,
+		"isLocked": true,
 		"lockedType": {
 			"looted": true,
 			"event": "Harvester"
@@ -770,7 +770,7 @@
 		},
 		"craftTime": 0,
 		"outputCount": 1,
-		"recipeLocked": true,
+		"isLocked": true,
 		"lockedType": {
 			"looted": true,
 			"event": "Harvester"
@@ -794,7 +794,7 @@
 		},
 		"craftTime": 0,
 		"outputCount": 1,
-		"recipeLocked": true,
+		"isLocked": true,
 		"lockedType": {
 			"looted": true,
 			"event": "Harvester"
@@ -819,7 +819,7 @@
 		},
 		"craftTime": 0,
 		"outputCount": 1,
-		"recipeLocked": false
+		"isLocked": false
 	},
 	{
 		"id": "recipe_medium_shield",
@@ -839,7 +839,7 @@
 		},
 		"craftTime": 0,
 		"outputCount": 1,
-		"recipeLocked": false
+		"isLocked": false
 	},
 	{
 		"id": "recipe_heavy_shield",
@@ -859,7 +859,7 @@
 		},
 		"craftTime": 0,
 		"outputCount": 1,
-		"recipeLocked": false
+		"isLocked": false
 	},
 	{
 		"id": "recipe_raider_augment_i",
@@ -879,7 +879,7 @@
 		},
 		"craftTime": 0,
 		"outputCount": 1,
-		"recipeLocked": false
+		"isLocked": false
 	},
 	{
 		"id": "recipe_raider_augment_ii",
@@ -899,7 +899,7 @@
 		},
 		"craftTime": 0,
 		"outputCount": 1,
-		"recipeLocked": false
+		"isLocked": false
 	},
 	{
 		"id": "recipe_raider_augment_iii",
@@ -919,7 +919,7 @@
 		},
 		"craftTime": 0,
 		"outputCount": 1,
-		"recipeLocked": false
+		"isLocked": false
 	},
 	{
 		"id": "recipe_raider_augment_iv",
@@ -939,6 +939,6 @@
 		},
 		"craftTime": 0,
 		"outputCount": 1,
-		"recipeLocked": false
+		"isLocked": false
 	}
 ]
