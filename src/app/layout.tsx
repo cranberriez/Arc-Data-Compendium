@@ -8,7 +8,7 @@ import Toolbar from "@/components/toolbar/toolbar";
 import "./globals.css";
 
 export const metadata: Metadata = {
-	title: "ARC Data Compendium | Complete Item Database & Guides",
+	title: "ARC Vault Data Compendium",
 	description:
 		"Your ultimate resource for ARC Raiders with detailed item stats, locations, and game data.",
 	keywords: [
@@ -27,7 +27,7 @@ export const metadata: Metadata = {
 		canonical: "/",
 	},
 	openGraph: {
-		title: "ARC Data Compendium | Item & Stats Database",
+		title: "ARC Vault Data Compendium",
 		description:
 			"Your ultimate resource for ARC Raiders with detailed item stats and recycle chains, quests, tracking, and more.",
 		url: "https://arcvault.app",

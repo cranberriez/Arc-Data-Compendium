@@ -3,6 +3,10 @@ import { QuickUseData } from "./quickuse";
 import { GearData } from "./gear";
 import { ItemCategory, ItemSource, Rarity, Recycling } from "./types";
 
+export type ItemUse =
+	| { type: "workbench"; id: string; name: string; extra: { tier: number } }
+	| { type: "recipe"; id: string; name: string };
+
 /**
  * Base interface that all items must implement
  */
@@ -51,4 +55,7 @@ export interface Item extends BaseItem {
 
 	/** Gear item data encapsulator */
 	gear?: GearData;
+
+	/** How this item can be used */
+	uses?: ItemUse[];
 }

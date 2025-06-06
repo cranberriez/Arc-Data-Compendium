@@ -4,7 +4,7 @@ import { Recipe } from "@/types/items/recipe";
 import { Workbench } from "@/types/items/workbench";
 
 // Import all JSON data files
-import itemData from "@/data/items/itemData.json";
+import itemData from "@/data/items/itemData.build.json";
 import recipeData from "@/data/recipes/recipeData.json";
 import workbenchData from "@/data/workbenches/workbenchData.json";
 
