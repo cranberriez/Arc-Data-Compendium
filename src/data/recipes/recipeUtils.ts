@@ -14,14 +14,16 @@ export function filterRecipesAvailableByTier(recipes: Recipe[], tier: number) {
 	});
 }
 
-export function groupRecipesByWorkbenchTier(recipes: Recipe[]) {
+import type { WorkbenchId } from "@/types";
+
+export function groupRecipesByWorkbenchTier(recipes: Recipe[], workbenchId: WorkbenchId) {
 	const tierMap: Record<number, Recipe[]> = {};
 	for (const recipe of recipes) {
-		if (!recipe.workbench) continue;
-		for (const unlockedTier of Object.values(recipe.workbench)) {
-			if (!(unlockedTier in tierMap)) tierMap[unlockedTier] = [];
-			tierMap[unlockedTier].push(recipe);
-		}
+		if (!recipe.workbench || !(workbenchId in recipe.workbench)) continue;
+		const unlockedTier = recipe.workbench[workbenchId];
+		if (unlockedTier === undefined) continue;
+		if (!(unlockedTier in tierMap)) tierMap[unlockedTier] = [];
+		tierMap[unlockedTier].push(recipe);
 	}
 	return tierMap;
 }

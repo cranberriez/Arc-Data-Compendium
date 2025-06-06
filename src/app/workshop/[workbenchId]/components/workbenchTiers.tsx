@@ -3,6 +3,7 @@
 import React from "react";
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import type { WorkbenchId } from "@/types/items/recipe";
 import {
 	filterRecipeByWorkbenchTier,
 	groupRecipesByWorkbenchTier,
@@ -18,6 +19,7 @@ import ItemCard from "@/components/items/ItemCard";
 import { useItems } from "@/contexts/itemContext";
 import getItemIcon from "@/components/items/getItemIcon";
 import { getRarityColor } from "@/data/items/itemUtils";
+import { useDialog } from "@/contexts/dialogContext";
 
 interface WorkbenchTiersProps {
 	workbench: Workbench;
@@ -73,7 +75,10 @@ export default function WorkbenchTiers({ workbench, curWbTier }: WorkbenchTiersP
 					{workbench.id === "scrappy" ? (
 						<ScrappyOutput currentTier={curWbTier} />
 					) : (
-						<WorkbenchRecipes recipes={recipes} />
+						<WorkbenchRecipes
+							recipes={recipes}
+							workbenchId={workbench.id as WorkbenchId}
+						/>
 					)}
 				</TabsContent>
 				<TabsContent
@@ -91,8 +96,14 @@ export default function WorkbenchTiers({ workbench, curWbTier }: WorkbenchTiersP
 	);
 }
 
-function WorkbenchRecipes({ recipes }: { recipes: Recipe[] }) {
-	const groupedRecipes = groupRecipesByWorkbenchTier(recipes);
+function WorkbenchRecipes({
+	recipes,
+	workbenchId,
+}: {
+	recipes: Recipe[];
+	workbenchId: WorkbenchId;
+}) {
+	const groupedRecipes = groupRecipesByWorkbenchTier(recipes, workbenchId);
 
 	return (
 		<div className="flex flex-col gap-6">
@@ -104,7 +115,7 @@ function WorkbenchRecipes({ recipes }: { recipes: Recipe[] }) {
 					<div className="flex items-center gap-2 w-full">
 						<p>Tier {tier}</p>
 					</div>
-					<div className="flex flex-wrap items-center gap-4">
+					<div className="flex flex-wrap gap-4">
 						{recipes.map((recipe) => (
 							<RecipeItem
 								key={recipe.id}
@@ -120,6 +131,7 @@ function WorkbenchRecipes({ recipes }: { recipes: Recipe[] }) {
 
 function RecipeItem({ recipe }: { recipe: Recipe }) {
 	const { getItemById } = useItems();
+	const { openDialog } = useDialog();
 	const outputItem = getItemById(recipe.outputItemId);
 
 	if (!outputItem) return null;
@@ -127,35 +139,49 @@ function RecipeItem({ recipe }: { recipe: Recipe }) {
 	return (
 		<div
 			key={recipe.id}
-			className="flex items-center gap-4 border-2 p-2"
+			className="flex flex-col items-start p-2"
 		>
-			<div className="flex items-center gap-2">
+			<div
+				className="flex items-center gap-2 pr-2 rounded hover:bg-primary/10 cursor-pointer"
+				onClick={() => {
+					openDialog("item", outputItem);
+				}}
+			>
 				{getItemIcon(
 					outputItem.icon,
-					`w-6 h-6 ${getRarityColor(outputItem.rarity, "text")}`
+					`w-12 h-12 p-2 rounded text-card ${getRarityColor(outputItem.rarity, "bg")}`
 				)}
-				<p className="mb-[2px]">{recipe.outputCount}</p>
+				<p className="mb-[2px] font-mono">{recipe.outputCount}</p>
 				<p className="mb-[2px]">{outputItem.name}</p>
 			</div>
-			<div className="flex flex-col gap-2 text-sm">
-				{recipe.requirements.map((requirement) => {
-					const reqItem = getItemById(requirement.itemId);
-					if (!reqItem) return null;
+			<div className="flex flex-col gap-2 text-md p-3">
+				{recipe.requirements.length === 0 ? (
+					<div className="flex items-center gap-2 text-muted-foreground">
+						<p className="mb-[2px] font-bold font-mono">Unknown Requirements</p>
+					</div>
+				) : (
+					recipe.requirements.map((requirement) => {
+						const reqItem = getItemById(requirement.itemId);
+						if (!reqItem) return null;
 
-					return (
-						<div
-							key={requirement.itemId}
-							className="flex items-center gap-2"
-						>
-							{getItemIcon(
-								reqItem.icon,
-								`w-4 h-4 ${getRarityColor(reqItem.rarity, "text")}`
-							)}
-							<p className="mb-[2px]">{requirement.count}</p>
-							<p className="mb-[2px]">{reqItem.name}</p>
-						</div>
-					);
-				})}
+						return (
+							<div
+								key={requirement.itemId}
+								className="flex items-center gap-2 text-muted-foreground hover:text-primary cursor-pointer"
+								onClick={() => {
+									openDialog("item", reqItem);
+								}}
+							>
+								{getItemIcon(
+									reqItem.icon,
+									`w-6 h-6 ${getRarityColor(reqItem.rarity, "text")}`
+								)}
+								<p className="mb-[2px] font-bold font-mono">{requirement.count}</p>
+								<p className="mb-[2px]">{reqItem.name}</p>
+							</div>
+						);
+					})
+				)}
 			</div>
 		</div>
 	);
