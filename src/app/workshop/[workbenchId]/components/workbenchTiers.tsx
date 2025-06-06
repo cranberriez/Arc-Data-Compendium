@@ -2,7 +2,19 @@
 
 import React from "react";
 
-import { Book, Boxes, Egg, Lock } from "lucide-react";
+import {
+	Book,
+	BookMarked,
+	Box,
+	Boxes,
+	CircleHelp,
+	Crown,
+	Egg,
+	Hexagon,
+	Lock,
+	TicketCheck,
+	Timer,
+} from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { getAllWorkbenchRequirements } from "@/data/workbenches/workbenchUtils";
 import { cn } from "@/lib/utils";
@@ -187,32 +199,77 @@ function RecipeItem({ recipe, className }: { recipe: Recipe; className?: string 
 				</div>
 			</div>
 			{recipe.isLocked && (
-				<div className="flex items-center gap-2 pl-4.5 w-full">
-					<Lock
-						size={14}
-						className="text-red-600 dark:text-red-400"
-					/>
-					<div className="flex items-center gap-2 w-full mb-[2px]">
-						{Object.entries(recipe.lockedType ?? {}).map(([key, value]) => {
-							if (typeof value === "boolean") {
-								return <p key={key}>{formatName(key)}</p>;
-							}
-
-							return (
-								<p key={key}>
-									{value === "Mastery" ? "" : value} {formatName(key)}
-								</p>
-							);
-						})}
+				<div className="flex flex-col gap-2 w-full">
+					<div className="flex items-center gap-2 text-red-600 dark:text-red-400">
+						<Lock size={14} />
+						<span className="mb-[2px]">Unlock:</span>
 					</div>
+					<RecipeUnlockType recipeLock={recipe.lockedType} />
 				</div>
 			)}
 		</div>
 	);
 }
 
-function RecipeUnlockType({ recipeLock }: { recipeLock: RecipeLock }) {
-	return <div className="flex items-center gap-2 w-full mb-[2px]"></div>;
+function RecipeUnlockType({ recipeLock }: { recipeLock: RecipeLock | undefined }) {
+	if (!recipeLock) return null;
+
+	const lockTypeDetails = (lockType: string) => {
+		const iconClasses = (color: string) => `w-4 h-4 text-${color}`;
+		const icons: Record<string, { Icon: React.ElementType; color: string }> = {
+			looted: { Icon: Box, color: "gray-600/80" },
+			mastery: { Icon: Crown, color: "green-500/80" },
+			quest: { Icon: BookMarked, color: "yellow-500/80" },
+			battlepass: { Icon: TicketCheck, color: "blue-500/80" },
+			skill: { Icon: Hexagon, color: "purple-500/80" },
+			event: { Icon: Timer, color: "orange-500/80" },
+		};
+
+		const { Icon, color } = icons[lockType] || { Icon: CircleHelp, color: "gray-700/80" };
+
+		return {
+			icon: (
+				<Icon
+					size={14}
+					className={iconClasses(color)}
+				/>
+			),
+		};
+	};
+
+	const lockPill = (key: string, value: string | boolean) => {
+		const lockVisuals = lockTypeDetails(key);
+		let displayKey: string;
+		let displayValue: string;
+
+		if (typeof value === "boolean") {
+			displayKey = key;
+			displayValue = value ? "" : "";
+		} else {
+			displayKey = value === "Mastery" ? "" : value;
+			displayValue = key;
+		}
+
+		return (
+			<div
+				className={cn("flex items-center gap-2")}
+				key={key}
+			>
+				{lockVisuals.icon}
+				<p>
+					{formatName(displayKey)} {formatName(displayValue)}
+				</p>
+			</div>
+		);
+	};
+
+	return (
+		<div className="flex items-center gap-2 w-full mb-[2px]">
+			{Object.entries(recipeLock).map(([key, value]) => {
+				return lockPill(key, value);
+			})}
+		</div>
+	);
 }
 
 function WorkbenchRequirements({
