@@ -189,7 +189,7 @@ export function WorkshopProvider({ children }: { children: React.ReactNode }) {
 
 	useEffect(() => {
 		fetchWorkshopData();
-	}, [fetchWorkshopData]);
+	}, []);
 
 	const refreshWorkshop = async () => {
 		await fetchWorkshopData();
