@@ -3,35 +3,34 @@ export interface RecipeRequirement {
 	count: number;
 }
 
-export interface RecipeWB {
-	workbench:
-		| "none"
-		| "scrappy"
-		| "weapon_bench"
-		| "equipment_bench"
-		| "med_station"
-		| "explosives_bench"
-		| "utility_bench"
-		| "refiner";
-	tier: number;
-}
-
 export interface RecipeLock {
 	looted?: boolean;
-	quest?: string;
 	mastery?: string;
+	quest?: string;
+	battlepass?: string;
+	skill?: string;
 	event?: string;
 	unsure?: boolean;
 }
+
+export type WorkbenchId =
+	| "none"
+	| "scrappy"
+	| "weapon_bench"
+	| "equipment_bench"
+	| "med_station"
+	| "explosives_bench"
+	| "utility_bench"
+	| "refiner";
 
 export interface Recipe {
 	id: string;
 	outputItemId: string;
 	requirements: RecipeRequirement[];
-	workbench: RecipeWB[] | null;
+	workbench: Partial<Record<WorkbenchId, number>> | null;
 	craftTime: number;
 	inRaid: boolean;
 	outputCount: number;
-	recipeLocked: boolean;
+	isLocked: boolean;
 	lockedType?: RecipeLock;
 }

@@ -14,6 +14,8 @@ import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { useSidebar } from "@/components/ui/sidebar";
 import { useEffect } from "react";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import React from "react";
 
 export type NavItem = {
 	title: string;
@@ -40,7 +42,7 @@ function NavItem({ item, pathname }: { item: NavItem; pathname: string | null })
 		return null;
 	}
 
-	if (hasItems) {
+	if (hasItems && !isCollapsed) {
 		return (
 			<Collapsible
 				defaultOpen
@@ -83,9 +85,85 @@ function NavItem({ item, pathname }: { item: NavItem; pathname: string | null })
 				)}
 			</Collapsible>
 		);
+	} else if (hasItems && isCollapsed) {
+		return (
+			<Popover>
+				<PopoverTrigger asChild>
+					<NavMainItem
+						item={item}
+						isActive={isActive}
+						isDisabled={isDisabled}
+						activeButton={activeButton}
+						disabledButton={disabledButton}
+						activeClass={activeClass}
+						isCollapsed={isCollapsed}
+					/>
+				</PopoverTrigger>
+				<PopoverContent
+					side="right"
+					sideOffset={32}
+					className="w-fit p-1 border-1"
+				>
+					<div className="flex flex-col gap-2">
+						{item.items?.map((subItem) => (
+							<Link
+								key={subItem.title}
+								href={subItem.url || "#"}
+								className={cn(
+									"flex items-center py-2 px-2 text-xs gap-2 hover:bg-accent hover:text-accent-foreground rounded",
+									subItem.url === pathname
+										? "bg-accent text-accent-foreground"
+										: ""
+								)}
+							>
+								{subItem.icon && <subItem.icon className="h-4 w-4 flex-shrink-0" />}
+								<p>{subItem.title}</p>
+							</Link>
+						))}
+					</div>
+				</PopoverContent>
+			</Popover>
+		);
+	} else {
+		return (
+			<NavMainItem
+				item={item}
+				isActive={isActive}
+				isDisabled={isDisabled}
+				activeButton={activeButton}
+				disabledButton={disabledButton}
+				activeClass={activeClass}
+				isCollapsed={isCollapsed}
+			/>
+		);
 	}
+}
 
-	return (
+type NavMainItemProps = {
+	item: NavItem;
+	isActive: boolean;
+	isDisabled: boolean;
+	activeButton: string;
+	disabledButton: string;
+	activeClass: string;
+	isCollapsed: boolean;
+};
+
+// Use forwardRef so PopoverTrigger can attach to the correct DOM node
+export const NavMainItem = React.forwardRef<HTMLAnchorElement, NavMainItemProps>(
+	(
+		{
+			item,
+			isActive,
+			isDisabled,
+			activeButton,
+			disabledButton,
+			activeClass,
+			isCollapsed,
+			...props
+		},
+		ref
+	) => (
 		<SidebarMenuItem>
 			<SidebarMenuButton
 				asChild
@@ -97,23 +175,38 @@ function NavItem({ item, pathname }: { item: NavItem; pathname: string | null })
 				)}
 				disabled={isDisabled}
 			>
+				{/* Link is the actual focusable element, so forward the ref here */}
 				<Link
+					ref={ref}
 					href={isDisabled ? "#" : item.url || "#"}
 					className={cn("w-full py-2 px-2 text-sm flex items-center gap-2", activeClass)}
+					tabIndex={isDisabled ? -1 : 0}
+					aria-disabled={isDisabled}
+					{...props}
 				>
 					{item.icon && <item.icon className="h-4 w-4 flex-shrink-0" />}
 					{!isCollapsed && <span className="truncate">{item.title}</span>}
 				</Link>
 			</SidebarMenuButton>
 		</SidebarMenuItem>
-	);
-}
+	)
+);
 
-export function NavMain({ items, category }: { items: NavItem[]; category: string }) {
+NavMainItem.displayName = "NavMainItem";
+
+export function NavMain({
+	items,
+	category,
+	index,
+}: {
+	items: NavItem[];
+	category: string;
+	index: number;
+}) {
 	const pathname = usePathname();
 
 	return (
-		<SidebarGroup>
+		<SidebarGroup style={{ zIndex: 99 - index }}>
 			<SidebarGroupLabel className="px-2 text-xs font-medium text-muted-foreground">
 				{category}
 			</SidebarGroupLabel>

@@ -4,6 +4,8 @@ import { ThemeProvider } from "@/contexts/themeContext";
 import { ItemProvider } from "@/contexts/itemContext";
 import { DialogProvider } from "@/contexts/dialogContext";
 import { SidebarProvider } from "@/components/ui/sidebar";
+import { WorkshopProvider } from "@/contexts/workshopContext";
+import { RecipeProvider } from "@/contexts/recipeContext";
 
 interface AppProvidersProps {
 	children: React.ReactNode;
@@ -17,9 +19,13 @@ export function AppProviders({ children }: AppProvidersProps) {
 			enableSystem
 		>
 			<SidebarProvider>
-				<ItemProvider>
-					<DialogProvider>{children}</DialogProvider>
-				</ItemProvider>
+				<WorkshopProvider>
+					<RecipeProvider>
+						<ItemProvider>
+							<DialogProvider>{children}</DialogProvider>
+						</ItemProvider>
+					</RecipeProvider>
+				</WorkshopProvider>
 			</SidebarProvider>
 		</ThemeProvider>
 	);

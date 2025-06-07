@@ -12,15 +12,12 @@
 				"count": 4
 			}
 		],
-		"workbench": [
-			{
-				"workbench": "utility_bench",
-				"tier": 1
-			}
-		],
+		"workbench": {
+			"utility_bench": 1
+		},
 		"craftTime": 0,
 		"outputCount": 1,
-		"recipeLocked": false
+		"isLocked": false
 	},
 	{
 		"id": "recipe_barricade_kit",
@@ -35,15 +32,12 @@
 				"count": 1
 			}
 		],
-		"workbench": [
-			{
-				"workbench": "utility_bench",
-				"tier": 1
-			}
-		],
+		"workbench": {
+			"utility_bench": 1
+		},
 		"craftTime": 0,
 		"outputCount": 1,
-		"recipeLocked": true,
+		"isLocked": true,
 		"lockedType": {
 			"unsure": true
 		}
@@ -61,15 +55,12 @@
 				"count": 2
 			}
 		],
-		"workbench": [
-			{
-				"workbench": "utility_bench",
-				"tier": 1
-			}
-		],
+		"workbench": {
+			"utility_bench": 1
+		},
 		"craftTime": 0,
 		"outputCount": 1,
-		"recipeLocked": true,
+		"isLocked": true,
 		"lockedType": {
 			"unsure": true
 		}
@@ -87,15 +78,12 @@
 				"count": 3
 			}
 		],
-		"workbench": [
-			{
-				"workbench": "utility_bench",
-				"tier": 3
-			}
-		],
+		"workbench": {
+			"utility_bench": 3
+		},
 		"craftTime": 0,
 		"outputCount": 1,
-		"recipeLocked": false
+		"isLocked": false
 	},
 	{
 		"id": "recipe_raider_hatch_key",
@@ -104,7 +92,7 @@
 		"workbench": null,
 		"craftTime": 0,
 		"outputCount": 1,
-		"recipeLocked": true,
+		"isLocked": true,
 		"lockedType": {
 			"unsure": true
 		}
@@ -122,29 +110,23 @@
 				"count": 4
 			}
 		],
-		"workbench": [
-			{
-				"workbench": "utility_bench",
-				"tier": 3
-			}
-		],
+		"workbench": {
+			"utility_bench": 3
+		},
 		"craftTime": 0,
 		"outputCount": 1,
-		"recipeLocked": false
+		"isLocked": false
 	},
 	{
 		"id": "recipe_snap_hook",
 		"outputItemId": "snap_hook",
 		"requirements": [],
-		"workbench": [
-			{
-				"workbench": "utility_bench",
-				"tier": 3
-			}
-		],
+		"workbench": {
+			"utility_bench": 3
+		},
 		"craftTime": 0,
 		"outputCount": 1,
-		"recipeLocked": true,
+		"isLocked": true,
 		"lockedType": {
 			"mastery": "Mastery"
 		}
@@ -162,15 +144,12 @@
 				"count": 7
 			}
 		],
-		"workbench": [
-			{
-				"workbench": "utility_bench",
-				"tier": 1
-			}
-		],
+		"workbench": {
+			"utility_bench": 1
+		},
 		"craftTime": 0,
 		"outputCount": 1,
-		"recipeLocked": false
+		"isLocked": false
 	},
 	{
 		"id": "recipe_blaze_grenade",
@@ -185,15 +164,12 @@
 				"count": 7
 			}
 		],
-		"workbench": [
-			{
-				"workbench": "explosives_bench",
-				"tier": 3
-			}
-		],
+		"workbench": {
+			"explosives_bench": 3
+		},
 		"craftTime": 0,
 		"outputCount": 1,
-		"recipeLocked": false
+		"isLocked": false
 	},
 	{
 		"id": "recipe_gas_grenade",
@@ -208,15 +184,12 @@
 				"count": 2
 			}
 		],
-		"workbench": [
-			{
-				"workbench": "explosives_bench",
-				"tier": 1
-			}
-		],
+		"workbench": {
+			"explosives_bench": 1
+		},
 		"craftTime": 0,
 		"outputCount": 1,
-		"recipeLocked": false
+		"isLocked": false
 	},
 	{
 		"id": "recipe_jump_mine",
@@ -231,15 +204,12 @@
 				"count": 2
 			}
 		],
-		"workbench": [
-			{
-				"workbench": "explosives_bench",
-				"tier": 3
-			}
-		],
+		"workbench": {
+			"explosives_bench": 3
+		},
 		"craftTime": 0,
 		"outputCount": 1,
-		"recipeLocked": true,
+		"isLocked": true,
 		"lockedType": {
 			"unsure": true
 		}
@@ -256,7 +226,7 @@
 		"workbench": null,
 		"craftTime": 0,
 		"outputCount": 1,
-		"recipeLocked": true,
+		"isLocked": true,
 		"inRaid": true,
 		"lockedType": {
 			"unsure": true
@@ -274,7 +244,7 @@
 		"workbench": null,
 		"craftTime": 0,
 		"outputCount": 1,
-		"recipeLocked": true,
+		"isLocked": true,
 		"inRaid": true,
 		"lockedType": {
 			"unsure": true
@@ -292,7 +262,7 @@
 		"workbench": null,
 		"craftTime": 0,
 		"outputCount": 1,
-		"recipeLocked": true,
+		"isLocked": true,
 		"inRaid": true,
 		"lockedType": {
 			"unsure": true
@@ -310,7 +280,7 @@
 		"workbench": null,
 		"craftTime": 0,
 		"outputCount": 1,
-		"recipeLocked": true,
+		"isLocked": true,
 		"inRaid": true,
 		"lockedType": {
 			"unsure": true
@@ -329,20 +299,14 @@
 				"count": 3
 			}
 		],
-		"workbench": [
-			{
-				"workbench": "basic_bench",
-				"tier": 1
-			},
-			{
-				"workbench": "explosives_bench",
-				"tier": 1
-			}
-		],
+		"workbench": {
+			"basic_bench": 1,
+			"explosives_bench": 1
+		},
 		"craftTime": 0,
 		"outputCount": 1,
 		"inRaid": true,
-		"recipeLocked": false
+		"isLocked": false
 	},
 	{
 		"id": "recipe_lure_grenade",
@@ -357,15 +321,12 @@
 				"count": 2
 			}
 		],
-		"workbench": [
-			{
-				"workbench": "utility_bench",
-				"tier": 2
-			}
-		],
+		"workbench": {
+			"utility_bench": 2
+		},
 		"craftTime": 0,
 		"outputCount": 1,
-		"recipeLocked": true,
+		"isLocked": true,
 		"lockedType": {
 			"unsure": true
 		}
@@ -377,7 +338,7 @@
 		"workbench": null,
 		"craftTime": 0,
 		"outputCount": 1,
-		"recipeLocked": true,
+		"isLocked": true,
 		"lockedType": {
 			"mastery": "Mastery"
 		}
@@ -395,16 +356,13 @@
 				"count": 7
 			}
 		],
-		"workbench": [
-			{
-				"workbench": "utility_bench",
-				"tier": 1
-			}
-		],
+		"workbench": {
+			"utility_bench": 1
+		},
 		"craftTime": 0,
 		"outputCount": 1,
 		"inRaid": true,
-		"recipeLocked": false
+		"isLocked": false
 	},
 	{
 		"id": "recipe_snap_blast_grenade",
@@ -419,15 +377,12 @@
 				"count": 7
 			}
 		],
-		"workbench": [
-			{
-				"workbench": "explosives_bench",
-				"tier": 2
-			}
-		],
+		"workbench": {
+			"explosives_bench": 2
+		},
 		"craftTime": 0,
 		"outputCount": 1,
-		"recipeLocked": false
+		"isLocked": false
 	},
 	{
 		"id": "recipe_tagging_grenade",
@@ -442,15 +397,12 @@
 				"count": 2
 			}
 		],
-		"workbench": [
-			{
-				"workbench": "utility_bench",
-				"tier": 3
-			}
-		],
+		"workbench": {
+			"utility_bench": 3
+		},
 		"craftTime": 0,
 		"outputCount": 1,
-		"recipeLocked": true,
+		"isLocked": true,
 		"lockedType": {
 			"unsure": true
 		}
@@ -462,7 +414,7 @@
 		"workbench": null,
 		"craftTime": 0,
 		"outputCount": 1,
-		"recipeLocked": true,
+		"isLocked": true,
 		"lockedType": {
 			"unsure": true
 		}
@@ -474,7 +426,7 @@
 		"workbench": null,
 		"craftTime": 0,
 		"outputCount": 1,
-		"recipeLocked": true,
+		"isLocked": true,
 		"lockedType": {
 			"mastery": "Mastery"
 		}
@@ -492,15 +444,12 @@
 				"count": 1
 			}
 		],
-		"workbench": [
-			{
-				"workbench": "medical_station",
-				"tier": 2
-			}
-		],
+		"workbench": {
+			"medical_station": 2
+		},
 		"craftTime": 0,
 		"outputCount": 1,
-		"recipeLocked": true,
+		"isLocked": true,
 		"lockedType": {
 			"looted": true
 		}
@@ -518,15 +467,12 @@
 				"count": 1
 			}
 		],
-		"workbench": [
-			{
-				"workbench": "medical_station",
-				"tier": 2
-			}
-		],
+		"workbench": {
+			"medical_station": 2
+		},
 		"craftTime": 0,
 		"outputCount": 1,
-		"recipeLocked": false
+		"isLocked": false
 	},
 	{
 		"id": "recipe_herbal_bandage",
@@ -541,15 +487,12 @@
 				"count": 1
 			}
 		],
-		"workbench": [
-			{
-				"workbench": "medical_station",
-				"tier": 2
-			}
-		],
+		"workbench": {
+			"medical_station": 2
+		},
 		"craftTime": 0,
 		"outputCount": 1,
-		"recipeLocked": false
+		"isLocked": false
 	},
 	{
 		"id": "recipe_bandage",
@@ -560,19 +503,13 @@
 				"count": 4
 			}
 		],
-		"workbench": [
-			{
-				"workbench": "medical_station",
-				"tier": 1
-			},
-			{
-				"workbench": "basic_bench",
-				"tier": 1
-			}
-		],
+		"workbench": {
+			"medical_station": 1,
+			"basic_bench": 1
+		},
 		"craftTime": 0,
 		"outputCount": 1,
-		"recipeLocked": false
+		"isLocked": false
 	},
 	{
 		"id": "recipe_vita_shot",
@@ -587,15 +524,12 @@
 				"count": 1
 			}
 		],
-		"workbench": [
-			{
-				"workbench": "medical_station",
-				"tier": 3
-			}
-		],
+		"workbench": {
+			"medical_station": 3
+		},
 		"craftTime": 0,
 		"outputCount": 1,
-		"recipeLocked": true,
+		"isLocked": true,
 		"lockedType": {
 			"looted": true
 		}
@@ -613,15 +547,12 @@
 				"count": 2
 			}
 		],
-		"workbench": [
-			{
-				"workbench": "medical_station",
-				"tier": 3
-			}
-		],
+		"workbench": {
+			"medical_station": 3
+		},
 		"craftTime": 0,
 		"outputCount": 1,
-		"recipeLocked": true,
+		"isLocked": true,
 		"lockedType": {
 			"looted": true
 		}
@@ -639,15 +570,12 @@
 				"count": 2
 			}
 		],
-		"workbench": [
-			{
-				"workbench": "medical_station",
-				"tier": 1
-			}
-		],
+		"workbench": {
+			"medical_station": 1
+		},
 		"craftTime": 0,
 		"outputCount": 1,
-		"recipeLocked": false
+		"isLocked": false
 	},
 	{
 		"id": "recipe_shield_recharger",
@@ -662,33 +590,24 @@
 				"count": 5
 			}
 		],
-		"workbench": [
-			{
-				"workbench": "medical_station",
-				"tier": 1
-			},
-			{
-				"workbench": "basic_bench",
-				"tier": 1
-			}
-		],
+		"workbench": {
+			"medical_station": 1,
+			"basic_bench": 1
+		},
 		"craftTime": 0,
 		"outputCount": 1,
-		"recipeLocked": false
+		"isLocked": false
 	},
 	{
 		"id": "recipe_arc_circuitry",
 		"outputItemId": "arc_circuitry",
 		"requirements": [],
-		"workbench": [
-			{
-				"workbench": "refiner",
-				"tier": 2
-			}
-		],
+		"workbench": {
+			"refiner": 2
+		},
 		"craftTime": 0,
 		"outputCount": 1,
-		"recipeLocked": true,
+		"isLocked": true,
 		"lockedType": {
 			"looted": true
 		}
@@ -706,15 +625,12 @@
 				"count": 8
 			}
 		],
-		"workbench": [
-			{
-				"workbench": "refiner",
-				"tier": 2
-			}
-		],
+		"workbench": {
+			"refiner": 2
+		},
 		"craftTime": 0,
 		"outputCount": 1,
-		"recipeLocked": true,
+		"isLocked": true,
 		"lockedType": {
 			"looted": true
 		}
@@ -732,15 +648,12 @@
 				"count": 8
 			}
 		],
-		"workbench": [
-			{
-				"workbench": "refiner",
-				"tier": 2
-			}
-		],
+		"workbench": {
+			"refiner": 2
+		},
 		"craftTime": 0,
 		"outputCount": 1,
-		"recipeLocked": true,
+		"isLocked": true,
 		"lockedType": {
 			"looted": true
 		}
@@ -758,15 +671,12 @@
 				"count": 8
 			}
 		],
-		"workbench": [
-			{
-				"workbench": "refiner",
-				"tier": 2
-			}
-		],
+		"workbench": {
+			"refiner": 2
+		},
 		"craftTime": 0,
 		"outputCount": 1,
-		"recipeLocked": true,
+		"isLocked": true,
 		"lockedType": {
 			"looted": true
 		}
@@ -784,15 +694,12 @@
 				"count": 8
 			}
 		],
-		"workbench": [
-			{
-				"workbench": "refiner",
-				"tier": 2
-			}
-		],
+		"workbench": {
+			"refiner": 2
+		},
 		"craftTime": 0,
 		"outputCount": 1,
-		"recipeLocked": true,
+		"isLocked": true,
 		"lockedType": {
 			"looted": true
 		}
@@ -810,15 +717,12 @@
 				"count": 1
 			}
 		],
-		"workbench": [
-			{
-				"workbench": "refiner",
-				"tier": 3
-			}
-		],
+		"workbench": {
+			"refiner": 3
+		},
 		"craftTime": 0,
 		"outputCount": 1,
-		"recipeLocked": true,
+		"isLocked": true,
 		"lockedType": {
 			"looted": true,
 			"event": "Harvester"
@@ -837,15 +741,12 @@
 				"count": 1
 			}
 		],
-		"workbench": [
-			{
-				"workbench": "refiner",
-				"tier": 3
-			}
-		],
+		"workbench": {
+			"refiner": 3
+		},
 		"craftTime": 0,
 		"outputCount": 1,
-		"recipeLocked": true,
+		"isLocked": true,
 		"lockedType": {
 			"looted": true,
 			"event": "Harvester"
@@ -864,15 +765,12 @@
 				"count": 1
 			}
 		],
-		"workbench": [
-			{
-				"workbench": "refiner",
-				"tier": 3
-			}
-		],
+		"workbench": {
+			"refiner": 3
+		},
 		"craftTime": 0,
 		"outputCount": 1,
-		"recipeLocked": true,
+		"isLocked": true,
 		"lockedType": {
 			"looted": true,
 			"event": "Harvester"
@@ -891,15 +789,12 @@
 				"count": 1
 			}
 		],
-		"workbench": [
-			{
-				"workbench": "refiner",
-				"tier": 3
-			}
-		],
+		"workbench": {
+			"refiner": 3
+		},
 		"craftTime": 0,
 		"outputCount": 1,
-		"recipeLocked": true,
+		"isLocked": true,
 		"lockedType": {
 			"looted": true,
 			"event": "Harvester"
@@ -918,19 +813,13 @@
 				"count": 8
 			}
 		],
-		"workbench": [
-			{
-				"workbench": "basic_bench",
-				"tier": 1
-			},
-			{
-				"workbench": "equipment_bench",
-				"tier": 1
-			}
-		],
+		"workbench": {
+			"basic_bench": 1,
+			"equipment_bench": 1
+		},
 		"craftTime": 0,
 		"outputCount": 1,
-		"recipeLocked": false
+		"isLocked": false
 	},
 	{
 		"id": "recipe_medium_shield",
@@ -945,15 +834,12 @@
 				"count": 2
 			}
 		],
-		"workbench": [
-			{
-				"workbench": "equipment_bench",
-				"tier": 2
-			}
-		],
+		"workbench": {
+			"equipment_bench": 2
+		},
 		"craftTime": 0,
 		"outputCount": 1,
-		"recipeLocked": false
+		"isLocked": false
 	},
 	{
 		"id": "recipe_heavy_shield",
@@ -968,15 +854,12 @@
 				"count": 5
 			}
 		],
-		"workbench": [
-			{
-				"workbench": "equipment_bench",
-				"tier": 3
-			}
-		],
+		"workbench": {
+			"equipment_bench": 3
+		},
 		"craftTime": 0,
 		"outputCount": 1,
-		"recipeLocked": false
+		"isLocked": false
 	},
 	{
 		"id": "recipe_raider_augment_i",
@@ -991,15 +874,12 @@
 				"count": 9
 			}
 		],
-		"workbench": [
-			{
-				"workbench": "equipment_bench",
-				"tier": 1
-			}
-		],
+		"workbench": {
+			"equipment_bench": 1
+		},
 		"craftTime": 0,
 		"outputCount": 1,
-		"recipeLocked": false
+		"isLocked": false
 	},
 	{
 		"id": "recipe_raider_augment_ii",
@@ -1014,15 +894,12 @@
 				"count": 2
 			}
 		],
-		"workbench": [
-			{
-				"workbench": "equipment_bench",
-				"tier": 1
-			}
-		],
+		"workbench": {
+			"equipment_bench": 1
+		},
 		"craftTime": 0,
 		"outputCount": 1,
-		"recipeLocked": false
+		"isLocked": false
 	},
 	{
 		"id": "recipe_raider_augment_iii",
@@ -1037,15 +914,12 @@
 				"count": 2
 			}
 		],
-		"workbench": [
-			{
-				"workbench": "equipment_bench",
-				"tier": 1
-			}
-		],
+		"workbench": {
+			"equipment_bench": 1
+		},
 		"craftTime": 0,
 		"outputCount": 1,
-		"recipeLocked": false
+		"isLocked": false
 	},
 	{
 		"id": "recipe_raider_augment_iv",
@@ -1060,14 +934,11 @@
 				"count": 4
 			}
 		],
-		"workbench": [
-			{
-				"workbench": "equipment_bench",
-				"tier": 1
-			}
-		],
+		"workbench": {
+			"equipment_bench": 1
+		},
 		"craftTime": 0,
 		"outputCount": 1,
-		"recipeLocked": false
+		"isLocked": false
 	}
 ]
