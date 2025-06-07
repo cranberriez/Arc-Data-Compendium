@@ -9,10 +9,12 @@
 		"tiers": [
 			{
 				"tier": 1,
+				"tierName": "Fledgling",
 				"requiredItems": []
 			},
 			{
 				"tier": 2,
+				"tierName": "Forager",
 				"requiredItems": [
 					{
 						"itemId": "dog_collar",
@@ -26,6 +28,7 @@
 			},
 			{
 				"tier": 3,
+				"tierName": "Scavenger",
 				"requiredItems": [
 					{
 						"itemId": "lemon",
@@ -39,6 +42,7 @@
 			},
 			{
 				"tier": 4,
+				"tierName": "Treasure Hunter",
 				"requiredItems": [
 					{
 						"itemId": "prickly_pear",
@@ -56,6 +60,7 @@
 			},
 			{
 				"tier": 5,
+				"tierName": "Master Hoarder",
 				"requiredItems": [
 					{
 						"itemId": "apricot",
@@ -78,8 +83,8 @@
 		"name": "Basic Workbench",
 		"type": "workbench",
 		"description": "A basic workbench with general purpose crafting",
-		"icon": "Egg",
-		"baseTier": 0,
+		"icon": "Anvil",
+		"baseTier": 1,
 		"tiers": [
 			{
 				"tier": 1,
