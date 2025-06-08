@@ -3,7 +3,7 @@
 import { Quest } from "@/types/items/quest";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, ExternalLink } from "lucide-react";
+import { ArrowLeft, ExternalLink, MoveLeft, MoveRight } from "lucide-react";
 import Image from "next/image";
 
 function capitalizeId(id: string) {
@@ -11,6 +11,10 @@ function capitalizeId(id: string) {
 		.split("_")
 		.map((part) => part.charAt(0).toUpperCase() + part.slice(1))
 		.join("_");
+}
+
+function formatName(id: string) {
+	return capitalizeId(id).replaceAll("_", " ");
 }
 
 export function QuestFull({ questData }: { questData: Quest }) {
@@ -48,20 +52,59 @@ export function QuestFull({ questData }: { questData: Quest }) {
 
 				{/* Title and subtitle */}
 				<h1 className="text-3xl font-bold mb-2">{questData.name}</h1>
-				<p className="text-sm text-muted-foreground mb-6">From ARC Raiders Wiki</p>
+
+				{/* Next and Previous */}
+				<div className="flex justify-between">
+					<div className="flex flex-col items-start gap-2">
+						<h2 className="text-sm">Prerequisites</h2>
+						{(questData.prereq ?? []).length > 0 ? (
+							(questData.prereq ?? []).map((prereqId: string) => (
+								<Link
+									key={prereqId}
+									href={`/quests/${prereqId}`}
+								>
+									<Button variant="outline">
+										<MoveLeft className="w-4 h-4" />
+										<span className="mb-[2px]">{formatName(prereqId)}</span>
+									</Button>
+								</Link>
+							))
+						) : (
+							<p className="text-muted-foreground">No Prerequisites</p>
+						)}
+					</div>
+					<div className="flex flex-col items-end gap-2">
+						<h2 className="text-sm">Next Quests</h2>
+						{(questData.next ?? []).length > 0 ? (
+							(questData.next ?? []).map((nextId: string) => (
+								<Link
+									key={nextId}
+									href={`/quests/${nextId}`}
+								>
+									<Button variant="outline">
+										<span className="mb-[2px]">{formatName(nextId)}</span>
+										<MoveRight className="w-4 h-4" />
+									</Button>
+								</Link>
+							))
+						) : (
+							<p className="text-muted-foreground">No Next Quests</p>
+						)}
+					</div>
+				</div>
 
 				<div className="flex flex-col md:flex-row gap-8">
 					{/* Main content */}
 					<div className="flex-1">
 						{/* Dialog */}
-						{questData.dialog && (
-							<section className="mb-6">
-								<h2 className="text-xl font-semibold mb-2">Dialog</h2>
-								<blockquote className="italic text-gray-400 bg-muted p-4 rounded">
-									{questData.dialog}
-								</blockquote>
-							</section>
-						)}
+						<section className="mb-6">
+							<h2 className="text-xl font-semibold mb-2">Dialog</h2>
+							<blockquote className="italic text-gray-400 bg-muted p-4 rounded">
+								{questData.dialog
+									? questData.dialog
+									: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam pulvinar nisl vel metus placerat, vel placerat nisl placerat."}
+							</blockquote>
+						</section>
 
 						{/* Requirements */}
 						<section className="mb-6">
@@ -99,9 +142,7 @@ export function QuestFull({ questData }: { questData: Quest }) {
 								<strong>Location:</strong>{" "}
 								{Array.isArray(questData.location)
 									? questData.location.join(", ")
-									: questData.location === ""
-									? "Anywhere"
-									: questData.location}
+									: "Anywhere"}
 							</div>
 							{/* Related quests, etc. */}
 						</div>
@@ -123,6 +164,15 @@ export function QuestFull({ questData }: { questData: Quest }) {
 						</div>
 					</aside>
 				</div>
+				<p className="text-sm text-muted-foreground">
+					Data Sourced From ARC Raiders{" "}
+					<Link
+						href="https://arcraiders.wiki/"
+						className="text-sm text-muted-foreground hover:underline"
+					>
+						Official Wiki
+					</Link>
+				</p>
 			</div>
 		</article>
 	);
