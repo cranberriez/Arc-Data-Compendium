@@ -71,7 +71,7 @@ function QuestHeader({ quest }: { quest: Quest }) {
 				{Array.isArray(quest.location) ? quest.location.join(", ") : quest.location}
 			</p>
 			{quest.dialog && (
-				<blockquote className="italic text-gray-700">"{quest.dialog}"</blockquote>
+				<blockquote className="italic text-gray-700">&quot;{quest.dialog}&quot;</blockquote>
 			)}
 		</div>
 	);

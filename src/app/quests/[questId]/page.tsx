@@ -5,7 +5,7 @@ import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { QuestFull } from "../components/questFull";
 
-export default async function QuestPage({ params }: { params: { questId: string } }) {
+export default async function QuestPage({ params }: { params: Promise<{ questId: string }> }) {
 	const { questId } = await params;
 	const questData = await fetchQuestById(questId);
 
