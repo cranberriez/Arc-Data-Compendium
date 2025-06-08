@@ -52,100 +52,124 @@ export type QuestNode = {
  * @param quests Array of Quest objects
  * @returns Array of QuestNode objects with questline labels assigned
  */
-export function assignQuestlines(quests: Quest[]): QuestNode[] {
+export function assignQuestlinesWithColumns(quests: Quest[]): {
+	totalColumns: number;
+	nodes: QuestNode[];
+} {
 	// Build a map for fast quest lookup by ID
 	const questMap = new Map<string, Quest>();
 	quests.forEach((q) => questMap.set(q.id, q));
 
 	// Identify root quests (quests with no prereqs)
-	// These are the starting points for questline assignment
 	const roots = quests.filter((q) => !q.prereq || q.prereq.length === 0);
 
-	// Map questId to questline label (e.g., "line_1", "line_2", ...)
-	const questlineMap = new Map<string, number>();
-	/**
-	 * Recursively assigns questline labels to quests.
-	 * - Linear progression: child inherits parent's line label.
-	 * - Split: first child keeps parent's line, others get new lines (line_2, line_3, ...) relative to their parent.
-	 * - Already visited: skip to avoid overwriting (important for merges).
-	 * @param questId Current quest's ID
-	 * @param lineLabel Current questline label
-	 */
-	function traverse(questId: string, lineLabel: number) {
-		// Prevent overwriting questline at merges
-		if (questlineMap.has(questId)) return;
-		questlineMap.set(questId, lineLabel);
+	// Track which quest is on which column (line)
+	const questColumnMap = new Map<string, number>();
+	// For merges, track all columns leading into a quest
+	const questPrereqColumns = new Map<string, number[]>();
+	// For splits, track all columns leading out
+	const questNextColumns = new Map<string, number[]>();
+
+	let maxColumn = 0;
+	const nodes: QuestNode[] = [];
+
+	// Helper to recursively assign columns
+	function traverse(questId: string, column: number) {
+		// Prevent overwriting at merges
+		if (questColumnMap.has(questId)) {
+			// For merges, collect all columns leading in
+			const prevCols = questPrereqColumns.get(questId) || [];
+			if (!prevCols.includes(column)) {
+				questPrereqColumns.set(questId, [...prevCols, column]);
+			}
+			return;
+		}
+		questColumnMap.set(questId, column);
+		if (column > maxColumn) maxColumn = column;
 
 		const quest = questMap.get(questId);
-		if (!quest || !quest.next) return;
+		if (!quest) return;
 
-		if (quest.next.length <= 1) {
-			quest.next.forEach((nextId) => traverse(nextId, lineLabel));
-		} else {
-			// Split: use a local counter for this split, starting at 2
-			let localLineNum = 2;
-			quest.next.forEach((nextId, idx) => {
-				if (idx === 0) {
-					traverse(nextId, lineLabel);
-				} else {
-					traverse(nextId, localLineNum++);
+		// Check for split
+		const isSplit = !!(quest.next && quest.next.length > 1);
+		const isMerge = !!(quest.prereq && quest.prereq.length > 1);
+
+		// Track outgoing columns for splits
+		let nextCols: number[] = [];
+		if (quest.next && quest.next.length > 0) {
+			if (isSplit) {
+				// First next stays on same column, others get new columns
+				let nextCol = maxColumn + 1;
+				quest.next.forEach((nextId, idx) => {
+					if (idx === 0) {
+						nextCols.push(column);
+						traverse(nextId, column);
+					} else {
+						nextCols.push(nextCol);
+						traverse(nextId, nextCol);
+						nextCol++;
+					}
+				});
+				if (nextCols.length > 1 && Math.max(...nextCols) > maxColumn) {
+					maxColumn = Math.max(...nextCols);
 				}
-			});
+			} else {
+				// Linear
+				quest.next.forEach((nextId) => {
+					nextCols.push(column);
+					traverse(nextId, column);
+				});
+			}
 		}
+		questNextColumns.set(questId, nextCols);
 	}
 
-	// Start traversal from each root quest, using "line_1" as the initial line label
-	roots.forEach((root) => traverse(root.id, 1));
+	// Start traversal from each root quest, using column 0 as the initial line
+	roots.forEach((root) => traverse(root.id, 0));
 
 	// After traversal, handle merges (quests with multiple prereqs):
-	// Assign the lowest line label from all prereqs to the merged quest
+	// Assign the highest column index from all prereqs to the merged quest
 	quests.forEach((q) => {
 		if (q.prereq && q.prereq.length > 1) {
 			const prereqLines = q.prereq
-				.map((pid) => questlineMap.get(pid))
-				.filter(Boolean)
-				.sort();
-			// Use the lowest (alphabetically) line label for the merge
-			if (prereqLines.length) questlineMap.set(q.id, prereqLines[0]!);
+				.map((pid) => questColumnMap.get(pid))
+				.filter((v): v is number => typeof v === "number");
+			if (prereqLines.length) {
+				const highest = Math.max(...prereqLines);
+				questColumnMap.set(q.id, highest);
+			}
 		}
 	});
 
-	// Assign a unique column index to each questline label
-	const questlineToColumn = new Map<string, number>();
-	let nextCol = 0;
-	for (const label of Array.from(new Set(Array.from(questlineMap.values()))).sort()) {
-		questlineToColumn.set(label.toString(), nextCol++);
-	}
-
-	// Build the output: each quest gets its assigned questline label, split/merge flags, column index, and connector columns
-	return quests.map((q) => {
-		const label = questlineMap.get(q.id) ?? -1;
-		const column = questlineToColumn.get(label.toString()) ?? -1;
-		const prereqColumns = Array.isArray(q.prereq)
-			? q.prereq
-					.map((pid) => {
-						const l = questlineMap.get(pid);
-						return l ? questlineToColumn.get(l.toString()) ?? -1 : -1;
-					})
-					.filter((c) => c >= 0)
-			: [];
-		const nextColumns = Array.isArray(q.next)
-			? q.next
-					.map((nid) => {
-						const l = questlineMap.get(nid);
-						return l ? questlineToColumn.get(l.toString()) ?? -1 : -1;
-					})
-					.filter((c) => c >= 0)
-			: [];
-		return {
-			questline: label,
-			quest: q,
-			isSplit: Array.isArray(q.next) && q.next.length > 1,
-			isMerge: Array.isArray(q.prereq) && q.prereq.length > 1,
-			isPrimaryLine: label === 1,
+	// Build QuestNode array
+	quests.forEach((quest) => {
+		const column = questColumnMap.get(quest.id) ?? 0;
+		const prereqColumns =
+			questPrereqColumns.get(quest.id) ||
+			(quest.prereq && quest.prereq.length > 1
+				? quest.prereq.map((pid) => questColumnMap.get(pid) ?? 0)
+				: []);
+		const nextColumns =
+			questNextColumns.get(quest.id) ||
+			(quest.next ? quest.next.map((nid) => questColumnMap.get(nid) ?? 0) : []);
+		const isSplit = !!(quest.next && quest.next.length > 1);
+		const isMerge = !!(quest.prereq && quest.prereq.length > 1);
+		const isPrimaryLine = column === 0;
+		const node: QuestNode = {
+			questline: column,
+			quest,
+			isSplit,
+			isMerge,
+			isPrimaryLine,
 			column,
 			prereqColumns,
 			nextColumns,
 		};
+		nodes.push(node);
 	});
+
+	return {
+		totalColumns: maxColumn + 1,
+		nodes,
+	};
 }

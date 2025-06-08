@@ -1,21 +1,17 @@
 import React from "react";
 import questData from "@/data/quests/questData.json";
-import { assignQuestlines } from "@/data/quests/questUtils";
+import { assignQuestlinesWithColumns } from "@/data/quests/questUtils";
 import type { QuestNode } from "@/data/quests/questUtils";
 
 export default function QuestsPage() {
-	// Assign questlines using the imported utility
-	const questNodes: QuestNode[] = assignQuestlines(questData as any);
-
-	// Get total number of columns (questlines)
-	const totalColumns = Math.max(...questNodes.map((n) => n.column)) + 1;
+	const { totalColumns, nodes } = assignQuestlinesWithColumns(questData as any);
 
 	return (
 		<main className="max-w-[1600px] mx-auto p-6">
 			<h1 className="text-2xl text-center font-bold mb-6">Quests (with Questlines)</h1>
-			{questNodes.length === 0 && <p>No quests found.</p>}
+			{nodes.length === 0 && <p>No quests found.</p>}
 			<ul>
-				{questNodes.map((node, idx) => (
+				{nodes.map((node, idx) => (
 					<QuestItem
 						node={node}
 						totalColumns={totalColumns}
@@ -166,61 +162,62 @@ function Connector({ node, totalColumns }: { node: QuestNode; totalColumns: numb
 			}px]`}
 			style={{ width: totalColumns * 16 }}
 		>
-			{(node.nextColumns.length > 1
-				? node.nextColumns
-				: Array.from({ length: totalColumns }, (_, i) => i)
-			).map((colIdx) => {
+			{Array.from({ length: totalColumns }, (_, i) => {
+				// Flip: current node's column is always rightmost visually
+				if (i === totalColumns - 1) return node.column;
+				if (i === node.column) return totalColumns - 1;
+				return i;
+			}).map((colIdx, i) => {
 				return (
 					<div
-						key={colIdx}
+						key={i}
 						className="flex flex-col justify-center relative"
 					>
 						{/* Top Half of line */}
-						<div className="h-1/2 w-[2px]">
-							{node.column === colIdx && (
-								<div
-									className="h-full w-full"
-									style={{ backgroundColor: getLineColor(colIdx) }}
-								></div>
-							)}
-
-							{node.column > colIdx && (
-								<div
-									className="h-full w-full"
-									style={{ backgroundColor: getLineColor(colIdx) }}
-								></div>
-							)}
-
-							{node.isMerge && (
-								<div
-									className="h-full w-full"
-									style={{ backgroundColor: getLineColor(colIdx) }}
-								></div>
-							)}
+						<div className="h-1/2 w-[2px] mx-auto relative">
+							{node.isMerge
+								? node.prereqColumns.includes(colIdx) && (
+										<div
+											className="h-full w-full"
+											style={{ backgroundColor: getLineColor(colIdx) }}
+										/>
+								  )
+								: node.column === colIdx && (
+										<div
+											className="h-full w-full"
+											style={{ backgroundColor: getLineColor(colIdx) }}
+										/>
+								  )}
 						</div>
-
+						{/* Dot for current line, only on rightmost column visually */}
+						{node.column === colIdx && i === totalColumns - 1 && (
+							<div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10">
+								<div
+									className="rounded-full"
+									style={{
+										width: 8,
+										height: 8,
+										backgroundColor: getLineColor(colIdx),
+										border: "2px solid white",
+									}}
+								/>
+							</div>
+						)}
 						{/* Bottom Half of line */}
-						<div className="h-1/2 w-[2px]">
-							{node.column === colIdx && (
-								<div
-									className="h-full w-full"
-									style={{ backgroundColor: getLineColor(colIdx) }}
-								></div>
-							)}
-
-							{node.column > colIdx && (
-								<div
-									className="h-full w-full"
-									style={{ backgroundColor: getLineColor(colIdx) }}
-								></div>
-							)}
-
-							{node.isSplit && (
-								<div
-									className="h-full w-full"
-									style={{ backgroundColor: getLineColor(colIdx) }}
-								></div>
-							)}
+						<div className="h-1/2 w-[2px] mx-auto">
+							{node.isSplit
+								? node.nextColumns.includes(colIdx) && (
+										<div
+											className="h-full w-full"
+											style={{ backgroundColor: getLineColor(colIdx) }}
+										/>
+								  )
+								: node.column === colIdx && (
+										<div
+											className="h-full w-full"
+											style={{ backgroundColor: getLineColor(colIdx) }}
+										/>
+								  )}
 						</div>
 					</div>
 				);
