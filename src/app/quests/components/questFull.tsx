@@ -20,7 +20,7 @@ export function QuestFull({ questData }: { questData: Quest }) {
 
 	return (
 		<article className="w-full p-4">
-			<div className="flex flex-col gap-2 mx-auto max-w-[1200px]">
+			<div className="flex flex-col gap-4 mx-auto max-w-[1200px]">
 				<Link href="/quests">
 					<Button
 						variant="outline"
@@ -41,9 +41,8 @@ export function QuestFull({ questData }: { questData: Quest }) {
 						className="object-cover"
 						placeholder="blur"
 						fill
-						objectFit="cover"
-						objectPosition="top"
 						blurDataURL={starterImg}
+						style={{ objectPosition: "top" }}
 					/>
 				</div>
 
