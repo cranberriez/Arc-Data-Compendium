@@ -62,7 +62,7 @@ function QuestHeader({ quest }: { quest: Quest }) {
 						getTraderColor(quest.trader)
 					)}
 				>
-					<User size={24} />
+					<User size={16} />
 				</div>
 				<span className="font-medium">{quest.trader}</span>
 			</div>
@@ -83,10 +83,7 @@ function QuestRequirements({ requirements }: { requirements: QuestObjective[] })
 			<strong>Requirements:</strong>
 			<ul className="list-disc ml-6">
 				{requirements.map((req, i) => (
-					<li key={i}>
-						{req.description}
-						{typeof req.count === "number" && <span> x{req.count}</span>}
-					</li>
+					<li key={i}>{req.description}</li>
 				))}
 			</ul>
 		</div>
@@ -100,8 +97,8 @@ function QuestRewards({ rewards }: { rewards: QuestReward[] }) {
 			<ul className="list-disc ml-6">
 				{rewards.map((reward, i) => (
 					<li key={i}>
+						{typeof reward.count === "number" && <span> x{reward.count} </span>}
 						{reward.description}
-						{typeof reward.count === "number" && <span> x{reward.count}</span>}
 					</li>
 				))}
 			</ul>
