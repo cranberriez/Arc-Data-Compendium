@@ -5,8 +5,8 @@ export default async function QuestsPage() {
 	const quests = await fetchQuests();
 
 	return (
-		<main className="max-w-3xl mx-auto p-6">
-			<h1 className="text-3xl font-bold mb-6">Quests</h1>
+		<main className="max-w-[1600px] mx-auto p-6">
+			<h1 className="text-2xl text-center font-bold mb-6">Quests</h1>
 			{quests.length === 0 && <p>No quests found.</p>}
 			<ul className="space-y-8">
 				{quests.map((quest) => (

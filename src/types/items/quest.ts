@@ -22,11 +22,11 @@ export interface Quest {
 	id: QuestId;
 	trader: string;
 	name: string;
-	prereq: QuestId[]; // quest(s) that must be completed first
-	next: QuestId[]; // quest(s) this leads to
+	prereq: QuestId[] | null; // quest(s) that must be completed first
+	next: QuestId[] | null; // quest(s) this leads to
 	requirements: QuestObjective[];
 	rewards: QuestReward[];
-	dialog: string;
-	location: string | string[]; // can be single, multiple, or "any"
-	link: string; // wiki link
+	dialog?: string;
+	location?: string | string[]; // can be single, multiple, or "any"
+	link?: string; // wiki link
 }
