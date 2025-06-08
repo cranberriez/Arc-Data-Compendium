@@ -1,35 +1,39 @@
 import React from "react";
-import { fetchQuests } from "@/services/dataService";
-import { Quest } from "@/types/items/quest";
-import { User } from "lucide-react";
-import { cn } from "@/lib/utils";
+import questData from "@/data/quests/questData.json";
+import { assignQuestlines } from "@/data/quests/questUtils";
+import type { QuestNode } from "@/data/quests/questUtils";
 
-export default async function QuestsPage() {
-	const quests = await fetchQuests();
+export default function QuestsPage() {
+	// Assign questlines using the imported utility
+	const questNodes: QuestNode[] = assignQuestlines(questData as any);
 
 	return (
 		<main className="max-w-[1600px] mx-auto p-6">
-			<h1 className="text-2xl text-center font-bold mb-6">Quests</h1>
-			{quests.length === 0 && <p>No quests found.</p>}
-			<QuestTimeline quests={quests} />
+			<h1 className="text-2xl text-center font-bold mb-6">Quests (with Questlines)</h1>
+			{questNodes.length === 0 && <p>No quests found.</p>}
+			<ul className="space-y-2">
+				{questNodes.map((node) => (
+					<QuestItem
+						node={node}
+						key={node.quest.id}
+					/>
+				))}
+			</ul>
 		</main>
 	);
 }
 
-function QuestTimeline({ quests }: { quests: Quest[] }) {
-	return (
-		<ul>
-			{quests.map((quest) => (
-				<QuestNode
-					quest={quest}
-					key={quest.id}
-				/>
-			))}
-		</ul>
-	);
-}
+import { User } from "lucide-react";
+import { cn } from "@/lib/utils";
 
-function QuestNode({ quest }: { quest: Quest }) {
+type QuestItemProps = {
+	node: QuestNode;
+};
+
+function QuestItem({ node }: QuestItemProps) {
+	const quest = node.quest;
+	const hasPrevious = (quest.prereq?.length ?? 0) > 0;
+	const hasNext = (quest.next?.length ?? 0) > 0;
 	const getTraderColor = (trader: string) => {
 		switch (trader) {
 			case "Shani":
@@ -46,10 +50,6 @@ function QuestNode({ quest }: { quest: Quest }) {
 				return "bg-gray-500/20";
 		}
 	};
-
-	const hasPrevious = (quest.prereq?.length ?? 0) > 0;
-	const hasNext = (quest.next?.length ?? 0) > 0;
-
 	return (
 		<li
 			key={quest.id}
@@ -73,7 +73,12 @@ function QuestNode({ quest }: { quest: Quest }) {
 			<div className="flex flex-col flex-1 gap-2 border rounded-lg p-4 shadow">
 				<div className="flex gap-8">
 					<div className="w-1/3 flex flex-col gap-2">
-						<h2 className="text-xl font-semibold">{quest.name}</h2>
+						<h2 className="text-xl font-semibold">
+							<span className="font-mono bg-gray-200 px-2 py-1 rounded mr-2">
+								{node.questline}
+							</span>
+							{quest.name}
+						</h2>
 						<div className="flex items-center gap-2">
 							<div
 								className={cn(
@@ -97,7 +102,6 @@ function QuestNode({ quest }: { quest: Quest }) {
 							</blockquote>
 						)}
 					</div>
-
 					<div className="w-1/3">
 						<strong>Requirements:</strong>
 						<ul className="list-disc ml-6">
@@ -109,7 +113,6 @@ function QuestNode({ quest }: { quest: Quest }) {
 							))}
 						</ul>
 					</div>
-
 					<div className="w-1/3">
 						<strong>Rewards:</strong>
 						<ul className="list-disc ml-6">
@@ -124,7 +127,6 @@ function QuestNode({ quest }: { quest: Quest }) {
 						</ul>
 					</div>
 				</div>
-
 				{quest.link && (
 					<p>
 						<a
