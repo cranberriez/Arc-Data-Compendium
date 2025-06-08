@@ -6,12 +6,22 @@
 		"prereq": null,
 		"next": ["the_bandage_run"],
 		"requirements": [
-			{ "description": "Go topside for the first time" },
-			{ "description": "Optional - Ping any ARC" }
+			{
+				"description": "Go topside for the first time",
+				"links": [{ "type": "location", "id": "topside" }]
+			},
+			{
+				"description": "Optional - Ping any ARC",
+				"links": [{ "type": "enemy", "id": "arc" }]
+			}
 		],
 		"rewards": [
-			{ "description": "Ferro", "count": 1 },
-			{ "description": "Heavy Ammo", "count": 20 },
+			{ "description": "Ferro", "count": 1, "links": [{ "type": "item", "id": "ferro" }] },
+			{
+				"description": "Heavy Ammo",
+				"count": 20,
+				"links": [{ "type": "item", "id": "heavy_ammo" }]
+			},
 			{ "description": "XP", "count": 4000 }
 		],
 		"dialog": "",
@@ -25,11 +35,23 @@
 		"prereq": ["topside"],
 		"next": ["small_but_sinister"],
 		"requirements": [
-			{ "description": "Search 5 containers" },
-			{ "description": "Get 15 pieces of Fabric for Lance" }
+			{
+				"description": "Search 5 containers",
+				"count": 5,
+				"links": [{ "type": "location", "id": "container" }]
+			},
+			{
+				"description": "Get 15 pieces of Fabric for Lance",
+				"count": 15,
+				"links": [{ "type": "item", "id": "fabric" }]
+			}
 		],
 		"rewards": [
-			{ "description": "Herbal Bandage", "count": 3 },
+			{
+				"description": "Herbal Bandage",
+				"count": 3,
+				"links": [{ "type": "item", "id": "herbal_bandage" }]
+			},
 			{ "description": "XP", "count": 4000 }
 		],
 		"dialog": "",
@@ -43,11 +65,23 @@
 		"prereq": ["the_bandage_run"],
 		"next": ["controlled_demolition"],
 		"requirements": [
-			{ "description": "Destroy a Tick" },
-			{ "description": "Get a Tick Pod for Shani" }
+			{
+				"description": "Destroy a Tick",
+				"count": 1,
+				"links": [{ "type": "enemy", "id": "tick" }]
+			},
+			{
+				"description": "Get a Tick Pod for Shani",
+				"count": 1,
+				"links": [{ "type": "item", "id": "tick_pod" }]
+			}
 		],
 		"rewards": [
-			{ "description": "Lure Grenade", "count": 2 },
+			{
+				"description": "Lure Grenade",
+				"count": 2,
+				"links": [{ "type": "item", "id": "lure_grenade" }]
+			},
 			{ "description": "XP", "count": 5000 }
 		],
 		"dialog": "",
@@ -60,9 +94,19 @@
 		"name": "Controlled Demolition",
 		"prereq": ["small_but_sinister"],
 		"next": ["fight_fire_with_fire"],
-		"requirements": [{ "description": "Get 2 Explosive Mixtures for Apollo" }],
+		"requirements": [
+			{
+				"description": "Get 2 Explosive Mixtures for Apollo",
+				"count": 2,
+				"links": [{ "type": "item", "id": "explosive_mixture" }]
+			}
+		],
 		"rewards": [
-			{ "description": "Jump Mine", "count": 2 },
+			{
+				"description": "Jump Mine",
+				"count": 2,
+				"links": [{ "type": "item", "id": "jump_mine" }]
+			},
 			{ "description": "XP", "count": 5000 }
 		]
 	},
@@ -72,9 +116,22 @@
 		"name": "Fight Fire With Fire",
 		"prereq": ["controlled_demolition"],
 		"next": ["hatch_repairs"],
-		"requirements": [{ "description": "Destroy a Fireball with a Ferro" }],
+		"requirements": [
+			{
+				"description": "Destroy a Fireball with a Ferro",
+				"count": 1,
+				"links": [
+					{ "type": "enemy", "id": "fireball" },
+					{ "type": "item", "id": "ferro" }
+				]
+			}
+		],
 		"rewards": [
-			{ "description": "Blaze Grenade", "count": 3 },
+			{
+				"description": "Blaze Grenade",
+				"count": 3,
+				"links": [{ "type": "item", "id": "blaze_grenade" }]
+			},
 			{ "description": "XP", "count": 5000 }
 		]
 	},
@@ -85,11 +142,24 @@
 		"prereq": ["fight_fire_with_fire"],
 		"next": ["a_bad_feeling"],
 		"requirements": [
-			{ "description": "Repair the leaking hydraulic pipes near a Raider Hatch" },
-			{ "description": "Investigate the ARC Husk near the hatch" }
+			{
+				"description": "Repair the leaking hydraulic pipes near a Raider Hatch",
+				"links": [{ "type": "location", "id": "raider_hatch" }]
+			},
+			{
+				"description": "Investigate the ARC Husk near the hatch",
+				"links": [
+					{ "type": "enemy", "id": "arc_husk" },
+					{ "type": "location", "id": "raider_hatch" }
+				]
+			}
 		],
 		"rewards": [
-			{ "description": "Raider Hatch Key", "count": 1 },
+			{
+				"description": "Raider Hatch Key",
+				"count": 1,
+				"links": [{ "type": "item", "id": "raider_hatch_key" }]
+			},
 			{ "description": "XP", "count": 6000 }
 		]
 	},
@@ -99,9 +169,22 @@
 		"name": "A Bad Feeling",
 		"prereq": ["hatch_repairs"],
 		"next": ["safe_passage"],
-		"requirements": [{ "description": "Find and search any ARC Probe, ARC Courier, or Husk" }],
+		"requirements": [
+			{
+				"description": "Find and search any ARC Probe, ARC Courier, or Husk",
+				"links": [
+					{ "type": "enemy", "id": "arc_probe" },
+					{ "type": "enemy", "id": "arc_courier" },
+					{ "type": "enemy", "id": "husk" }
+				]
+			}
+		],
 		"rewards": [
-			{ "description": "Raider Augment I", "count": 1 },
+			{
+				"description": "Raider Augment I",
+				"count": 1,
+				"links": [{ "type": "item", "id": "raider_augment_i" }]
+			},
 			{ "description": "XP", "count": 7000 }
 		]
 	},
@@ -111,9 +194,21 @@
 		"name": "Safe Passage",
 		"prereq": ["a_bad_feeling"],
 		"next": ["finders_keepers"],
-		"requirements": [{ "description": "Destroy a Turret using Light Impact Grenades" }],
+		"requirements": [
+			{
+				"description": "Destroy a Turret using Light Impact Grenades",
+				"links": [
+					{ "type": "enemy", "id": "turret" },
+					{ "type": "item", "id": "light_impact_grenade" }
+				]
+			}
+		],
 		"rewards": [
-			{ "description": "Snap Grenade", "count": 2 },
+			{
+				"description": "Snap Grenade",
+				"count": 2,
+				"links": [{ "type": "item", "id": "snap_grenade" }]
+			},
 			{ "description": "XP", "count": 7000 }
 		]
 	},
@@ -123,9 +218,22 @@
 		"name": "Finders Keepers",
 		"prereq": ["safe_passage"],
 		"next": ["wasps_and_hornets"],
-		"requirements": [{ "description": "Loot 3 containers in any Raider camp" }],
+		"requirements": [
+			{
+				"description": "Loot 3 containers in any Raider camp",
+				"count": 3,
+				"links": [
+					{ "type": "location", "id": "raider_camp" },
+					{ "type": "location", "id": "container" }
+				]
+			}
+		],
 		"rewards": [
-			{ "description": "Heavy Fuse Grenade", "count": 2 },
+			{
+				"description": "Heavy Fuse Grenade",
+				"count": 2,
+				"links": [{ "type": "item", "id": "heavy_fuse_grenade" }]
+			},
 			{ "description": "XP", "count": 8000 }
 		]
 	},
@@ -136,16 +244,46 @@
 		"prereq": ["finders_keepers"],
 		"next": ["from_a_distance", "movie_night"],
 		"requirements": [
-			{ "description": "Destroy a Wasp" },
-			{ "description": "Destroy a Hornet" },
-			{ "description": "Get a Wasp Driver for Shani" },
-			{ "description": "Get a Hornet Driver for Shani" }
+			{
+				"description": "Destroy a Wasp",
+				"count": 1,
+				"links": [{ "type": "enemy", "id": "wasp" }]
+			},
+			{
+				"description": "Destroy a Hornet",
+				"count": 1,
+				"links": [{ "type": "enemy", "id": "hornet" }]
+			},
+			{
+				"description": "Get a Wasp Driver for Shani",
+				"count": 1,
+				"links": [{ "type": "item", "id": "wasp_driver" }]
+			},
+			{
+				"description": "Get a Hornet Driver for Shani",
+				"count": 1,
+				"links": [{ "type": "item", "id": "hornet_driver" }]
+			}
 		],
 		"rewards": [
-			{ "description": "Wasp Driver", "count": 1 },
-			{ "description": "Hornet Driver", "count": 1 },
-			{ "description": "Mechanical Components" },
-			{ "description": "Electrical Components" },
+			{
+				"description": "Wasp Driver",
+				"count": 1,
+				"links": [{ "type": "item", "id": "wasp_driver" }]
+			},
+			{
+				"description": "Hornet Driver",
+				"count": 1,
+				"links": [{ "type": "item", "id": "hornet_driver" }]
+			},
+			{
+				"description": "Mechanical Components",
+				"links": [{ "type": "item", "id": "mechanical_components" }]
+			},
+			{
+				"description": "Electrical Components",
+				"links": [{ "type": "item", "id": "electrical_components" }]
+			},
 			{ "description": "XP", "count": 9000 }
 		]
 	},
@@ -155,9 +293,24 @@
 		"name": "From A Distance",
 		"prereq": ["wasps_and_hornets"],
 		"next": ["what_goes_around"],
-		"requirements": [{ "description": "Ping a Rocketeer" }, { "description": "Ping a Bison" }],
+		"requirements": [
+			{
+				"description": "Ping a Rocketeer",
+				"count": 1,
+				"links": [{ "type": "enemy", "id": "rocketeer" }]
+			},
+			{
+				"description": "Ping a Bison",
+				"count": 1,
+				"links": [{ "type": "enemy", "id": "bison" }]
+			}
+		],
 		"rewards": [
-			{ "description": "Photoelectric Cloak", "count": 1 },
+			{
+				"description": "Photoelectric Cloak",
+				"count": 1,
+				"links": [{ "type": "item", "id": "photoelectric_cloak" }]
+			},
 			{ "description": "XP", "count": 10000 }
 		]
 	},
@@ -168,12 +321,28 @@
 		"prereq": ["wasps_and_hornets"],
 		"next": ["what_goes_around"],
 		"requirements": [
-			{ "description": "Get a Film Reel for Apollo" },
-			{ "description": "Get 3 Electrical Components for Apollo" },
-			{ "description": "Get a Camera Lens for Apollo" }
+			{
+				"description": "Get a Film Reel for Apollo",
+				"count": 1,
+				"links": [{ "type": "item", "id": "film_reel" }]
+			},
+			{
+				"description": "Get 3 Electrical Components for Apollo",
+				"count": 3,
+				"links": [{ "type": "item", "id": "electrical_components" }]
+			},
+			{
+				"description": "Get a Camera Lens for Apollo",
+				"count": 1,
+				"links": [{ "type": "item", "id": "camera_lens" }]
+			}
 		],
 		"rewards": [
-			{ "description": "Showstopper", "count": 2 },
+			{
+				"description": "Showstopper",
+				"count": 2,
+				"links": [{ "type": "item", "id": "showstopper" }]
+			},
 			{ "description": "XP", "count": 9000 }
 		]
 	},
@@ -183,9 +352,22 @@
 		"name": "What Goes Around",
 		"prereq": ["from_a_distance", "movie_night"],
 		"next": ["dormant_barons"],
-		"requirements": [{ "description": "Destroy a Fireball using a Fireball Burner" }],
+		"requirements": [
+			{
+				"description": "Destroy a Fireball using a Fireball Burner",
+				"count": 1,
+				"links": [
+					{ "type": "enemy", "id": "fireball" },
+					{ "type": "item", "id": "fireball_burner" }
+				]
+			}
+		],
 		"rewards": [
-			{ "description": "Blaze Grenade", "count": 2 },
+			{
+				"description": "Blaze Grenade",
+				"count": 2,
+				"links": [{ "type": "item", "id": "blaze_grenade" }]
+			},
 			{ "description": "XP", "count": 12000 }
 		]
 	},
@@ -196,12 +378,24 @@
 		"prereq": ["what_goes_around"],
 		"next": ["our_presence_up_there"],
 		"requirements": [
-			{ "description": "Find and loot a Baron Husk" },
-			{ "description": "Get an ARC Powercell for Shani" }
+			{
+				"description": "Find and loot a Baron Husk",
+				"count": 1,
+				"links": [{ "type": "location", "id": "baron_husk" }]
+			},
+			{
+				"description": "Get an ARC Powercell for Shani",
+				"count": 1,
+				"links": [{ "type": "item", "id": "arc_powercell" }]
+			}
 		],
 		"rewards": [
-			{ "description": "Silencer I", "count": 1 },
-			{ "description": "XP", "count": 130000 }
+			{
+				"description": "Silencer I",
+				"count": 1,
+				"links": [{ "type": "item", "id": "silencer_i" }]
+			},
+			{ "description": "XP", "count": 13000 }
 		]
 	},
 	{
@@ -211,9 +405,18 @@
 		"prereq": ["dormant_barons"],
 		"next": ["a_balanced_harvest"],
 		"requirements": [
-			{ "description": "Visit the Pattern House in The Dam" },
-			{ "description": "Find and interact with the Power Switch" },
-			{ "description": "Complete the antenna installation on the roof" }
+			{
+				"description": "Visit the Pattern House in The Dam",
+				"links": [{ "type": "location", "id": "pattern_house" }]
+			},
+			{
+				"description": "Find and interact with the Power Switch",
+				"links": [{ "type": "location", "id": "pattern_house_power_switch" }]
+			},
+			{
+				"description": "Complete the antenna installation on the roof",
+				"links": [{ "type": "location", "id": "pattern_house_antenna" }]
+			}
 		],
 		"rewards": [
 			{ "description": "Silencer I Recipe", "count": 1 },
@@ -227,11 +430,21 @@
 		"prereq": ["our_presence_up_there"],
 		"next": ["untended_garden"],
 		"requirements": [
-			{ "description": "Go to the Research & Administration building" },
-			{ "description": "Search for any traces of the agricultural research project" }
+			{
+				"description": "Go to the Research & Administration building",
+				"links": [{ "type": "location", "id": "research_administration" }]
+			},
+			{
+				"description": "Search for any traces of the agricultural research project",
+				"links": [{ "type": "location", "id": "agricultural_research" }]
+			}
 		],
 		"rewards": [
-			{ "description": "Sterilized Bandage", "count": 3 },
+			{
+				"description": "Sterilized Bandage",
+				"count": 3,
+				"links": [{ "type": "item", "id": "sterilized_bandage" }]
+			},
 			{ "description": "XP", "count": 14000 }
 		]
 	},
@@ -242,11 +455,21 @@
 		"prereq": ["a_balanced_harvest"],
 		"next": ["the_root_of_the_matter"],
 		"requirements": [
-			{ "description": "Go to the Hydroponic Dome Complex" },
-			{ "description": "Upload the data to the computer terminal in any Field Depot" }
+			{
+				"description": "Go to the Hydroponic Dome Complex",
+				"links": [{ "type": "location", "id": "hydroponic_dome_complex" }]
+			},
+			{
+				"description": "Upload the data to the computer terminal in any Field Depot",
+				"links": [{ "type": "location", "id": "field_depot" }]
+			}
 		],
 		"rewards": [
-			{ "description": "Vita Shot", "count": 1 },
+			{
+				"description": "Vita Shot",
+				"count": 1,
+				"links": [{ "type": "item", "id": "vita_shot" }]
+			},
 			{ "description": "XP", "count": 15000 }
 		]
 	},
@@ -257,11 +480,21 @@
 		"prereq": ["untended_garden"],
 		"next": ["handover"],
 		"requirements": [
-			{ "description": "Go to the Research Building" },
-			{ "description": "Search for the seed vault in the 'room with a great view'" }
+			{
+				"description": "Go to the Research Building",
+				"links": [{ "type": "location", "id": "research_building" }]
+			},
+			{
+				"description": "Search for the seed vault in the 'room with a great view'",
+				"links": [{ "type": "location", "id": "seed_vault" }]
+			}
 		],
 		"rewards": [
-			{ "description": "Vita Spray", "count": 1 },
+			{
+				"description": "Vita Spray",
+				"count": 1,
+				"links": [{ "type": "item", "id": "vita_spray" }]
+			},
 			{ "description": "XP", "count": 16000 }
 		]
 	},
@@ -272,11 +505,21 @@
 		"prereq": ["the_root_of_the_matter"],
 		"next": ["tribute_to_toledo", "lances_tea_party"],
 		"requirements": [
-			{ "description": "Visit the Pattern House in the Dam" },
-			{ "description": "Mark the Pattern Outpost" }
+			{
+				"description": "Visit the Pattern House in the Dam",
+				"links": [{ "type": "location", "id": "pattern_house" }]
+			},
+			{
+				"description": "Mark the Pattern Outpost",
+				"links": [{ "type": "location", "id": "pattern_outpost" }]
+			}
 		],
 		"rewards": [
-			{ "description": "Jolt Mine", "count": 2 },
+			{
+				"description": "Jolt Mine",
+				"count": 2,
+				"links": [{ "type": "item", "id": "jolt_mine" }]
+			},
 			{ "description": "XP", "count": 17000 }
 		]
 	},
@@ -286,9 +529,19 @@
 		"name": "Tribute To Toledo",
 		"prereq": ["handover"],
 		"next": ["digging_up_dirt"],
-		"requirements": [{ "description": "Get an ARC Powercell for Celeste" }],
+		"requirements": [
+			{
+				"description": "Get an ARC Powercell for Celeste",
+				"count": 1,
+				"links": [{ "type": "item", "id": "arc_powercell" }]
+			}
+		],
 		"rewards": [
-			{ "description": "Damn Staff Room Key", "count": 1 },
+			{
+				"description": "Damn Staff Room Key",
+				"count": 1,
+				"links": [{ "type": "item", "id": "damn_staff_room_key" }]
+			},
 			{ "description": "XP", "count": 19000 }
 		]
 	},
@@ -299,11 +552,21 @@
 		"prereq": ["handover"],
 		"next": ["turnabout"],
 		"requirements": [
-			{ "description": "Locate the Santa Maria Houses in Old Town" },
-			{ "description": "Locate the Dead Drop inside the Santa Maria Houses in Old Town" }
+			{
+				"description": "Locate the Santa Maria Houses in Old Town",
+				"links": [{ "type": "location", "id": "santa_maria_houses" }]
+			},
+			{
+				"description": "Locate the Dead Drop inside the Santa Maria Houses in Old Town",
+				"links": [{ "type": "location", "id": "dead_drop" }]
+			}
 		],
 		"rewards": [
-			{ "description": "Buried City Residential Master Key", "count": 1 },
+			{
+				"description": "Buried City Residential Master Key",
+				"count": 1,
+				"links": [{ "type": "item", "id": "buried_city_residential_master_key" }]
+			},
 			{ "description": "XP", "count": 21000 }
 		]
 	},
@@ -314,11 +577,21 @@
 		"prereq": ["handover"],
 		"next": ["after_rain_comes"],
 		"requirements": [
-			{ "description": "Go to the North Trench Tower" },
-			{ "description": "Locate and upload the Blackmail Files to Celeste" }
+			{
+				"description": "Go to the North Trench Tower",
+				"links": [{ "type": "location", "id": "north_trench_tower" }]
+			},
+			{
+				"description": "Locate and upload the Blackmail Files to Celeste",
+				"links": [{ "type": "location", "id": "blackmail_files" }]
+			}
 		],
 		"rewards": [
-			{ "description": "Barricade Kit", "count": 2 },
+			{
+				"description": "Barricade Kit",
+				"count": 2,
+				"links": [{ "type": "item", "id": "barricade_kit" }]
+			},
 			{ "description": "XP", "count": 23000 }
 		]
 	},
@@ -329,11 +602,23 @@
 		"prereq": ["handover"],
 		"next": ["building_a_library"],
 		"requirements": [
-			{ "description": "Get 2 Rubber Ducks for Lance" },
-			{ "description": "Get 2 Faded Photographs for Lance" }
+			{
+				"description": "Get 2 Rubber Ducks for Lance",
+				"count": 2,
+				"links": [{ "type": "item", "id": "rubber_duck" }]
+			},
+			{
+				"description": "Get 2 Faded Photographs for Lance",
+				"count": 2,
+				"links": [{ "type": "item", "id": "faded_photograph" }]
+			}
 		],
 		"rewards": [
-			{ "description": "Defibrillator", "count": 2 },
+			{
+				"description": "Defibrillator",
+				"count": 2,
+				"links": [{ "type": "item", "id": "defibrillator" }]
+			},
 			{ "description": "XP", "count": 18000 }
 		]
 	},
@@ -344,13 +629,32 @@
 		"prereq": ["lances_tea_party"],
 		"next": ["sparks_fly"],
 		"requirements": [
-			{ "description": "Locate the Library in the City Center" },
-			{ "description": "Find 1 romance book" },
-			{ "description": "Find 1 detective book" },
-			{ "description": "Find 1 adventure book" }
+			{
+				"description": "Locate the Library in the City Center",
+				"links": [{ "type": "location", "id": "library" }]
+			},
+			{
+				"description": "Find 1 romance book",
+				"count": 1,
+				"links": [{ "type": "item", "id": "romance_book" }]
+			},
+			{
+				"description": "Find 1 detective book",
+				"count": 1,
+				"links": [{ "type": "item", "id": "detective_book" }]
+			},
+			{
+				"description": "Find 1 adventure book",
+				"count": 1,
+				"links": [{ "type": "item", "id": "adventure_book" }]
+			}
 		],
 		"rewards": [
-			{ "description": "Buried City Town Hall Key", "count": 1 },
+			{
+				"description": "Buried City Town Hall Key",
+				"count": 1,
+				"links": [{ "type": "item", "id": "buried_city_town_hall_key" }]
+			},
 			{ "description": "XP", "count": 20000 }
 		]
 	},
@@ -360,9 +664,22 @@
 		"name": "Sparks Fly",
 		"prereq": ["building_a_library"],
 		"next": ["after_rain_comes"],
-		"requirements": [{ "description": "Destroy a Hornet with a Snap Blast Grenade" }],
+		"requirements": [
+			{
+				"description": "Destroy a Hornet with a Snap Blast Grenade",
+				"count": 1,
+				"links": [
+					{ "type": "enemy", "id": "hornet" },
+					{ "type": "item", "id": "snap_blast_grenade" }
+				]
+			}
+		],
 		"rewards": [
-			{ "description": "Trigger Nade", "count": 2 },
+			{
+				"description": "Trigger Nade",
+				"count": 2,
+				"links": [{ "type": "item", "id": "trigger_nade" }]
+			},
 			{ "description": "XP", "count": 22000 }
 		]
 	},
@@ -373,11 +690,18 @@
 		"prereq": ["turnabout", "sparks_fly"],
 		"next": ["communication_hideout"],
 		"requirements": [
-			{ "description": "Find the flooded solar panels nearby the Grandioso Apartments" },
+			{
+				"description": "Find the flooded solar panels nearby the Grandioso Apartments",
+				"links": [{ "type": "location", "id": "grandioso_apartments" }]
+			},
 			{ "description": "Repair the solar panels" }
 		],
 		"rewards": [
-			{ "description": "Showstopper", "count": 2 },
+			{
+				"description": "Showstopper",
+				"count": 2,
+				"links": [{ "type": "item", "id": "showstopper" }]
+			},
 			{ "description": "XP", "count": 24000 }
 		]
 	},
@@ -388,14 +712,34 @@
 		"prereq": ["after_rain_comes"],
 		"next": ["prescriptions_of_the_past"],
 		"requirements": [
-			{ "description": "Reach the Red Tower in Old Town" },
-			{ "description": "Find missing battery cell" },
-			{ "description": "Install the battery in the Generator" },
-			{ "description": "Enable the power on the Generator" },
+			{
+				"description": "Reach the Red Tower in Old Town",
+				"links": [{ "type": "location", "id": "red_tower" }]
+			},
+			{
+				"description": "Find missing battery cell",
+				"count": 1,
+				"links": [{ "type": "item", "id": "battery_cell" }]
+			},
+			{
+				"description": "Install the battery in the Generator",
+				"links": [
+					{ "type": "item", "id": "battery_cell" },
+					{ "type": "location", "id": "generator" }
+				]
+			},
+			{
+				"description": "Enable the power on the Generator",
+				"links": [{ "type": "location", "id": "generator" }]
+			},
 			{ "description": "Boot the antenna terminal near the Red Tower" }
 		],
 		"rewards": [
-			{ "description": "Zipline", "count": 2 },
+			{
+				"description": "Zipline",
+				"count": 2,
+				"links": [{ "type": "item", "id": "zipline" }]
+			},
 			{ "description": "XP", "count": 25000 }
 		]
 	},
@@ -469,12 +813,26 @@
 		"prereq": ["switching_the_supply"],
 		"next": ["life_of_a_pharmacist"],
 		"requirements": [
-			{ "description": "Obtain a Water Filter" },
-			{ "description": "Obtain 3 Lemons" },
-			{ "description": "Obtain a Water Pump" }
+			{
+				"description": "Obtain a Water Filter",
+				"links": [{ "type": "item", "id": "water_filter" }]
+			},
+			{
+				"description": "Obtain 3 Lemons",
+				"count": 3,
+				"links": [{ "type": "item", "id": "lemon" }]
+			},
+			{
+				"description": "Obtain a Water Pump",
+				"links": [{ "type": "item", "id": "water_pump" }]
+			}
 		],
 		"rewards": [
-			{ "description": "Osprey I", "count": 1 },
+			{
+				"description": "Osprey I",
+				"count": 1,
+				"links": [{ "type": "item", "id": "osprey_i" }]
+			},
 			{ "description": "XP", "count": 28000 }
 		]
 	},
@@ -492,7 +850,11 @@
 			{ "description": "Document the pharmacist's skills" }
 		],
 		"rewards": [
-			{ "description": "Buried City Hospital Key", "count": 1 },
+			{
+				"description": "Buried City Hospital Key",
+				"count": 1,
+				"links": [{ "type": "item", "id": "buried_city_hospital_key" }]
+			},
 			{ "description": "XP", "count": 29000 }
 		]
 	},
@@ -503,11 +865,23 @@
 		"prereq": ["life_of_a_pharmacist"],
 		"next": ["the_league"],
 		"requirements": [
-			{ "description": "Get 3 Sensors for Tian Wen" },
-			{ "description": "Get Advanced Electrical Components for Tian Wen" }
+			{
+				"description": "Get 3 Sensors for Tian Wen",
+				"count": 3,
+				"links": [{ "type": "item", "id": "sensor" }]
+			},
+			{
+				"description": "Get Advanced Electrical Components for Tian Wen",
+				"count": 1,
+				"links": [{ "type": "item", "id": "advanced_electrical_components" }]
+			}
 		],
 		"rewards": [
-			{ "description": "Raider Augment III", "count": 1 },
+			{
+				"description": "Raider Augment III",
+				"count": 1,
+				"links": [{ "type": "item", "id": "raider_augment_iii" }]
+			},
 			{ "description": "XP", "count": 29000 }
 		]
 	},
@@ -518,11 +892,23 @@
 		"prereq": ["powering_up_the_greenhouse"],
 		"next": ["soaking_up_the_sun"],
 		"requirements": [
-			{ "description": "Get a Deflated Football for Apollo" },
-			{ "description": "Get a Duct Tape for Apollo" }
+			{
+				"description": "Get a Deflated Football for Apollo",
+				"count": 1,
+				"links": [{ "type": "item", "id": "deflated_football" }]
+			},
+			{
+				"description": "Get a Duct Tape for Apollo",
+				"count": 1,
+				"links": [{ "type": "item", "id": "duct_tape" }]
+			}
 		],
 		"rewards": [
-			{ "description": "Padded Stock", "count": 1 },
+			{
+				"description": "Padded Stock",
+				"count": 1,
+				"links": [{ "type": "item", "id": "padded_stock" }]
+			},
 			{ "description": "XP", "count": 30000 }
 		]
 	},
@@ -539,7 +925,11 @@
 			{ "description": "Rewire the solar panel" }
 		],
 		"rewards": [
-			{ "description": "Padded Stock Recipe", "count": 1 },
+			{
+				"description": "Padded Stock Recipe",
+				"count": 1,
+				"links": [{ "type": "item", "id": "recipe_padded_stock" }]
+			},
 			{ "description": "XP", "count": 30000 }
 		]
 	},
@@ -562,14 +952,38 @@
 		"prereq": ["espresso"],
 		"next": ["a_better_use"],
 		"requirements": [
-			{ "description": "Get a Flute for Apollo" },
-			{ "description": "Get an Apricot for Apollo" },
-			{ "description": "Get an Empty Winer Bottle for Apollo" },
-			{ "description": "Get 3 Light Impact Grenades for Apollo" },
-			{ "description": "Get Oil for Apollo" }
+			{
+				"description": "Get a Flute for Apollo",
+				"count": 1,
+				"links": [{ "type": "item", "id": "flute" }]
+			},
+			{
+				"description": "Get an Apricot for Apollo",
+				"count": 1,
+				"links": [{ "type": "item", "id": "apricot" }]
+			},
+			{
+				"description": "Get an Empty Wine Bottle for Apollo",
+				"count": 1,
+				"links": [{ "type": "item", "id": "empty_wine_bottle" }]
+			},
+			{
+				"description": "Get 3 Light Impact Grenades for Apollo",
+				"count": 3,
+				"links": [{ "type": "item", "id": "light_impact_grenade" }]
+			},
+			{
+				"description": "Get Oil for Apollo",
+				"count": 1,
+				"links": [{ "type": "item", "id": "oil" }]
+			}
 		],
 		"rewards": [
-			{ "description": "Gas Grenade", "count": 3 },
+			{
+				"description": "Gas Grenade",
+				"count": 3,
+				"links": [{ "type": "item", "id": "gas_grenade" }]
+			},
 			{ "description": "XP", "count": 31000 }
 		]
 	},
@@ -595,11 +1009,21 @@
 		"prereq": ["a_better_use"],
 		"next": ["power_out"],
 		"requirements": [
-			{ "description": "Place a Jolt Mine" },
-			{ "description": "Destroy a Rollbot with a Raider Tool" }
+			{
+				"description": "Place a Jolt Mine",
+				"links": [{ "type": "item", "id": "jolt_mine" }]
+			},
+			{
+				"description": "Destroy a Rollbot with a Raider Tool",
+				"links": [{ "type": "enemy", "id": "rollbot" }]
+			}
 		],
 		"rewards": [
-			{ "description": "Photoelectric Cloak", "count": 1 },
+			{
+				"description": "Photoelectric Cloak",
+				"count": 1,
+				"links": [{ "type": "item", "id": "photoelectric_cloak" }]
+			},
 			{ "description": "XP", "count": 32000 }
 		]
 	},
@@ -618,7 +1042,11 @@
 			{ "description": "Enable the power switch on the Fuse Box" }
 		],
 		"rewards": [
-			{ "description": "Showstopper", "count": 2 },
+			{
+				"description": "Showstopper",
+				"count": 2,
+				"links": [{ "type": "item", "id": "showstopper" }]
+			},
 			{ "description": "XP", "count": 32000 }
 		]
 	},
@@ -636,7 +1064,11 @@
 			{ "description": "Enable the power via the power switch underneath the stairs" }
 		],
 		"rewards": [
-			{ "description": "Dam Utility Key", "count": 1 },
+			{
+				"description": "Dam Utility Key",
+				"count": 1,
+				"links": [{ "type": "item", "id": "dam_utility_key" }]
+			},
 			{ "description": "XP", "count": 33000 }
 		]
 	},
@@ -652,7 +1084,11 @@
 			{ "description": "Interact with the data terminal at the top of Control Tower B6" }
 		],
 		"rewards": [
-			{ "description": "Snap Hook", "count": 1 },
+			{
+				"description": "Snap Hook",
+				"count": 1,
+				"links": [{ "type": "item", "id": "snap_hook" }]
+			},
 			{ "description": "XP", "count": 33000 }
 		]
 	},
@@ -666,7 +1102,11 @@
 			{ "description": "Search for an ESR Analyzer inside any pharmacy in Buried City" }
 		],
 		"rewards": [
-			{ "description": "Tempest I", "count": 1 },
+			{
+				"description": "Tempest I",
+				"count": 1,
+				"links": [{ "type": "item", "id": "tempest_i" }]
+			},
 			{ "description": "XP", "count": 33000 }
 		]
 	},
@@ -678,10 +1118,18 @@
 		"next": ["bringing_down_a_bison"],
 		"requirements": [
 			{ "description": "Destroy a Rocketeer" },
-			{ "description": "Obtain a Rocketeer Part" }
+			{
+				"description": "Obtain a Rocketeer Part",
+				"count": 1,
+				"links": [{ "type": "item", "id": "rocketeer_part" }]
+			}
 		],
 		"rewards": [
-			{ "description": "Wolfpack", "count": 2 },
+			{
+				"description": "Wolfpack",
+				"count": 2,
+				"links": [{ "type": "item", "id": "wolfpack" }]
+			},
 			{ "description": "XP", "count": 33000 }
 		]
 	},
@@ -693,10 +1141,18 @@
 		"next": null,
 		"requirements": [
 			{ "description": "Destroy a Bison" },
-			{ "description": "Obtain a Bison Driver" }
+			{
+				"description": "Obtain a Bison Driver",
+				"count": 1,
+				"links": [{ "type": "item", "id": "bison_driver" }]
+			}
 		],
 		"rewards": [
-			{ "description": "Equalizer", "count": 1 },
+			{
+				"description": "Equalizer",
+				"count": 1,
+				"links": [{ "type": "item", "id": "equalizer" }]
+			},
 			{ "description": "XP", "count": 34000 }
 		]
 	}
