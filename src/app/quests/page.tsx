@@ -9,7 +9,7 @@ export default async function QuestsPage() {
 		<main className="max-w-[1600px] mx-auto p-6">
 			<h1 className="text-2xl text-center font-bold mb-6">Quests</h1>
 			{questData.length === 0 && <p>No quests found.</p>}
-			<ul>
+			<ul className="flex flex-col gap-2">
 				{questData.map((quest) => (
 					<QuestItem
 						quest={quest}
@@ -21,12 +21,20 @@ export default async function QuestsPage() {
 	);
 }
 
-import { User } from "lucide-react";
+import { ExternalLink, Pin, FileText, User } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
 
 type QuestItemProps = {
 	quest: Quest;
 };
+
+function capitalizeId(id: string) {
+	return id
+		.split("_")
+		.map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+		.join("_");
+}
 
 function QuestItem({ quest }: QuestItemProps) {
 	const getTraderColor = (trader: string) => {
@@ -50,9 +58,10 @@ function QuestItem({ quest }: QuestItemProps) {
 			key={quest.id}
 			className="flex gap-2"
 		>
-			<div className="flex flex-col flex-1 gap-2 border rounded-lg p-4 shadow">
-				<div className="flex gap-8">
-					<div className="w-1/3 flex flex-col gap-2">
+			{/* TODO: Add questline connections (tree view visualization) */}
+			<div className="flex flex-col flex-1 gap-4 border rounded-lg p-4 shadow group/questcard">
+				<div className="flex md:flex-row flex-col gap-8">
+					<div className="flex flex-col flex-1 gap-2">
 						<h2 className="text-xl font-semibold">{quest.name}</h2>
 						<div className="flex items-center gap-2">
 							<div
@@ -77,7 +86,7 @@ function QuestItem({ quest }: QuestItemProps) {
 							</blockquote>
 						)}
 					</div>
-					<div className="w-1/3">
+					<div className="flex-1">
 						<strong>Requirements:</strong>
 						<ul className="list-disc ml-6">
 							{quest.requirements.map((req, i) => (
@@ -88,7 +97,7 @@ function QuestItem({ quest }: QuestItemProps) {
 							))}
 						</ul>
 					</div>
-					<div className="w-1/3">
+					<div className="flex-1">
 						<strong>Rewards:</strong>
 						<ul className="list-disc ml-6">
 							{quest.rewards.map((reward, i) => (
@@ -102,18 +111,36 @@ function QuestItem({ quest }: QuestItemProps) {
 						</ul>
 					</div>
 				</div>
-				{quest.link && (
-					<p>
+				<div className="flex flex-row gap-2">
+					<Button
+						variant="ghost"
+						className="group-hover/questcard:bg-secondary"
+					>
+						<FileText className="h-4 w-4" />
+						Details
+					</Button>
+					<Button variant="ghost">
+						<Pin className="h-4 w-4" />
+						Pin
+					</Button>
+					<Button
+						asChild
+						variant="ghost"
+						className="hover:text-blue-500 dark:hover:text-blue-300"
+					>
 						<a
-							href={quest.link}
+							href={
+								quest.link ||
+								`https://arcraiders.wiki/wiki/${capitalizeId(quest.id)}`
+							}
 							target="_blank"
 							rel="noopener noreferrer"
-							className="text-blue-600 underline"
 						>
-							Wiki page
+							<ExternalLink className="h-4 w-4" />
+							Wiki
 						</a>
-					</p>
-				)}
+					</Button>
+				</div>
 			</div>
 		</li>
 	);
