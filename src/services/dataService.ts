@@ -13,11 +13,9 @@ type DataType = "items" | "recipes" | "workbenches" | "quests";
  */
 async function fetchData<T>(type: DataType, id?: string): Promise<T[] | T | null> {
 	try {
+		const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
 		const endpoint = id ? `/api/data/${type}/${id}` : `/api/data/${type}`;
-		const url =
-			process.env.NODE_ENV === "production"
-				? `${process.env.NEXT_PUBLIC_BASE_URL || ""}${endpoint}`
-				: `http://localhost:3000${endpoint}`;
+		const url = `${baseUrl}${endpoint}`;
 
 		const response = await fetch(url, {
 			method: "GET",
