@@ -1,7 +1,7 @@
 import { fetchWorkbenches } from "@/services/dataService";
 import ItemChecklist from "@/components/checklist/overview";
-import { WorkbenchList } from "./components/workbenchList";
-import ResetUserData from "./components/resetUserData";
+import { WorkbenchList } from "../../components/workbench/workbenchList";
+import ResetUserData from "../../components/workbench/resetUserData";
 
 export default async function WorkshopOverview() {
 	const workbenches = await fetchWorkbenches();
@@ -10,7 +10,7 @@ export default async function WorkshopOverview() {
 		<main className="w-full py-4 px-4">
 			<div className="mx-auto max-w-[1600px]">
 				<h1 className="text-2xl font-bold text-center mb-6">Workshop Overview</h1>
-				<div className="flex flex-col-reverse lg:grid lg:grid-cols-[1fr_auto] gap-6 items-stretch">
+				<div className="flex flex-col-reverse xl:grid xl:grid-cols-[1fr_auto] gap-6 items-stretch">
 					<WorkbenchList workbenches={workbenches} />
 					<ItemChecklist />
 				</div>

@@ -147,7 +147,7 @@ export const WorkbenchUpgradeReqs = ({
 			{workbench.tiers[curWbTier].requiredItems.map((req) => (
 				<div
 					key={req.itemId}
-					className="flex items-center gap-2 w-full px-2"
+					className="flex items-center gap-2 w-full"
 				>
 					<span className="text-sm w-4 text-right">{req.count}</span>
 					{itemsLoading ? (

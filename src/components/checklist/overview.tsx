@@ -19,7 +19,7 @@ const WorkshopItemChecklist = () => {
 	const summary = workbenchUpgradeSummary;
 
 	return (
-		<div className="flex flex-col gap-4 border-2 rounded p-2 w-full h-fit lg:w-fit lg:h-full">
+		<div className="flex flex-col gap-4 border-2 rounded p-2 w-full h-fit xl:w-fit xl:h-full">
 			<h2 className="text-lg font-semibold text-center">Item Checklist</h2>
 			<div>
 				<div className="grid grid-cols-[repeat(auto-fill,minmax(20rem,1fr))] gap-1rem justify-items-center">

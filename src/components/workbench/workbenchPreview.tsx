@@ -5,7 +5,9 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Workbench } from "@/types";
 import Link from "next/link";
 import { useWorkshop } from "@/contexts/workshopContext";
-import { WorkbenchUpgrades } from "@/app/workshop/components/workbenchUpgrade";
+import { WorkbenchUpgrades } from "@/components/workbench/workbenchUpgrade";
+import { Button } from "@/components/ui/button";
+import { FileText } from "lucide-react";
 
 export const WorkbenchPreview = ({ workbench }: { workbench: Workbench }) => {
 	const { loading, getLevel, upgradeWorkbench, downgradeWorkbench } = useWorkshop();
@@ -20,22 +22,21 @@ export const WorkbenchPreview = ({ workbench }: { workbench: Workbench }) => {
 	}
 
 	return (
-		<div className="flex flex-col justify-between gap-2 border-2 rounded p-2 min-w-0 w-full min-h-60 sm:h-60">
+		<div className="flex flex-col justify-between gap-2 border-2 rounded-lg p-2 sm:p-4 min-w-0 w-full min-h-60 sm:h-64 bg-card">
 			<div
 				key={workbench.id}
-				className="flex flex-col sm:flex-row gap-4 sm:gap-2"
+				className="flex flex-col sm:flex-row gap-4 sm:gap-2 h-full"
 			>
-				<div className="flex flex-col gap-2 flex-1">
-					<div className="flex flex-col flex-1 gap-2">
-						<div className="flex items-center gap-2 h-11">
-							<div className="w-10 h-10 p-2 flex items-center justify-center rounded bg-muted">
-								{icon}
-							</div>
-							<h2 className="text-xl font-semibold mb-1">{workbench.name}</h2>
+				<div className="flex flex-col flex-1 gap-2">
+					<div className="flex items-center gap-2 h-11">
+						<div className="w-10 h-10 p-2 flex items-center justify-center rounded bg-muted">
+							{icon}
 						</div>
-						<p className="text-gray-500 ">{workbench.description}</p>
+						<h2 className="text-xl font-semibold mb-1">{workbench.name}</h2>
 					</div>
+					<p className="text-gray-500 ">{workbench.description}</p>
 				</div>
+
 				<WorkbenchUpgrades
 					curWbTier={curWbTier}
 					workbench={workbench}
@@ -44,12 +45,16 @@ export const WorkbenchPreview = ({ workbench }: { workbench: Workbench }) => {
 					isMaxed={isMaxed}
 				/>
 			</div>
-			<Link
-				href={`/workshop/${workbench.id}`}
-				className="text-blue-500 hover:underline"
+			<Button
+				variant="link"
+				className="w-fit self-start"
+				asChild
 			>
-				Go To Workbench
-			</Link>
+				<Link href={`/workshop/${workbench.id}`}>
+					<FileText className="h-4 w-4" />
+					Details
+				</Link>
+			</Button>
 		</div>
 	);
 };
