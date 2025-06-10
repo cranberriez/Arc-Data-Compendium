@@ -99,6 +99,30 @@
 		"recipeId": null
 	},
 	{
+		"id": "shotgun_ammo",
+		"name": "Shotgun Ammo",
+		"description": "Shotgun bullets used mainly with shotguns.",
+		"icon": "Package2",
+		"rarity": "common",
+		"value": 0,
+		"weight": 0,
+		"maxStack": 1,
+		"category": "ammo",
+		"recipeId": null
+	},
+	{
+		"id": "energy_ammo",
+		"name": "Energy Ammo",
+		"description": "Energy bullets used mainly with energy weapons.",
+		"icon": "Package2",
+		"rarity": "rare",
+		"value": 0,
+		"weight": 0,
+		"maxStack": 1,
+		"category": "ammo",
+		"recipeId": null
+	},
+	{
 		"id": "bandage",
 		"name": "Bandage",
 		"description": "A basic medical item that restores a small amount of health over time.",
