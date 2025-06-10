@@ -1,7 +1,6 @@
 import React from "react";
-import type { Quest } from "@/types";
 import { fetchQuests } from "@/services/dataService";
-import { QuestItem } from "./components/questItem";
+import { QuestList } from "./components/questList";
 
 export default async function QuestsPage() {
 	// Artificial delay for testing loading skeleton
@@ -12,16 +11,10 @@ export default async function QuestsPage() {
 
 	return (
 		<article className="w-full p-4">
-			<div className="mx-auto max-w-[1600px]">
-				<h1 className="text-2xl text-center font-bold mb-6">Quests</h1>
-				<ul className="flex flex-col gap-2">
-					{questData.map((quest) => (
-						<QuestItem
-							quest={quest}
-							key={quest.id}
-						/>
-					))}
-				</ul>
+			<div className="flex flex-col gap-6 mx-auto max-w-[1600px]">
+				<h1 className="text-2xl text-center font-bold">Quests</h1>
+
+				<QuestList quests={questData} />
 			</div>
 		</article>
 	);

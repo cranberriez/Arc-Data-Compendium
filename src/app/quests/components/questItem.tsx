@@ -19,7 +19,7 @@ export function QuestItem({ quest }: QuestItemProps) {
 	return (
 		<li
 			key={quest.id}
-			className="flex gap-2"
+			className="flex flex-1 gap-2"
 		>
 			{/* TODO: Add questline connections (tree view visualization) */}
 			<div className="flex flex-col flex-1 gap-4 border rounded-lg p-4 shadow group/questcard">
@@ -121,10 +121,10 @@ function QuestButtons({ quest }: { quest: Quest }) {
 					Details
 				</Link>
 			</Button>
-			<Button variant="ghost">
+			{/* <Button variant="ghost">
 				<Pin className="h-4 w-4" />
 				Pin
-			</Button>
+			</Button> */}
 			<Button
 				asChild
 				variant="ghost"
