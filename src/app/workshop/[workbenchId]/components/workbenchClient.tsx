@@ -13,14 +13,12 @@ interface WorkbenchClientProps {
 }
 
 export function WorkbenchClient({ workbench }: WorkbenchClientProps) {
-	const { workbenchUserData, upgradeWorkbench, downgradeWorkbench } = useWorkshop();
-	const icon = getItemIcon(workbench.icon);
+	const { getLevel } = useWorkshop();
 
 	// Calculate derived values
-	const curWbTier =
-		workbenchUserData.find((wb) => wb.workbenchId === workbench.id)?.currentTier ??
-		workbench.baseTier;
+	const curWbTier = getLevel(workbench.id);
 	const isMaxed = curWbTier === workbench.tiers.length;
+	const icon = getItemIcon(workbench.icon);
 
 	return (
 		<div className="space-y-6">

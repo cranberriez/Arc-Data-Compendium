@@ -26,8 +26,9 @@ interface CookieContextType {
 	data: CookieData;
 
 	// Workbench methods
-	getWorkbenchLevel: (id: string) => number;
-	setWorkbenchLevel: (id: string, level: number) => void;
+	getWorkbenchLevel: (id: string) => number | null;
+	setWorkbenchLevel: (id: string, level: number) => number;
+	resetWorkbenches: () => void;
 
 	// Quest methods
 	getActiveQuest: () => string | null;
@@ -160,9 +161,14 @@ export function CookieProvider({ children }: CookieProviderProps) {
 	};
 
 	// Convenience methods using generic accessors
-	const getWorkbenchLevel = (id: string): number => get("workbenchLevels", id) || 1;
-	const setWorkbenchLevel = (id: string, level: number): void =>
+	const getWorkbenchLevel = (id: string): number | null => get("workbenchLevels", id);
+	const setWorkbenchLevel = (id: string, level: number): number => {
 		set("workbenchLevels", id, level);
+		return level;
+	};
+	const resetWorkbenches = () => {
+		updateCategory("workbenchLevels", () => ({}));
+	};
 
 	const getActiveQuest = (): string | null => data.activeQuest;
 	const setActiveQuest = (questId: string | null): void => set("activeQuest", "", questId);
@@ -349,6 +355,7 @@ export function CookieProvider({ children }: CookieProviderProps) {
 
 	const contextValue: CookieContextType = {
 		data,
+		resetWorkbenches,
 		getWorkbenchLevel,
 		setWorkbenchLevel,
 		getActiveQuest,
@@ -375,10 +382,10 @@ export function CookieProvider({ children }: CookieProviderProps) {
 	return <CookieContext.Provider value={contextValue}>{children}</CookieContext.Provider>;
 }
 
-export function useCookieContext() {
+export function useCookies() {
 	const context = useContext(CookieContext);
 	if (context === undefined) {
-		throw new Error("useCookieContext must be used within a CookieProvider");
+		throw new Error("useCookies must be used within a CookieProvider");
 	}
 	return context;
 }

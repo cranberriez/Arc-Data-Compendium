@@ -8,11 +8,11 @@ import { useWorkshop } from "@/contexts/workshopContext";
 import { WorkbenchUpgrades } from "@/app/workshop/components/workbenchUpgrade";
 
 export const WorkbenchPreview = ({ workbench }: { workbench: Workbench }) => {
+	const { loading, getLevel, upgradeWorkbench, downgradeWorkbench } = useWorkshop();
+
+	const curWbTier = getLevel(workbench.id);
+
 	const icon = getItemIcon(workbench.icon);
-	const { loading, workbenchUserData, upgradeWorkbench, downgradeWorkbench } = useWorkshop();
-	const curWbTier =
-		workbenchUserData.find((wb) => wb.workbenchId === workbench.id)?.currentTier ??
-		workbench.baseTier;
 	const isMaxed = curWbTier === workbench.tiers.length;
 
 	if (loading) {

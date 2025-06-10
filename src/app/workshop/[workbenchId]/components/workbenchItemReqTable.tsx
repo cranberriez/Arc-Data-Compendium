@@ -26,6 +26,7 @@ export function WorkbenchItemReqTable({
 }) {
 	const { openDialog } = useDialog();
 	const { isLoading, getItemById } = useItems();
+
 	return (
 		<Table className="text-xs lg:text-lg h-full table-fixed sm:table-auto">
 			<TableHeader>

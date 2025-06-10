@@ -3,67 +3,55 @@
 import React, { createContext, useContext, useEffect, useState, useCallback, useMemo } from "react";
 import { fetchWorkbenches } from "@/services/dataService";
 import { Workbench, WorkbenchUpgradeSummary } from "@/types/items/workbench";
-import { getWorkbenchData, saveWorkbenchData, WorkbenchUserData } from "@/utils/cookieUtils";
+import { useCookies } from "@/contexts/cookieContext";
 
 interface WorkshopContextType {
 	workbenches: Workbench[];
-	workbenchUserData: WorkbenchUserData[];
 	loading: boolean;
 	error: Error | null;
+
 	refreshWorkshop: () => Promise<void>;
-	updateWorkbenchTier: (workbenchId: string, currentTier: number) => void;
-	workbenchUpgradeSummary: Record<string, WorkbenchUpgradeSummary>;
+	getLevel: (workbenchId: string) => number;
+	setLevel: (workbenchId: string, level: number) => void;
 	upgradeWorkbench: (workbenchId: string) => void;
 	downgradeWorkbench: (workbenchId: string) => void;
 	resetWorkbenches: () => void;
+
+	workbenchUpgradeSummary: Record<string, WorkbenchUpgradeSummary>;
 }
 
 const WorkshopContext = createContext<WorkshopContextType | undefined>(undefined);
 
 export function WorkshopProvider({ children }: { children: React.ReactNode }) {
+	const { getWorkbenchLevel, setWorkbenchLevel, resetWorkbenches } = useCookies();
 	const [workbenches, setWorkbenches] = useState<Workbench[]>([]);
-	const [workbenchUserData, setWorkbenchUserData] = useState<WorkbenchUserData[]>([]);
 	const [loading, setLoading] = useState<boolean>(true);
 	const [error, setError] = useState<Error | null>(null);
 
-	// Load saved workbench data from cookies and initialize missing workbenches with base tier
-	const loadWorkbenchUserData = useCallback((workbenches: Workbench[]) => {
-		const savedData = workbenches.map((workbench) => {
-			const savedWorkbench = getWorkbenchData(workbench.id);
-			return {
-				workbenchId: workbench.id,
-				currentTier: savedWorkbench?.currentTier ?? workbench.baseTier,
-			};
-		});
+	// Get workbench tier from cookies
+	const getLevel = useCallback(
+		(workbenchId: string) => {
+			return (
+				getWorkbenchLevel(workbenchId) ??
+				workbenches.find((wb) => wb.id === workbenchId)?.baseTier ??
+				0
+			);
+		},
+		[getWorkbenchLevel, workbenches]
+	);
 
-		setWorkbenchUserData(savedData);
-	}, []);
-
-	// Update workbench tier and save to cookies
-	const updateWorkbenchTier = useCallback((workbenchId: string, currentTier: number) => {
-		const newData: WorkbenchUserData = { workbenchId, currentTier };
-
-		// Update state
-		setWorkbenchUserData((prevData) => {
-			const existingIndex = prevData.findIndex((item) => item.workbenchId === workbenchId);
-			if (existingIndex >= 0) {
-				const newDataArray = [...prevData];
-				newDataArray[existingIndex] = newData;
-				return newDataArray;
-			}
-			return [...prevData, newData];
-		});
-
-		// Save to cookies
-		saveWorkbenchData(newData);
-	}, []);
+	// Set workbench tier and save to cookies
+	const setLevel = useCallback(
+		(workbenchId: string, level: number) => {
+			setWorkbenchLevel(workbenchId, level);
+		},
+		[setWorkbenchLevel]
+	);
 
 	// Get a summary of all of the items needed to upgrade all workbenches 1 level
 	const getWorkbenchUpgradeSummary = useCallback(() => {
 		return workbenches.reduce((summary, workbench) => {
-			const currentTier =
-				workbenchUserData.find((wb) => wb.workbenchId === workbench.id)?.currentTier ??
-				workbench.baseTier;
+			const currentTier = getLevel(workbench.id);
 			const nextTier = currentTier + 1;
 			const nextTierData = workbench.tiers.find((t) => t.tier === nextTier);
 
@@ -90,7 +78,7 @@ export function WorkshopProvider({ children }: { children: React.ReactNode }) {
 
 			return summary;
 		}, {} as Record<string, WorkbenchUpgradeSummary>);
-	}, [workbenchUserData, workbenches]);
+	}, [getLevel, workbenches]);
 
 	const workbenchUpgradeSummary = useMemo(
 		() => getWorkbenchUpgradeSummary(),
@@ -104,27 +92,13 @@ export function WorkshopProvider({ children }: { children: React.ReactNode }) {
 			const workbench = workbenches.find((wb) => wb.id === workbenchId);
 			if (!workbench) return;
 
-			setWorkbenchUserData((prevData) => {
-				const wbIndex = prevData.findIndex((item) => item.workbenchId === workbenchId);
-				const maxTier = Math.max(...workbench.tiers.map((t) => t.tier));
-				const currentTier =
-					wbIndex >= 0 ? prevData[wbIndex].currentTier : workbench.baseTier;
-				if (currentTier < maxTier) {
-					const newTier = currentTier + 1;
-					const newData: WorkbenchUserData = { workbenchId, currentTier: newTier };
-					const newDataArray = wbIndex >= 0 ? [...prevData] : prevData;
-					if (wbIndex >= 0) {
-						newDataArray[wbIndex] = newData;
-					} else {
-						newDataArray.push(newData);
-					}
-					saveWorkbenchData(newData);
-					return newDataArray;
-				}
-				return prevData;
-			});
+			const currentTier = getLevel(workbenchId);
+			const maxTier = workbench.tiers.length;
+			if (currentTier < maxTier) {
+				setLevel(workbenchId, currentTier + 1);
+			}
 		},
-		[workbenches]
+		[getLevel, setLevel, workbenches]
 	);
 
 	// Downgrade workbench tier and update cookie
@@ -134,39 +108,14 @@ export function WorkshopProvider({ children }: { children: React.ReactNode }) {
 			const workbench = workbenches.find((wb) => wb.id === workbenchId);
 			if (!workbench) return;
 
-			setWorkbenchUserData((prevData) => {
-				const wbIndex = prevData.findIndex((item) => item.workbenchId === workbenchId);
-				const minTier = workbench.baseTier;
-				const currentTier =
-					wbIndex >= 0 ? prevData[wbIndex].currentTier : workbench.baseTier;
-				if (currentTier > minTier) {
-					const newTier = currentTier - 1;
-					const newData: WorkbenchUserData = { workbenchId, currentTier: newTier };
-					const newDataArray = wbIndex >= 0 ? [...prevData] : prevData;
-					if (wbIndex >= 0) {
-						newDataArray[wbIndex] = newData;
-					} else {
-						newDataArray.push(newData);
-					}
-					saveWorkbenchData(newData);
-					return newDataArray;
-				}
-				return prevData;
-			});
+			const currentTier = getLevel(workbenchId);
+			const minTier = workbench.baseTier;
+			if (currentTier > minTier) {
+				setLevel(workbenchId, currentTier - 1);
+			}
 		},
-		[workbenches]
+		[getLevel, setLevel, workbenches]
 	);
-
-	const resetWorkbenches = () => {
-		if (typeof window !== "undefined") {
-			const resetData = workbenches.map((workbench) => ({
-				workbenchId: workbench.id,
-				currentTier: workbench.baseTier,
-			}));
-			setWorkbenchUserData(resetData);
-			resetData.forEach(saveWorkbenchData);
-		}
-	};
 
 	const fetchWorkshopData = async () => {
 		try {
@@ -174,11 +123,6 @@ export function WorkshopProvider({ children }: { children: React.ReactNode }) {
 			setError(null);
 			const data = await fetchWorkbenches();
 			setWorkbenches(data);
-
-			// Load saved data for these workbenches and initialize with base tiers
-			if (typeof window !== "undefined") {
-				loadWorkbenchUserData(data);
-			}
 		} catch (err) {
 			console.error("Failed to fetch workbenches:", err);
 			setError(err instanceof Error ? err : new Error("Failed to fetch workbenches"));
@@ -199,11 +143,11 @@ export function WorkshopProvider({ children }: { children: React.ReactNode }) {
 		<WorkshopContext.Provider
 			value={{
 				workbenches,
-				workbenchUserData,
 				loading,
 				error,
 				refreshWorkshop,
-				updateWorkbenchTier,
+				getLevel,
+				setLevel,
 				workbenchUpgradeSummary,
 				upgradeWorkbench,
 				downgradeWorkbench,
