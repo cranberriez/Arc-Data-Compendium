@@ -1,11 +1,14 @@
 "use client";
 
-import { ThemeProvider } from "@/contexts/themeContext";
-import { ItemProvider } from "@/contexts/itemContext";
-import { DialogProvider } from "@/contexts/dialogContext";
+import {
+	ThemeProvider,
+	RecipeProvider,
+	ItemProvider,
+	CookieProvider,
+	WorkshopProvider,
+	DialogProvider,
+} from "@/contexts";
 import { SidebarProvider } from "@/components/ui/sidebar";
-import { WorkshopProvider } from "@/contexts/workshopContext";
-import { RecipeProvider } from "@/contexts/recipeContext";
 
 interface AppProvidersProps {
 	children: React.ReactNode;
@@ -19,13 +22,15 @@ export function AppProviders({ children }: AppProvidersProps) {
 			enableSystem
 		>
 			<SidebarProvider>
-				<WorkshopProvider>
-					<RecipeProvider>
-						<ItemProvider>
-							<DialogProvider>{children}</DialogProvider>
-						</ItemProvider>
-					</RecipeProvider>
-				</WorkshopProvider>
+				<RecipeProvider>
+					<ItemProvider>
+						<CookieProvider>
+							<WorkshopProvider>
+								<DialogProvider>{children}</DialogProvider>
+							</WorkshopProvider>
+						</CookieProvider>
+					</ItemProvider>
+				</RecipeProvider>
 			</SidebarProvider>
 		</ThemeProvider>
 	);
