@@ -1,0 +1,1159 @@
+[
+	{
+		"id": "topside",
+		"trader": "Shani",
+		"name": "Topside",
+		"prereq": null,
+		"next": ["the_bandage_run"],
+		"requirements": [
+			{
+				"description": "Go topside for the first time",
+				"links": [{ "type": "location", "id": "topside" }]
+			},
+			{
+				"description": "Optional - Ping any ARC",
+				"links": [{ "type": "enemy", "id": "arc" }]
+			}
+		],
+		"rewards": [
+			{ "description": "Ferro", "count": 1, "links": [{ "type": "item", "id": "ferro" }] },
+			{
+				"description": "Heavy Ammo",
+				"count": 20,
+				"links": [{ "type": "item", "id": "heavy_ammo" }]
+			},
+			{ "description": "XP", "count": 4000 }
+		],
+		"dialog": "",
+		"location": "",
+		"link": ""
+	},
+	{
+		"id": "the_bandage_run",
+		"trader": "Lance",
+		"name": "The Bandage Run",
+		"prereq": ["topside"],
+		"next": ["small_but_sinister"],
+		"requirements": [
+			{
+				"description": "Search 5 containers",
+				"count": 5,
+				"links": [{ "type": "location", "id": "container" }]
+			},
+			{
+				"description": "Get 15 pieces of Fabric for Lance",
+				"count": 15,
+				"links": [{ "type": "item", "id": "fabric" }]
+			}
+		],
+		"rewards": [
+			{
+				"description": "Herbal Bandage",
+				"count": 3,
+				"links": [{ "type": "item", "id": "herbal_bandage" }]
+			},
+			{ "description": "XP", "count": 4000 }
+		],
+		"dialog": "",
+		"location": "",
+		"link": ""
+	},
+	{
+		"id": "small_but_sinister",
+		"trader": "Shani",
+		"name": "Small, But Sinister",
+		"prereq": ["the_bandage_run"],
+		"next": ["controlled_demolition"],
+		"requirements": [
+			{
+				"description": "Destroy a Tick",
+				"count": 1,
+				"links": [{ "type": "enemy", "id": "tick" }]
+			},
+			{
+				"description": "Get a Tick Pod for Shani",
+				"count": 1,
+				"links": [{ "type": "item", "id": "tick_pod" }]
+			}
+		],
+		"rewards": [
+			{
+				"description": "Lure Grenade",
+				"count": 2,
+				"links": [{ "type": "item", "id": "lure_grenade" }]
+			},
+			{ "description": "XP", "count": 5000 }
+		],
+		"dialog": "",
+		"location": "",
+		"link": ""
+	},
+	{
+		"id": "controlled_demolition",
+		"trader": "Apollo",
+		"name": "Controlled Demolition",
+		"prereq": ["small_but_sinister"],
+		"next": ["fight_fire_with_fire"],
+		"requirements": [
+			{
+				"description": "Get 2 Explosive Mixtures for Apollo",
+				"count": 2,
+				"links": [{ "type": "item", "id": "explosive_mixture" }]
+			}
+		],
+		"rewards": [
+			{
+				"description": "Jump Mine",
+				"count": 2,
+				"links": [{ "type": "item", "id": "jump_mine" }]
+			},
+			{ "description": "XP", "count": 5000 }
+		]
+	},
+	{
+		"id": "fight_fire_with_fire",
+		"trader": "Tian Wen",
+		"name": "Fight Fire With Fire",
+		"prereq": ["controlled_demolition"],
+		"next": ["hatch_repairs"],
+		"requirements": [
+			{
+				"description": "Destroy a Fireball with a Ferro",
+				"count": 1,
+				"links": [
+					{ "type": "enemy", "id": "fireball" },
+					{ "type": "item", "id": "ferro" }
+				]
+			}
+		],
+		"rewards": [
+			{
+				"description": "Blaze Grenade",
+				"count": 3,
+				"links": [{ "type": "item", "id": "blaze_grenade" }]
+			},
+			{ "description": "XP", "count": 5000 }
+		]
+	},
+	{
+		"id": "hatch_repairs",
+		"trader": "Shani",
+		"name": "Hatch Repairs",
+		"prereq": ["fight_fire_with_fire"],
+		"next": ["a_bad_feeling"],
+		"requirements": [
+			{
+				"description": "Repair the leaking hydraulic pipes near a Raider Hatch",
+				"links": [{ "type": "location", "id": "raider_hatch" }]
+			},
+			{
+				"description": "Investigate the ARC Husk near the hatch",
+				"links": [
+					{ "type": "enemy", "id": "arc_husk" },
+					{ "type": "location", "id": "raider_hatch" }
+				]
+			}
+		],
+		"rewards": [
+			{
+				"description": "Raider Hatch Key",
+				"count": 1,
+				"links": [{ "type": "item", "id": "raider_hatch_key" }]
+			},
+			{ "description": "XP", "count": 6000 }
+		]
+	},
+	{
+		"id": "a_bad_feeling",
+		"trader": "Celeste",
+		"name": "A Bad Feeling",
+		"prereq": ["hatch_repairs"],
+		"next": ["safe_passage"],
+		"requirements": [
+			{
+				"description": "Find and search any ARC Probe, ARC Courier, or Husk",
+				"links": [
+					{ "type": "enemy", "id": "arc_probe" },
+					{ "type": "enemy", "id": "arc_courier" },
+					{ "type": "enemy", "id": "husk" }
+				]
+			}
+		],
+		"rewards": [
+			{
+				"description": "Raider Augment I",
+				"count": 1,
+				"links": [{ "type": "item", "id": "raider_augment_i" }]
+			},
+			{ "description": "XP", "count": 7000 }
+		]
+	},
+	{
+		"id": "safe_passage",
+		"trader": "Apollo",
+		"name": "Safe Passage",
+		"prereq": ["a_bad_feeling"],
+		"next": ["finders_keepers"],
+		"requirements": [
+			{
+				"description": "Destroy a Turret using Light Impact Grenades",
+				"links": [
+					{ "type": "enemy", "id": "turret" },
+					{ "type": "item", "id": "light_impact_grenade" }
+				]
+			}
+		],
+		"rewards": [
+			{
+				"description": "Snap Grenade",
+				"count": 2,
+				"links": [{ "type": "item", "id": "snap_grenade" }]
+			},
+			{ "description": "XP", "count": 7000 }
+		]
+	},
+	{
+		"id": "finders_keepers",
+		"trader": "Tian Wen",
+		"name": "Finders Keepers",
+		"prereq": ["safe_passage"],
+		"next": ["wasps_and_hornets"],
+		"requirements": [
+			{
+				"description": "Loot 3 containers in any Raider camp",
+				"count": 3,
+				"links": [
+					{ "type": "location", "id": "raider_camp" },
+					{ "type": "location", "id": "container" }
+				]
+			}
+		],
+		"rewards": [
+			{
+				"description": "Heavy Fuse Grenade",
+				"count": 2,
+				"links": [{ "type": "item", "id": "heavy_fuse_grenade" }]
+			},
+			{ "description": "XP", "count": 8000 }
+		]
+	},
+	{
+		"id": "wasps_and_hornets",
+		"trader": "Shani",
+		"name": "Wasps and Hornets",
+		"prereq": ["finders_keepers"],
+		"next": ["from_a_distance", "movie_night"],
+		"requirements": [
+			{
+				"description": "Destroy a Wasp",
+				"count": 1,
+				"links": [{ "type": "enemy", "id": "wasp" }]
+			},
+			{
+				"description": "Destroy a Hornet",
+				"count": 1,
+				"links": [{ "type": "enemy", "id": "hornet" }]
+			},
+			{
+				"description": "Get a Wasp Driver for Shani",
+				"count": 1,
+				"links": [{ "type": "item", "id": "wasp_driver" }]
+			},
+			{
+				"description": "Get a Hornet Driver for Shani",
+				"count": 1,
+				"links": [{ "type": "item", "id": "hornet_driver" }]
+			}
+		],
+		"rewards": [
+			{
+				"description": "Wasp Driver",
+				"count": 1,
+				"links": [{ "type": "item", "id": "wasp_driver" }]
+			},
+			{
+				"description": "Hornet Driver",
+				"count": 1,
+				"links": [{ "type": "item", "id": "hornet_driver" }]
+			},
+			{
+				"description": "Mechanical Components",
+				"links": [{ "type": "item", "id": "mechanical_components" }]
+			},
+			{
+				"description": "Electrical Components",
+				"links": [{ "type": "item", "id": "electrical_components" }]
+			},
+			{ "description": "XP", "count": 9000 }
+		]
+	},
+	{
+		"id": "from_a_distance",
+		"trader": "Shani",
+		"name": "From A Distance",
+		"prereq": ["wasps_and_hornets"],
+		"next": ["what_goes_around"],
+		"requirements": [
+			{
+				"description": "Ping a Rocketeer",
+				"count": 1,
+				"links": [{ "type": "enemy", "id": "rocketeer" }]
+			},
+			{
+				"description": "Ping a Bison",
+				"count": 1,
+				"links": [{ "type": "enemy", "id": "bison" }]
+			}
+		],
+		"rewards": [
+			{
+				"description": "Photoelectric Cloak",
+				"count": 1,
+				"links": [{ "type": "item", "id": "photoelectric_cloak" }]
+			},
+			{ "description": "XP", "count": 10000 }
+		]
+	},
+	{
+		"id": "movie_night",
+		"trader": "Apollo",
+		"name": "Movie Night",
+		"prereq": ["wasps_and_hornets"],
+		"next": ["what_goes_around"],
+		"requirements": [
+			{
+				"description": "Get a Film Reel for Apollo",
+				"count": 1,
+				"links": [{ "type": "item", "id": "film_reel" }]
+			},
+			{
+				"description": "Get 3 Electrical Components for Apollo",
+				"count": 3,
+				"links": [{ "type": "item", "id": "electrical_components" }]
+			},
+			{
+				"description": "Get a Camera Lens for Apollo",
+				"count": 1,
+				"links": [{ "type": "item", "id": "camera_lens" }]
+			}
+		],
+		"rewards": [
+			{
+				"description": "Showstopper",
+				"count": 2,
+				"links": [{ "type": "item", "id": "showstopper" }]
+			},
+			{ "description": "XP", "count": 9000 }
+		]
+	},
+	{
+		"id": "what_goes_around",
+		"trader": "Apollo",
+		"name": "What Goes Around",
+		"prereq": ["from_a_distance", "movie_night"],
+		"next": ["dormant_barons"],
+		"requirements": [
+			{
+				"description": "Destroy a Fireball using a Fireball Burner",
+				"count": 1,
+				"links": [
+					{ "type": "enemy", "id": "fireball" },
+					{ "type": "item", "id": "fireball_burner" }
+				]
+			}
+		],
+		"rewards": [
+			{
+				"description": "Blaze Grenade",
+				"count": 2,
+				"links": [{ "type": "item", "id": "blaze_grenade" }]
+			},
+			{ "description": "XP", "count": 12000 }
+		]
+	},
+	{
+		"id": "dormant_barons",
+		"trader": "Shani",
+		"name": "Dormant Barons",
+		"prereq": ["what_goes_around"],
+		"next": ["our_presence_up_there"],
+		"requirements": [
+			{
+				"description": "Find and loot a Baron Husk",
+				"count": 1,
+				"links": [{ "type": "location", "id": "baron_husk" }]
+			},
+			{
+				"description": "Get an ARC Powercell for Shani",
+				"count": 1,
+				"links": [{ "type": "item", "id": "arc_powercell" }]
+			}
+		],
+		"rewards": [
+			{
+				"description": "Silencer I",
+				"count": 1,
+				"links": [{ "type": "item", "id": "silencer_i" }]
+			},
+			{ "description": "XP", "count": 13000 }
+		]
+	},
+	{
+		"id": "our_presence_up_there",
+		"trader": "Shani",
+		"name": "Our Presence Up There",
+		"prereq": ["dormant_barons"],
+		"next": ["a_balanced_harvest"],
+		"requirements": [
+			{
+				"description": "Visit the Pattern House in The Dam",
+				"links": [{ "type": "location", "id": "pattern_house" }]
+			},
+			{
+				"description": "Find and interact with the Power Switch",
+				"links": [{ "type": "location", "id": "pattern_house_power_switch" }]
+			},
+			{
+				"description": "Complete the antenna installation on the roof",
+				"links": [{ "type": "location", "id": "pattern_house_antenna" }]
+			}
+		],
+		"rewards": [
+			{ "description": "Silencer I Recipe", "count": 1 },
+			{ "description": "XP", "count": 14000 }
+		]
+	},
+	{
+		"id": "a_balanced_harvest",
+		"trader": "Celeste",
+		"name": "A Balanced Harvest",
+		"prereq": ["our_presence_up_there"],
+		"next": ["untended_garden"],
+		"requirements": [
+			{
+				"description": "Go to the Research & Administration building",
+				"links": [{ "type": "location", "id": "research_administration" }]
+			},
+			{
+				"description": "Search for any traces of the agricultural research project",
+				"links": [{ "type": "location", "id": "agricultural_research" }]
+			}
+		],
+		"rewards": [
+			{
+				"description": "Sterilized Bandage",
+				"count": 3,
+				"links": [{ "type": "item", "id": "sterilized_bandage" }]
+			},
+			{ "description": "XP", "count": 14000 }
+		]
+	},
+	{
+		"id": "untended_garden",
+		"trader": "Celeste",
+		"name": "Untended Garden",
+		"prereq": ["a_balanced_harvest"],
+		"next": ["the_root_of_the_matter"],
+		"requirements": [
+			{
+				"description": "Go to the Hydroponic Dome Complex",
+				"links": [{ "type": "location", "id": "hydroponic_dome_complex" }]
+			},
+			{
+				"description": "Upload the data to the computer terminal in any Field Depot",
+				"links": [{ "type": "location", "id": "field_depot" }]
+			}
+		],
+		"rewards": [
+			{
+				"description": "Vita Shot",
+				"count": 1,
+				"links": [{ "type": "item", "id": "vita_shot" }]
+			},
+			{ "description": "XP", "count": 15000 }
+		]
+	},
+	{
+		"id": "the_root_of_the_matter",
+		"trader": "Celeste",
+		"name": "The Root Of The Matter",
+		"prereq": ["untended_garden"],
+		"next": ["handover"],
+		"requirements": [
+			{
+				"description": "Go to the Research Building",
+				"links": [{ "type": "location", "id": "research_building" }]
+			},
+			{
+				"description": "Search for the seed vault in the 'room with a great view'",
+				"links": [{ "type": "location", "id": "seed_vault" }]
+			}
+		],
+		"rewards": [
+			{
+				"description": "Vita Spray",
+				"count": 1,
+				"links": [{ "type": "item", "id": "vita_spray" }]
+			},
+			{ "description": "XP", "count": 16000 }
+		]
+	},
+	{
+		"id": "handover",
+		"trader": "Tian Wen",
+		"name": "Handover",
+		"prereq": ["the_root_of_the_matter"],
+		"next": ["tribute_to_toledo", "lances_tea_party"],
+		"requirements": [
+			{
+				"description": "Visit the Pattern House in the Dam",
+				"links": [{ "type": "location", "id": "pattern_house" }]
+			},
+			{
+				"description": "Mark the Pattern Outpost",
+				"links": [{ "type": "location", "id": "pattern_outpost" }]
+			}
+		],
+		"rewards": [
+			{
+				"description": "Jolt Mine",
+				"count": 2,
+				"links": [{ "type": "item", "id": "jolt_mine" }]
+			},
+			{ "description": "XP", "count": 17000 }
+		]
+	},
+	{
+		"id": "tribute_to_toledo",
+		"trader": "Celeste",
+		"name": "Tribute To Toledo",
+		"prereq": ["handover"],
+		"next": ["digging_up_dirt"],
+		"requirements": [
+			{
+				"description": "Get an ARC Powercell for Celeste",
+				"count": 1,
+				"links": [{ "type": "item", "id": "arc_powercell" }]
+			}
+		],
+		"rewards": [
+			{
+				"description": "Damn Staff Room Key",
+				"count": 1,
+				"links": [{ "type": "item", "id": "damn_staff_room_key" }]
+			},
+			{ "description": "XP", "count": 19000 }
+		]
+	},
+	{
+		"id": "digging_up_dirt",
+		"trader": "Celeste",
+		"name": "Digging Up Dirt",
+		"prereq": ["handover"],
+		"next": ["turnabout"],
+		"requirements": [
+			{
+				"description": "Locate the Santa Maria Houses in Old Town",
+				"links": [{ "type": "location", "id": "santa_maria_houses" }]
+			},
+			{
+				"description": "Locate the Dead Drop inside the Santa Maria Houses in Old Town",
+				"links": [{ "type": "location", "id": "dead_drop" }]
+			}
+		],
+		"rewards": [
+			{
+				"description": "Buried City Residential Master Key",
+				"count": 1,
+				"links": [{ "type": "item", "id": "buried_city_residential_master_key" }]
+			},
+			{ "description": "XP", "count": 21000 }
+		]
+	},
+	{
+		"id": "turnabout",
+		"trader": "Celeste",
+		"name": "Turnabout",
+		"prereq": ["handover"],
+		"next": ["after_rain_comes"],
+		"requirements": [
+			{
+				"description": "Go to the North Trench Tower",
+				"links": [{ "type": "location", "id": "north_trench_tower" }]
+			},
+			{
+				"description": "Locate and upload the Blackmail Files to Celeste",
+				"links": [{ "type": "location", "id": "blackmail_files" }]
+			}
+		],
+		"rewards": [
+			{
+				"description": "Barricade Kit",
+				"count": 2,
+				"links": [{ "type": "item", "id": "barricade_kit" }]
+			},
+			{ "description": "XP", "count": 23000 }
+		]
+	},
+	{
+		"id": "lances_tea_party",
+		"trader": "Lance",
+		"name": "Lance's Tea Party",
+		"prereq": ["handover"],
+		"next": ["building_a_library"],
+		"requirements": [
+			{
+				"description": "Get 2 Rubber Ducks for Lance",
+				"count": 2,
+				"links": [{ "type": "item", "id": "rubber_duck" }]
+			},
+			{
+				"description": "Get 2 Faded Photographs for Lance",
+				"count": 2,
+				"links": [{ "type": "item", "id": "faded_photograph" }]
+			}
+		],
+		"rewards": [
+			{
+				"description": "Defibrillator",
+				"count": 2,
+				"links": [{ "type": "item", "id": "defibrillator" }]
+			},
+			{ "description": "XP", "count": 18000 }
+		]
+	},
+	{
+		"id": "building_a_library",
+		"trader": "Apollo",
+		"name": "Building A Library",
+		"prereq": ["lances_tea_party"],
+		"next": ["sparks_fly"],
+		"requirements": [
+			{
+				"description": "Locate the Library in the City Center",
+				"links": [{ "type": "location", "id": "library" }]
+			},
+			{
+				"description": "Find 1 romance book",
+				"count": 1,
+				"links": [{ "type": "item", "id": "romance_book" }]
+			},
+			{
+				"description": "Find 1 detective book",
+				"count": 1,
+				"links": [{ "type": "item", "id": "detective_book" }]
+			},
+			{
+				"description": "Find 1 adventure book",
+				"count": 1,
+				"links": [{ "type": "item", "id": "adventure_book" }]
+			}
+		],
+		"rewards": [
+			{
+				"description": "Buried City Town Hall Key",
+				"count": 1,
+				"links": [{ "type": "item", "id": "buried_city_town_hall_key" }]
+			},
+			{ "description": "XP", "count": 20000 }
+		]
+	},
+	{
+		"id": "sparks_fly",
+		"trader": "Apollo",
+		"name": "Sparks Fly",
+		"prereq": ["building_a_library"],
+		"next": ["after_rain_comes"],
+		"requirements": [
+			{
+				"description": "Destroy a Hornet with a Snap Blast Grenade",
+				"count": 1,
+				"links": [
+					{ "type": "enemy", "id": "hornet" },
+					{ "type": "item", "id": "snap_blast_grenade" }
+				]
+			}
+		],
+		"rewards": [
+			{
+				"description": "Trigger Nade",
+				"count": 2,
+				"links": [{ "type": "item", "id": "trigger_nade" }]
+			},
+			{ "description": "XP", "count": 22000 }
+		]
+	},
+	{
+		"id": "after_rain_comes",
+		"trader": "Celeste",
+		"name": "After Rain Comes",
+		"prereq": ["turnabout", "sparks_fly"],
+		"next": ["communication_hideout"],
+		"requirements": [
+			{
+				"description": "Find the flooded solar panels nearby the Grandioso Apartments",
+				"links": [{ "type": "location", "id": "grandioso_apartments" }]
+			},
+			{ "description": "Repair the solar panels" }
+		],
+		"rewards": [
+			{
+				"description": "Showstopper",
+				"count": 2,
+				"links": [{ "type": "item", "id": "showstopper" }]
+			},
+			{ "description": "XP", "count": 24000 }
+		]
+	},
+	{
+		"id": "communication_hideout",
+		"trader": "Shani",
+		"name": "Communication Hideout",
+		"prereq": ["after_rain_comes"],
+		"next": ["prescriptions_of_the_past"],
+		"requirements": [
+			{
+				"description": "Reach the Red Tower in Old Town",
+				"links": [{ "type": "location", "id": "red_tower" }]
+			},
+			{
+				"description": "Find missing battery cell",
+				"count": 1,
+				"links": [{ "type": "item", "id": "battery_cell" }]
+			},
+			{
+				"description": "Install the battery in the Generator",
+				"links": [
+					{ "type": "item", "id": "battery_cell" },
+					{ "type": "location", "id": "generator" }
+				]
+			},
+			{
+				"description": "Enable the power on the Generator",
+				"links": [{ "type": "location", "id": "generator" }]
+			},
+			{ "description": "Boot the antenna terminal near the Red Tower" }
+		],
+		"rewards": [
+			{
+				"description": "Zipline",
+				"count": 2,
+				"links": [{ "type": "item", "id": "zipline" }]
+			},
+			{ "description": "XP", "count": 25000 }
+		]
+	},
+	{
+		"id": "prescriptions_of_the_past",
+		"trader": "Lance",
+		"name": "Prescriptions Of The Past",
+		"prereq": ["communication_hideout"],
+		"next": ["water_troubles"],
+		"requirements": [
+			{ "description": "Visit the Departure Building in Spaceport" },
+			{ "description": "Find the Medical Exam Room inside the Departure Building" },
+			{ "description": "Search for the records" }
+		],
+		"rewards": [
+			{ "description": "Spaceport Container Storage Key", "count": 1 },
+			{ "description": "XP", "count": 25000 }
+		]
+	},
+	{
+		"id": "water_troubles",
+		"trader": "Celeste",
+		"name": "Water Troubles",
+		"prereq": ["prescriptions_of_the_past"],
+		"next": ["source_of_the_contamination"],
+		"requirements": [
+			{ "description": "Locate the Flood Access Tunnel under the Red Lake Berm" },
+			{ "description": "Find the intake to the District's Water Supply" },
+			{ "description": "Sample the water" }
+		],
+		"rewards": [
+			{ "description": "Burletta I", "count": 1 },
+			{ "description": "XP", "count": 26000 }
+		]
+	},
+	{
+		"id": "source_of_the_contamination",
+		"trader": "Celeste",
+		"name": "Source Of The Contamination",
+		"prereq": ["water_troubles"],
+		"next": ["switching_the_supply"],
+		"requirements": [
+			{ "description": "Reach the Water Treatment Building in The Dam" },
+			{ "description": "Search for the Flood Spill Intake near the Swamp" },
+			{ "description": "Investigate any suspicious objects" }
+		],
+		"rewards": [
+			{ "description": "Burletta Recipe", "count": 1 },
+			{ "description": "XP", "count": 27000 }
+		]
+	},
+	{
+		"id": "switching_the_supply",
+		"trader": "Celeste",
+		"name": "Switching The Supply",
+		"prereq": ["source_of_the_contamination"],
+		"next": ["unexpected_initiative"],
+		"requirements": [
+			{ "description": "Find the tunnels under the Spaceport" },
+			{ "description": "Find and turn the valve in the tunnels under Spaceport" }
+		],
+		"rewards": [
+			{ "description": "Spaceport Warehouse Key", "count": 1 },
+			{ "description": "XP", "count": 28000 }
+		]
+	},
+	{
+		"id": "unexpected_initiative",
+		"trader": "Tian Wen",
+		"name": "Unexpected Initiative",
+		"prereq": ["switching_the_supply"],
+		"next": ["life_of_a_pharmacist"],
+		"requirements": [
+			{
+				"description": "Obtain a Water Filter",
+				"links": [{ "type": "item", "id": "water_filter" }]
+			},
+			{
+				"description": "Obtain 3 Lemons",
+				"count": 3,
+				"links": [{ "type": "item", "id": "lemon" }]
+			},
+			{
+				"description": "Obtain a Water Pump",
+				"links": [{ "type": "item", "id": "water_pump" }]
+			}
+		],
+		"rewards": [
+			{
+				"description": "Osprey I",
+				"count": 1,
+				"links": [{ "type": "item", "id": "osprey_i" }]
+			},
+			{ "description": "XP", "count": 28000 }
+		]
+	},
+	{
+		"id": "life_of_a_pharmacist",
+		"trader": "Lance",
+		"name": "Life Of A Pharmacist",
+		"prereq": ["unexpected_initiative"],
+		"next": ["powering_up_the_greenhouse"],
+		"requirements": [
+			{ "description": "Find the Arbuso Farmacia then search the apartment above" },
+			{ "description": "Document the pharmacist's hobbies" },
+			{ "description": "Document the pharmacist's family" },
+			{ "description": "Document the pharmacist's taste" },
+			{ "description": "Document the pharmacist's skills" }
+		],
+		"rewards": [
+			{
+				"description": "Buried City Hospital Key",
+				"count": 1,
+				"links": [{ "type": "item", "id": "buried_city_hospital_key" }]
+			},
+			{ "description": "XP", "count": 29000 }
+		]
+	},
+	{
+		"id": "powering_up_the_greenhouse",
+		"trader": "Tian Wen",
+		"name": "Powering Up The Greenhouse",
+		"prereq": ["life_of_a_pharmacist"],
+		"next": ["the_league"],
+		"requirements": [
+			{
+				"description": "Get 3 Sensors for Tian Wen",
+				"count": 3,
+				"links": [{ "type": "item", "id": "sensor" }]
+			},
+			{
+				"description": "Get Advanced Electrical Components for Tian Wen",
+				"count": 1,
+				"links": [{ "type": "item", "id": "advanced_electrical_components" }]
+			}
+		],
+		"rewards": [
+			{
+				"description": "Raider Augment III",
+				"count": 1,
+				"links": [{ "type": "item", "id": "raider_augment_iii" }]
+			},
+			{ "description": "XP", "count": 29000 }
+		]
+	},
+	{
+		"id": "the_league",
+		"trader": "Apollo",
+		"name": "The League",
+		"prereq": ["powering_up_the_greenhouse"],
+		"next": ["soaking_up_the_sun"],
+		"requirements": [
+			{
+				"description": "Get a Deflated Football for Apollo",
+				"count": 1,
+				"links": [{ "type": "item", "id": "deflated_football" }]
+			},
+			{
+				"description": "Get a Duct Tape for Apollo",
+				"count": 1,
+				"links": [{ "type": "item", "id": "duct_tape" }]
+			}
+		],
+		"rewards": [
+			{
+				"description": "Padded Stock",
+				"count": 1,
+				"links": [{ "type": "item", "id": "padded_stock" }]
+			},
+			{ "description": "XP", "count": 30000 }
+		]
+	},
+	{
+		"id": "soaking_up_the_sun",
+		"trader": "Tian Wen",
+		"name": "Soaking Up The Sun",
+		"prereq": ["the_league"],
+		"next": ["espresso"],
+		"requirements": [
+			{
+				"description": "Find the secluded roof terrace south-west of the Southern Station, look for blue tarps."
+			},
+			{ "description": "Rewire the solar panel" }
+		],
+		"rewards": [
+			{
+				"description": "Padded Stock Recipe",
+				"count": 1,
+				"links": [{ "type": "item", "id": "recipe_padded_stock" }]
+			},
+			{ "description": "XP", "count": 30000 }
+		]
+	},
+	{
+		"id": "espresso",
+		"trader": "Apollo",
+		"name": "Espresso",
+		"prereq": ["soaking_up_the_sun"],
+		"next": ["pied_piper"],
+		"requirements": [{ "description": "Find an espresso machine to salvage for spare parts" }],
+		"rewards": [
+			{ "description": "Adrenaline Shot", "count": 3 },
+			{ "description": "XP", "count": 31000 }
+		]
+	},
+	{
+		"id": "pied_piper",
+		"trader": "Apollo",
+		"name": "Pied Piper",
+		"prereq": ["espresso"],
+		"next": ["a_better_use"],
+		"requirements": [
+			{
+				"description": "Get a Flute for Apollo",
+				"count": 1,
+				"links": [{ "type": "item", "id": "flute" }]
+			},
+			{
+				"description": "Get an Apricot for Apollo",
+				"count": 1,
+				"links": [{ "type": "item", "id": "apricot" }]
+			},
+			{
+				"description": "Get an Empty Wine Bottle for Apollo",
+				"count": 1,
+				"links": [{ "type": "item", "id": "empty_wine_bottle" }]
+			},
+			{
+				"description": "Get 3 Light Impact Grenades for Apollo",
+				"count": 3,
+				"links": [{ "type": "item", "id": "light_impact_grenade" }]
+			},
+			{
+				"description": "Get Oil for Apollo",
+				"count": 1,
+				"links": [{ "type": "item", "id": "oil" }]
+			}
+		],
+		"rewards": [
+			{
+				"description": "Gas Grenade",
+				"count": 3,
+				"links": [{ "type": "item", "id": "gas_grenade" }]
+			},
+			{ "description": "XP", "count": 31000 }
+		]
+	},
+	{
+		"id": "a_better_use",
+		"trader": "Tian Wen",
+		"name": "A Better Use",
+		"prereq": ["pied_piper"],
+		"next": ["mixed_signals"],
+		"requirements": [
+			{ "description": "Request in a Supply Drop from a Call Station" },
+			{ "description": "Loot a Supply Drop" }
+		],
+		"rewards": [
+			{ "description": "Torrente I", "count": 1 },
+			{ "description": "XP", "count": 32000 }
+		]
+	},
+	{
+		"id": "mixed_signals",
+		"trader": "Shani",
+		"name": "Mixed Signals",
+		"prereq": ["a_better_use"],
+		"next": ["power_out"],
+		"requirements": [
+			{
+				"description": "Place a Jolt Mine",
+				"links": [{ "type": "item", "id": "jolt_mine" }]
+			},
+			{
+				"description": "Destroy a Rollbot with a Raider Tool",
+				"links": [{ "type": "enemy", "id": "rollbot" }]
+			}
+		],
+		"rewards": [
+			{
+				"description": "Photoelectric Cloak",
+				"count": 1,
+				"links": [{ "type": "item", "id": "photoelectric_cloak" }]
+			},
+			{ "description": "XP", "count": 32000 }
+		]
+	},
+	{
+		"id": "power_out",
+		"trader": "Celeste",
+		"name": "Power Out",
+		"prereq": ["mixed_signals"],
+		"next": ["flickering_threat"],
+		"requirements": [
+			{
+				"description": "Find the Electrical Substation south of the Spaceport, next to the Checkpoint"
+			},
+			{ "description": "Find any sign of the missing engineer" },
+			{ "description": "Carry the fuse/battery back to the Electrical Substation" },
+			{ "description": "Enable the power switch on the Fuse Box" }
+		],
+		"rewards": [
+			{
+				"description": "Showstopper",
+				"count": 2,
+				"links": [{ "type": "item", "id": "showstopper" }]
+			},
+			{ "description": "XP", "count": 32000 }
+		]
+	},
+	{
+		"id": "flickering_threat",
+		"trader": "Celeste",
+		"name": "Flickering Threat",
+		"prereq": ["power_out"],
+		"next": ["the_control_tower"],
+		"requirements": [
+			{ "description": "Enter the Power Generation Complex by The Dam" },
+			{ "description": "Find the Generator Room" },
+			{ "description": "Repair the Generator" },
+			{ "description": "Find the Ventilation Shaft" },
+			{ "description": "Enable the power via the power switch underneath the stairs" }
+		],
+		"rewards": [
+			{
+				"description": "Dam Utility Key",
+				"count": 1,
+				"links": [{ "type": "item", "id": "dam_utility_key" }]
+			},
+			{ "description": "XP", "count": 33000 }
+		]
+	},
+	{
+		"id": "the_control_tower",
+		"trader": "Shani",
+		"name": "The Control Tower",
+		"prereq": ["flickering_threat"],
+		"next": ["esr_analyzer"],
+		"requirements": [
+			{ "description": "Visit Control Tower B6" },
+			{ "description": "Reach the top of Control Tower B6" },
+			{ "description": "Interact with the data terminal at the top of Control Tower B6" }
+		],
+		"rewards": [
+			{
+				"description": "Snap Hook",
+				"count": 1,
+				"links": [{ "type": "item", "id": "snap_hook" }]
+			},
+			{ "description": "XP", "count": 33000 }
+		]
+	},
+	{
+		"id": "esr_analyzer",
+		"trader": "Lance",
+		"name": "ESR Analyzer",
+		"prereq": ["the_control_tower"],
+		"next": ["raider_versus_rocketeer"],
+		"requirements": [
+			{ "description": "Search for an ESR Analyzer inside any pharmacy in Buried City" }
+		],
+		"rewards": [
+			{
+				"description": "Tempest I",
+				"count": 1,
+				"links": [{ "type": "item", "id": "tempest_i" }]
+			},
+			{ "description": "XP", "count": 33000 }
+		]
+	},
+	{
+		"id": "raider_versus_rocketeer",
+		"trader": "Shani",
+		"name": "Raider Versus Rocketeer",
+		"prereq": ["esr_analyzer"],
+		"next": ["bringing_down_a_bison"],
+		"requirements": [
+			{ "description": "Destroy a Rocketeer" },
+			{
+				"description": "Obtain a Rocketeer Part",
+				"count": 1,
+				"links": [{ "type": "item", "id": "rocketeer_part" }]
+			}
+		],
+		"rewards": [
+			{
+				"description": "Wolfpack",
+				"count": 2,
+				"links": [{ "type": "item", "id": "wolfpack" }]
+			},
+			{ "description": "XP", "count": 33000 }
+		]
+	},
+	{
+		"id": "bringing_down_a_bison",
+		"trader": "Shani",
+		"name": "Bringing Down A Bison",
+		"prereq": ["raider_versus_rocketeer"],
+		"next": null,
+		"requirements": [
+			{ "description": "Destroy a Bison" },
+			{
+				"description": "Obtain a Bison Driver",
+				"count": 1,
+				"links": [{ "type": "item", "id": "bison_driver" }]
+			}
+		],
+		"rewards": [
+			{
+				"description": "Equalizer",
+				"count": 1,
+				"links": [{ "type": "item", "id": "equalizer" }]
+			},
+			{ "description": "XP", "count": 34000 }
+		]
+	}
+]

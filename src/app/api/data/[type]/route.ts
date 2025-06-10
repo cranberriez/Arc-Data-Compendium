@@ -2,19 +2,22 @@ import { NextResponse } from "next/server";
 import { Item } from "@/types/items/item";
 import { Recipe } from "@/types/items/recipe";
 import { Workbench } from "@/types/items/workbench";
+import { Quest } from "@/types/items/quest";
 
 // Import all JSON data files
 import itemData from "@/data/items/itemData.build.json";
 import recipeData from "@/data/recipes/recipeData.json";
 import workbenchData from "@/data/workbenches/workbenchData.json";
+import questData from "@/data/quests/questData.json";
 
-type DataType = "items" | "recipes" | "workbenches";
+type DataType = "items" | "recipes" | "workbenches" | "quests";
 
 // Map data types to their corresponding data sources
 const dataMap: Record<DataType, any> = {
 	items: itemData as Item[],
 	recipes: recipeData as Recipe[],
 	workbenches: workbenchData as Workbench[],
+	quests: questData as Quest[],
 };
 
 const headers = {

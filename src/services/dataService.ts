@@ -1,8 +1,21 @@
 import { Item } from "@/types/items/item";
+import { Quest } from "@/types/items/quest";
 import { Recipe } from "@/types/items/recipe";
 import { Workbench } from "@/types/items/workbench";
 
-type DataType = "items" | "recipes" | "workbenches";
+import itemsData from "@/data/items/itemData.build.json";
+import recipesData from "@/data/recipes/recipeData.json";
+import workbenchesData from "@/data/workbenches/workbenchData.json";
+import questsData from "@/data/quests/questData.json";
+
+type DataType = "items" | "recipes" | "workbenches" | "quests";
+
+const dataMap: Record<DataType, any> = {
+	items: itemsData,
+	recipes: recipesData,
+	workbenches: workbenchesData,
+	quests: questsData,
+};
 
 /**
  * Generic function to fetch data from the API
@@ -11,12 +24,21 @@ type DataType = "items" | "recipes" | "workbenches";
  * @returns Promise that resolves to an array of items or a single item if ID is provided
  */
 async function fetchData<T>(type: DataType, id?: string): Promise<T[] | T | null> {
-	try {
-		const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
-		const endpoint = id ? `/api/data/${type}/${id}` : `/api/data/${type}`;
-		const url = `${baseUrl}${endpoint}`;
+	// Server-side: use imported data directly
+	if (typeof window === "undefined") {
+		const allData = dataMap[type] as T[];
+		if (!allData) return null;
+		if (id) {
+			return allData.find((item: any) => item.id === id) ?? null;
+		}
+		return allData;
+	}
 
-		const response = await fetch(url, {
+	// Client-side: fetch from API
+	try {
+		const endpoint = id ? `/api/data/${type}/${id}` : `/api/data/${type}`;
+
+		const response = await fetch(endpoint, {
 			method: "GET",
 			headers: {
 				"Content-Type": "application/json",
@@ -102,9 +124,29 @@ export async function fetchWorkbenchById(id: string): Promise<Workbench | null> 
 	return result && !Array.isArray(result) ? result : null;
 }
 
+/**
+ * Fetches all quests from the API
+ * @returns Promise that resolves to an array of quests
+ */
+export async function fetchQuests(): Promise<Quest[]> {
+	const result = await fetchData<Quest>("quests");
+	return Array.isArray(result) ? result : [];
+}
+
+/**
+ * Fetches a single quest by ID from the API
+ * @param id The ID of the quest to fetch
+ * @returns Promise that resolves to the quest or null if not found
+ */
+export async function fetchQuestById(id: string): Promise<Quest | null> {
+	const result = await fetchData<Quest>("quests", id);
+	return result && !Array.isArray(result) ? result : null;
+}
+
 // For backward compatibility
 export type DataTypes = {
 	workbench: Workbench;
 	item: Item;
 	recipe: Recipe;
+	quest: Quest;
 };

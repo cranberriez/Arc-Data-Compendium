@@ -7,6 +7,7 @@ export * from "./items/workbench";
 export * from "./items/recipe";
 export * from "./items/quickuse";
 export * from "./items/gear";
+export * from "./items/quest";
 
 // Re-export commonly used types for convenience
 export type { BaseItem } from "./items/base";
