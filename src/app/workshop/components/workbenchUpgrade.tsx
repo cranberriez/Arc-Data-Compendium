@@ -1,4 +1,4 @@
-import { PlusIcon } from "lucide-react";
+import { Check, PlusIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { MoveLeft, MoveRight, Trash } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -57,7 +57,7 @@ export const WorkbenchTier = ({
 	upgradeWorkbench: (workbenchId: string) => void;
 	downgradeWorkbench: (workbenchId: string) => void;
 }) => {
-	const genericClasses = "flex items-center justify-between gap-2 rounded border-2";
+	const genericClasses = "flex items-center justify-between gap-2 h-11";
 
 	switch (true) {
 		case currentTier === 0:
@@ -66,7 +66,7 @@ export const WorkbenchTier = ({
 					onClick={() => upgradeWorkbench(workbenchId)}
 					className={cn(
 						genericClasses,
-						"flex justify-center border-blue-400 dark:border-blue-400/40 border-dashed group hover:border-accent-foreground dark:hover:border-accent cursor-pointer p-2"
+						"flex justify-center border-blue-400 dark:border-blue-400/40 border-dashed group hover:border-accent-foreground dark:hover:border-accent cursor-pointer p-2 rounded border-2"
 					)}
 				>
 					<p className="text-blue-400 dark:text-blue-400/60 group-hover:hidden flex items-center gap-1">
@@ -88,29 +88,28 @@ export const WorkbenchTier = ({
 		case currentTier === maxTier:
 			return (
 				<>
-					<div
-						className={cn(genericClasses, "flex items-center justify-center border-0")}
-					>
+					<div className={cn(genericClasses)}>
 						<Button
 							variant="ghost"
 							onClick={() => downgradeWorkbench(workbenchId)}
 							className="cursor-pointer"
-							disabled={currentTier !== maxTier}
+							disabled={currentTier === baseTier}
 						>
-							<MoveLeft />
+							{currentTier === baseTier ? <Trash /> : <MoveLeft />}
 						</Button>
-						<p className="dark:text-green-500 text-green-700 p-2 mb-1">
-							Bench Fully Upgraded
-						</p>
+						<p className="dark:text-green-500 text-green-700 p-2 mb-1">Max Level</p>
+						<Button
+							variant="ghost"
+							disabled
+						>
+							<Check />
+						</Button>
 					</div>
 				</>
 			);
 		default:
 			return (
-				<div className={cn(genericClasses, "border-transparent flex items-center h-11")}>
-					<p className="font-semibold">
-						Level <span className="font-mono">{currentTier}</span>
-					</p>
+				<div className={cn(genericClasses)}>
 					<Button
 						variant="outline"
 						onClick={() => downgradeWorkbench(workbenchId)}
@@ -119,6 +118,9 @@ export const WorkbenchTier = ({
 					>
 						{currentTier === baseTier ? <Trash /> : <MoveLeft />}
 					</Button>
+					<p className="font-semibold">
+						Level <span className="font-mono">{currentTier}</span>
+					</p>
 					<Button
 						variant="outline"
 						onClick={() => upgradeWorkbench(workbenchId)}
@@ -126,10 +128,6 @@ export const WorkbenchTier = ({
 					>
 						<MoveRight />
 					</Button>
-					<p>
-						{currentTier + 1}
-						<span className="text-xs text-muted-foreground ml-2">/ {maxTier}</span>
-					</p>
 				</div>
 			);
 	}
