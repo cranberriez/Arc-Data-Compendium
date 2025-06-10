@@ -26,25 +26,30 @@ export function RecipeItem({ recipe, className }: { recipe: Recipe; className?: 
 		<div
 			key={recipe.id}
 			className={cn(
-				"flex flex-col justify-between items-start gap-2 p-2 border-2 rounded-lg min-h-48 min-w-80",
+				"flex flex-wrap justify-between items-center gap-2 p-2 w-full",
 				className
 			)}
 		>
-			<div className="flex flex-col items-start">
+			<div className="flex flex-wrap flex-1 items-center gap-2">
 				<div
-					className="flex items-center gap-2 pr-2 rounded hover:bg-primary/10 cursor-pointer"
+					className="flex items-center gap-2 rounded-md hover:bg-primary/10 cursor-pointer w-sm"
 					onClick={() => {
 						openDialog("item", outputItem);
 					}}
 				>
 					{getItemIcon(
 						outputItem.icon,
-						`w-12 h-12 p-2 rounded text-card ${getRarityColor(outputItem.rarity, "bg")}`
+						`w-12 h-12 p-2 rounded-md text-card ${getRarityColor(
+							outputItem.rarity,
+							"bg"
+						)}`
 					)}
-					<p className="mb-[2px] font-mono">{recipe.outputCount}</p>
-					<p className="mb-[2px]">{outputItem.name}</p>
+					{recipe.outputCount > 1 && (
+						<p className="text-3xl font-mono">{recipe.outputCount}</p>
+					)}
+					<p className="mb-[2px] text-xl">{outputItem.name}</p>
 				</div>
-				<div className="flex flex-col gap-2 text-md p-3">
+				<div className="flex flex-col gap-2 text-md">
 					{recipe.requirements.length === 0 ? (
 						<div className="flex items-center gap-2 text-muted-foreground">
 							<p className="mb-[2px] font-bold font-mono">Unknown Requirements</p>
@@ -57,7 +62,7 @@ export function RecipeItem({ recipe, className }: { recipe: Recipe; className?: 
 							return (
 								<div
 									key={requirement.itemId}
-									className="flex items-center gap-2 text-muted-foreground hover:text-primary cursor-pointer"
+									className="flex items-center gap-2 text-lg dark:text-muted-foreground hover:text-primary cursor-pointer"
 									onClick={() => {
 										openDialog("item", reqItem);
 									}}
@@ -66,10 +71,10 @@ export function RecipeItem({ recipe, className }: { recipe: Recipe; className?: 
 										reqItem.icon,
 										`w-6 h-6 ${getRarityColor(reqItem.rarity, "text")}`
 									)}
-									<p className="mb-[2px] font-bold font-mono">
+									<p className="mb-[3px] font-bold font-mono">
 										{requirement.count}
 									</p>
-									<p className="mb-[2px]">{reqItem.name}</p>
+									<p className="mb-[3px]">{reqItem.name}</p>
 								</div>
 							);
 						})
@@ -77,10 +82,10 @@ export function RecipeItem({ recipe, className }: { recipe: Recipe; className?: 
 				</div>
 			</div>
 			{recipe.isLocked && (
-				<div className="flex flex-col gap-2 w-full">
+				<div className="flex flex-col items-center gap-2">
 					<div className="flex items-center gap-2 text-red-600 dark:text-red-400">
 						<Lock size={14} />
-						<span className="mb-[2px]">Unlock:</span>
+						<span className="mb-[2px]">Unlock Requirements:</span>
 					</div>
 					<RecipeUnlockType recipeLock={recipe.lockedType} />
 				</div>
@@ -134,7 +139,7 @@ function RecipeUnlockType({ recipeLock }: { recipeLock: RecipeLock | undefined }
 				key={key}
 			>
 				{lockVisuals.icon}
-				<p>
+				<p className="mb-[2px]">
 					{formatName(displayKey)} {formatName(displayValue)}
 				</p>
 			</div>
@@ -142,7 +147,7 @@ function RecipeUnlockType({ recipeLock }: { recipeLock: RecipeLock | undefined }
 	};
 
 	return (
-		<div className="flex items-center gap-2 w-full mb-[2px]">
+		<div className="flex flex-col gap-2 w-full">
 			{Object.entries(recipeLock).map(([key, value]) => {
 				return lockPill(key, value);
 			})}

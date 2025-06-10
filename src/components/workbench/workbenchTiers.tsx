@@ -12,6 +12,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useRecipes } from "@/contexts/recipeContext";
 import { WorkbenchItemReqTable } from "./workbenchItemReqTable";
 import { RecipeItem } from "./recipeItem";
+import { toRomanNumeral } from "@/utils/format";
 
 interface WorkbenchTiersProps {
 	workbench: Workbench;
@@ -102,17 +103,25 @@ function WorkbenchRecipes({
 			{Object.entries(groupedRecipes).map(([tier, recipes]) => (
 				<div
 					key={tier}
-					className="flex flex-wrap items-center gap-2"
+					className="flex flex-wrap items-center"
 				>
 					<div className="flex items-center gap-2 w-full">
-						<p>Tier {tier}</p>
+						<h4 className="ml-2 text-2xl font-semibold dark:text-muted-foreground">
+							Level {tier}
+						</h4>
 					</div>
-					<div className="flex flex-wrap gap-4">
-						{recipes.map((recipe) => (
-							<RecipeItem
-								key={recipe.id}
-								recipe={recipe}
-							/>
+					<div className="flex flex-wrap gap-4 w-full">
+						{recipes.map((recipe, index) => (
+							<React.Fragment key={recipe.id}>
+								<RecipeItem recipe={recipe} />
+								{!(
+									index === recipes.length - 1 &&
+									tier ===
+										Object.keys(groupedRecipes)[
+											Object.keys(groupedRecipes).length - 1
+										]
+								) && <div className="w-full h-1 rounded-lg bg-muted" />}
+							</React.Fragment>
 						))}
 					</div>
 				</div>

@@ -71,9 +71,9 @@ export function WorkbenchClient({ workbench }: WorkbenchClientProps) {
 					</div>
 				</div>
 
-				<div className="flex flex-row gap-2">
+				<div className="flex flex-row flex-wrap justify-start gap-2">
 					{workbench.baseTier !== workbench.tiers.length && (
-						<div className="flex flex-col gap-2 border-2 border-blue-500 rounded-lg p-2 px-6 ml-auto w-[320px]">
+						<div className="flex flex-col gap-2 border-2 border-blue-500 rounded-lg p-2 px-6 w-[320px]">
 							<h3 className="text-center text-lg font-semibold">
 								Upgrade Requirements
 							</h3>
