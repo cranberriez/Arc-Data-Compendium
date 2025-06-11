@@ -9,6 +9,7 @@ import { cn } from "@/lib/utils";
 import { toRomanNumeral } from "@/utils/format";
 import { formatName } from "@/data/items/itemUtils";
 import { calculateTTK } from "@/utils/weapons/ttkCalc";
+import { Square } from "lucide-react";
 
 // Stat max values for creating the horizontal bars representing the stat
 const STAT_MAX_VALUES: Record<string, number> = {
@@ -21,16 +22,20 @@ const STAT_MAX_VALUES: Record<string, number> = {
 };
 
 // Shield Values for Selection
-const SHIELD_VALUES: Record<string, { health: number; negationPercent: number }> = {
-	light: { health: 50, negationPercent: 0.23 },
-	medium: { health: 80, negationPercent: 0.45 },
-	heavy: { health: 120, negationPercent: 0.65 },
+type Shield_Data = Record<string, { health: number; negationPercent: number; color: string }>;
+
+const SHIELD_VALUES: Shield_Data = {
+	none: { health: 0, negationPercent: 0, color: "bg-common" },
+	light: { health: 50, negationPercent: 0.23, color: "bg-uncommon" },
+	medium: { health: 80, negationPercent: 0.45, color: "bg-rare" },
+	heavy: { health: 120, negationPercent: 0.65, color: "bg-epic" },
 };
 
 export default function WeaponsPage() {
 	const [weapons, setWeapons] = useState<Weapon[]>([]);
 	const [selectedId, setSelectedId] = useState<string | null>(null);
 	const [isLocked, setIsLocked] = useState(false);
+	const [shield, setShield] = useState<string | null>(null);
 
 	useEffect(() => {
 		fetchWeapons().then((data: Weapon[]) => {
@@ -90,6 +95,7 @@ export default function WeaponsPage() {
 												onHover={() => handleHover(weapon)}
 												onClick={() => handleClick(weapon)}
 												isLocked={isLocked}
+												shield={shield}
 											/>
 										))}
 									</div>
@@ -106,6 +112,11 @@ export default function WeaponsPage() {
 								Select a weapon to see details
 							</Card>
 						)}
+
+						<TTKShieldSelector
+							shield={shield}
+							setShield={setShield}
+						/>
 					</div>
 				</div>
 			</div>
@@ -119,21 +130,29 @@ function WeaponCard({
 	onHover,
 	onClick,
 	isLocked,
+	shield,
 }: {
 	weapon: Weapon;
 	selected: boolean;
 	onHover: () => void;
 	onClick: () => void;
 	isLocked: boolean;
+	shield: string | null;
 }) {
 	// Damage, Firerate, Health, Shield Health, Shield Negation
-	const ttk = calculateTTK(weapon.stats.damage, weapon.stats.fire_rate, 100, 0, 0.23);
+	const ttk = calculateTTK(
+		weapon.stats.damage,
+		weapon.stats.fire_rate,
+		100,
+		SHIELD_VALUES[shield || "none"].health,
+		SHIELD_VALUES[shield || "none"].negationPercent
+	);
 
 	return (
 		<div
 			className={cn(
-				"cursor-pointer p-3 border-2 border-border/50 hover:border-primary/40 bg-card w-64 transition-colors duration-150 ease-out rounded-md",
-				selected && !isLocked && "border-primary bg-primary/5 shadow-md",
+				"p-3 border-2 border-border/50 rounded-md w-64 transition-colors duration-150 ease-out gap-2 cursor-pointer hover:border-primary/40 bg-card",
+				selected && !isLocked && "border-primary/75 shadow-md",
 				isLocked && selected && "border-sky-500! shadow-lg"
 			)}
 			onMouseEnter={onHover}
@@ -143,9 +162,10 @@ function WeaponCard({
 				{/* <span className="font-mono text-lg text-muted-foreground">
 					{toRomanNumeral(weapon.base_tier)}
 				</span> */}
-				<h3 className="font-semibold text-xl leading-tight mb-1">{weapon.name}</h3>
+				<h3 className="font-semibold text-lg leading-tight mb-1">{weapon.name}</h3>
 				<div className="text-primary/90 ml-auto px-2 py-0.5 bg-primary/5 rounded text-sm">
-					TTK: {ttk.timeToKillSeconds.toFixed(2)}s
+					<span className="text-primary/60 mr-1">TTK</span>
+					{ttk.timeToKillSeconds.toFixed(2)}s
 				</div>
 			</div>
 			<div className="flex justify-between gap-2">
@@ -252,5 +272,41 @@ function WeaponDetailsPanel({ weapon }: { weapon: Weapon }) {
 				</div>
 			</div>
 		</Card>
+	);
+}
+
+function TTKShieldSelector({
+	shield,
+	setShield,
+}: {
+	shield: string | null;
+	setShield: (shield: string | null) => void;
+}) {
+	const shieldButton = (shield: string, isCurrent: boolean) => {
+		const shieldData = SHIELD_VALUES[shield];
+
+		return (
+			<div
+				className={cn(
+					"px-2 py-1 flex items-center gap-1 cursor-pointer transition-all",
+					isCurrent && "dark:bg-primary/20 bg-primary/10 rounded-sm"
+				)}
+				onClick={() => setShield(shield)}
+			>
+				<div className={cn("w-2 h-2 rounded-[2px]", shieldData.color)} />
+				<span className="mb-1">{formatName(shield)}</span>
+			</div>
+		);
+	};
+
+	return (
+		<div className="w-full flex justify-center gap-2 p-2">
+			<div className="flex rounded-lg dark:bg-primary/10 bg-primary/5 p-1">
+				{shieldButton("none", shield === "none")}
+				{shieldButton("light", shield === "light")}
+				{shieldButton("medium", shield === "medium")}
+				{shieldButton("heavy", shield === "heavy")}
+			</div>
+		</div>
 	);
 }
