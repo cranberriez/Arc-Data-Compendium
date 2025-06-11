@@ -186,7 +186,6 @@ export function QuestFull({ questData }: { questData: Quest }) {
 						Official Wiki
 					</Link>
 				</p>
-				<QuestFullSkeleton />
 			</div>
 		</article>
 	);
