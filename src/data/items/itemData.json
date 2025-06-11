@@ -4112,18 +4112,6 @@
 		"value": 2000
 	},
 	{
-		"id": "red_coral_jewlery",
-		"name": "Red Coral Jewlery",
-		"category": "trinket",
-		"icon": "Gem",
-		"rarity": "common",
-		"description": "",
-		"weight": 1,
-		"maxStack": 1,
-		"recipeId": null,
-		"value": 5000
-	},
-	{
 		"id": "rosary",
 		"name": "Rosary",
 		"category": "trinket",
@@ -4185,5 +4173,662 @@
 				}
 			]
 		}
+	},
+	{
+		"id": "kettle",
+		"sub_type": "weapon",
+		"name": "Kettle",
+		"category": "weapon",
+		"icon": "BowArrow",
+		"rarity": "uncommon",
+		"description": "A reliable assault rifle crafted from basic parts.",
+		"weight": 4.2,
+		"maxStack": 1,
+		"recipeId": null,
+		"value": 800,
+		"weapon_class": "assault_rifle",
+		"ammo_type": "medium",
+		"stats": {
+			"damage": 28,
+			"fire_rate": 540,
+			"range": 60,
+			"stability": 55,
+			"agility": 50,
+			"stealth": 20,
+			"durability_burn": 2.0,
+			"magazine_size": 30,
+			"max_mods": 4
+		},
+		"mod_slots": ["barrel", "grip", "magazine", "stock"],
+		"compatible_mods": {
+			"barrel": [],
+			"grip": [],
+			"magazine": [],
+			"stock": []
+		},
+		"upgrade_effects": [
+			{
+				"bullet_velocity": 0.25,
+				"reload_time": -0.13,
+				"durability_burn": -0.23
+			},
+			{},
+			{}
+		]
+	},
+	{
+		"id": "rattler",
+		"sub_type": "weapon",
+		"name": "Rattler",
+		"category": "weapon",
+		"icon": "BowArrow",
+		"rarity": "uncommon",
+		"description": "An assault rifle that uses medium ammo.",
+		"weight": 4.4,
+		"maxStack": 1,
+		"recipeId": null,
+		"value": 950,
+		"weapon_class": "assault_rifle",
+		"ammo_type": "medium",
+		"stats": {
+			"damage": 30,
+			"fire_rate": 570,
+			"range": 65,
+			"stability": 60,
+			"agility": 52,
+			"stealth": 22,
+			"durability_burn": 1.8,
+			"magazine_size": 30,
+			"max_mods": 3
+		},
+		"mod_slots": ["barrel", "grip", "stock"],
+		"compatible_mods": {
+			"barrel": [],
+			"grip": [],
+			"stock": []
+		},
+		"upgrade_effects": [
+			{
+				"fire_rate": 0.2,
+				"agility": 0.15
+			},
+			{}
+		]
+	},
+	{
+		"id": "arpeggio",
+		"sub_type": "weapon",
+		"name": "Arpeggio",
+		"category": "weapon",
+		"icon": "BowArrow",
+		"rarity": "rare",
+		"description": "A burst assault rifle that uses medium ammo.",
+		"weight": 4.3,
+		"maxStack": 1,
+		"recipeId": null,
+		"value": 1200,
+		"weapon_class": "assault_rifle",
+		"ammo_type": "medium",
+		"stats": {
+			"damage": 34,
+			"fire_rate": 600,
+			"range": 68,
+			"stability": 62,
+			"agility": 53,
+			"stealth": 23,
+			"durability_burn": 1.7,
+			"magazine_size": 24,
+			"max_mods": 4
+		},
+		"mod_slots": ["barrel", "grip", "magazine", "stock"],
+		"compatible_mods": {
+			"barrel": [],
+			"grip": [],
+			"magazine": [],
+			"stock": []
+		},
+		"upgrade_effects": [
+			{
+				"damage": 0.18,
+				"range": 0.12
+			},
+			{},
+			{}
+		]
+	},
+	{
+		"id": "tempest",
+		"sub_type": "weapon",
+		"name": "Tempest",
+		"category": "weapon",
+		"icon": "BowArrow",
+		"rarity": "epic",
+		"description": "A fully automatic assault rifle that uses medium ammo.",
+		"weight": 4.6,
+		"maxStack": 1,
+		"recipeId": null,
+		"value": 1600,
+		"weapon_class": "assault_rifle",
+		"ammo_type": "medium",
+		"stats": {
+			"damage": 36,
+			"fire_rate": 650,
+			"range": 72,
+			"stability": 65,
+			"agility": 54,
+			"stealth": 24,
+			"durability_burn": 1.5,
+			"magazine_size": 32,
+			"max_mods": 3
+		},
+		"mod_slots": ["barrel", "grip", "magazine"],
+		"compatible_mods": {
+			"barrel": [],
+			"grip": [],
+			"magazine": []
+		},
+		"upgrade_effects": [
+			{
+				"stability": 0.15,
+				"stealth": 0.1
+			},
+			{}
+		]
+	},
+	{
+		"id": "stitcher",
+		"sub_type": "weapon",
+		"name": "Stitcher",
+		"category": "weapon",
+		"icon": "BowArrow",
+		"rarity": "uncommon",
+		"description": "A fully automatic submachine gun that uses light ammo.",
+		"weight": 3.8,
+		"maxStack": 1,
+		"recipeId": null,
+		"value": 700,
+		"weapon_class": "smg",
+		"ammo_type": "light",
+		"stats": {
+			"damage": 22,
+			"fire_rate": 800,
+			"range": 45,
+			"stability": 43,
+			"agility": 65,
+			"stealth": 28,
+			"durability_burn": 2.5,
+			"magazine_size": 40,
+			"max_mods": 4
+		},
+		"mod_slots": ["barrel", "grip", "magazine", "stock"],
+		"compatible_mods": {
+			"barrel": [],
+			"grip": [],
+			"magazine": [],
+			"stock": []
+		},
+		"upgrade_effects": [
+			{
+				"fire_rate": 0.2,
+				"agility": 0.15
+			},
+			{
+				"damage": 0.18,
+				"range": 0.12
+			},
+			{
+				"stability": 0.15,
+				"stealth": 0.1,
+				"recoil_horizontal": -0.333,
+				"reload_time": -0.26,
+				"durability_burn": -0.46
+			}
+		]
+	},
+	{
+		"id": "ferro",
+		"sub_type": "weapon",
+		"name": "Ferro",
+		"category": "weapon",
+		"icon": "BowArrow",
+		"rarity": "uncommon",
+		"description": "A break-action rifle that uses heavy ammo.",
+		"weight": 5.2,
+		"maxStack": 1,
+		"recipeId": null,
+		"value": 1000,
+		"weapon_class": "battle_rifle",
+		"ammo_type": "heavy",
+		"stats": {
+			"damage": 60,
+			"fire_rate": 50,
+			"range": 80,
+			"stability": 48,
+			"agility": 35,
+			"stealth": 18,
+			"durability_burn": 2.2,
+			"magazine_size": 1,
+			"max_mods": 3
+		},
+		"mod_slots": ["barrel", "grip", "stock"],
+		"compatible_mods": {
+			"barrel": [],
+			"grip": [],
+			"stock": []
+		},
+		"upgrade_effects": [
+			{},
+			{},
+			{
+				"reload_time": -0.39,
+				"durability_burn": -0.62
+			}
+		]
+	},
+	{
+		"id": "renegade",
+		"sub_type": "weapon",
+		"name": "Renegade",
+		"category": "weapon",
+		"icon": "BowArrow",
+		"rarity": "rare",
+		"description": "A lever-action rifle that uses medium ammo.",
+		"weight": 5.0,
+		"maxStack": 1,
+		"recipeId": null,
+		"value": 1300,
+		"weapon_class": "battle_rifle",
+		"ammo_type": "medium",
+		"stats": {
+			"damage": 52,
+			"fire_rate": 120,
+			"range": 78,
+			"stability": 60,
+			"agility": 40,
+			"stealth": 19,
+			"durability_burn": 1.6,
+			"magazine_size": 7,
+			"max_mods": 3
+		},
+		"mod_slots": ["barrel", "magazine", "stock"],
+		"compatible_mods": {
+			"barrel": [],
+			"magazine": [],
+			"stock": []
+		},
+		"upgrade_effects": [{}, {}, {}]
+	},
+	{
+		"id": "vulcano",
+		"sub_type": "weapon",
+		"name": "Vulcano",
+		"category": "weapon",
+		"icon": "BowArrow",
+		"rarity": "rare",
+		"description": "A powerful pump-action shotgun.",
+		"weight": 5.5,
+		"maxStack": 1,
+		"recipeId": null,
+		"value": 1400,
+		"weapon_class": "shotgun",
+		"ammo_type": "shotgun",
+		"stats": {
+			"damage": 80,
+			"fire_rate": 70,
+			"range": 25,
+			"stability": 40,
+			"agility": 32,
+			"stealth": 10,
+			"durability_burn": 2.8,
+			"magazine_size": 6,
+			"max_mods": 4
+		},
+		"mod_slots": [
+			"shotgun_barrel_attachment",
+			"foregrip_attachment",
+			"magazine_attachment",
+			"stock_attachment"
+		],
+		"compatible_mods": {
+			"shotgun_barrel_attachment": [],
+			"foregrip_attachment": [],
+			"magazine_attachment": [],
+			"stock_attachment": []
+		},
+		"upgrade_effects": [{}, {}, {}]
+	},
+	{
+		"id": "burletta",
+		"sub_type": "weapon",
+		"name": "Burletta",
+		"category": "weapon",
+		"icon": "BowArrow",
+		"rarity": "uncommon",
+		"description": "A compact semi-auto pistol.",
+		"weight": 2.0,
+		"maxStack": 1,
+		"recipeId": null,
+		"value": 400,
+		"weapon_class": "pistol",
+		"ammo_type": "light",
+		"stats": {
+			"damage": 18,
+			"fire_rate": 320,
+			"range": 30,
+			"stability": 38,
+			"agility": 60,
+			"stealth": 18,
+			"durability_burn": 1.7,
+			"magazine_size": 15,
+			"max_mods": 2
+		},
+		"mod_slots": ["barrel_attachment", "magazine_attachment"],
+		"compatible_mods": {
+			"barrel_attachment": [],
+			"magazine_attachment": []
+		},
+		"upgrade_effects": [
+			{
+				"reload_time": -0.166,
+				"durability_burn": -0.23
+			},
+			{},
+			{}
+		]
+	},
+	{
+		"id": "bobcat",
+		"sub_type": "weapon",
+		"name": "Bobcat",
+		"category": "weapon",
+		"icon": "BowArrow",
+		"rarity": "uncommon",
+		"description": "A lightweight SMG with a high rate of fire.",
+		"weight": 3.2,
+		"maxStack": 1,
+		"recipeId": null,
+		"value": 650,
+		"weapon_class": "smg",
+		"ammo_type": "light",
+		"stats": {
+			"damage": 20,
+			"fire_rate": 850,
+			"range": 38,
+			"stability": 40,
+			"agility": 70,
+			"stealth": 30,
+			"durability_burn": 2.8,
+			"magazine_size": 32,
+			"max_mods": 3
+		},
+		"mod_slots": ["barrel", "grip", "magazine"],
+		"compatible_mods": {
+			"barrel": [],
+			"grip": [],
+			"magazine": []
+		},
+		"upgrade_effects": [{}, {}, {}]
+	},
+	{
+		"id": "il_toro",
+		"sub_type": "weapon",
+		"name": "Il Toro",
+		"category": "weapon",
+		"icon": "BowArrow",
+		"rarity": "epic",
+		"description": "A hard-hitting revolver prized for its stopping power.",
+		"weight": 2.7,
+		"maxStack": 1,
+		"recipeId": null,
+		"value": 1200,
+		"weapon_class": "pistol",
+		"ammo_type": "heavy",
+		"stats": {
+			"damage": 54,
+			"fire_rate": 180,
+			"range": 40,
+			"stability": 45,
+			"agility": 44,
+			"stealth": 16,
+			"durability_burn": 2.0,
+			"magazine_size": 6,
+			"max_mods": 2
+		},
+		"mod_slots": ["barrel_attachment", "grip_attachment"],
+		"compatible_mods": {
+			"barrel_attachment": [],
+			"grip_attachment": []
+		},
+		"upgrade_effects": [{}, {}, {}]
+	},
+	{
+		"id": "hairpin",
+		"sub_type": "weapon",
+		"name": "Hairpin",
+		"category": "weapon",
+		"icon": "BowArrow",
+		"rarity": "uncommon",
+		"description": "A compact semi-auto SMG, easy to conceal.",
+		"weight": 2.9,
+		"maxStack": 1,
+		"recipeId": null,
+		"value": 600,
+		"weapon_class": "smg",
+		"ammo_type": "light",
+		"stats": {
+			"damage": 17,
+			"fire_rate": 780,
+			"range": 32,
+			"stability": 38,
+			"agility": 72,
+			"stealth": 34,
+			"durability_burn": 2.4,
+			"magazine_size": 28,
+			"max_mods": 2
+		},
+		"mod_slots": ["barrel", "magazine"],
+		"compatible_mods": {
+			"barrel": [],
+			"magazine": []
+		},
+		"upgrade_effects": [{}, {}, {}]
+	},
+	{
+		"id": "anvil",
+		"sub_type": "weapon",
+		"name": "Anvil",
+		"category": "weapon",
+		"icon": "BowArrow",
+		"rarity": "uncommon",
+		"description": "A placeholder description for Anvil pistol.",
+		"weight": 2.2,
+		"maxStack": 1,
+		"recipeId": null,
+		"value": 500,
+		"weapon_class": "pistol",
+		"ammo_type": "light",
+		"stats": {
+			"damage": 20,
+			"fire_rate": 300,
+			"range": 28,
+			"stability": 40,
+			"agility": 58,
+			"stealth": 16,
+			"durability_burn": 1.8,
+			"magazine_size": 12,
+			"max_mods": 2
+		},
+		"mod_slots": ["barrel_attachment", "magazine_attachment"],
+		"compatible_mods": {
+			"barrel_attachment": [],
+			"magazine_attachment": []
+		},
+		"upgrade_effects": [{}, {}, {}]
+	},
+	{
+		"id": "venator",
+		"sub_type": "weapon",
+		"name": "Venator",
+		"category": "weapon",
+		"icon": "BowArrow",
+		"rarity": "rare",
+		"description": "A placeholder description for Venator pistol.",
+		"weight": 2.4,
+		"maxStack": 1,
+		"recipeId": null,
+		"value": 700,
+		"weapon_class": "pistol",
+		"ammo_type": "light",
+		"stats": {
+			"damage": 22,
+			"fire_rate": 340,
+			"range": 32,
+			"stability": 42,
+			"agility": 62,
+			"stealth": 17,
+			"durability_burn": 1.6,
+			"magazine_size": 14,
+			"max_mods": 2
+		},
+		"mod_slots": ["barrel_attachment", "magazine_attachment"],
+		"compatible_mods": {
+			"barrel_attachment": [],
+			"magazine_attachment": []
+		},
+		"upgrade_effects": [{}, {}, {}]
+	},
+	{
+		"id": "torrente",
+		"sub_type": "weapon",
+		"name": "Torrente",
+		"category": "weapon",
+		"icon": "BowArrow",
+		"rarity": "rare",
+		"description": "A placeholder description for Torrente LMG.",
+		"weight": 7.5,
+		"maxStack": 1,
+		"recipeId": null,
+		"value": 2000,
+		"weapon_class": "lmg",
+		"ammo_type": "medium",
+		"stats": {
+			"damage": 32,
+			"fire_rate": 700,
+			"range": 60,
+			"stability": 55,
+			"agility": 35,
+			"stealth": 15,
+			"durability_burn": 3.0,
+			"magazine_size": 75,
+			"max_mods": 4
+		},
+		"mod_slots": ["barrel", "grip", "magazine", "stock"],
+		"compatible_mods": {
+			"barrel": [],
+			"grip": [],
+			"magazine": [],
+			"stock": []
+		},
+		"upgrade_effects": [{}, {}, {}]
+	},
+	{
+		"id": "osprey",
+		"sub_type": "weapon",
+		"name": "Osprey",
+		"category": "weapon",
+		"icon": "BowArrow",
+		"rarity": "epic",
+		"description": "A placeholder description for Osprey sniper rifle.",
+		"weight": 6.8,
+		"maxStack": 1,
+		"recipeId": null,
+		"value": 2500,
+		"weapon_class": "sniper_rifle",
+		"ammo_type": "heavy",
+		"stats": {
+			"damage": 90,
+			"fire_rate": 45,
+			"range": 120,
+			"stability": 60,
+			"agility": 28,
+			"stealth": 10,
+			"durability_burn": 2.5,
+			"magazine_size": 5,
+			"max_mods": 3
+		},
+		"mod_slots": ["barrel", "stock", "magazine"],
+		"compatible_mods": {
+			"barrel": [],
+			"stock": [],
+			"magazine": []
+		},
+		"upgrade_effects": [{}, {}, {}]
+	},
+	{
+		"id": "jupiter",
+		"sub_type": "weapon",
+		"name": "Jupiter",
+		"category": "weapon",
+		"icon": "BowArrow",
+		"rarity": "epic",
+		"description": "A placeholder description for Jupiter sniper rifle.",
+		"weight": 7.1,
+		"maxStack": 1,
+		"recipeId": null,
+		"value": 2700,
+		"weapon_class": "sniper_rifle",
+		"ammo_type": "heavy",
+		"stats": {
+			"damage": 100,
+			"fire_rate": 40,
+			"range": 130,
+			"stability": 62,
+			"agility": 26,
+			"stealth": 9,
+			"durability_burn": 2.7,
+			"magazine_size": 4,
+			"max_mods": 3
+		},
+		"mod_slots": ["barrel", "stock", "magazine"],
+		"compatible_mods": {
+			"barrel": [],
+			"stock": [],
+			"magazine": []
+		},
+		"upgrade_effects": [{}, {}, {}]
+	},
+	{
+		"id": "equalizer",
+		"sub_type": "weapon",
+		"name": "Equalizer",
+		"category": "weapon",
+		"icon": "BowArrow",
+		"rarity": "legendary",
+		"description": "A placeholder description for Equalizer special weapon.",
+		"weight": 5.5,
+		"maxStack": 1,
+		"recipeId": null,
+		"value": 3500,
+		"weapon_class": "special",
+		"ammo_type": "special",
+		"stats": {
+			"damage": 60,
+			"fire_rate": 300,
+			"range": 70,
+			"stability": 58,
+			"agility": 40,
+			"stealth": 20,
+			"durability_burn": 2.2,
+			"magazine_size": 10,
+			"max_mods": 4
+		},
+		"mod_slots": ["barrel", "magazine", "stock", "tech"],
+		"compatible_mods": {
+			"barrel": [],
+			"magazine": [],
+			"stock": [],
+			"tech": []
+		},
+		"upgrade_effects": [{}, {}, {}]
 	}
 ]

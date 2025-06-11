@@ -8,6 +8,7 @@ export * from "./items/recipe";
 export * from "./items/quickuse";
 export * from "./items/gear";
 export * from "./items/quest";
+export * from "./items/weapon";
 
 // Re-export commonly used types for convenience
 export type { BaseItem } from "./items/base";
@@ -21,6 +22,21 @@ export type {
 export type { Recipe, RecipeRequirement } from "./items/recipe";
 export type { QuickUseData, QuickUseStat, QuickUseCharge } from "./items/quickuse";
 export type { GearData, GearStat } from "./items/gear";
+export type {
+	QuestId,
+	QuestObjective,
+	QuestObjectiveLink,
+	QuestReward,
+	Quest,
+} from "./items/quest";
+export type {
+	Weapon,
+	WeaponUpgrade,
+	WeaponStats,
+	WeaponModSlot,
+	WeaponClass,
+	AmmoType,
+} from "./items/weapon";
 
 export type {
 	Rarity,
@@ -28,9 +44,6 @@ export type {
 	ItemCategory,
 	ItemSourceType,
 	ShieldType,
-	AmmoType,
-	ModSlotType,
-	WeaponType,
 	TraderName,
 } from "./items/types";
 

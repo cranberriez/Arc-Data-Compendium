@@ -17,19 +17,6 @@ export type ItemCategory =
 
 export type ShieldType = "light" | "medium" | "heavy";
 
-export type AmmoType = "light" | "medium" | "heavy" | "shotgun" | "energy";
-
-export type ModSlotType = "muzzle" | "grip" | "magazine" | "stock" | "tech" | "sight";
-
-export type WeaponType =
-	| "shotgun"
-	| "assault_rifle"
-	| "pistol"
-	| "submachine_gun"
-	| "sniper_rifle"
-	| "rifle"
-	| "machine_gun";
-
 export type TraderName = "Tian Wen" | "Lance" | "Apollo" | "Shani";
 
 export type ItemSource =
