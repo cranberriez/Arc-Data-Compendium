@@ -7,7 +7,7 @@ export type AmmoType = "light" | "medium" | "heavy" | "shotgun" | "energy";
 export type WeaponClass =
 	| "assault_rifle"
 	| "battle_rifle"
-	| "submachine_gun"
+	| "smg"
 	| "shotgun"
 	| "pistol"
 	| "light_machinegun"

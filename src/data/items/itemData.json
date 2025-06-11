@@ -4206,6 +4206,8 @@
 			"magazine": [],
 			"stock": []
 		},
+		"base_tier": 1,
+		"max_level": 5,
 		"upgrade_effects": [
 			{
 				"bullet_velocity": 0.25,
@@ -4247,6 +4249,8 @@
 			"grip": [],
 			"stock": []
 		},
+		"base_tier": 1,
+		"max_level": 5,
 		"upgrade_effects": [
 			{
 				"fire_rate": 0.2,
@@ -4287,6 +4291,8 @@
 			"magazine": [],
 			"stock": []
 		},
+		"base_tier": 1,
+		"max_level": 5,
 		"upgrade_effects": [
 			{
 				"damage": 0.18,
@@ -4327,6 +4333,8 @@
 			"grip": [],
 			"magazine": []
 		},
+		"base_tier": 1,
+		"max_level": 5,
 		"upgrade_effects": [
 			{
 				"stability": 0.15,
@@ -4367,6 +4375,8 @@
 			"magazine": [],
 			"stock": []
 		},
+		"base_tier": 1,
+		"max_level": 5,
 		"upgrade_effects": [
 			{
 				"fire_rate": 0.2,
@@ -4416,6 +4426,8 @@
 			"grip": [],
 			"stock": []
 		},
+		"base_tier": 1,
+		"max_level": 5,
 		"upgrade_effects": [
 			{},
 			{},
@@ -4456,6 +4468,8 @@
 			"magazine": [],
 			"stock": []
 		},
+		"base_tier": 1,
+		"max_level": 5,
 		"upgrade_effects": [{}, {}, {}]
 	},
 	{
@@ -4495,6 +4509,8 @@
 			"magazine_attachment": [],
 			"stock_attachment": []
 		},
+		"base_tier": 1,
+		"max_level": 5,
 		"upgrade_effects": [{}, {}, {}]
 	},
 	{
@@ -4527,6 +4543,8 @@
 			"barrel_attachment": [],
 			"magazine_attachment": []
 		},
+		"base_tier": 1,
+		"max_level": 5,
 		"upgrade_effects": [
 			{
 				"reload_time": -0.166,
@@ -4567,6 +4585,8 @@
 			"grip": [],
 			"magazine": []
 		},
+		"base_tier": 1,
+		"max_level": 5,
 		"upgrade_effects": [{}, {}, {}]
 	},
 	{
@@ -4599,6 +4619,8 @@
 			"barrel_attachment": [],
 			"grip_attachment": []
 		},
+		"base_tier": 1,
+		"max_level": 5,
 		"upgrade_effects": [{}, {}, {}]
 	},
 	{
@@ -4631,6 +4653,8 @@
 			"barrel": [],
 			"magazine": []
 		},
+		"base_tier": 1,
+		"max_level": 5,
 		"upgrade_effects": [{}, {}, {}]
 	},
 	{
@@ -4663,6 +4687,8 @@
 			"barrel_attachment": [],
 			"magazine_attachment": []
 		},
+		"base_tier": 1,
+		"max_level": 5,
 		"upgrade_effects": [{}, {}, {}]
 	},
 	{
@@ -4695,6 +4721,8 @@
 			"barrel_attachment": [],
 			"magazine_attachment": []
 		},
+		"base_tier": 1,
+		"max_level": 5,
 		"upgrade_effects": [{}, {}, {}]
 	},
 	{
@@ -4729,6 +4757,8 @@
 			"magazine": [],
 			"stock": []
 		},
+		"base_tier": 1,
+		"max_level": 5,
 		"upgrade_effects": [{}, {}, {}]
 	},
 	{
@@ -4762,6 +4792,8 @@
 			"stock": [],
 			"magazine": []
 		},
+		"base_tier": 1,
+		"max_level": 5,
 		"upgrade_effects": [{}, {}, {}]
 	},
 	{
@@ -4795,6 +4827,8 @@
 			"stock": [],
 			"magazine": []
 		},
+		"base_tier": 1,
+		"max_level": 5,
 		"upgrade_effects": [{}, {}, {}]
 	},
 	{
@@ -4829,6 +4863,8 @@
 			"stock": [],
 			"tech": []
 		},
+		"base_tier": 1,
+		"max_level": 5,
 		"upgrade_effects": [{}, {}, {}]
 	}
 ]
