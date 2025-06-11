@@ -8,14 +8,23 @@ import { Progress } from "@/components/ui/progress";
 import { cn } from "@/lib/utils";
 import { toRomanNumeral } from "@/utils/format";
 import { formatName } from "@/data/items/itemUtils";
+import { calculateTTK } from "@/utils/weapons/ttkCalc";
 
+// Stat max values for creating the horizontal bars representing the stat
 const STAT_MAX_VALUES: Record<string, number> = {
-	damage: 200, // Example max values, adjust as needed
+	damage: 200,
 	fire_rate: 1000,
 	range: 150,
 	stability: 100,
 	agility: 100,
 	stealth: 100,
+};
+
+// Shield Values for Selection
+const SHIELD_VALUES: Record<string, { health: number; negationPercent: number }> = {
+	light: { health: 50, negationPercent: 0.23 },
+	medium: { health: 80, negationPercent: 0.45 },
+	heavy: { health: 120, negationPercent: 0.65 },
 };
 
 export default function WeaponsPage() {
@@ -117,10 +126,13 @@ function WeaponCard({
 	onClick: () => void;
 	isLocked: boolean;
 }) {
+	// Damage, Firerate, Health, Shield Health, Shield Negation
+	const ttk = calculateTTK(weapon.stats.damage, weapon.stats.fire_rate, 100, 0, 0.23);
+
 	return (
-		<Card
+		<div
 			className={cn(
-				"cursor-pointer p-3 border-2 border-border/50 hover:border-primary/40 bg-card w-64 transition-colors duration-150 ease-out",
+				"cursor-pointer p-3 border-2 border-border/50 hover:border-primary/40 bg-card w-64 transition-colors duration-150 ease-out rounded-md",
 				selected && !isLocked && "border-primary bg-primary/5 shadow-md",
 				isLocked && selected && "border-sky-500! shadow-lg"
 			)}
@@ -132,15 +144,15 @@ function WeaponCard({
 					{toRomanNumeral(weapon.base_tier)}
 				</span> */}
 				<h3 className="font-semibold text-xl leading-tight mb-1">{weapon.name}</h3>
-				<div className="text-primary/90 ml-auto px-2 py-0.5 border rounded-full">
-					TTK: 1.23s
+				<div className="text-primary/90 ml-auto px-2 py-0.5 bg-primary/5 rounded text-sm">
+					TTK: {ttk.timeToKillSeconds.toFixed(2)}s
 				</div>
 			</div>
 			<div className="flex justify-between gap-2">
 				<p className="text-muted-foreground">{formatName(weapon.weapon_class)}</p>
 				<p className="text-muted-foreground">{formatName(weapon.ammo_type)}</p>
 			</div>
-		</Card>
+		</div>
 	);
 }
 
