@@ -148,7 +148,7 @@ const data: NavData = {
 				title: "Weapons",
 				url: "/weapons",
 				icon: Swords,
-				enabled: false,
+				enabled: true,
 			},
 			{
 				title: "Armor",
