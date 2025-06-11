@@ -31,6 +31,14 @@ const SHIELD_VALUES: Shield_Data = {
 	heavy: { health: 120, negationPercent: 0.65, color: "bg-epic" },
 };
 
+const AMMO_TYPE_COLORS: Record<string, string> = {
+	light: "text-amber-600 dark:text-amber-400",
+	medium: "text-blue-600 dark:text-blue-300",
+	heavy: "text-rose-600 dark:text-rose-300",
+	shotgun: "text-red-800 dark:text-red-400",
+	special: "text-green-600 dark:text-green-300",
+};
+
 export default function WeaponsPage() {
 	const [weapons, setWeapons] = useState<Weapon[]>([]);
 	const [selectedId, setSelectedId] = useState<string | null>(null);
@@ -169,8 +177,16 @@ function WeaponCard({
 				</div>
 			</div>
 			<div className="flex justify-between gap-2">
-				<p className="text-muted-foreground">{formatName(weapon.weapon_class)}</p>
-				<p className="text-muted-foreground">{formatName(weapon.ammo_type)}</p>
+				{/* <p className="text-muted-foreground">{formatName(weapon.weapon_class)}</p> */}
+				<p
+					className={cn(
+						"text-muted-foreground text-shadow-md",
+						AMMO_TYPE_COLORS[weapon.ammo_type],
+						"light-text-shadow dark:no-light-text-shadow"
+					)}
+				>
+					{formatName(weapon.ammo_type)}
+				</p>
 			</div>
 		</div>
 	);
