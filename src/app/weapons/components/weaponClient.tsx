@@ -45,7 +45,7 @@ export function WeaponsClient({ weapons }: { weapons: Weapon[] }) {
 
 	useEffect(() => {
 		if (weapons.length) setSelectedId(weapons[0].id);
-	}, []);
+	}, [weapons]);
 
 	const selectedWeapon = useMemo(
 		() => weapons.find((w) => w.id === selectedId) || null,
