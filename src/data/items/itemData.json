@@ -4627,7 +4627,7 @@
 		"maxStack": 1,
 		"recipeId": null,
 		"value": 600,
-		"weapon_class": "smg",
+		"weapon_class": "pistol",
 		"ammo_type": "light",
 		"stats": {
 			"damage": 20,
@@ -4660,7 +4660,7 @@
 		"recipeId": null,
 		"value": 500,
 		"weapon_class": "pistol",
-		"ammo_type": "light",
+		"ammo_type": "heavy",
 		"stats": {
 			"damage": 40,
 			"fire_rate": 2.7,

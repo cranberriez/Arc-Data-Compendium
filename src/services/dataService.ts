@@ -53,7 +53,7 @@ async function fetchData<T>(
 				"Content-Type": "application/json",
 			},
 			next: {
-				revalidate: 3600,
+				revalidate: process.env.NODE_ENV === "development" ? 0 : 3600,
 			},
 		});
 
