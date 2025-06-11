@@ -18,7 +18,7 @@ export default function QuestFullSkeleton() {
 				<Skeleton className="h-8 w-1/2 mb-2" />
 
 				{/* Prerequisites & Next Quests skeletons */}
-				<div className="flex justify-between mb-6 gap-8">
+				<div className="flex justify-between mb-6 gap-8 p-4">
 					<div className="flex flex-col items-start gap-2 w-1/2">
 						<Skeleton className="h-5 w-28 mb-1" /> {/* Prerequisites heading */}
 						<div className="flex flex-col gap-2 w-full">
@@ -63,11 +63,10 @@ export default function QuestFullSkeleton() {
 					{/* Sidebar skeleton */}
 					<aside className="w-full md:w-64 flex-shrink-0">
 						<div className="flex flex-col gap-4 bg-card p-4 rounded-lg shadow mb-4">
-							<Skeleton className="h-4 w-24" />
 							<Skeleton className="h-4 w-32" />
-							<Skeleton className="h-8 w-40 mt-2" />
+							<Skeleton className="h-4 w-42" />
 						</div>
-						<Skeleton className="h-8 w-32 mt-4" />
+						<Skeleton className="h-6 w-36 mt-4" />
 					</aside>
 				</div>
 			</div>

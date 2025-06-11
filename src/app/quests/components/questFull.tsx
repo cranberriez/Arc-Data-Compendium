@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, ExternalLink, MoveLeft, MoveRight } from "lucide-react";
 import Image from "next/image";
+import QuestFullSkeleton from "./questFullSkeleton";
 
 function capitalizeId(id: string) {
 	return id
@@ -53,19 +54,24 @@ export function QuestFull({ questData }: { questData: Quest }) {
 				{/* Title and subtitle */}
 				<h1 className="text-3xl font-bold mb-2">{questData.name}</h1>
 
-				{/* Next and Previous */}
-				<div className="flex justify-between">
+				{/* Next and Previous 2*/}
+				<div className="flex justify-between p-2">
 					<div className="flex flex-col items-start gap-2">
-						<h2 className="text-sm">Prerequisites</h2>
+						<h2 className="text-sm pl-2">Prerequisites</h2>
 						{(questData.prereq ?? []).length > 0 ? (
 							(questData.prereq ?? []).map((prereqId: string) => (
 								<Link
 									key={prereqId}
 									href={`/quests/${prereqId}`}
 								>
-									<Button variant="outline">
+									<Button
+										variant="outline"
+										size="lg"
+										className="border-blue-500/50! bg-blue-500/10! cursor-pointer relative group/questchange"
+									>
 										<MoveLeft className="w-4 h-4" />
 										<span className="mb-[2px]">{formatName(prereqId)}</span>
+										<div className="hidden group-hover/questchange:block absolute inset-0 w-full h-full animate-pulse bg-blue-500/20" />
 									</Button>
 								</Link>
 							))
@@ -73,17 +79,23 @@ export function QuestFull({ questData }: { questData: Quest }) {
 							<p className="text-muted-foreground">No Prerequisites</p>
 						)}
 					</div>
+
 					<div className="flex flex-col items-end gap-2">
-						<h2 className="text-sm">Next Quests</h2>
+						<h2 className="text-sm pr-2">Next Quests</h2>
 						{(questData.next ?? []).length > 0 ? (
 							(questData.next ?? []).map((nextId: string) => (
 								<Link
 									key={nextId}
 									href={`/quests/${nextId}`}
 								>
-									<Button variant="outline">
+									<Button
+										variant="outline"
+										size="lg"
+										className="border-blue-500/50! bg-blue-500/10! cursor-pointer relative group/questchange"
+									>
 										<span className="mb-[2px]">{formatName(nextId)}</span>
 										<MoveRight className="w-4 h-4" />
+										<div className="hidden group-hover/questchange:block absolute inset-0 w-full h-full animate-pulse bg-blue-500/20" />
 									</Button>
 								</Link>
 							))
@@ -157,6 +169,7 @@ export function QuestFull({ questData }: { questData: Quest }) {
 										questData.link ||
 										`https://arcraiders.wiki/wiki/${capitalizeId(questData.id)}`
 									}
+									className="text-sm text-blue-500 dark:text-blue-300 hover:underline"
 								>
 									Official Wiki Page
 								</Link>
@@ -173,6 +186,7 @@ export function QuestFull({ questData }: { questData: Quest }) {
 						Official Wiki
 					</Link>
 				</p>
+				<QuestFullSkeleton />
 			</div>
 		</article>
 	);
