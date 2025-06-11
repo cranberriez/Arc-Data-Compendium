@@ -5,7 +5,7 @@ import { Workbench } from "@/types/items/workbench";
 import { Quest } from "@/types/items/quest";
 
 // Import all JSON data files
-import itemData from "@/data/items/itemData.json";
+import itemData from "@/data/items/itemData.build.json";
 import recipeData from "@/data/recipes/recipeData.json";
 import workbenchData from "@/data/workbenches/workbenchData.json";
 import questData from "@/data/quests/questData.json";
