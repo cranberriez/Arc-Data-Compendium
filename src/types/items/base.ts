@@ -15,4 +15,10 @@ export interface BaseItem {
 
 	/** Icon name as string (will be converted to LucideIcon on client) */
 	icon: string;
+
+	/** ISO string of creation date (set by API) */
+	created?: string;
+
+	/** ISO string of last update date (set by API) */
+	updated?: string;
 }
