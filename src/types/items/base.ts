@@ -17,8 +17,8 @@ export interface BaseItem {
 	icon: string;
 
 	/** ISO string of creation date (set by API) */
-	created?: string;
+	createdAt?: string;
 
 	/** ISO string of last update date (set by API) */
-	updated?: string;
+	updatedAt?: string;
 }

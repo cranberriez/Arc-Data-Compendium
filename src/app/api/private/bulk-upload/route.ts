@@ -1,5 +1,4 @@
 import { NextResponse } from "next/server";
-import { getAuth, currentUser } from "@clerk/nextjs/server";
 import type { NextRequest } from "next/server";
 import { Redis } from "@upstash/redis";
 
@@ -7,6 +6,7 @@ import { Redis } from "@upstash/redis";
 import itemsData from "@/data/items/itemData.build.json";
 import workbenchesData from "@/data/workbenches/workbenchData.json";
 import questsData from "@/data/quests/questData.json";
+import recipesData from "@/data/recipes/recipeData.json";
 
 const redis = new Redis({
 	url: process.env.UPSTASH_STORAGE_KV_REST_API_URL!,
@@ -33,11 +33,13 @@ export async function POST(req: NextRequest) {
 		const itemPrefix = "item";
 		const workbenchPrefix = "workbench";
 		const questPrefix = "quest";
+		const recipePrefix = "recipe";
 
 		const now = new Date().toISOString();
 		await bulkUploadToRedis(itemsData, itemPrefix, now);
 		await bulkUploadToRedis(workbenchesData, workbenchPrefix, now);
 		await bulkUploadToRedis(questsData, questPrefix, now);
+		await bulkUploadToRedis(recipesData, recipePrefix, now);
 
 		return NextResponse.json({ success: true, message: "Bulk upload completed." });
 	} catch (err: any) {

@@ -31,21 +31,24 @@ async function fetchData<T>(
 	filterFn?: (item: any) => boolean
 ): Promise<T[] | T | null> {
 	// Server-side: use imported data directly
-	if (typeof window === "undefined") {
-		let allData = dataMap[type] as T[];
-		if (!allData) return null;
-		if (id) {
-			return allData.find((item: any) => item.id === id) ?? null;
-		}
-		if (filterFn) {
-			allData = allData.filter(filterFn);
-		}
-		return allData;
-	}
+	// if (typeof window === "undefined") {
+	// 	let allData = dataMap[type] as T[];
+	// 	if (!allData) return null;
+	// 	if (id) {
+	// 		return allData.find((item: any) => item.id === id) ?? null;
+	// 	}
+	// 	if (filterFn) {
+	// 		allData = allData.filter(filterFn);
+	// 	}
+	// 	return allData;
+	// }
 
 	// Client-side: fetch from API
 	try {
-		const endpoint = id ? `/api/data/${type}/${id}` : `/api/data/${type}`;
+		const isServer = typeof window === "undefined";
+		const baseUrl = isServer ? process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000" : "";
+
+		const endpoint = id ? `${baseUrl}/api/data/${type}/${id}` : `${baseUrl}/api/data/${type}`;
 
 		const response = await fetch(endpoint, {
 			method: "GET",
