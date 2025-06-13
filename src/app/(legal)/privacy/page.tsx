@@ -10,15 +10,16 @@ export default function PrivacyPolicyPage() {
 				</p>
 
 				<p>
-					This Privacy Notice for ARC Vault ("<strong>we</strong>," "<strong>us</strong>,"
-					or "<strong>our</strong>") describes how and why we may access, collect, store,
-					use, and/or share ("<strong>process</strong>") your personal information when
-					you use our services ("<strong>Services</strong>"), including when you:
+					This Privacy Notice for ARC Vault (&quot;<strong>we</strong>&quot;, &quot;
+					<strong>us</strong>&quot;, or &quot;<strong>our</strong>&quot;) describes how
+					and why we may access, collect, store, use, and/or share (&quot;
+					<strong>process</strong>&quot;) your personal information when you use our
+					services (&quot;<strong>Services</strong>&quot;), including when you:
 				</p>
 				<ul className="list-disc ml-6">
 					<li>
-						Visit our website at <strong>arcvault.app</strong>, or any website of ours
-						that links to this Privacy Notice
+						Visit our website at &quot;<strong>arcvault.app</strong>&quot;, or any
+						website of ours that links to this Privacy Notice
 					</li>
 					<li>
 						Use ARC Vault, a web-based application serving as a searchable database for
@@ -300,7 +301,7 @@ export default function PrivacyPolicyPage() {
 				</ul>
 				<p>
 					We only use this data to facilitate login and account creation. Please review
-					the respective social media provider's privacy policies.
+					the respective social media provider&apos;s privacy policies.
 				</p>
 
 				<hr />
@@ -340,14 +341,15 @@ export default function PrivacyPolicyPage() {
 					18.
 				</p>
 				<p>
-					If you're under 18, do not use our Services. If we discover such data, we will:
+					If you&apos;re under 18, do not use our Services. If we discover such data, we
+					will:
 				</p>
 				<ul className="list-disc ml-6">
 					<li>Deactivate the account</li>
 					<li>Delete the data</li>
 				</ul>
 				<p>
-					If you believe we’ve collected such data, email{" "}
+					If you believe we&apos;ve collected such data, email{" "}
 					<strong>official.arcvault@gmail.com</strong>.
 				</p>
 
