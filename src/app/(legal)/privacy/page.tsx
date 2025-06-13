@@ -1,4 +1,11 @@
 import React from "react";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+	title: "Privacy Policy | ARC Vault",
+	description:
+		"Privacy policy for ARC Vault, detailing how we collect, use, and protect your personal information.",
+};
 
 export default function PrivacyPolicyPage() {
 	return (

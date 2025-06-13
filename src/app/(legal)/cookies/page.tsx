@@ -1,4 +1,11 @@
 import React from "react";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+	title: "Cookie Policy | ARC Vault",
+	description:
+		"Cookie policy for ARC Vault, detailing how we use cookies and similar technologies to recognize you when you visit our website.",
+};
 
 export default function CookiePolicyPage() {
 	return (

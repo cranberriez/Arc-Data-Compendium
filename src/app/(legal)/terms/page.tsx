@@ -1,4 +1,11 @@
 import React from "react";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+	title: "Terms of Service | ARC Vault",
+	description:
+		"Terms of service for ARC Vault, outlining your rights and responsibilities when using our services.",
+};
 
 export default function TermsOfServicePage() {
 	return (
