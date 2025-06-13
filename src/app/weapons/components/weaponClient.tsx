@@ -87,7 +87,7 @@ export function WeaponsClient({ weapons }: { weapons: Weapon[] }) {
 									className="space-y-3"
 								>
 									<h2 className="font-semibold text-xl">
-										{formatName(weaponClass)} ({list.length})
+										{formatName(weaponClass)}
 									</h2>
 									<div className="flex flex-wrap gap-3">
 										{list.map((weapon) => (
