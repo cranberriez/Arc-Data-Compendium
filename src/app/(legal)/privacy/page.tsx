@@ -17,16 +17,14 @@ export default function PrivacyPolicyPage() {
 				</p>
 
 				<p>
-					This Privacy Notice for ARC Vault (&quot;<strong>we</strong>&quot;, &quot;
-					<strong>us</strong>&quot;, or &quot;<strong>our</strong>&quot;) describes how
-					and why we may access, collect, store, use, and/or share (&quot;
-					<strong>process</strong>&quot;) your personal information when you use our
-					services (&quot;<strong>Services</strong>&quot;), including when you:
+					This Privacy Notice for ARC Vault describes how and why we may access, collect,
+					store, use, and/or share your personal information when you use our services,
+					including when you:
 				</p>
 				<ul className="list-disc ml-6">
 					<li>
-						Visit our website at &quot;<strong>arcvault.app</strong>&quot;, or any
-						website of ours that links to this Privacy Notice
+						Visit our website at <strong>arcvault.app</strong>, or any website of ours
+						that links to this Privacy Notice
 					</li>
 					<li>
 						Use ARC Vault, a web-based application serving as a searchable database for
