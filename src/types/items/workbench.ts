@@ -2,9 +2,9 @@ import { BaseItem } from "../items/base";
 
 export interface WorkbenchTier {
 	tier: number;
-	tierName?: string;
+	tierName: string;
 	requiredItems: Array<{ itemId: string; count: number }>;
-	raidsRequired?: number;
+	raidsRequired: number;
 }
 
 export interface Workbench extends BaseItem {
@@ -13,6 +13,7 @@ export interface Workbench extends BaseItem {
 	tiers: WorkbenchTier[];
 }
 
+// Helper types for generating workbench summary
 export type WorkbenchUpgradeSummaryItem = {
 	workbenchId: string;
 	targetTier: number;
