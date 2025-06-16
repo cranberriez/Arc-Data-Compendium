@@ -1,6 +1,6 @@
 "use client";
 
-import { Quest } from "@/types/items/quest";
+import { Quest } from "@/types/quest";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, ExternalLink, MoveLeft, MoveRight } from "lucide-react";

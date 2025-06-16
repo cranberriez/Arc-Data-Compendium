@@ -1,4 +1,4 @@
-import { BaseItem } from "./base";
+import { BaseItem } from "../base";
 import { QuickUseData } from "./quickuse";
 import { GearData } from "./gear";
 import { ItemCategory, ItemSource, Rarity, Recycling } from "./types";

@@ -1,4 +1,4 @@
-import { BaseItem } from "../items/base";
+import { BaseItem } from "./base";
 
 export interface WorkbenchTier {
 	tier: number;

@@ -2,7 +2,7 @@
 
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { fetchRecipes } from "@/services/dataService";
-import { Recipe } from "@/types/items/recipe";
+import { Recipe } from "@/types/recipe";
 
 interface RecipeContextType {
 	recipes: Recipe[];

@@ -2,7 +2,7 @@
 
 import React, { createContext, useContext, useEffect, useState, useCallback, useMemo } from "react";
 import { fetchWorkbenches } from "@/services/dataService";
-import { Workbench, WorkbenchUpgradeSummary } from "@/types/items/workbench";
+import { Workbench, WorkbenchUpgradeSummary } from "@/types/workbench";
 import { useCookies } from "@/contexts/cookieContext";
 
 interface WorkshopContextType {
