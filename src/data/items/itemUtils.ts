@@ -29,11 +29,11 @@ function buildRecycleSourceMap(items: Item[]): Map<string, ItemSource[]> {
 	items.forEach((item) => {
 		if (item.recycling) {
 			item.recycling.forEach((recycle) => {
-				if (!sourceMap.has(recycle.id)) {
-					sourceMap.set(recycle.id, []);
+				if (!sourceMap.has(recycle.itemId)) {
+					sourceMap.set(recycle.itemId, []);
 				}
 
-				sourceMap.get(recycle.id)?.push({
+				sourceMap.get(recycle.itemId)?.push({
 					type: "recycle",
 					fromItemId: item.id,
 					count: recycle.count,
@@ -205,8 +205,12 @@ export const searchFunc = (item: Item, query: string) => {
 	const queryTokens = queryNorm.split(" ").filter(Boolean);
 
 	// Prepare name and id tokens
-	const nameTokens = normalize(item.name).split(" ").filter(Boolean);
-	const idTokens = normalize(item.id).split(" ").filter(Boolean);
+	const nameTokens = normalize(item.name ?? "")
+		.split(" ")
+		.filter(Boolean);
+	const idTokens = normalize(item.id ?? "")
+		.split(" ")
+		.filter(Boolean);
 
 	// Also prepare compact versions (remove all spaces and underscores)
 	const compact = (str: string) =>
@@ -215,8 +219,8 @@ export const searchFunc = (item: Item, query: string) => {
 			.replace(/[_\s]+/g, "")
 			.replace(/[^a-z0-9]/g, "");
 	const compactQuery = compact(query);
-	const compactName = compact(item.name);
-	const compactId = compact(item.id);
+	const compactName = compact(item.name ?? "");
+	const compactId = compact(item.id ?? "");
 
 	// Match if every query token is found in either name or id tokens,
 	// or if the compact query is a substring of the compact name or id

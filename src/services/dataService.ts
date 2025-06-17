@@ -2,13 +2,13 @@ import { Item } from "@/types";
 import { Quest } from "@/types";
 import { Recipe } from "@/types";
 import { Workbench } from "@/types";
+import { Weapon } from "@/types";
+import { isWeapon } from "@/data/items/subTypeUtils";
 
 import itemsData from "@/data/items/itemData.build.json";
 import recipesData from "@/data/recipes/recipeData.json";
 import workbenchesData from "@/data/workbenches/workbenchData.json";
 import questsData from "@/data/quests/questData.json";
-import { Weapon } from "@/types";
-import { isWeapon } from "@/data/items/subTypeUtils";
 
 type DataType = "items" | "recipes" | "workbenches" | "quests";
 

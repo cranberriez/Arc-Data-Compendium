@@ -13,6 +13,7 @@ import {
 	foreignKey,
 	real,
 	primaryKey,
+	unique,
 } from "drizzle-orm/pg-core";
 
 // ---------------------------
@@ -38,18 +39,18 @@ export const itemCategoryEnum = pgEnum("item_category", [
 // Base Item table (includes BaseItem & Item fields)
 export const items = pgTable("items", {
 	id: varchar("id", { length: 255 }).primaryKey(),
-	name: varchar("name", { length: 255 }),
-	description: text("description"),
-	icon: varchar("icon", { length: 255 }),
+	name: varchar("name", { length: 255 }).notNull(),
+	description: text("description").default(""),
+	icon: varchar("icon", { length: 255 }).default("FileQuestion"),
 	createdAt: timestamp("created_at", { withTimezone: true }).defaultNow(),
 	updatedAt: timestamp("updated_at", { withTimezone: true })
 		.defaultNow()
 		.$onUpdate(() => new Date()),
-	rarity: rarityEnum("rarity"),
-	value: integer("value"),
-	weight: real("weight"),
-	maxStack: integer("max_stack"),
-	category: itemCategoryEnum("category"),
+	rarity: rarityEnum("rarity").notNull(),
+	value: integer("value").notNull(),
+	weight: real("weight").notNull(),
+	maxStack: integer("max_stack").notNull(),
+	category: itemCategoryEnum("category").notNull(),
 	flavorText: text("flavor_text"),
 	recipeId: varchar("recipe_id", { length: 255 }),
 
@@ -79,7 +80,6 @@ export const consumerTypeEnum = pgEnum("consumer_type", [
 export const requiredItem = pgTable(
 	"required_item",
 	{
-		id: serial("id").primaryKey(),
 		consumerType: consumerTypeEnum("consumer_type").notNull(),
 		consumerId: varchar("consumer_id", { length: 255 }).notNull(), // what is consuming the item, for recycling refers to the item being recycled
 		itemId: varchar("item_id", { length: 255 }) // what the output item or required item is
@@ -90,6 +90,7 @@ export const requiredItem = pgTable(
 	(table) => [
 		index("required_item_idx").on(table.itemId),
 		index("item_consumer_idx").on(table.consumerType, table.consumerId),
+		primaryKey({ columns: [table.itemId, table.consumerType, table.consumerId] }),
 	]
 );
 
@@ -132,6 +133,10 @@ export const weapons = pgTable("weapons", {
 	baseTier: integer("base_tier"),
 	maxLevel: integer("max_level"),
 });
+
+export const weaponsRelations = relations(weapons, ({ one }) => ({
+	item: one(items),
+}));
 
 // Because we store base stats and modifier stats in the same table, we need to know which is which
 export const statUsageEnum = pgEnum("stat_usage", ["base", "modifier"]);
@@ -205,6 +210,9 @@ export const upgradeStats = pgTable(
 		value: real("value").notNull(),
 	},
 	(table) => [
+		primaryKey({
+			columns: [table.upgradeItemId, table.upgradeItemLevel, table.statType],
+		}),
 		foreignKey({
 			name: "weapon_upgrade_id",
 			columns: [table.upgradeItemId, table.upgradeItemLevel],

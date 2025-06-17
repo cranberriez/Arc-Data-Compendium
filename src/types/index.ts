@@ -20,14 +20,22 @@ export * from "./quest";
 
 // Item Types
 export type { BaseItem } from "./base";
-// export type { Item } from "./items/item";
-export type Item = typeof items.$inferSelect;
-export type Weapon = Item & typeof weapons.$inferSelect;
-export type WeaponStats = typeof weaponStats.$inferSelect;
-export type Upgrade = typeof upgrade.$inferSelect;
-export type UpgradeStats = typeof upgradeStats.$inferSelect;
+
 // Required item is a global table for anything using an item, refer to consumerType for what it's used for
 export type RequiredItem = typeof requiredItem.$inferSelect;
+
+// export type { Item } from "./items/item";
+export type Item = typeof items.$inferSelect & {
+	recycling: RequiredItem[];
+	sources: RequiredItem[];
+};
+
+export type WeaponStats = typeof weaponStats.$inferSelect;
+export type UpgradeStats = typeof upgradeStats.$inferSelect;
+export type Upgrade = typeof upgrade.$inferSelect & { stats: UpgradeStats[] };
+
+export type BaseWeapon = Item & typeof weapons.$inferSelect;
+export type Weapon = BaseWeapon & { weaponStats: WeaponStats; upgrades: Upgrade[] };
 
 // Quickuse and Gear stats remain as JSON in database so their type stays
 export type { QuickUseData, QuickUseStat, QuickUseCharge } from "./items/quickuse";

@@ -1,13 +1,11 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { Weapon } from "@/types/items/weapon";
-import { fetchWeapons } from "@/services/dataService";
+import { Weapon } from "@/types";
 import { Card } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { cn } from "@/lib/utils";
-import { toRomanNumeral } from "@/utils/format";
-import { formatName } from "@/data/items/itemUtils";
+import { toRomanNumeral, formatName } from "@/utils/format";
 import { calculateTTK } from "@/utils/weapons/ttkCalc";
 
 // Stat max values for creating the horizontal bars representing the stat
@@ -55,8 +53,8 @@ export function WeaponsClient({ weapons }: { weapons: Weapon[] }) {
 	const weaponGroups = useMemo(() => {
 		const map: Record<string, Weapon[]> = {};
 		weapons.forEach((w) => {
-			if (!map[w.weapon_class]) map[w.weapon_class] = [];
-			map[w.weapon_class].push(w);
+			if (!map[w.weaponClass!]) map[w.weaponClass!] = [];
+			map[w.weaponClass!].push(w);
 		});
 		return map;
 	}, [weapons]);
@@ -144,8 +142,8 @@ function WeaponCard({
 }) {
 	// Damage, Firerate, Health, Shield Health, Shield Negation
 	const ttk = calculateTTK(
-		weapon.stats.damage,
-		weapon.stats.fire_rate,
+		weapon.weaponStats.damage!,
+		weapon.weaponStats.fireRate!,
 		100,
 		SHIELD_VALUES[shield || "none"].health,
 		SHIELD_VALUES[shield || "none"].negationPercent
@@ -176,11 +174,11 @@ function WeaponCard({
 				<p
 					className={cn(
 						"text-muted-foreground text-shadow-md",
-						AMMO_TYPE_COLORS[weapon.ammo_type],
+						AMMO_TYPE_COLORS[weapon.ammoType!],
 						"light-text-shadow dark:no-light-text-shadow"
 					)}
 				>
-					{formatName(weapon.ammo_type)}
+					{formatName(weapon.ammoType!)}
 				</p>
 			</div>
 		</div>
@@ -216,30 +214,30 @@ function WeaponDetailsPanel({ weapon }: { weapon: Weapon }) {
 				<div>
 					Class:{" "}
 					<span className="font-medium text-foreground/90">
-						{formatName(weapon.weapon_class)}
+						{formatName(weapon.weaponClass!)}
 					</span>
 				</div>
 				<div>
 					Ammo:{" "}
 					<span className="font-medium text-foreground/90">
-						{formatName(weapon.ammo_type)}
+						{formatName(weapon.ammoType!)}
 					</span>
 				</div>
 				<div>
 					Base Tier:{" "}
 					<span className="font-medium text-foreground/90">
-						{toRomanNumeral(weapon.base_tier)}
+						{toRomanNumeral(weapon.baseTier!)}
 					</span>
 				</div>
 				<div>
 					Max Level:{" "}
-					<span className="font-medium text-foreground/90">{weapon.max_level}</span>
+					<span className="font-medium text-foreground/90">{weapon.maxLevel}</span>
 				</div>
 			</div>
 
 			<h3 className="mt-4 mb-2 text-base font-semibold">Base Stats</h3>
 			<div className="space-y-2.5">
-				{Object.entries(weapon.stats)
+				{Object.entries(weapon.weaponStats)
 					.filter(([key]) =>
 						[
 							"damage",
@@ -254,13 +252,13 @@ function WeaponDetailsPanel({ weapon }: { weapon: Weapon }) {
 						<StatBar
 							key={key}
 							label={formatName(key)}
-							value={value}
+							value={value as number}
 						/>
 					))}
 			</div>
 
 			<div className="mt-4 pt-3 border-t border-border/50 text-sm space-y-1">
-				{Object.entries(weapon.stats)
+				{Object.entries(weapon.upgrades)
 					.filter(
 						([key]) =>
 							![
@@ -278,7 +276,9 @@ function WeaponDetailsPanel({ weapon }: { weapon: Weapon }) {
 							className="flex justify-between"
 						>
 							<span className="text-muted-foreground">{formatName(key)}:</span>
-							<span className="font-medium text-foreground/90">{value}</span>
+							<span className="font-medium text-foreground/90">
+								{value.description}
+							</span>
 						</div>
 					))}
 			</div>

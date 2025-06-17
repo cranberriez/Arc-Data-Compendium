@@ -1,3 +1,7 @@
+export const formatName = (str: string) => {
+	return formatSnakeCase(str); // yeah uhh tech debt am i right
+};
+
 export const formatSnakeCase = (str: string) =>
 	str
 		.split("_")
