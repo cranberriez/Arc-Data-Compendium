@@ -22,9 +22,11 @@ import { recipeItems, recipes } from "./recipes";
 // ---------------------------
 
 // Enums matching our TS types
-export const rarityEnum = pgEnum("rarity", ["common", "uncommon", "rare", "epic", "legendary"]);
+const rarityValues = ["common", "uncommon", "rare", "epic", "legendary"] as const;
+export type Rarity = (typeof rarityValues)[number];
+export const rarityEnum = pgEnum("rarity", rarityValues);
 
-export const itemCategoryEnum = pgEnum("item_category", [
+const itemCategoryValues = [
 	"recyclable",
 	"trinket",
 	"quick_use",
@@ -35,7 +37,9 @@ export const itemCategoryEnum = pgEnum("item_category", [
 	"topside_material",
 	"refined_material",
 	"key",
-]);
+] as const;
+export type ItemCategory = (typeof itemCategoryValues)[number];
+export const itemCategoryEnum = pgEnum("item_category", itemCategoryValues);
 
 // Base Item table (includes BaseItem & Item fields)
 export const items = pgTable("items", {
@@ -70,13 +74,15 @@ export const itemsRelations = relations(items, ({ one, many }) => ({
 }));
 
 // What a required item is used for (e.g. weapon upgrade, recipe, etc.), improves lookups
-export const consumerTypeEnum = pgEnum("consumer_type", [
+const consumerTypeValues = [
 	"weapon_upgrade",
 	"recycle",
 	"workbench_upgrade",
 	"recipe",
 	"quest",
-]);
+] as const;
+export type ConsumerType = (typeof consumerTypeValues)[number];
+export const consumerTypeEnum = pgEnum("consumer_type", consumerTypeValues);
 
 // Many-to-Many table for required items for anything using an item
 export const requiredItem = pgTable(
@@ -96,9 +102,11 @@ export const requiredItem = pgTable(
 	]
 );
 // Weapon specific enums
-export const ammoTypeEnum = pgEnum("ammo_type", ["light", "medium", "heavy", "shotgun", "energy"]);
+const ammoTypeValues = ["light", "medium", "heavy", "shotgun", "energy"] as const;
+export const ammoTypeEnum = pgEnum("ammo_type", ammoTypeValues);
+export type AmmoType = (typeof ammoTypeValues)[number];
 
-export const weaponClassEnum = pgEnum("weapon_class", [
+const weaponClassValues = [
 	"assault_rifle",
 	"battle_rifle",
 	"smg",
@@ -107,7 +115,9 @@ export const weaponClassEnum = pgEnum("weapon_class", [
 	"light_machinegun",
 	"sniper_rifle",
 	"special",
-]);
+] as const;
+export const weaponClassEnum = pgEnum("weapon_class", weaponClassValues);
+export type WeaponClass = (typeof weaponClassValues)[number];
 
 // Weapon extension table (1-to-1 with items)
 export const weapons = pgTable("weapons", {
@@ -127,7 +137,9 @@ export const weaponsRelations = relations(weapons, ({ one }) => ({
 }));
 
 // Because we store base stats and modifier stats in the same table, we need to know which is which
-export const statUsageEnum = pgEnum("stat_usage", ["base", "modifier"]);
+const statUsageValues = ["base", "modifier"] as const;
+export const statUsageEnum = pgEnum("stat_usage", statUsageValues);
+export type StatUsage = (typeof statUsageValues)[number];
 
 export const weaponStats = pgTable("weapon_stats", {
 	itemId: varchar("item_id", { length: 255 })
@@ -149,7 +161,7 @@ export const weaponStats = pgTable("weapon_stats", {
 });
 
 // Stat types
-export const statTypeEnum = pgEnum("stat_type", [
+const statTypeValues = [
 	"damage",
 	"fire_rate",
 	"range",
@@ -162,10 +174,14 @@ export const statTypeEnum = pgEnum("stat_type", [
 	"reload_time",
 	"recoil_horizontal",
 	"recoil_vertical",
-]);
+] as const;
+export const statTypeEnum = pgEnum("stat_type", statTypeValues);
+export type StatType = (typeof statTypeValues)[number];
 
 // Modifier types
-export const modifierTypeEnum = pgEnum("modifier_type", ["additive", "multiplicative"]);
+const modifierTypeValues = ["additive", "multiplicative"] as const;
+export const modifierTypeEnum = pgEnum("modifier_type", modifierTypeValues);
+export type ModifierType = (typeof modifierTypeValues)[number];
 
 // Upgrade table
 export const upgrade = pgTable(

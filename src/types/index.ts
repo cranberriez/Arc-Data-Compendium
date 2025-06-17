@@ -5,6 +5,14 @@ import {
 	upgrade,
 	upgradeStats,
 	requiredItem,
+	Rarity,
+	ItemCategory,
+	AmmoType,
+	WeaponClass,
+	StatType,
+	ModifierType,
+	ConsumerType,
+	StatUsage,
 } from "@/db/schema/items";
 import { recipes, recipeItems } from "@/db/schema/recipes";
 
@@ -51,16 +59,16 @@ export type Weapon = BaseWeapon & { weaponStats: WeaponStats; upgrades: Upgrade[
 export type { QuickUseData, QuickUseStat, QuickUseCharge } from "./items/quickuse";
 export type { GearData, GearStat } from "./items/gear";
 
-// Item and Weapon Enums
-export {
-	rarityEnum as Rarity, // item rarity (common, uncommon, rare, epic, legendary)
-	itemCategoryEnum as ItemCategory, // item category (weapon, quick use, etc.)
-	ammoTypeEnum as AmmoType, // ammo type (light, medium, heavy, shotgun, energy)
-	weaponClassEnum as WeaponClass, // weapon class (smg, assault rifle, etc.)
-	statTypeEnum as StatType, // All weapon stats (including those adjusted by upgrades)
-	modifierTypeEnum as ModifierType, // Weapon upgrade modification (additive / multiplicative)
-	consumerTypeEnum as ConsumerType, // What a required item is used for (e.g. weapon upgrade, recipe, etc.)
-} from "@/db/schema/items";
+export type {
+	Rarity,
+	ItemCategory,
+	AmmoType,
+	WeaponClass,
+	StatType,
+	ModifierType,
+	ConsumerType,
+	StatUsage,
+};
 
 // Weapon Types
 export type {
