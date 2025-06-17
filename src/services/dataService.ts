@@ -1,7 +1,7 @@
-import { Item } from "@/types/items/item";
-import { Quest } from "@/types/quest";
-import { Recipe } from "@/types/recipe";
-import { Workbench } from "@/types/workbench";
+import { Item } from "@/types";
+import { Quest } from "@/types";
+import { Recipe } from "@/types";
+import { Workbench } from "@/types";
 
 import itemsData from "@/data/items/itemData.build.json";
 import recipesData from "@/data/recipes/recipeData.json";
