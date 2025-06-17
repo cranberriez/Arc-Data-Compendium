@@ -50,7 +50,7 @@ export type Item = typeof items.$inferSelect & {
 	recycling: RecipeRow[];
 	quickUse: QuickUseData;
 	gear: GearData;
-	recyclingSources: RecipeRow[];
+	recyclingSources: Recipe[];
 };
 
 export type WeaponStats = typeof weaponStats.$inferSelect;

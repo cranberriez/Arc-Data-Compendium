@@ -1,9 +1,7 @@
 import { NextResponse } from "next/server";
 import { db } from "@/db/drizzle";
-import { Weapon } from "@/types";
 
-// DISABLED FOR DEV TEST
-// export const revalidate = 3600; // revalidate every hour
+export const revalidate = 30;
 
 export async function GET() {
 	try {

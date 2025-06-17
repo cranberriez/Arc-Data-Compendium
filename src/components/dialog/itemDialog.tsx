@@ -22,7 +22,7 @@ export function ItemDialog({ data, isOpen, closeDialog, backDialog }: ItemDialog
 	if (!data) return null;
 	const item = data;
 
-	const sourcesPresent = item.sources && item.sources.length > 0;
+	const sourcesPresent = item.recyclingSources && item.recyclingSources.length > 0;
 	const recyclingPresent = item.recycling && item.recycling.length > 0;
 	const isQuickUse = item.quickUse;
 	const isGear = item.gear;

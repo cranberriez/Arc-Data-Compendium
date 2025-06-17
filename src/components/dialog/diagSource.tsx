@@ -1,9 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { Item } from "@/types";
+import { Item, Recipe, RecipeRow } from "@/types";
 import { useItems } from "@/contexts/itemContext";
-import { SourceItem } from "./diagSourceItem";
+import { RecycleSourceItem } from "./diagSourceItem";
 import { Link, ChevronDown, ChevronUp, MoveRight, BadgeCent } from "lucide-react";
 import { ScrollArea } from "@radix-ui/react-scroll-area";
 import { Button } from "../ui/button";
@@ -32,6 +32,7 @@ export function SourcesSection({ item }: SourcesSectionProps) {
 	// const recycleSources = [...item.sources]
 	// 	.filter((source) => source.type === "recycle")
 	// 	.sort((a, b) => (b.count || 0) - (a.count || 0));
+
 	const recycleSources = item.recyclingSources;
 
 	// Check if we need to show the "Show more/less" button
@@ -94,17 +95,8 @@ export function SourcesSection({ item }: SourcesSectionProps) {
 				<div className="flex flex-col md:flex-row gap-2 md:gap-0 w-fit">
 					{/* Left Column */}
 					<div className="flex flex-col gap-2 md:pr-4">
-						{leftColumnSources.map((source) => {
-							const sourceItem = getItemById(source.itemId);
-							if (!sourceItem) return null;
-							return (
-								<SourceItem
-									key={sourceItem.id}
-									sourceItem={sourceItem}
-									item={item}
-									source={source}
-								/>
-							);
+						{leftColumnSources.map((recycleSource) => {
+							return getRecycleSourceItem(item, recycleSource);
 						})}
 					</div>
 
@@ -115,17 +107,8 @@ export function SourcesSection({ item }: SourcesSectionProps) {
 
 					{/* Right Column */}
 					<div className="flex flex-col gap-2 md:pl-4">
-						{rightColumnSources.map((source) => {
-							const sourceItem = getItemById(source.itemId);
-							if (!sourceItem) return null;
-							return (
-								<SourceItem
-									key={sourceItem.id}
-									sourceItem={sourceItem}
-									item={item}
-									source={source}
-								/>
-							);
+						{rightColumnSources.map((recycleSource) => {
+							return getRecycleSourceItem(item, recycleSource);
 						})}
 					</div>
 				</div>
@@ -153,3 +136,19 @@ export function SourcesSection({ item }: SourcesSectionProps) {
 		</div>
 	);
 }
+
+const getRecycleSourceItem = (item: Item, recycleSource: Recipe) => {
+	const coproducts = recycleSource.outputs.filter((output) => output.itemId !== item.id);
+	const mainItemQty = recycleSource.outputs.filter((output) => output.itemId === item.id)[0].qty;
+	const sourceItem = recycleSource.inputs[0];
+	if (!sourceItem) return null;
+	return (
+		<RecycleSourceItem
+			key={sourceItem.itemId}
+			recycledSource={sourceItem}
+			mainItem={item}
+			mainItemQty={mainItemQty}
+			coproducts={coproducts}
+		/>
+	);
+};
