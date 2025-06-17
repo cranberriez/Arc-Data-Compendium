@@ -17,12 +17,12 @@ import {
 import { recipes, recipeItems } from "@/db/schema/recipes";
 import { QuickUseData } from "./items/quickuse";
 import { GearData } from "./items/gear";
+import { WeaponModSlot } from "./items/weapon";
 
 // Base types and interfaces
 export * from "./items/types";
 export * from "./items/quickuse";
 export * from "./items/gear";
-export * from "./items/weapon";
 
 export * from "./base";
 export * from "./workbench";
@@ -57,8 +57,11 @@ export type WeaponStats = typeof weaponStats.$inferSelect;
 export type UpgradeStats = typeof upgradeStats.$inferSelect;
 export type Upgrade = typeof upgrade.$inferSelect & { stats: UpgradeStats[] };
 
-export type BaseWeapon = Item & typeof weapons.$inferSelect;
-export type Weapon = BaseWeapon & { weaponStats: WeaponStats; upgrades: Upgrade[] };
+export type Weapon = Item & {
+	weapon: typeof weapons.$inferSelect;
+	weaponStats: WeaponStats;
+	upgrades: Upgrade[];
+};
 
 // Quickuse and Gear stats remain as JSON in database so their type stays
 export type { QuickUseData, QuickUseStat, QuickUseCharge } from "./items/quickuse";

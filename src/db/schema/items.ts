@@ -16,6 +16,7 @@ import {
 	unique,
 } from "drizzle-orm/pg-core";
 import { recipeItems, recipes } from "./recipes";
+import { WeaponModSlot } from "@/types";
 
 // ---------------------------
 // Item & Weapon Tables
@@ -126,8 +127,8 @@ export const weapons = pgTable("weapons", {
 		.references(() => items.id),
 	ammoType: ammoTypeEnum("ammo_type"),
 	weaponClass: weaponClassEnum("weapon_class"),
-	modSlots: jsonb("mod_slots"),
-	compatibleMods: jsonb("compatible_mods"),
+	modSlots: jsonb("mod_slots").$type<WeaponModSlot[]>().notNull(),
+	compatibleMods: jsonb("compatible_mods").$type<string[]>().notNull(),
 	baseTier: integer("base_tier"),
 	maxLevel: integer("max_level"),
 });

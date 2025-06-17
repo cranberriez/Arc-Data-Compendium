@@ -2,11 +2,13 @@ export const formatName = (str: string) => {
 	return formatSnakeCase(str); // yeah uhh tech debt am i right
 };
 
-export const formatSnakeCase = (str: string) =>
-	str
+export const formatSnakeCase = (str: string) => {
+	if (!str) return "";
+	return str
 		.split("_")
 		.map((word) => word.charAt(0).toUpperCase() + word.slice(1))
 		.join(" ");
+};
 
 export const toRomanNumeral = (num: number) => {
 	const map = [
