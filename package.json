@@ -4,7 +4,7 @@
 	"private": true,
 	"scripts": {
 		"dev": "next dev",
-		"seed": "tsx scripts/seed.ts",
+		"seed": "tsx scripts/seedItems.ts",
 		"devtb": "next dev --turbopack",
 		"prebuild": "tsx scripts/generateItemData.ts",
 		"build": "next build",

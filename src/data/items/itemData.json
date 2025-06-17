@@ -1588,7 +1588,7 @@
 		"value": 300,
 		"recycling": [
 			{
-				"id": "plastics_parts",
+				"id": "plastic_parts",
 				"count": 3
 			}
 		]
@@ -1706,7 +1706,7 @@
 		"value": 80,
 		"recycling": [
 			{
-				"id": "plastics_parts",
+				"id": "plastic_parts",
 				"count": 3
 			}
 		]
@@ -1858,7 +1858,7 @@
 		"value": 2000,
 		"recycling": [
 			{
-				"id": "plastics_parts",
+				"id": "plastic_parts",
 				"count": 8
 			},
 			{
@@ -2541,7 +2541,7 @@
 		"value": 3000,
 		"recycling": [
 			{
-				"id": "steels_springs",
+				"id": "steel_spring",
 				"count": 4
 			},
 			{
@@ -2901,7 +2901,7 @@
 				"count": 0
 			},
 			{
-				"id": "metal_scraps",
+				"id": "metal_parts",
 				"count": 0
 			}
 		]
@@ -4725,7 +4725,7 @@
 		"maxStack": 1,
 		"recipeId": null,
 		"value": 2000,
-		"weapon_class": "lmg",
+		"weapon_class": "light_machinegun",
 		"ammo_type": "medium",
 		"stats": {
 			"damage": 7,
