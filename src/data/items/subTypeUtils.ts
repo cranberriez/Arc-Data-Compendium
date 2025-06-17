@@ -1,5 +1,5 @@
-import { Weapon } from "@/types";
+import { Item, Weapon } from "@/types";
 
-export function isWeapon(item: any): item is Weapon {
-	return item.sub_type === "weapon";
+export function isWeapon(item: Item): item is Weapon {
+	return item.category === "weapon";
 }

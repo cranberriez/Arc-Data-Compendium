@@ -1,45 +1,82 @@
-// Re-export all item-related types and utilities
+import {
+	items,
+	weapons,
+	weaponStats,
+	upgrade,
+	upgradeStats,
+	requiredItem,
+} from "@/db/schema/items";
 
 // Base types and interfaces
 export * from "./items/types";
+export * from "./items/quickuse";
+export * from "./items/gear";
+export * from "./items/weapon";
+
 export * from "./base";
 export * from "./workbench";
 export * from "./recipe";
-export * from "./items/quickuse";
-export * from "./items/gear";
 export * from "./quest";
-export * from "./items/weapon";
 
-// Re-export commonly used types for convenience
+// Item Types
 export type { BaseItem } from "./base";
-export type { Item } from "./items/item";
+// export type { Item } from "./items/item";
+export type Item = typeof items.$inferSelect;
+export type Weapon = Item & typeof weapons.$inferSelect;
+export type WeaponStats = typeof weaponStats.$inferSelect;
+export type Upgrade = typeof upgrade.$inferSelect;
+export type UpgradeStats = typeof upgradeStats.$inferSelect;
+// Required item is a global table for anything using an item, refer to consumerType for what it's used for
+export type RequiredItem = typeof requiredItem.$inferSelect;
+
+// Quickuse and Gear stats remain as JSON in database so their type stays
+export type { QuickUseData, QuickUseStat, QuickUseCharge } from "./items/quickuse";
+export type { GearData, GearStat } from "./items/gear";
+
+// Item and Weapon Enums
+export {
+	rarityEnum as Rarity, // item rarity (common, uncommon, rare, epic, legendary)
+	itemCategoryEnum as ItemCategory, // item category (weapon, quick use, etc.)
+	ammoTypeEnum as AmmoType, // ammo type (light, medium, heavy, shotgun, energy)
+	weaponClassEnum as WeaponClass, // weapon class (smg, assault rifle, etc.)
+	statTypeEnum as StatType, // All weapon stats (including those adjusted by upgrades)
+	modifierTypeEnum as ModifierType, // Weapon upgrade modification (additive / multiplicative)
+	consumerTypeEnum as ConsumerType, // What a required item is used for (e.g. weapon upgrade, recipe, etc.)
+} from "@/db/schema/items";
+
+// Weapon Types
+export type {
+	// Weapon,
+	// WeaponUpgrade,
+	// WeaponStats,
+	WeaponModSlot,
+	// WeaponClass,
+	// AmmoType,
+} from "./items/weapon";
+
+// Item Type Enums
+export type {
+	// Rarity,
+	ItemSource,
+	// ItemCategory,
+	ItemSourceType,
+	ShieldType,
+	TraderName,
+} from "./items/types";
+
+// Workbench Types
 export type {
 	Workbench,
 	WorkbenchTier,
 	WorkbenchUpgradeSummary,
 	WorkbenchUpgradeSummaryItem,
 } from "./workbench";
-export type { Recipe, RecipeRequirement } from "./recipe";
-export type { QuickUseData, QuickUseStat, QuickUseCharge } from "./items/quickuse";
-export type { GearData, GearStat } from "./items/gear";
-export type { QuestId, QuestObjective, QuestObjectiveLink, QuestReward, Quest } from "./quest";
-export type {
-	Weapon,
-	WeaponUpgrade,
-	WeaponStats,
-	WeaponModSlot,
-	WeaponClass,
-	AmmoType,
-} from "./items/weapon";
 
-export type {
-	Rarity,
-	ItemSource,
-	ItemCategory,
-	ItemSourceType,
-	ShieldType,
-	TraderName,
-} from "./items/types";
+// Recipe Types
+export type { Recipe, RecipeRequirement } from "./recipe";
+
+// Quest Types
+export type { QuestId, QuestObjective, QuestObjectiveLink, QuestReward, Quest } from "./quest";
 
 // Utility types
 export type Nullable<T> = T | null;

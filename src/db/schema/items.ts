@@ -1,4 +1,5 @@
 // workbenches.ts
+import { relations } from "drizzle-orm";
 import {
 	pgTable,
 	varchar,
@@ -12,7 +13,6 @@ import {
 	foreignKey,
 	real,
 	primaryKey,
-	unique,
 } from "drizzle-orm/pg-core";
 
 // ---------------------------
@@ -57,6 +57,55 @@ export const items = pgTable("items", {
 	gear: jsonb("gear"),
 });
 
+export const itemsRelations = relations(items, ({ one, many }) => ({
+	weapon: one(weapons, { fields: [items.id], references: [weapons.itemId] }),
+	weaponStats: one(weaponStats, { fields: [items.id], references: [weaponStats.itemId] }),
+	upgrades: many(upgrade),
+	upgradeStats: many(upgradeStats),
+	recycling: many(requiredItem, { relationName: "recycling" }),
+	sources: many(requiredItem, { relationName: "sources" }),
+}));
+
+// What a required item is used for (e.g. weapon upgrade, recipe, etc.), improves lookups
+export const consumerTypeEnum = pgEnum("consumer_type", [
+	"weapon_upgrade",
+	"recycle",
+	"workbench_upgrade",
+	"recipe",
+	"quest",
+]);
+
+// Many-to-Many table for required items for anything using an item
+export const requiredItem = pgTable(
+	"required_item",
+	{
+		id: serial("id").primaryKey(),
+		consumerType: consumerTypeEnum("consumer_type").notNull(),
+		consumerId: varchar("consumer_id", { length: 255 }).notNull(), // what is consuming the item, for recycling refers to the item being recycled
+		itemId: varchar("item_id", { length: 255 }) // what the output item or required item is
+			.references(() => items.id)
+			.notNull(),
+		count: integer("count").notNull(), // the number required or produced
+	},
+	(table) => [
+		index("required_item_idx").on(table.itemId),
+		index("item_consumer_idx").on(table.consumerType, table.consumerId),
+	]
+);
+
+export const requiredItemRelations = relations(requiredItem, ({ one }) => ({
+	recycling: one(items, {
+		fields: [requiredItem.consumerId],
+		references: [items.id],
+		relationName: "recycling",
+	}),
+	sources: one(items, {
+		fields: [requiredItem.itemId],
+		references: [items.id],
+		relationName: "sources",
+	}),
+}));
+
 // Weapon specific enums
 export const ammoTypeEnum = pgEnum("ammo_type", ["light", "medium", "heavy", "shotgun", "energy"]);
 
@@ -100,6 +149,10 @@ export const weaponStats = pgTable("weapon_stats", {
 	stealth: real("stealth"),
 	durabilityBurn: real("durability_burn"),
 	magazineSize: real("magazine_size"),
+	bulletVelocity: real("bullet_velocity"),
+	reloadTime: real("reload_time"),
+	recoilHorizontal: real("recoil_horizontal"),
+	recoilVertical: real("recoil_vertical"),
 });
 
 // Stat types
@@ -134,6 +187,14 @@ export const upgrade = pgTable(
 	(table) => [primaryKey({ name: "id", columns: [table.itemId, table.level] })]
 );
 
+export const upgradeRelations = relations(upgrade, ({ one, many }) => ({
+	item: one(items, {
+		fields: [upgrade.itemId],
+		references: [items.id],
+	}),
+	stats: many(upgradeStats),
+}));
+
 export const upgradeStats = pgTable(
 	"weapon_upgrade_stats",
 	{
@@ -152,29 +213,9 @@ export const upgradeStats = pgTable(
 	]
 );
 
-// What a required item is used for (e.g. weapon upgrade, recipe, etc.), improves lookups
-export const consumerTypeEnum = pgEnum("consumer_type", [
-	"weapon_upgrade",
-	"recycle",
-	"workbench_upgrade",
-	"recipe",
-	"quest",
-]);
-
-// Many-to-Many table for required items for anything using an item
-export const requiredItem = pgTable(
-	"required_item",
-	{
-		id: serial("id").primaryKey(),
-		consumerType: consumerTypeEnum("consumer_type").notNull(),
-		consumerId: varchar("consumer_id", { length: 255 }).notNull(),
-		itemId: varchar("item_id", { length: 255 })
-			.references(() => items.id)
-			.notNull(),
-		count: integer("count").notNull(),
-	},
-	(table) => [
-		index("required_item_idx").on(table.itemId),
-		index("item_consumer_idx").on(table.consumerType, table.consumerId),
-	]
-);
+export const upgradeStatsRelations = relations(upgradeStats, ({ one }) => ({
+	upgrade: one(upgrade, {
+		fields: [upgradeStats.upgradeItemId, upgradeStats.upgradeItemLevel],
+		references: [upgrade.itemId, upgrade.level],
+	}),
+}));
