@@ -8,11 +8,15 @@ import {
 	weapons,
 } from "../src/db/schema/items";
 import itemData from "../src/data/items/itemData.json";
+import { recipeItems, recipes } from "../src/db/schema";
+import { eq } from "drizzle-orm";
 
 // 1. Read and (optionally) validate/transform data
 // 2. Loop and insert
 async function seedItems() {
-	let requiredItemsToInsert: any[] = [];
+	// seed recycling as recipes
+	let recyclingRecipes: any[] = [];
+	let recyclingIO: any[] = [];
 
 	for (const item of itemData) {
 		try {
@@ -39,19 +43,37 @@ async function seedItems() {
 		}
 
 		if (item.recycling && item.recycling.length > 0) {
-			requiredItemsToInsert.push(
+			recyclingRecipes.push({
+				id: "recycle_" + item.id,
+				type: "recycling",
+			} as any);
+
+			recyclingIO.push(
 				...item.recycling.map(
 					(r) =>
 						({
+							recipeId: "recycle_" + item.id,
 							itemId: r.id,
-							count: r.count,
-							consumerType: "recycle",
-							consumerId: item.id,
+							role: "output",
+							qty: r.count,
+						} as any)
+				)
+			);
+
+			recyclingIO.push(
+				...item.recycling.map(
+					(r) =>
+						({
+							recipeId: "recycle_" + item.id,
+							itemId: item.id,
+							role: "input",
+							qty: 1,
 						} as any)
 				)
 			);
 		}
 
+		// seed weapon stats
 		if (item.sub_type === "weapon") {
 			await db
 				.insert(weapons)
@@ -83,6 +105,7 @@ async function seedItems() {
 				.onConflictDoNothing();
 		}
 
+		// seed upgrade stats
 		if (item.upgrade_effects && item.upgrade_effects.length > 0) {
 			item.upgrade_effects.map(async (upgradeEffect, idx) => {
 				await db
@@ -109,7 +132,18 @@ async function seedItems() {
 		}
 	}
 
-	await db.insert(requiredItem).values(requiredItemsToInsert).onConflictDoNothing();
+	for (const item of itemData) {
+		if (item.recycling && item.recycling.length > 0) {
+			await db
+				.update(items)
+				.set({ recycling: "recycle_" + item.id })
+				.where(eq(items.id, item.id));
+		}
+	}
+
+	// seed recycling as recipes
+	await db.insert(recipes).values(recyclingRecipes).onConflictDoNothing();
+	await db.insert(recipeItems).values(recyclingIO).onConflictDoNothing();
 }
 
 seedItems();

@@ -6,6 +6,7 @@ import {
 	upgradeStats,
 	requiredItem,
 } from "@/db/schema/items";
+import { recipes, recipeItems } from "@/db/schema/recipes";
 
 // Base types and interfaces
 export * from "./items/types";
@@ -24,10 +25,19 @@ export type { BaseItem } from "./base";
 // Required item is a global table for anything using an item, refer to consumerType for what it's used for
 export type RequiredItem = typeof requiredItem.$inferSelect;
 
+// a row from the junction table
+export type RecipeRow = typeof recipeItems.$inferSelect;
+
+// a recipe row plus its I/O arrays
+export type Recipe = typeof recipes.$inferSelect & {
+	inputs: RecipeRow[]; // role === "input"
+	outputs: RecipeRow[]; // role === "output"
+};
+
 // export type { Item } from "./items/item";
+// Override the `recycling` column (string FK) with a richer joined type
 export type Item = typeof items.$inferSelect & {
-	recycling: RequiredItem[];
-	sources: RequiredItem[];
+	recycling: RecipeRow[];
 };
 
 export type WeaponStats = typeof weaponStats.$inferSelect;
@@ -81,7 +91,7 @@ export type {
 } from "./workbench";
 
 // Recipe Types
-export type { Recipe, RecipeRequirement } from "./recipe";
+// export type { Recipe, RecipeRequirement } from "./recipe";
 
 // Quest Types
 export type { QuestId, QuestObjective, QuestObjectiveLink, QuestReward, Quest } from "./quest";

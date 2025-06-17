@@ -15,6 +15,7 @@ import {
 	primaryKey,
 	unique,
 } from "drizzle-orm/pg-core";
+import { recipeItems, recipes } from "./recipes";
 
 // ---------------------------
 // Item & Weapon Tables
@@ -56,6 +57,8 @@ export const items = pgTable("items", {
 
 	quickUse: jsonb("quick_use"),
 	gear: jsonb("gear"),
+
+	recycling: varchar("recycling", { length: 255 }).references(() => recipes.id),
 });
 
 export const itemsRelations = relations(items, ({ one, many }) => ({
@@ -63,8 +66,7 @@ export const itemsRelations = relations(items, ({ one, many }) => ({
 	weaponStats: one(weaponStats, { fields: [items.id], references: [weaponStats.itemId] }),
 	upgrades: many(upgrade),
 	upgradeStats: many(upgradeStats),
-	recycling: many(requiredItem, { relationName: "recycling" }),
-	sources: many(requiredItem, { relationName: "sources" }),
+	recycling: one(recipes, { fields: [items.recycling], references: [recipes.id] }),
 }));
 
 // What a required item is used for (e.g. weapon upgrade, recipe, etc.), improves lookups
@@ -93,20 +95,6 @@ export const requiredItem = pgTable(
 		primaryKey({ columns: [table.itemId, table.consumerType, table.consumerId] }),
 	]
 );
-
-export const requiredItemRelations = relations(requiredItem, ({ one }) => ({
-	recycling: one(items, {
-		fields: [requiredItem.consumerId],
-		references: [items.id],
-		relationName: "recycling",
-	}),
-	sources: one(items, {
-		fields: [requiredItem.itemId],
-		references: [items.id],
-		relationName: "sources",
-	}),
-}));
-
 // Weapon specific enums
 export const ammoTypeEnum = pgEnum("ammo_type", ["light", "medium", "heavy", "shotgun", "energy"]);
 

@@ -18,23 +18,25 @@ export async function GET() {
 						stats: true,
 					},
 				},
-				recycling: true,
-				sources: true,
+				recycling: {
+					with: {
+						io: true,
+					},
+				},
 			},
 		});
 
-		const flattened: Weapon[] = result.map(
-			({ weapon, weaponStats, upgrades, recycling, sources, ...itemFields }) => ({
-				...itemFields,
-				...weapon,
-				weaponStats,
-				upgrades,
-				recycling,
-				sources,
+		const cleaned = result.map(
+			({ weapon, weaponStats, upgrades, recycling, ...base }: any) => ({
+				...base,
+				...(weapon && { weapon }),
+				...(weaponStats && { weaponStats }),
+				...(upgrades?.length && { upgrades }),
+				...(recycling?.io && { recycling: recycling.io }),
 			})
 		);
 
-		return NextResponse.json(flattened, { status: 200 });
+		return NextResponse.json(cleaned, { status: 200 });
 	} catch (error) {
 		console.error("Error fetching items:", error);
 		return NextResponse.json({ error: "Failed to fetch items" }, { status: 500 });
