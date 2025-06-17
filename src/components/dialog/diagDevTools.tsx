@@ -15,8 +15,8 @@ export default function DevTools({ item }: { item: Item }) {
 				<span>Log Item</span>
 			</Button>
 
-			{item.createdAt && <p>Created: {formatDate(item.createdAt)}</p>}
-			{item.updatedAt && <p>Updated: {formatDate(item.updatedAt)}</p>}
+			{item.createdAt && <p>Created: {formatDate(item.createdAt.toString())}</p>}
+			{item.updatedAt && <p>Updated: {formatDate(item.updatedAt.toString())}</p>}
 		</div>
 	);
 }

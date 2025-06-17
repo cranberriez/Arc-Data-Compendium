@@ -40,19 +40,21 @@ export const RecyclingSection = ({ item }: { item: Item }) => {
 					}
 				/>
 				<ArrowRight className="size-4" />
-				{item.recycling.map((recycle, idx) => {
-					const recycledItem = getItemById(recycle.id);
-					if (!recycledItem) return null;
-					return (
-						<ItemCard
-							key={recycle.id + idx}
-							item={recycledItem}
-							variant="compact"
-							size="sm"
-							count={recycle.count}
-						/>
-					);
-				})}
+				{item.recycling
+					.filter((recycle) => recycle.role === "output")
+					.map((recycle, idx) => {
+						const recycledItem = getItemById(recycle.itemId);
+						if (!recycledItem) return null;
+						return (
+							<ItemCard
+								key={recycle.itemId + idx}
+								item={recycledItem}
+								variant="compact"
+								size="sm"
+								count={recycle.qty}
+							/>
+						);
+					})}
 			</div>
 		</div>
 	);

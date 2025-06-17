@@ -15,6 +15,8 @@ import {
 	StatUsage,
 } from "@/db/schema/items";
 import { recipes, recipeItems } from "@/db/schema/recipes";
+import { QuickUseData } from "./items/quickuse";
+import { GearData } from "./items/gear";
 
 // Base types and interfaces
 export * from "./items/types";
@@ -46,6 +48,8 @@ export type Recipe = typeof recipes.$inferSelect & {
 // Override the `recycling` column (string FK) with a richer joined type
 export type Item = typeof items.$inferSelect & {
 	recycling: RecipeRow[];
+	quickUse: QuickUseData;
+	gear: GearData;
 };
 
 export type WeaponStats = typeof weaponStats.$inferSelect;

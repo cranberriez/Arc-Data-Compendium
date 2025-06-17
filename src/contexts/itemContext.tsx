@@ -12,7 +12,6 @@ import {
 import { applyItemFilters, sortItems, SortField, SortOrder } from "@/utils/items";
 
 import { Item, ItemCategory, Rarity } from "@/types";
-import { addSources, composeProcessors, processItems } from "@/data/items/itemPreprocessor";
 import { fetchItems } from "@/services/dataService";
 import { FilterOptions, SortOptions } from "@/utils/items/types";
 
@@ -53,10 +52,6 @@ const defaultSortState: SortOptions = {
 const ItemContext = createContext<ItemContextType | undefined>(undefined);
 
 export function ItemProvider({ children }: { children: ReactNode }) {
-	// Compose item preprocessors
-	// Expand to include validItem and processIcons when needed
-	const itemProcessor = useMemo(() => composeProcessors<Item>(addSources), []);
-
 	// State for storing fetched items
 	const [allItems, setAllItems] = useState<Item[]>([]);
 	const [isLoading, setIsLoading] = useState(true);
@@ -68,10 +63,7 @@ export function ItemProvider({ children }: { children: ReactNode }) {
 			setIsLoading(true);
 			try {
 				const fetchedItems = await fetchItems();
-
-				// Process items with the processor if needed
-				const processedItems = processItems(fetchedItems, itemProcessor);
-				setAllItems(processedItems);
+				setAllItems(fetchedItems);
 				setError(null);
 			} catch (err) {
 				console.error("Failed to fetch items:", err);
@@ -82,7 +74,7 @@ export function ItemProvider({ children }: { children: ReactNode }) {
 		}
 
 		loadData();
-	}, [itemProcessor]);
+	}, []);
 
 	// State for filter and sort
 	const [filterState, setFilterState] = useState<FilterOptions>(defaultFilterState);

@@ -46,7 +46,7 @@ export const items = pgTable("items", {
 	id: varchar("id", { length: 255 }).primaryKey(),
 	name: varchar("name", { length: 255 }).notNull(),
 	description: text("description").default(""),
-	icon: varchar("icon", { length: 255 }).default("FileQuestion"),
+	icon: varchar("icon", { length: 255 }).default("FileQuestion").notNull(),
 	createdAt: timestamp("created_at", { withTimezone: true }).defaultNow(),
 	updatedAt: timestamp("updated_at", { withTimezone: true })
 		.defaultNow()

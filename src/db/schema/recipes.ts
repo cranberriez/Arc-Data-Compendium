@@ -41,7 +41,7 @@ export const recipeItems = pgTable(
 			.references(() => items.id)
 			.notNull(),
 		role: ioEnum("role").notNull(), // “input” or “output”
-		qty: real("qty").default(1),
+		qty: real("qty").default(1).notNull(),
 	},
 	(t) => [primaryKey({ columns: [t.recipeId, t.itemId, t.role] })]
 );

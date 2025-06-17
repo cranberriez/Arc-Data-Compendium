@@ -5,7 +5,6 @@ import ItemCard from "@/components/items/ItemCard";
 import { applyItemFilters, sortItems } from "@/utils/items";
 import { useItems } from "@/contexts/itemContext";
 import { Fragment, useMemo } from "react";
-import { processItems, composeProcessors, addSources } from "@/data/items/itemPreprocessor";
 
 interface ItemListProps {
 	initialItems: Item[];
@@ -13,8 +12,7 @@ interface ItemListProps {
 
 export function ItemList({ initialItems }: ItemListProps) {
 	const { filterState, sortState } = useItems();
-	const processedItems = processItems(initialItems, composeProcessors(addSources));
-	const sortedItems = sortItems(processedItems, sortState);
+	const sortedItems = sortItems(initialItems, sortState);
 	const filteredItems = applyItemFilters(sortedItems, filterState);
 
 	// Calculate value percentiles when sorting by value
