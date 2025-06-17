@@ -22,16 +22,17 @@ export function SourcesSection({ item }: SourcesSectionProps) {
 	const { getItemById } = useItems();
 	const [showAllSources, setShowAllSources] = useState(false);
 
-	if (!item.sources || item.sources.length === 0) return null;
+	if (!item.recyclingSources || item.recyclingSources.length === 0) return null;
 
 	// Filter and sort sources
-	const buySources = [...item.sources]
-		.filter((source) => source.type === "buy")
-		.sort((a, b) => (b.count || 0) - (a.count || 0));
+	// const buySources = [...item.sources]
+	// 	.filter((source) => source.type === "buy")
+	// 	.sort((a, b) => (b.count || 0) - (a.count || 0));
 
-	const recycleSources = [...item.sources]
-		.filter((source) => source.type === "recycle")
-		.sort((a, b) => (b.count || 0) - (a.count || 0));
+	// const recycleSources = [...item.sources]
+	// 	.filter((source) => source.type === "recycle")
+	// 	.sort((a, b) => (b.count || 0) - (a.count || 0));
+	const recycleSources = item.recyclingSources;
 
 	// Check if we need to show the "Show more/less" button
 	const shouldShowToggle = recycleSources.length > 4;
@@ -50,12 +51,15 @@ export function SourcesSection({ item }: SourcesSectionProps) {
 					size={24}
 				/>
 				<p>
-					<span className="inline-block text-lg">Sources:</span>
-					<span className="text-xs text-muted-foreground"> ({item.sources?.length})</span>
+					<span className="inline-block text-lg">Recycling Sources:</span>
+					<span className="text-xs text-muted-foreground">
+						{" "}
+						({recycleSources?.length})
+					</span>
 				</p>
 			</div>
 
-			{buySources.length > 0 && (
+			{/* {buySources.length > 0 && (
 				<div className="w-full flex flex-col items-center gap-2">
 					{buySources.map((source) => {
 						return (
@@ -84,14 +88,14 @@ export function SourcesSection({ item }: SourcesSectionProps) {
 						);
 					})}
 				</div>
-			)}
+			)} */}
 
 			<ScrollArea className="w-fit min-w-full max-h[minmax(200px, 60vh)]">
 				<div className="flex flex-col md:flex-row gap-2 md:gap-0 w-fit">
 					{/* Left Column */}
 					<div className="flex flex-col gap-2 md:pr-4">
 						{leftColumnSources.map((source) => {
-							const sourceItem = getItemById(source.fromItemId);
+							const sourceItem = getItemById(source.itemId);
 							if (!sourceItem) return null;
 							return (
 								<SourceItem
@@ -112,7 +116,7 @@ export function SourcesSection({ item }: SourcesSectionProps) {
 					{/* Right Column */}
 					<div className="flex flex-col gap-2 md:pl-4">
 						{rightColumnSources.map((source) => {
-							const sourceItem = getItemById(source.fromItemId);
+							const sourceItem = getItemById(source.itemId);
 							if (!sourceItem) return null;
 							return (
 								<SourceItem

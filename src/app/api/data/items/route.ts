@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { db } from "@/db/drizzle";
+import { getItemSources } from "@/db/utils/getSources";
 
 // DISABLED FOR DEV TEST
 // export const revalidate = 3600; // revalidate every hour
@@ -24,13 +25,18 @@ export async function GET() {
 			},
 		});
 
-		const cleaned = result.map(
-			({ weapon, weaponStats, upgrades, recycling, ...base }: any) => ({
-				...base,
-				...(weapon && { weapon }),
-				...(weaponStats && { weaponStats }),
-				...(upgrades?.length && { upgrades }),
-				...(recycling?.io && { recycling: recycling.io }),
+		// For each item, fetch recipeItems where itemId matches and role === 'output'
+		const cleaned = await Promise.all(
+			result.map(async ({ weapon, weaponStats, upgrades, recycling, ...base }: any) => {
+				const recyclingSources = await getItemSources(base.id);
+				return {
+					...base,
+					...(weapon && { weapon }),
+					...(weaponStats && { weaponStats }),
+					...(upgrades?.length && { upgrades }),
+					...(recycling?.io && { recycling: recycling.io }),
+					...(recyclingSources && { recyclingSources }),
+				};
 			})
 		);
 

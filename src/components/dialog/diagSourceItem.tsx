@@ -4,7 +4,6 @@ import { useItems } from "@/contexts/itemContext";
 import { ItemCard } from "@/components/items/ItemCard";
 import { ArrowRight } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
-import { cn } from "@/lib/utils";
 
 export const SourceItem = ({
 	sourceItem,
@@ -21,7 +20,7 @@ export const SourceItem = ({
 
 	// Get recycle products for this sourceItem
 	const recycleProducts = (sourceItem.recycling || [])
-		.map((recycle) => getItemById(recycle.id))
+		.map((recycle) => getItemById(recycle.itemId))
 		.filter(Boolean)
 		.filter((recycledItem) => recycledItem && recycledItem.id !== item.id);
 
