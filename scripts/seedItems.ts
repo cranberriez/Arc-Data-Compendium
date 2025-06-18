@@ -1,19 +1,12 @@
 import { db } from "../src/db/drizzle"; // your db instance
-import {
-	items,
-	requiredItem,
-	upgrade,
-	upgradeStats,
-	weaponStats,
-	weapons,
-} from "../src/db/schema/items";
+import { items, upgrade, upgradeStats, weaponStats, weapons } from "../src/db/schema/items";
 import itemData from "../src/data/items/itemData.json";
 import { recipeItems, recipes } from "../src/db/schema";
 import { eq } from "drizzle-orm";
 
 // 1. Read and (optionally) validate/transform data
 // 2. Loop and insert
-async function seedItems() {
+export async function seedItems() {
 	// seed recycling as recipes
 	let recyclingRecipes: any[] = [];
 	let recyclingIO: any[] = [];
