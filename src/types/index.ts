@@ -4,14 +4,12 @@ import {
 	weaponStats,
 	upgrade,
 	upgradeStats,
-	requiredItem,
 	Rarity,
 	ItemCategory,
 	AmmoType,
 	WeaponClass,
 	StatType,
 	ModifierType,
-	ConsumerType,
 	StatUsage,
 } from "@/db/schema/items";
 import { recipes, recipeItems } from "@/db/schema/recipes";
@@ -31,9 +29,6 @@ export * from "./quest";
 
 // Item Types
 export type { BaseItem } from "./base";
-
-// Required item is a global table for anything using an item, refer to consumerType for what it's used for
-export type RequiredItem = typeof requiredItem.$inferSelect;
 
 // a row from the junction table
 export type RecipeRow = typeof recipeItems.$inferSelect;
@@ -67,16 +62,7 @@ export type Weapon = Item & {
 export type { QuickUseData, QuickUseStat, QuickUseCharge } from "./items/quickuse";
 export type { GearData, GearStat } from "./items/gear";
 
-export type {
-	Rarity,
-	ItemCategory,
-	AmmoType,
-	WeaponClass,
-	StatType,
-	ModifierType,
-	ConsumerType,
-	StatUsage,
-};
+export type { Rarity, ItemCategory, AmmoType, WeaponClass, StatType, ModifierType, StatUsage };
 
 // Weapon Types
 export type {
