@@ -1,12 +1,13 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { Weapon } from "@/types";
 import { Card } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { cn } from "@/lib/utils";
 import { toRomanNumeral, formatName } from "@/utils/format";
 import { calculateTTK } from "@/utils/weapons/ttkCalc";
+import { Button } from "@/components/ui/button";
 
 // Stat max values for creating the horizontal bars representing the stat
 const STAT_MAX_VALUES: Record<string, number> = {
@@ -29,17 +30,28 @@ const SHIELD_VALUES: Shield_Data = {
 };
 
 const AMMO_TYPE_COLORS: Record<string, string> = {
-	light: "text-amber-600 dark:text-amber-400",
-	medium: "text-blue-600 dark:text-blue-300",
-	heavy: "text-rose-600 dark:text-rose-300",
-	shotgun: "text-red-800 dark:text-red-400",
-	energy: "text-green-600 dark:text-green-300",
+	light: "bg-amber-200 text-amber-900 dark:bg-transparent dark:text-amber-400",
+	medium: "bg-blue-200 text-blue-900 dark:bg-transparent dark:text-blue-300",
+	heavy: "bg-rose-200 text-rose-900 dark:bg-transparent dark:text-rose-300",
+	shotgun: "bg-red-200 text-red-900 dark:bg-transparent dark:text-red-400",
+	energy: "bg-green-200 text-green-900 dark:bg-transparent dark:text-green-300",
+};
+
+const getWeaponDetails = (weapon: Weapon) => {
+	return {
+		weaponClass: weapon.weapon.weaponClass!,
+		ammoType: weapon.weapon.ammoType!,
+		baseTier: weapon.weapon.baseTier!,
+		maxLevel: weapon.weapon.maxLevel!,
+		modSlots: weapon.weapon.modSlots!,
+		compatibleMods: weapon.weapon.compatibleMods!,
+	};
 };
 
 export function WeaponsClient({ weapons }: { weapons: Weapon[] }) {
 	const [selectedId, setSelectedId] = useState<string | null>(null);
 	const [isLocked, setIsLocked] = useState(false);
-	const [shield, setShield] = useState<string | null>(null);
+	const [shield, setShield] = useState<string>("light");
 
 	useEffect(() => {
 		if (weapons.length) setSelectedId(weapons[0].id);
@@ -53,8 +65,8 @@ export function WeaponsClient({ weapons }: { weapons: Weapon[] }) {
 	const weaponGroups = useMemo(() => {
 		const map: Record<string, Weapon[]> = {};
 		weapons.forEach((w) => {
-			if (!map[w.weaponClass!]) map[w.weaponClass!] = [];
-			map[w.weaponClass!].push(w);
+			if (!map[w.weapon.weaponClass!]) map[w.weapon.weaponClass!] = [];
+			map[w.weapon.weaponClass!].push(w);
 		});
 		return map;
 	}, [weapons]);
@@ -76,36 +88,31 @@ export function WeaponsClient({ weapons }: { weapons: Weapon[] }) {
 		<article className="w-full p-4">
 			<div className="flex flex-col gap-8 mx-auto max-w-[1600px]">
 				{/* <h1 className="text-2xl text-center font-bold">Weapons</h1> */}
-				<div className="flex gap-6">
-					<div className="flex-1 space-y-6">
+				<div className="flex lg:gap-6">
+					<div className="flex-1 grid grid-cols-[repeat(auto-fill,minmax(16rem,1fr))] gap-4">
 						{Object.entries(weaponGroups).map(([weaponClass, list]) =>
 							list.length ? (
-								<div
-									key={weaponClass}
-									className="space-y-3"
-								>
-									<h2 className="font-semibold text-xl">
-										{formatName(weaponClass)} ({list.length})
+								<React.Fragment key={weaponClass}>
+									<h2 className="font-semibold text-xl col-span-full">
+										{formatName(weaponClass)}
 									</h2>
-									<div className="flex flex-wrap gap-3">
-										{list.map((weapon) => (
-											<WeaponCard
-												key={weapon.id}
-												weapon={weapon}
-												selected={weapon.id === selectedId}
-												onHover={() => handleHover(weapon)}
-												onClick={() => handleClick(weapon)}
-												isLocked={isLocked}
-												shield={shield}
-											/>
-										))}
-									</div>
-								</div>
+									{list.map((weapon) => (
+										<WeaponCard
+											key={weapon.id}
+											weapon={weapon}
+											selected={weapon.id === selectedId}
+											onHover={() => handleHover(weapon)}
+											onClick={() => handleClick(weapon)}
+											isLocked={isLocked}
+											shield={shield}
+										/>
+									))}
+								</React.Fragment>
 							) : null
 						)}
 					</div>
 
-					<div className="hidden md:block w-96 sticky top-4 self-start">
+					<div className="hidden lg:flex flex-col gap-2 w-72 sticky top-4 self-start">
 						{selectedWeapon ? (
 							<WeaponDetailsPanel weapon={selectedWeapon} />
 						) : (
@@ -138,7 +145,7 @@ function WeaponCard({
 	onHover: () => void;
 	onClick: () => void;
 	isLocked: boolean;
-	shield: string | null;
+	shield: string;
 }) {
 	// Damage, Firerate, Health, Shield Health, Shield Negation
 	const ttk = calculateTTK(
@@ -149,10 +156,12 @@ function WeaponCard({
 		SHIELD_VALUES[shield || "none"].negationPercent
 	);
 
+	const wepData = getWeaponDetails(weapon);
+
 	return (
 		<div
 			className={cn(
-				"p-3 border-2 border-border/50 rounded-md w-64 transition-colors duration-150 ease-out gap-2 cursor-pointer hover:border-primary/40 bg-card",
+				"p-3 border-2 border-border/50 rounded-md min-w-64 transition-colors duration-150 ease-out gap-2 cursor-pointer hover:border-primary/40 bg-card",
 				selected && !isLocked && "border-primary/75 shadow-md",
 				isLocked && selected && "border-sky-500! shadow-lg"
 			)}
@@ -173,12 +182,12 @@ function WeaponCard({
 				{/* <p className="text-muted-foreground">{formatName(weapon.weapon_class)}</p> */}
 				<p
 					className={cn(
-						"text-muted-foreground text-shadow-md",
-						AMMO_TYPE_COLORS[weapon.ammoType!],
+						"text-muted-foreground text-sm px-1 py-[1px] rounded",
+						AMMO_TYPE_COLORS[wepData.ammoType!],
 						"light-text-shadow dark:no-light-text-shadow"
 					)}
 				>
-					{formatName(weapon.ammoType!)}
+					{formatName(wepData.ammoType!)}
 				</p>
 			</div>
 		</div>
@@ -203,8 +212,14 @@ function StatBar({ label, value, maxValue }: { label: string; value: number; max
 }
 
 function WeaponDetailsPanel({ weapon }: { weapon: Weapon }) {
+	const baseStats = weapon.weaponStats;
+	const wepData = getWeaponDetails(weapon!);
+	const statFilters = ["damage", "fireRate", "range", "stability", "agility", "stealth"];
+	const upgradeStats = weapon.upgrades;
+
+	console.log(weapon);
 	return (
-		<Card className="p-4 max-h-[calc(100vh-2rem)] overflow-y-auto">
+		<div className="bg-card border-1 p-3 rounded-lg max-h-[calc(100vh-2rem)] overflow-y-auto">
 			<div className="flex items-center justify-center mt-4 p-2 border-amber-500 bg-amber-500/10 text-primary/90 border-2 rounded-lg">
 				Stats are probably incorrect
 			</div>
@@ -214,40 +229,31 @@ function WeaponDetailsPanel({ weapon }: { weapon: Weapon }) {
 				<div>
 					Class:{" "}
 					<span className="font-medium text-foreground/90">
-						{formatName(weapon.weaponClass!)}
+						{formatName(wepData.weaponClass)}
 					</span>
 				</div>
 				<div>
 					Ammo:{" "}
 					<span className="font-medium text-foreground/90">
-						{formatName(weapon.ammoType!)}
+						{formatName(wepData.ammoType)}
 					</span>
 				</div>
 				<div>
 					Base Tier:{" "}
 					<span className="font-medium text-foreground/90">
-						{toRomanNumeral(weapon.baseTier!)}
+						{toRomanNumeral(wepData.baseTier)}
 					</span>
 				</div>
 				<div>
 					Max Level:{" "}
-					<span className="font-medium text-foreground/90">{weapon.maxLevel}</span>
+					<span className="font-medium text-foreground/90">{wepData.maxLevel}</span>
 				</div>
 			</div>
 
 			<h3 className="mt-4 mb-2 text-base font-semibold">Base Stats</h3>
 			<div className="space-y-2.5">
-				{Object.entries(weapon.weaponStats)
-					.filter(([key]) =>
-						[
-							"damage",
-							"fire_rate",
-							"range",
-							"stability",
-							"agility",
-							"stealth",
-						].includes(key)
-					)
+				{Object.entries(baseStats)
+					.filter(([key]) => statFilters.includes(key))
 					.map(([key, value]) => (
 						<StatBar
 							key={key}
@@ -258,18 +264,8 @@ function WeaponDetailsPanel({ weapon }: { weapon: Weapon }) {
 			</div>
 
 			<div className="mt-4 pt-3 border-t border-border/50 text-sm space-y-1">
-				{Object.entries(weapon.upgrades)
-					.filter(
-						([key]) =>
-							![
-								"damage",
-								"fire_rate",
-								"range",
-								"stability",
-								"agility",
-								"stealth",
-							].includes(key)
-					)
+				{Object.entries(upgradeStats)
+					.filter(([key]) => !statFilters.includes(key))
 					.map(([key, value]) => (
 						<div
 							key={key}
@@ -282,7 +278,7 @@ function WeaponDetailsPanel({ weapon }: { weapon: Weapon }) {
 						</div>
 					))}
 			</div>
-		</Card>
+		</div>
 	);
 }
 
@@ -290,8 +286,8 @@ function TTKShieldSelector({
 	shield,
 	setShield,
 }: {
-	shield: string | null;
-	setShield: (shield: string | null) => void;
+	shield: string;
+	setShield: (shield: string) => void;
 }) {
 	const shieldButton = (shield: string, isCurrent: boolean) => {
 		const shieldData = SHIELD_VALUES[shield];
@@ -304,20 +300,18 @@ function TTKShieldSelector({
 				)}
 				onClick={() => setShield(shield)}
 			>
-				<div className={cn("w-2 h-2 rounded-[2px]", shieldData.color)} />
-				<span className="mb-1">{formatName(shield)}</span>
+				<div className={cn("w-2 h-2 rounded-[2px] mb-[2px]", shieldData.color)} />
+				<span className="mb-1 text-sm">{formatName(shield)}</span>
 			</div>
 		);
 	};
 
 	return (
-		<div className="w-full flex justify-center gap-2 p-2">
-			<div className="flex rounded-lg dark:bg-primary/10 bg-primary/5 p-1">
-				{shieldButton("none", shield === "none")}
-				{shieldButton("light", shield === "light")}
-				{shieldButton("medium", shield === "medium")}
-				{shieldButton("heavy", shield === "heavy")}
-			</div>
+		<div className="w-full flex justify-between bg-card border-1 p-1 rounded-lg">
+			{shieldButton("none", shield === "none")}
+			{shieldButton("light", shield === "light")}
+			{shieldButton("medium", shield === "medium")}
+			{shieldButton("heavy", shield === "heavy")}
 		</div>
 	);
 }
