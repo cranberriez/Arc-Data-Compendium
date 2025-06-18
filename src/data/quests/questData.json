@@ -205,9 +205,9 @@
 		],
 		"rewards": [
 			{
-				"description": "Snap Grenade",
+				"description": "Snap Blast Grenade",
 				"count": 2,
-				"links": [{ "type": "item", "id": "snap_grenade" }]
+				"links": [{ "type": "item", "id": "snap_blast_grenade" }]
 			},
 			{ "description": "XP", "count": 7000 }
 		]
@@ -603,9 +603,9 @@
 		"next": ["building_a_library"],
 		"requirements": [
 			{
-				"description": "Get 2 Rubber Ducks for Lance",
+				"description": "Get 2 Rubber Duckys for Lance",
 				"count": 2,
-				"links": [{ "type": "item", "id": "rubber_duck" }]
+				"links": [{ "type": "item", "id": "rubber_ducky" }]
 			},
 			{
 				"description": "Get 2 Faded Photographs for Lance",
@@ -634,19 +634,13 @@
 				"links": [{ "type": "location", "id": "library" }]
 			},
 			{
-				"description": "Find 1 romance book",
-				"count": 1,
-				"links": [{ "type": "item", "id": "romance_book" }]
+				"description": "Find 1 romance book"
 			},
 			{
-				"description": "Find 1 detective book",
-				"count": 1,
-				"links": [{ "type": "item", "id": "detective_book" }]
+				"description": "Find 1 detective book"
 			},
 			{
-				"description": "Find 1 adventure book",
-				"count": 1,
-				"links": [{ "type": "item", "id": "adventure_book" }]
+				"description": "Find 1 adventure book"
 			}
 		],
 		"rewards": [
@@ -719,12 +713,12 @@
 			{
 				"description": "Find missing battery cell",
 				"count": 1,
-				"links": [{ "type": "item", "id": "battery_cell" }]
+				"links": [{ "type": "item", "id": "battery" }]
 			},
 			{
 				"description": "Install the battery in the Generator",
 				"links": [
-					{ "type": "item", "id": "battery_cell" },
+					{ "type": "item", "id": "battery" },
 					{ "type": "location", "id": "generator" }
 				]
 			},
@@ -868,7 +862,7 @@
 			{
 				"description": "Get 3 Sensors for Tian Wen",
 				"count": 3,
-				"links": [{ "type": "item", "id": "sensor" }]
+				"links": [{ "type": "item", "id": "sensors" }]
 			},
 			{
 				"description": "Get Advanced Electrical Components for Tian Wen",

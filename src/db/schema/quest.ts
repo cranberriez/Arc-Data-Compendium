@@ -1,5 +1,15 @@
-import { pgTable, pgEnum, integer, check } from "drizzle-orm/pg-core";
-import { varchar, text, serial, unique, index } from "drizzle-orm/pg-core";
+import {
+	pgTable,
+	pgEnum,
+	integer,
+	check,
+	pgView,
+	varchar,
+	text,
+	serial,
+	unique,
+	index,
+} from "drizzle-orm/pg-core";
 import { createdUpdatedColumns } from "./base";
 import { relations, sql } from "drizzle-orm";
 import { items } from "./items";
@@ -10,17 +20,47 @@ export const quests = pgTable("quests", {
 	trader: varchar("trader", { length: 255 }).notNull(),
 
 	dialog: text("dialog").default(""),
-	location: varchar("location", { length: 255 }).notNull(), // expand later with locations
-	link: text("link").notNull(),
-	xpReward: integer("xp_reward").notNull(),
+	location: varchar("location", { length: 255 }), // expand later with locations (aka map)
+	link: text("link"),
+	xpReward: integer("xp_reward"),
 	...createdUpdatedColumns,
 });
 
 export const questRelations = relations(quests, ({ one, many }) => ({
 	entries: many(questEntries),
-	prereq: many(quests, { relationName: "prereq" }),
-	next: many(quests, { relationName: "next" }),
+	previous: many(questLinks, { relationName: "previous" }),
+	next: many(questLinks, { relationName: "next" }),
 }));
+
+export const questLinks = pgTable(
+	"quest_links",
+	{
+		previous: varchar("previous", { length: 255 })
+			.references(() => quests.id, { onDelete: "cascade" })
+			.notNull(),
+		next: varchar("next", { length: 255 })
+			.references(() => quests.id, { onDelete: "cascade" })
+			.notNull(),
+	},
+	(table) => [
+		unique("unique_quest_link").on(table.previous, table.next),
+		index("previous_idx").on(table.previous),
+		index("next_idx").on(table.next),
+	]
+);
+
+export const questLinksRelations = relations(questLinks, ({ one }) => ({
+	previous: one(quests, { fields: [questLinks.previous], references: [quests.id] }),
+	next: one(quests, { fields: [questLinks.next], references: [quests.id] }),
+}));
+
+// Quest View for getting the "first" quest, get quest that is not present in any link's "next"
+export const firstQuestsView = pgView("first_quests").as((qb) =>
+	qb
+		.select()
+		.from(quests)
+		.where(sql`${quests.id} NOT IN (SELECT ${questLinks.next} FROM ${questLinks})`)
+);
 
 const questEntryTypeValues = ["objective", "reward"] as const;
 export const questEntryType = pgEnum("quest_entry_type", questEntryTypeValues);
@@ -34,7 +74,7 @@ export const questEntries = pgTable(
 			.references(() => quests.id, { onDelete: "cascade" })
 			.notNull(),
 		type: questEntryType("type").notNull(),
-		description: text("description").notNull(),
+		description: text("description"),
 	},
 	(table) => [
 		unique("unique_quest_entry").on(table.questId, table.type),

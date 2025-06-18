@@ -1,10 +1,9 @@
 export type QuestId = string;
 
-export type QuestObjectiveLink =
-	| { type: "item"; id: string } // links to an item in your system
-	| { type: "enemy"; id: string } // links to an enemy (future)
-	| { type: "location"; id: string } // links to a location
-	| { type: "wiki"; url: string }; // external link (e.g., wiki)
+export interface QuestObjectiveLink {
+	type: string;
+	id: string;
+}
 
 export interface QuestObjective {
 	description: string; // e.g., "Destroy a Wasp"
@@ -27,6 +26,6 @@ export interface Quest {
 	requirements: QuestObjective[];
 	rewards: QuestReward[];
 	dialog?: string;
-	location?: string | string[]; // can be single, multiple, or "any"
+	location?: string; // can be single, multiple, or "any"
 	link?: string; // wiki link
 }
