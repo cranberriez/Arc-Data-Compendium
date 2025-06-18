@@ -29,7 +29,7 @@ export interface Recipe {
 	requirements: RecipeRequirement[];
 	workbench: Partial<Record<WorkbenchId, number>> | null;
 	craftTime: number;
-	inRaid: boolean;
+	inRaid?: boolean;
 	outputCount: number;
 	isLocked: boolean;
 	lockedType?: RecipeLock;
