@@ -37,9 +37,8 @@ export async function seedWorkbenches() {
 			console.log(
 				`[seedWorkbenches][ACTIVE] Inserting workbench tier for workbench: ${workbench.id}, tier: ${tier.tier}`
 			);
-			let tierId: number;
 			try {
-				const result = await db
+				await db
 					.insert(tiers)
 					.values({
 						workbenchId: workbench.id,
@@ -49,9 +48,7 @@ export async function seedWorkbenches() {
 					.onConflictDoUpdate({
 						target: [tiers.workbenchId, tiers.tier],
 						set: { tierName: tier.tierName ?? "" },
-					})
-					.returning({ id: tiers.id });
-				tierId = result[0].id;
+					});
 				console.log(
 					`[seedWorkbenches][SUCCESS] Inserted workbench tier for workbench: ${workbench.id}, tier: ${tier.tier}`
 				);
@@ -69,7 +66,8 @@ export async function seedWorkbenches() {
 					await db
 						.insert(tierRequirements)
 						.values({
-							tierId: tierId,
+							workbenchId: workbench.id,
+							workbenchTier: tier.tier,
 							itemId: requirement.itemId,
 							count: requirement.count,
 						} as any)
