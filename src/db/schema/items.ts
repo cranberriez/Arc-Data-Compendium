@@ -15,8 +15,9 @@ import {
 	primaryKey,
 	unique,
 } from "drizzle-orm/pg-core";
-import { recipes, questEntryItems } from "./index";
+import { recipes, questEntryItems, tierRequirements } from "./index";
 import { WeaponModSlot } from "@/types";
+import { baseItemColumns } from "./base";
 
 // ---------------------------
 // Item & Weapon Tables
@@ -44,14 +45,7 @@ export const itemCategoryEnum = pgEnum("item_category", itemCategoryValues);
 
 // Base Item table (includes BaseItem & Item fields)
 export const items = pgTable("items", {
-	id: varchar("id", { length: 255 }).primaryKey(),
-	name: varchar("name", { length: 255 }).notNull(),
-	description: text("description").default(""),
-	icon: varchar("icon", { length: 255 }).default("FileQuestion").notNull(),
-	createdAt: timestamp("created_at", { withTimezone: true }).defaultNow(),
-	updatedAt: timestamp("updated_at", { withTimezone: true })
-		.defaultNow()
-		.$onUpdate(() => new Date()),
+	...baseItemColumns,
 	rarity: rarityEnum("rarity").notNull(),
 	value: integer("value").notNull(),
 	weight: real("weight").notNull(),
@@ -72,7 +66,12 @@ export const itemsRelations = relations(items, ({ one, many }) => ({
 	upgrades: many(upgrade),
 	upgradeStats: many(upgradeStats),
 	recycling: one(recipes, { fields: [items.recycling], references: [recipes.id] }),
+
+	// Quest many to many relationship table
 	questEntries: many(questEntryItems),
+
+	// Workbench requirements many relationship table
+	workbenchRequirements: many(tierRequirements),
 }));
 
 // Weapon specific enums

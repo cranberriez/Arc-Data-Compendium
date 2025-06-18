@@ -13,6 +13,7 @@ import { items } from "./items";
 export const recipeTypeEnum = pgEnum("recipe_type", [
 	"crafting",
 	"recycling",
+	"workbench_upgrade",
 	// add more later
 ]);
 

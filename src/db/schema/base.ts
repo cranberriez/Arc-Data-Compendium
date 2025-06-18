@@ -1,5 +1,5 @@
 // sharedColumns.ts
-import { varchar, timestamp, text, integer, real, jsonb } from "drizzle-orm/pg-core";
+import { varchar, timestamp, text } from "drizzle-orm/pg-core";
 
 export const createdUpdatedColumns = {
 	createdAt: timestamp("created_at", { withTimezone: true }).defaultNow(),
