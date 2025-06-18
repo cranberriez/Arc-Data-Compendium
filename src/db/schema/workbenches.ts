@@ -96,7 +96,7 @@ export const workbenchRecipes = pgTable(
 		foreignKey({
 			columns: [table.workbenchId, table.workbenchTier],
 			foreignColumns: [tiers.workbenchId, tiers.tier],
-			name: "fk_workbench_recipes_tiers",
+			name: "fk_wbrecipes_workbenchid_tier",
 		}),
 		unique("unique_workbench_recipe").on(
 			table.workbenchId,
