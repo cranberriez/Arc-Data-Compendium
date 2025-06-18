@@ -1,51 +1,21 @@
 import { db } from "@/db/drizzle";
 import { getItemSources } from "@/db/utils/getSources";
-import { items, weapons, weaponStats as weaponStatsTable } from "@/db/schema/items";
-import { InferSelectModel } from "drizzle-orm";
+import { items } from "@/db/schema/items";
 import { eq } from "drizzle-orm";
-
-// Define types based on the Drizzle schema
-export type ItemModel = InferSelectModel<typeof items>;
-export type WeaponModel = InferSelectModel<typeof weapons>;
-export type WeaponStatsModel = InferSelectModel<typeof weaponStatsTable>;
-
-// Define the structure for recipe IO data
-type RecipeIO = {
-	recipeId: string;
-	itemId: string;
-	role: "input" | "output";
-	qty: number;
-};
-
-// Define the structure for recipe data
-type Recipe = {
-	id: string;
-	type: "recycling" | "crafting";
-	hasRecipeItem: boolean;
-	inRaid: boolean;
-	createdAt: Date | null;
-	updatedAt: Date | null;
-	io: RecipeIO[];
-};
-
-// Define a type for the upgrade stats
-type UpgradeStats = {
-	upgradeItemId: string;
-	upgradeItemLevel: number;
-	statType: string;
-	modifierType: string;
-	value: number;
-};
-
-// Define a type for upgrades
-type Upgrade = {
-	itemId: string;
-	level: number;
-	description: string | null;
-	stats?: UpgradeStats[];
-};
+import {
+	ItemModel,
+	WeaponModel,
+	WeaponStatsModel,
+	UpgradeModel,
+	UpgradeStatsModel,
+	RecipeModel,
+	RecipeIO,
+	EnhancedRecipe,
+	EnhancedItem
+} from "@/types/schema";
 
 // Define the structure for recycling sources based on actual structure from getItemSources
+// This matches what getItemSources returns
 type RecyclingSource = {
 	recipeId: string;
 	recipe: {
@@ -60,31 +30,27 @@ type RecyclingSource = {
 	outputs: RecipeIO[];
 };
 
+// Helper function to convert RecyclingSource to EnhancedRecipe
+function convertToEnhancedRecipe(source: RecyclingSource): EnhancedRecipe {
+	return {
+		...source.recipe,
+		inputs: source.inputs,
+		outputs: source.outputs
+	};
+};
+
 // Define the actual structure of the data returned by the database query
 type DatabaseItem = ItemModel & {
 	weapon: WeaponModel | null;
 	weaponStats: WeaponStatsModel | null;
-	upgrades: Upgrade[];
-	recycling: {
-		id: string;
-		type: "recycling" | "crafting";
-		hasRecipeItem: boolean;
-		inRaid: boolean;
-		createdAt: Date | null;
-		updatedAt: Date | null;
+	upgrades: (UpgradeModel & { stats: UpgradeStatsModel[] })[];
+	recycling: RecipeModel & {
 		io: RecipeIO[];
 	} | null;
 };
 
-// Define the flattened item type that will be returned by the API
-// All properties are optional to avoid TypeScript errors
-export type FlattenedItem = ItemModel & {
-	weapon?: WeaponModel;
-	weaponStats?: WeaponStatsModel;
-	upgrades?: Upgrade[];
-	recycling?: RecipeIO[];
-	recyclingSources?: RecyclingSource[];
-};
+// Use the EnhancedItem type from schema.ts as our FlattenedItem
+export type FlattenedItem = EnhancedItem;
 
 /**
  * Flattens a single item's data by handling null/undefined relations
@@ -97,7 +63,10 @@ export async function flattenItemData(item: DatabaseItem): Promise<FlattenedItem
 	const { weapon, weaponStats, upgrades, recycling, ...base } = item;
 
 	// Get recycling sources for the item
-	const recyclingSources = await getItemSources(base.id);
+	const rawRecyclingSources = await getItemSources(base.id);
+
+	// Convert recycling sources to EnhancedRecipe[] format
+	const recyclingSources = rawRecyclingSources.map(convertToEnhancedRecipe);
 
 	// Build the flattened item with proper conditional properties
 	const result = {

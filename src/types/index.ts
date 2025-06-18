@@ -1,9 +1,25 @@
+/**
+ * Type exports
+ *
+ * This file re-exports types from schema.ts (schema-derived types)
+ * as well as other necessary types from the application.
+ *
+ * IMPORTANT: Prefer using schema-derived types from schema.ts
+ * instead of manually defined types whenever possible.
+ */
+
+// Schema-derived types
 import {
-	items,
-	weapons,
-	weaponStats,
-	upgrade,
-	upgradeStats,
+	ItemModel,
+	WeaponModel,
+	WeaponStatsModel,
+	UpgradeModel,
+	UpgradeStatsModel,
+	RecipeModel,
+	RecipeIO,
+	EnhancedItem,
+	EnhancedWeapon,
+	EnhancedRecipe,
 	Rarity,
 	ItemCategory,
 	AmmoType,
@@ -11,78 +27,51 @@ import {
 	StatType,
 	ModifierType,
 	StatUsage,
-} from "@/db/schema/items";
-import { recipes, recipeItems } from "@/db/schema/recipes";
-import { QuickUseData } from "./items/quickuse";
-import { GearData } from "./items/gear";
-import { WeaponModSlot } from "./items/weapon";
+	QuickUseData,
+	GearData,
+	WeaponModSlot,
+} from "./schema";
 
-// Base types and interfaces
+// Re-export schema-derived types
+export type {
+	ItemModel,
+	WeaponModel,
+	WeaponStatsModel,
+	UpgradeModel,
+	UpgradeStatsModel,
+	RecipeModel,
+	RecipeIO,
+	EnhancedItem,
+	EnhancedWeapon,
+	EnhancedRecipe,
+	QuickUseData,
+	GearData,
+	WeaponModSlot,
+	Rarity,
+	ItemCategory,
+	AmmoType,
+	WeaponClass,
+	StatType,
+	ModifierType,
+	StatUsage,
+};
+
+// Legacy type aliases to maintain backward compatibility
+// These will be deprecated in the future
+export type RecipeRow = RecipeIO;
+export type Recipe = EnhancedRecipe;
+export type Item = EnhancedItem;
+export type Weapon = EnhancedWeapon;
+export type WeaponStats = WeaponStatsModel;
+export type UpgradeStats = UpgradeStatsModel;
+export type Upgrade = UpgradeModel & { stats: UpgradeStatsModel[] };
+
+// Export types from other modules that are still needed
 export * from "./items/types";
-export * from "./items/quickuse";
-export * from "./items/gear";
-
 export * from "./base";
 export * from "./workbench";
 export * from "./recipe";
 export * from "./quest";
-
-// Item Types
-export type { BaseItem } from "./base";
-
-// a row from the junction table
-export type RecipeRow = typeof recipeItems.$inferSelect;
-
-// a recipe row plus its I/O arrays
-export type Recipe = typeof recipes.$inferSelect & {
-	inputs: RecipeRow[]; // role === "input"
-	outputs: RecipeRow[]; // role === "output"
-};
-
-// export type { Item } from "./items/item";
-// Override the `recycling` column (string FK) with a richer joined type
-export type Item = typeof items.$inferSelect & {
-	recycling: RecipeRow[];
-	quickUse: QuickUseData;
-	gear: GearData;
-	recyclingSources: Recipe[];
-};
-
-export type WeaponStats = typeof weaponStats.$inferSelect;
-export type UpgradeStats = typeof upgradeStats.$inferSelect;
-export type Upgrade = typeof upgrade.$inferSelect & { stats: UpgradeStats[] };
-
-export type Weapon = Item & {
-	weapon: typeof weapons.$inferSelect;
-	weaponStats: WeaponStats;
-	upgrades: Upgrade[];
-};
-
-// Quickuse and Gear stats remain as JSON in database so their type stays
-export type { QuickUseData, QuickUseStat, QuickUseCharge } from "./items/quickuse";
-export type { GearData, GearStat } from "./items/gear";
-
-export type { Rarity, ItemCategory, AmmoType, WeaponClass, StatType, ModifierType, StatUsage };
-
-// Weapon Types
-export type {
-	// Weapon,
-	// WeaponUpgrade,
-	// WeaponStats,
-	WeaponModSlot,
-	// WeaponClass,
-	// AmmoType,
-} from "./items/weapon";
-
-// Item Type Enums
-export type {
-	// Rarity,
-	ItemSource,
-	// ItemCategory,
-	ItemSourceType,
-	ShieldType,
-	TraderName,
-} from "./items/types";
 
 // Workbench Types
 export type {
