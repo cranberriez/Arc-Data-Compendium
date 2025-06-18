@@ -2,13 +2,13 @@ import { BaseItem } from "./base";
 
 export interface WorkbenchTier {
 	tier: number;
-	tierName: string;
+	tierName?: string;
 	requiredItems: Array<{ itemId: string; count: number }>;
-	raidsRequired: number;
+	raidsRequired?: number;
 }
 
 export interface Workbench extends BaseItem {
-	type: "workbench";
+	type: string;
 	baseTier: number;
 	tiers: WorkbenchTier[];
 }

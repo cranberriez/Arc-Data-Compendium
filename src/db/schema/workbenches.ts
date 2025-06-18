@@ -7,21 +7,29 @@ import { items } from "./index";
 export const workbenches = pgTable("workbenches", {
 	...baseItemColumns,
 	baseTier: integer("base_tier").notNull(),
+	raidsRequired: integer("raids_required"),
 });
 
 export const workbenchesRelations = relations(workbenches, ({ many }) => ({
 	tiers: many(tiers),
 }));
 
-export const tiers = pgTable("workbench_tiers", {
-	id: serial("id").primaryKey(),
-	workbenchId: varchar("workbench_id", { length: 255 })
-		.references(() => workbenches.id, { onDelete: "cascade" })
-		.notNull(),
-	tier: integer("tier").notNull(),
-	tierName: varchar("tier_name", { length: 255 }).notNull(),
-	raidsRequired: integer("raids_required"),
-});
+export const tiers = pgTable(
+	"workbench_tiers",
+	{
+		id: serial("id").primaryKey(),
+		workbenchId: varchar("workbench_id", { length: 255 })
+			.references(() => workbenches.id, { onDelete: "cascade" })
+			.notNull(),
+		tier: integer("tier").notNull(),
+		tierName: varchar("tier_name", { length: 255 }).notNull(),
+	},
+	(table) => [
+		unique("unique_workbench_tier").on(table.workbenchId, table.tier),
+		index("workbench_idx").on(table.workbenchId),
+		index("tier_idx").on(table.tier),
+	]
+);
 
 export const tiersRelations = relations(tiers, ({ one, many }) => ({
 	workbench: one(workbenches, { fields: [tiers.workbenchId], references: [workbenches.id] }),
