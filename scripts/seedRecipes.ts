@@ -72,6 +72,7 @@ export async function seedRecipes() {
 				await db
 					.insert(recipeLocks)
 					.values({
+						recipeId: recipe.id,
 						looted: recipe.lockedType?.looted ?? null,
 						mastery: recipe.lockedType?.mastery ?? null,
 						quest: recipe.lockedType?.quest ?? null,
@@ -104,3 +105,5 @@ export async function seedRecipes() {
 	}
 	console.log("[seedRecipes] Finished recipe seeding process.");
 }
+
+seedRecipes();
