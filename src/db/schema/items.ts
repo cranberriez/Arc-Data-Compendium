@@ -57,7 +57,7 @@ export const items = pgTable("items", {
 	quickUse: jsonb("quick_use"),
 	gear: jsonb("gear"),
 
-	recycling: varchar("recycling", { length: 255 }).references(() => recipes.id),
+	recyclingId: varchar("recycling_id", { length: 255 }).references(() => recipes.id),
 });
 
 export const itemsRelations = relations(items, ({ one, many }) => ({
@@ -65,7 +65,7 @@ export const itemsRelations = relations(items, ({ one, many }) => ({
 	weaponStats: one(weaponStats, { fields: [items.id], references: [weaponStats.itemId] }),
 	upgrades: many(upgrade),
 	upgradeStats: many(upgradeStats),
-	recycling: one(recipes, { fields: [items.recycling], references: [recipes.id] }),
+	recycling: one(recipes, { fields: [items.recyclingId], references: [recipes.id] }),
 
 	// Quest many to many relationship table
 	questEntries: many(questEntryItems),
