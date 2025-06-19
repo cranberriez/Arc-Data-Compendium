@@ -156,14 +156,9 @@ export async function seedItems() {
 	await db.insert(recipes).values(recyclingRecipes).onConflictDoNothing();
 	await db.insert(recipeItems).values(recyclingIO).onConflictDoNothing();
 
-	// update recipe id for weapons AFTER recipe is created
-	for (const item of itemData) {
-		if (item.recycling && item.recycling.length > 0) {
-			await db
-				.update(items)
-				.set({ recyclingId: "recycle_" + item.id })
-				.where(eq(items.id, item.id));
-		}
+	// update recycling id for items AFTER recipe is created
+	for (const item of recyclingRecipes) {
+		await db.update(items).set({ recipeId: item.id }).where(eq(items.id, item.id));
 	}
 }
 

@@ -66,6 +66,12 @@ export async function seedRecipes() {
 			return;
 		}
 
+		// update recipe id for the output item
+		await db
+			.update(items)
+			.set({ recipeId: recipe.id })
+			.where(eq(items.id, recipe.outputItemId));
+
 		// seed recipe lock
 		if (recipe.isLocked) {
 			try {
