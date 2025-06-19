@@ -20,7 +20,7 @@ import {
 	ModifierType,
 	StatUsage,
 } from "@/db/schema/items";
-import { recipes, recipeItems } from "@/db/schema/recipes";
+import { recipes, recipeItems, recipeLocks } from "@/db/schema/recipes";
 import {
 	quests,
 	questLinks,
@@ -42,6 +42,7 @@ export type UpgradeBase = InferSelectModel<typeof upgrade>;
 export type UpgradeStatsBase = InferSelectModel<typeof upgradeStats>;
 export type RecipeBase = InferSelectModel<typeof recipes>;
 export type RecipeItemBase = InferSelectModel<typeof recipeItems>;
+export type RecipeLockBase = InferSelectModel<typeof recipeLocks>;
 
 // Quest schema-derived types
 export type QuestBase = InferSelectModel<typeof quests>;
@@ -62,6 +63,7 @@ export type RecipeIO = RecipeItemBase;
 export type Recipe = RecipeBase & {
 	inputs: RecipeIO[];
 	outputs: RecipeIO[];
+	locks: RecipeLockBase | null;
 };
 
 // Item with related data
@@ -69,7 +71,7 @@ export type Item = ItemBase & {
 	weapon?: WeaponBase;
 	weaponStats?: WeaponStatsBase;
 	upgrades?: (UpgradeBase & { stats: UpgradeStatsBase[] })[];
-	recycling?: RecipeIO[];
+	recycling?: Recipe;
 	recyclingSources?: Recipe[];
 	quickUse: QuickUseData | null;
 	gear: GearData | null;
