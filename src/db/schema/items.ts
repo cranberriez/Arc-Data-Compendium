@@ -114,6 +114,9 @@ export const itemsRelations = relations(items, ({ one, many }) => ({
 
 	// Workbench requirements many relationship table
 	workbenchRequirements: many(tierRequirements),
+
+	recycling: one(recipes, { fields: [items.recyclingId], references: [recipes.id] }),
+	recipe: one(recipes, { fields: [items.recipeId], references: [recipes.id] }),
 }));
 
 // Weapon extension table (1-to-1 with items)

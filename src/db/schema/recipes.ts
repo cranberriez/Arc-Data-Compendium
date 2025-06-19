@@ -30,7 +30,15 @@ export const recipes = pgTable("recipes", {
 });
 
 export const recipesRelations = relations(recipes, ({ one, many }) => ({
+	item: one(items, {
+		fields: [recipes.id],
+		references: [items.id],
+	}),
 	io: many(recipeItems),
+	locks: one(recipeLocks, {
+		fields: [recipes.id],
+		references: [recipeLocks.recipeId],
+	}),
 }));
 
 export const ioEnum = pgEnum("recipe_io_role", ["input", "output"]);
