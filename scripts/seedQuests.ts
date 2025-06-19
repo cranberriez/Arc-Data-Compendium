@@ -204,6 +204,7 @@ export async function seedQuests() {
 	}
 
 	console.log("Missing items:", missingItems);
+	return missingItems;
 }
 
 seedQuests();

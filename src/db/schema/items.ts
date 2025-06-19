@@ -123,6 +123,7 @@ export const weapons = pgTable("weapons", {
 	id: serial("id").primaryKey(),
 	itemId: varchar("item_id", { length: 255 })
 		.notNull()
+		.unique()
 		.references(() => items.id),
 	ammoType: ammoTypeEnum("ammo_type"),
 	weaponClass: weaponClassEnum("weapon_class"),
@@ -177,7 +178,10 @@ export const upgrade = pgTable(
 		level: integer("level").notNull(),
 		description: text("description"),
 	},
-	(table) => [foreignKey({ columns: [table.weaponId], foreignColumns: [weapons.id] })]
+	(table) => [
+		foreignKey({ columns: [table.weaponId], foreignColumns: [weapons.id] }),
+		unique("unique_weapon_upgrade").on(table.weaponId, table.level),
+	]
 );
 
 export const upgradeRelations = relations(upgrade, ({ one, many }) => ({

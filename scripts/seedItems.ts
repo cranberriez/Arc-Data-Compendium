@@ -33,7 +33,7 @@ export async function seedItems() {
 					description: item.description,
 					weight: item.weight,
 					maxStack: item.maxStack,
-					recipeId: item.recipeId,
+					recipeId: null, // Updated later when recipe is added
 					value: item.value,
 					quickUse: item.quickUse,
 					gear: item.gear,
@@ -152,6 +152,11 @@ export async function seedItems() {
 		}
 	}
 
+	// seed recycling as recipes
+	await db.insert(recipes).values(recyclingRecipes).onConflictDoNothing();
+	await db.insert(recipeItems).values(recyclingIO).onConflictDoNothing();
+
+	// update recipe id for weapons AFTER recipe is created
 	for (const item of itemData) {
 		if (item.recycling && item.recycling.length > 0) {
 			await db
@@ -160,10 +165,6 @@ export async function seedItems() {
 				.where(eq(items.id, item.id));
 		}
 	}
-
-	// seed recycling as recipes
-	await db.insert(recipes).values(recyclingRecipes).onConflictDoNothing();
-	await db.insert(recipeItems).values(recyclingIO).onConflictDoNothing();
 }
 
 seedItems();
