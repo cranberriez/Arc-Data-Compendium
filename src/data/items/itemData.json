@@ -670,7 +670,7 @@
 		"description": "Heals 25% of your max health.",
 		"weight": 0.5,
 		"maxStack": 1,
-		"recipeId": "recipe_healing_stim",
+		"recipeId": null,
 		"sources": [
 			{
 				"type": "buy",

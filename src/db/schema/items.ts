@@ -98,7 +98,7 @@ export const items = pgTable("items", {
 	maxStack: integer("max_stack").notNull(),
 	category: itemCategoryEnum("category").notNull(),
 	flavorText: text("flavor_text"),
-	recipeId: varchar("recipe_id", { length: 255 }),
+	recipeId: varchar("recipe_id", { length: 255 }).references(() => recipes.id),
 
 	quickUse: jsonb("quick_use").$type<QuickUseData>(),
 	gear: jsonb("gear").$type<GearData>(),
@@ -108,8 +108,6 @@ export const items = pgTable("items", {
 
 export const itemsRelations = relations(items, ({ one, many }) => ({
 	weapon: one(weapons, { fields: [items.id], references: [weapons.itemId] }),
-
-	recycling: one(recipes, { fields: [items.recyclingId], references: [recipes.id] }),
 
 	// Quest many to many relationship table
 	questEntries: many(questEntryItems),
