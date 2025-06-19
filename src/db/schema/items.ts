@@ -16,7 +16,7 @@ import {
 	unique,
 } from "drizzle-orm/pg-core";
 import { recipes, questEntryItems, tierRequirements } from "./index";
-import { WeaponModSlot } from "@/types";
+import { GearData, QuickUseData, WeaponModSlot } from "@/types";
 import { baseItemColumns } from "./base";
 
 // ---------------------------
@@ -43,37 +43,6 @@ const itemCategoryValues = [
 export type ItemCategory = (typeof itemCategoryValues)[number];
 export const itemCategoryEnum = pgEnum("item_category", itemCategoryValues);
 
-// Base Item table (includes BaseItem & Item fields)
-export const items = pgTable("items", {
-	...baseItemColumns,
-	rarity: rarityEnum("rarity").notNull(),
-	value: integer("value").notNull(),
-	weight: real("weight").notNull(),
-	maxStack: integer("max_stack").notNull(),
-	category: itemCategoryEnum("category").notNull(),
-	flavorText: text("flavor_text"),
-	recipeId: varchar("recipe_id", { length: 255 }),
-
-	quickUse: jsonb("quick_use"),
-	gear: jsonb("gear"),
-
-	recyclingId: varchar("recycling_id", { length: 255 }).references(() => recipes.id),
-});
-
-export const itemsRelations = relations(items, ({ one, many }) => ({
-	weapon: one(weapons, { fields: [items.id], references: [weapons.itemId] }),
-	weaponStats: one(weaponStats, { fields: [items.id], references: [weaponStats.itemId] }),
-	upgrades: many(upgrade),
-	upgradeStats: many(upgradeStats),
-	recycling: one(recipes, { fields: [items.recyclingId], references: [recipes.id] }),
-
-	// Quest many to many relationship table
-	questEntries: many(questEntryItems),
-
-	// Workbench requirements many relationship table
-	workbenchRequirements: many(tierRequirements),
-}));
-
 // Weapon specific enums
 const ammoTypeValues = ["light", "medium", "heavy", "shotgun", "energy"] as const;
 export const ammoTypeEnum = pgEnum("ammo_type", ammoTypeValues);
@@ -92,46 +61,10 @@ const weaponClassValues = [
 export const weaponClassEnum = pgEnum("weapon_class", weaponClassValues);
 export type WeaponClass = (typeof weaponClassValues)[number];
 
-// Weapon extension table (1-to-1 with items)
-export const weapons = pgTable("weapons", {
-	itemId: varchar("item_id", { length: 255 })
-		.primaryKey()
-		.references(() => items.id),
-	ammoType: ammoTypeEnum("ammo_type"),
-	weaponClass: weaponClassEnum("weapon_class"),
-	modSlots: jsonb("mod_slots").$type<WeaponModSlot[]>().notNull(),
-	compatibleMods: jsonb("compatible_mods").$type<string[]>().notNull(),
-	baseTier: integer("base_tier"),
-	maxLevel: integer("max_level"),
-});
-
-export const weaponsRelations = relations(weapons, ({ one }) => ({
-	item: one(items),
-}));
-
 // Because we store base stats and modifier stats in the same table, we need to know which is which
 const statUsageValues = ["base", "modifier"] as const;
 export const statUsageEnum = pgEnum("stat_usage", statUsageValues);
 export type StatUsage = (typeof statUsageValues)[number];
-
-export const weaponStats = pgTable("weapon_stats", {
-	itemId: varchar("item_id", { length: 255 })
-		.primaryKey()
-		.references(() => items.id),
-	statUsage: statUsageEnum("stat_usage"),
-	damage: real("damage"),
-	fireRate: real("fire_rate"),
-	range: real("range"),
-	stability: real("stability"),
-	agility: real("agility"),
-	stealth: real("stealth"),
-	durabilityBurn: real("durability_burn"),
-	magazineSize: real("magazine_size"),
-	bulletVelocity: real("bullet_velocity"),
-	reloadTime: real("reload_time"),
-	recoilHorizontal: real("recoil_horizontal"),
-	recoilVertical: real("recoil_vertical"),
-});
 
 // Stat types
 const statTypeValues = [
@@ -156,51 +89,123 @@ const modifierTypeValues = ["additive", "multiplicative"] as const;
 export const modifierTypeEnum = pgEnum("modifier_type", modifierTypeValues);
 export type ModifierType = (typeof modifierTypeValues)[number];
 
+// Base Item table (includes BaseItem & Item fields)
+export const items = pgTable("items", {
+	...baseItemColumns,
+	rarity: rarityEnum("rarity").notNull(),
+	value: integer("value").notNull(),
+	weight: real("weight").notNull(),
+	maxStack: integer("max_stack").notNull(),
+	category: itemCategoryEnum("category").notNull(),
+	flavorText: text("flavor_text"),
+	recipeId: varchar("recipe_id", { length: 255 }),
+
+	quickUse: jsonb("quick_use").$type<QuickUseData>(),
+	gear: jsonb("gear").$type<GearData>(),
+
+	recyclingId: varchar("recycling_id", { length: 255 }).references(() => recipes.id),
+});
+
+export const itemsRelations = relations(items, ({ one, many }) => ({
+	weapon: one(weapons, { fields: [items.id], references: [weapons.itemId] }),
+
+	recycling: one(recipes, { fields: [items.recyclingId], references: [recipes.id] }),
+
+	// Quest many to many relationship table
+	questEntries: many(questEntryItems),
+
+	// Workbench requirements many relationship table
+	workbenchRequirements: many(tierRequirements),
+}));
+
+// Weapon extension table (1-to-1 with items)
+export const weapons = pgTable("weapons", {
+	id: serial("id").primaryKey(),
+	itemId: varchar("item_id", { length: 255 })
+		.notNull()
+		.references(() => items.id),
+	ammoType: ammoTypeEnum("ammo_type"),
+	weaponClass: weaponClassEnum("weapon_class"),
+	modSlots: jsonb("mod_slots").$type<WeaponModSlot[]>().notNull(),
+	compatibleMods: jsonb("compatible_mods").$type<string[]>().notNull(),
+	baseTier: integer("base_tier"),
+	maxLevel: integer("max_level"),
+});
+
+export const weaponsRelations = relations(weapons, ({ one, many }) => ({
+	item: one(items, { fields: [weapons.itemId], references: [items.id] }),
+	weaponStats: one(weaponStats, { fields: [weapons.id], references: [weaponStats.weaponId] }),
+	upgrades: many(upgrade),
+}));
+
+export const weaponStats = pgTable(
+	"weapon_stats",
+	{
+		weaponId: integer("weapon_id")
+			.notNull()
+			.references(() => weapons.id)
+			.unique(),
+		statUsage: statUsageEnum("stat_usage"),
+		damage: real("damage"),
+		fireRate: real("fire_rate"),
+		range: real("range"),
+		stability: real("stability"),
+		agility: real("agility"),
+		stealth: real("stealth"),
+		durabilityBurn: real("durability_burn"),
+		magazineSize: real("magazine_size"),
+		bulletVelocity: real("bullet_velocity"),
+		reloadTime: real("reload_time"),
+		recoilHorizontal: real("recoil_horizontal"),
+		recoilVertical: real("recoil_vertical"),
+	},
+	(table) => [foreignKey({ columns: [table.weaponId], foreignColumns: [weapons.id] })]
+);
+
+export const weaponStatsRelations = relations(weaponStats, ({ one }) => ({
+	weapon: one(weapons, { fields: [weaponStats.weaponId], references: [weapons.id] }),
+}));
+
 // Upgrade table
 export const upgrade = pgTable(
 	"weapon_upgrade",
 	{
-		itemId: varchar("item_id", { length: 255 })
-			.references(() => items.id)
-			.notNull(),
+		id: serial("id").primaryKey(),
+		weaponId: integer("weapon_id")
+			.notNull()
+			.references(() => weapons.id),
 		level: integer("level").notNull(),
 		description: text("description"),
 	},
-	(table) => [primaryKey({ name: "id", columns: [table.itemId, table.level] })]
+	(table) => [foreignKey({ columns: [table.weaponId], foreignColumns: [weapons.id] })]
 );
 
 export const upgradeRelations = relations(upgrade, ({ one, many }) => ({
-	item: one(items, {
-		fields: [upgrade.itemId],
-		references: [items.id],
-	}),
-	stats: many(upgradeStats),
+	weapon: one(weapons, { fields: [upgrade.weaponId], references: [weapons.id] }),
+	upgradeStats: many(upgradeStats),
 }));
 
 export const upgradeStats = pgTable(
 	"weapon_upgrade_stats",
 	{
-		upgradeItemId: varchar("upgrade_item_id", { length: 255 }).notNull(),
-		upgradeItemLevel: integer("upgrade_item_level").notNull(),
+		upgradeId: integer("upgrade_id")
+			.notNull()
+			.references(() => upgrade.id),
 		statType: statTypeEnum("stat_type").notNull(),
 		modifierType: modifierTypeEnum("modifier_type").notNull(),
 		value: real("value").notNull(),
 	},
 	(table) => [
-		primaryKey({
-			columns: [table.upgradeItemId, table.upgradeItemLevel, table.statType],
-		}),
 		foreignKey({
-			name: "weapon_upgrade_id",
-			columns: [table.upgradeItemId, table.upgradeItemLevel],
-			foreignColumns: [upgrade.itemId, upgrade.level],
+			columns: [table.upgradeId],
+			foreignColumns: [upgrade.id],
+		}),
+		primaryKey({
+			columns: [table.upgradeId, table.statType],
 		}),
 	]
 );
 
 export const upgradeStatsRelations = relations(upgradeStats, ({ one }) => ({
-	upgrade: one(upgrade, {
-		fields: [upgradeStats.upgradeItemId, upgradeStats.upgradeItemLevel],
-		references: [upgrade.itemId, upgrade.level],
-	}),
+	upgrade: one(upgrade, { fields: [upgradeStats.upgradeId], references: [upgrade.id] }),
 }));

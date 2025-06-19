@@ -1,8 +1,17 @@
 import { db } from "../src/db/drizzle"; // your db instance
-import { items, upgrade, upgradeStats, weaponStats, weapons } from "../src/db/schema/items";
+import {
+	AmmoType,
+	WeaponClass,
+	items,
+	upgrade,
+	upgradeStats,
+	weaponStats,
+	weapons,
+} from "../src/db/schema/items";
 import itemData from "../src/data/items/itemData.json";
 import { recipeItems, recipes } from "../src/db/schema";
 import { eq } from "drizzle-orm";
+import { StatType, WeaponModSlot } from "@/types";
 
 // 1. Read and (optionally) validate/transform data
 // 2. Loop and insert
@@ -66,9 +75,10 @@ export async function seedItems() {
 			);
 		}
 
-		// seed weapon stats
+		// seed weapon data
+		let curWeapon: any;
 		if (item.sub_type === "weapon") {
-			await db
+			curWeapon = await db
 				.insert(weapons)
 				.values({
 					itemId: item.id,
@@ -79,12 +89,23 @@ export async function seedItems() {
 					baseTier: item.base_tier,
 					maxLevel: item.max_level,
 				} as any)
-				.onConflictDoNothing();
+				.onConflictDoUpdate({
+					target: [weapons.itemId],
+					set: {
+						ammoType: item.ammo_type as AmmoType,
+						weaponClass: item.weapon_class as WeaponClass,
+						modSlots: item.mod_slots as WeaponModSlot[],
+						compatibleMods: item.compatible_mods as string[],
+						baseTier: item.base_tier,
+						maxLevel: item.max_level,
+					},
+				})
+				.returning({ id: weapons.id });
 
 			await db
 				.insert(weaponStats)
 				.values({
-					itemId: item.id,
+					weaponId: curWeapon[0].id,
 					statUsage: "base",
 					damage: item.stats?.damage || -1,
 					fireRate: item.stats?.fire_rate || -1,
@@ -101,23 +122,29 @@ export async function seedItems() {
 		// seed upgrade stats
 		if (item.upgrade_effects && item.upgrade_effects.length > 0) {
 			item.upgrade_effects.map(async (upgradeEffect, idx) => {
-				await db
+				const curUpgrade = await db
 					.insert(upgrade)
 					.values({
-						itemId: item.id,
+						weaponId: curWeapon[0].id,
 						level: idx + 1,
 					} as any)
-					.onConflictDoNothing();
+					.onConflictDoUpdate({
+						target: [upgrade.weaponId, upgrade.level],
+						set: {
+							weaponId: curWeapon[0].id,
+							level: idx + 1,
+						},
+					})
+					.returning({ id: upgrade.id });
 
 				Object.entries(upgradeEffect).map(async ([stat, value]) => {
 					await db
 						.insert(upgradeStats)
 						.values({
-							upgradeItemId: item.id,
-							upgradeItemLevel: idx + 1,
-							statType: stat,
+							upgradeId: curUpgrade[0].id,
+							statType: stat as StatType,
 							modifierType: "additive",
-							value: value,
+							value: value as number,
 						} as any)
 						.onConflictDoNothing();
 				});
@@ -129,7 +156,7 @@ export async function seedItems() {
 		if (item.recycling && item.recycling.length > 0) {
 			await db
 				.update(items)
-				.set({ recycling: "recycle_" + item.id })
+				.set({ recyclingId: "recycle_" + item.id })
 				.where(eq(items.id, item.id));
 		}
 	}
