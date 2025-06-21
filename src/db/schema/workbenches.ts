@@ -80,7 +80,10 @@ export const tierRequirements = pgTable(
 );
 
 export const tierRequirementsRelations = relations(tierRequirements, ({ one }) => ({
-	tier: one(tiers, { fields: [tierRequirements.workbenchTier], references: [tiers.tier] }),
+	tier: one(tiers, {
+		fields: [tierRequirements.workbenchId, tierRequirements.workbenchTier],
+		references: [tiers.workbenchId, tiers.tier],
+	}),
 	item: one(items, { fields: [tierRequirements.itemId], references: [items.id] }),
 }));
 
@@ -116,8 +119,8 @@ export const workbenchRecipesRelations = relations(workbenchRecipes, ({ one }) =
 		references: [workbenches.id],
 	}),
 	tier: one(tiers, {
-		fields: [workbenchRecipes.workbenchTier],
-		references: [tiers.tier],
+		fields: [workbenchRecipes.workbenchId, workbenchRecipes.workbenchTier],
+		references: [tiers.workbenchId, tiers.tier],
 	}),
 	recipe: one(recipes, { fields: [workbenchRecipes.recipeId], references: [recipes.id] }),
 }));

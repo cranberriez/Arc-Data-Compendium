@@ -144,7 +144,7 @@ export const WorkbenchUpgradeReqs = ({
 
 	return (
 		<div className="flex flex-col gap-1 min-h-[128px]">
-			{workbench.tiers[curWbTier].requiredItems.map((req) => (
+			{workbench.tiers[curWbTier].requirements.map((req) => (
 				<div
 					key={req.itemId}
 					className="flex items-center gap-2 w-full"

@@ -2,7 +2,7 @@
 
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { fetchRecipes } from "@/services/dataService";
-import { Recipe } from "@/types/recipe";
+import { Recipe } from "@/types";
 
 interface RecipeContextType {
 	recipes: Recipe[];
@@ -10,7 +10,6 @@ interface RecipeContextType {
 	error: Error | null;
 	refreshRecipes: () => Promise<void>;
 	getRecipeById: (id: string) => Recipe | undefined;
-	getRecipesByWorkbench: (workbenchId: string) => Recipe[];
 }
 
 const RecipeContext = createContext<RecipeContextType | undefined>(undefined);
@@ -46,10 +45,6 @@ export function RecipeProvider({ children }: { children: React.ReactNode }) {
 		return recipes.find((recipe) => recipe.id === id);
 	};
 
-	const getRecipesByWorkbench = (workbenchId: string) => {
-		return recipes.filter((recipe) => recipe.workbench && workbenchId in recipe.workbench);
-	};
-
 	return (
 		<RecipeContext.Provider
 			value={{
@@ -58,7 +53,6 @@ export function RecipeProvider({ children }: { children: React.ReactNode }) {
 				error,
 				refreshRecipes,
 				getRecipeById,
-				getRecipesByWorkbench,
 			}}
 		>
 			{children}
