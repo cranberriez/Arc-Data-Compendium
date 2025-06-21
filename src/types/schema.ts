@@ -82,8 +82,8 @@ export type QuestEntry = QuestEntryBase & {
 // Quest with entries, previous and next quests
 export type Quest = QuestBase & {
 	entries: QuestEntry[];
-	previous: (QuestLinkBase & { previous: QuestBase["id"] })[];
-	next: (QuestLinkBase & { next: QuestBase["id"] })[];
+	previous: QuestBase["id"][]; // Array of previous quest ids
+	next: QuestBase["id"][]; // Array of next quest ids
 };
 
 // Tier with requirements and recipes
