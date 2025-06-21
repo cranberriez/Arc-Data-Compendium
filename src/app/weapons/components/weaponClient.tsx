@@ -1,13 +1,12 @@
 "use client";
 
 import React, { useEffect, useMemo, useState } from "react";
-import { Weapon } from "@/types";
+import { Weapon, WeaponBase } from "@/types";
 import { Card } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { cn } from "@/lib/utils";
 import { toRomanNumeral, formatName } from "@/utils/format";
 import { calculateTTK } from "@/utils/weapons/ttkCalc";
-import { Button } from "@/components/ui/button";
 
 // Stat max values for creating the horizontal bars representing the stat
 const STAT_MAX_VALUES: Record<string, number> = {
@@ -37,14 +36,14 @@ const AMMO_TYPE_COLORS: Record<string, string> = {
 	energy: "bg-green-200 text-green-900 dark:bg-transparent dark:text-green-300",
 };
 
-const getWeaponDetails = (weapon: Weapon) => {
+const getWeaponDetails = (weapon: WeaponBase) => {
 	return {
-		weaponClass: weapon.weapon.weaponClass!,
-		ammoType: weapon.weapon.ammoType!,
-		baseTier: weapon.weapon.baseTier!,
-		maxLevel: weapon.weapon.maxLevel!,
-		modSlots: weapon.weapon.modSlots!,
-		compatibleMods: weapon.weapon.compatibleMods!,
+		weaponClass: weapon.weaponClass!,
+		ammoType: weapon.ammoType!,
+		baseTier: weapon.baseTier!,
+		maxLevel: weapon.maxLevel!,
+		modSlots: weapon.modSlots!,
+		compatibleMods: weapon.compatibleMods!,
 	};
 };
 
@@ -65,8 +64,12 @@ export function WeaponsClient({ weapons }: { weapons: Weapon[] }) {
 	const weaponGroups = useMemo(() => {
 		const map: Record<string, Weapon[]> = {};
 		weapons.forEach((w) => {
-			if (!map[w.weapon.weaponClass!]) map[w.weapon.weaponClass!] = [];
-			map[w.weapon.weaponClass!].push(w);
+			const weaponData = w.weapon;
+			if (!weaponData) return;
+			const weaponClass = weaponData.weaponClass!;
+
+			if (!map[weaponClass]) map[weaponClass] = [];
+			map[weaponClass].push(w);
 		});
 		return map;
 	}, [weapons]);
@@ -148,15 +151,27 @@ function WeaponCard({
 	shield: string;
 }) {
 	// Damage, Firerate, Health, Shield Health, Shield Negation
+	const weaponData = weapon.weapon;
+	if (!weaponData) {
+		console.log("weapon is not a weapon");
+		return null;
+	} // item is not a weapon
+
+	const weaponStats = weaponData.weaponStats;
+	if (!weaponStats) {
+		console.log("weapon has no stats");
+		return null;
+	} // weapon has no stats
+
 	const ttk = calculateTTK(
-		weapon.weaponStats.damage!,
-		weapon.weaponStats.fireRate!,
+		weaponStats.damage!,
+		weaponStats.fireRate!,
 		100,
 		SHIELD_VALUES[shield || "none"].health,
 		SHIELD_VALUES[shield || "none"].negationPercent
 	);
 
-	const wepData = getWeaponDetails(weapon);
+	const wepData = getWeaponDetails(weaponData);
 
 	return (
 		<div
@@ -212,12 +227,18 @@ function StatBar({ label, value, maxValue }: { label: string; value: number; max
 }
 
 function WeaponDetailsPanel({ weapon }: { weapon: Weapon }) {
-	const baseStats = weapon.weaponStats;
-	const wepData = getWeaponDetails(weapon!);
-	const statFilters = ["damage", "fireRate", "range", "stability", "agility", "stealth"];
-	const upgradeStats = weapon.upgrades;
+	// Damage, Firerate, Health, Shield Health, Shield Negation
+	const weaponData = weapon.weapon;
+	if (!weaponData) return null; // item is not a weapon
 
-	console.log(weapon);
+	const weaponStats = weaponData.weaponStats;
+	if (!weaponStats) return null; // weapon has no stats
+
+	const statFilters = ["damage", "fireRate", "range", "stability", "agility", "stealth"];
+
+	const upgradeStats = weaponData.upgrades?.sort((a, b) => a.level - b.level);
+
+	console.log(upgradeStats);
 	return (
 		<div className="bg-card border-1 p-3 rounded-lg max-h-[calc(100vh-2rem)] overflow-y-auto">
 			<div className="flex items-center justify-center mt-4 p-2 border-amber-500 bg-amber-500/10 text-primary/90 border-2 rounded-lg">
@@ -229,30 +250,30 @@ function WeaponDetailsPanel({ weapon }: { weapon: Weapon }) {
 				<div>
 					Class:{" "}
 					<span className="font-medium text-foreground/90">
-						{formatName(wepData.weaponClass)}
+						{formatName(weaponData.weaponClass!)}
 					</span>
 				</div>
 				<div>
 					Ammo:{" "}
 					<span className="font-medium text-foreground/90">
-						{formatName(wepData.ammoType)}
+						{formatName(weaponData.ammoType!)}
 					</span>
 				</div>
 				<div>
 					Base Tier:{" "}
 					<span className="font-medium text-foreground/90">
-						{toRomanNumeral(wepData.baseTier)}
+						{toRomanNumeral(weaponData.baseTier!)}
 					</span>
 				</div>
 				<div>
 					Max Level:{" "}
-					<span className="font-medium text-foreground/90">{wepData.maxLevel}</span>
+					<span className="font-medium text-foreground/90">{weaponData.maxLevel!}</span>
 				</div>
 			</div>
 
 			<h3 className="mt-4 mb-2 text-base font-semibold">Base Stats</h3>
 			<div className="space-y-2.5">
-				{Object.entries(baseStats)
+				{Object.entries(weaponStats)
 					.filter(([key]) => statFilters.includes(key))
 					.map(([key, value]) => (
 						<StatBar
@@ -264,19 +285,40 @@ function WeaponDetailsPanel({ weapon }: { weapon: Weapon }) {
 			</div>
 
 			<div className="mt-4 pt-3 border-t border-border/50 text-sm space-y-1">
-				{Object.entries(upgradeStats)
-					.filter(([key]) => !statFilters.includes(key))
-					.map(([key, value]) => (
-						<div
-							key={key}
-							className="flex justify-between"
-						>
-							<span className="text-muted-foreground">{formatName(key)}:</span>
-							<span className="font-medium text-foreground/90">
-								{value.description}
-							</span>
-						</div>
-					))}
+				<p className="font-semibold mb-2">Upgrades:</p>
+				{upgradeStats
+					? upgradeStats.map((upgrade, index) => {
+							return (
+								<div
+									key={upgrade.id}
+									className="flex flex-col gap-2"
+								>
+									<div className="flex items-center gap-1">
+										<p>Lvl {upgrade.level}</p>
+										<div className="grid grid-cols-[1fr_1fr] gap-1 flex-1">
+											{upgrade.upgradeStats?.map((stat) => (
+												<React.Fragment key={stat.statType}>
+													<p className="text-xs text-muted-foreground text-right pr-2">
+														{formatName(stat.statType!)}
+													</p>
+													<p className="font-mono">
+														{stat.value > 0 ? "+" : ""}
+														{(stat.value * 100).toFixed(0)}{" "}
+														<span className="text-xs text-muted-foreground">
+															%
+														</span>
+													</p>
+												</React.Fragment>
+											))}
+										</div>
+									</div>
+									{index < upgradeStats.length - 1 && (
+										<div className="w-full h-[1px] bg-border/50" />
+									)}
+								</div>
+							);
+					  })
+					: "No upgrades"}
 			</div>
 		</div>
 	);

@@ -64,8 +64,8 @@ export type Recipe = RecipeBase & {
 // Item with related data
 export type Item = ItemBase & {
 	weapon?: WeaponBase & {
-		stats?: WeaponStatsBase[];
-		upgrades?: (UpgradeBase & { stats?: UpgradeStatsBase[] })[];
+		weaponStats?: WeaponStatsBase;
+		upgrades?: (UpgradeBase & { upgradeStats?: UpgradeStatsBase[] })[];
 	};
 	recycling?: Recipe;
 	recyclingSources?: Recipe[];
