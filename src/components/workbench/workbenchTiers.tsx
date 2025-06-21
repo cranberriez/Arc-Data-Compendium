@@ -4,24 +4,27 @@ import React from "react";
 
 import { Book, Boxes, Egg } from "lucide-react";
 import { Card } from "@/components/ui/card";
-import { getAllWorkbenchRequirements } from "@/data/workbenches/workbenchUtils";
-import { groupRecipesByWorkbenchTier } from "@/data/recipes/recipeUtils";
-import { Recipe, Workbench, WorkbenchId } from "@/types";
+import { getAllWorkbenchRequirements, groupWorkbenchRecipesByTier } from "@/utils/workbenchUtils";
+import { Tier, Workbench, WorkbenchRecipe } from "@/types";
 import { ScrappyOutput } from "./scrappyOutput";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { useRecipes } from "@/contexts/recipeContext";
 import { WorkbenchItemReqTable } from "./workbenchItemReqTable";
 import { RecipeItem } from "./recipeItem";
-import { toRomanNumeral } from "@/utils/format";
+import { tiers } from "@/db/schema/workbenches";
 
 interface WorkbenchTiersProps {
-	workbench: Workbench;
+	workbenchId: Workbench["id"];
+	recipes: WorkbenchRecipe[];
+	tiers: Tier[];
 	curWbTier: number;
 }
 
-export default function WorkbenchTiers({ workbench, curWbTier }: WorkbenchTiersProps) {
-	const recipes = useRecipes().getRecipesByWorkbench(workbench.id);
-
+export default function WorkbenchTiers({
+	workbenchId,
+	recipes,
+	tiers,
+	curWbTier,
+}: WorkbenchTiersProps) {
 	// --- Tabs state and helpers ---
 	const [mode, setMode] = React.useState<"recipes" | "requirements">("recipes");
 	const tabValue = `${mode}-all`;
@@ -40,7 +43,7 @@ export default function WorkbenchTiers({ workbench, curWbTier }: WorkbenchTiersP
 						onClick={() => setMode("recipes")}
 						className={tabClasses}
 					>
-						{workbench.id !== "scrappy" ? (
+						{workbenchId !== "scrappy" ? (
 							<>
 								<Book />
 								Recipes
@@ -52,7 +55,7 @@ export default function WorkbenchTiers({ workbench, curWbTier }: WorkbenchTiersP
 							</>
 						)}
 					</TabsTrigger>
-					{workbench.tiers.length > 1 && (
+					{tiers.length > 1 && (
 						<TabsTrigger
 							value={`requirements-all`}
 							onClick={() => setMode("requirements")}
@@ -65,12 +68,12 @@ export default function WorkbenchTiers({ workbench, curWbTier }: WorkbenchTiersP
 				</TabsList>
 
 				<TabsContent value={`recipes-all`}>
-					{workbench.id === "scrappy" ? (
+					{workbenchId === "scrappy" ? (
 						<ScrappyOutput currentTier={curWbTier} />
 					) : (
 						<WorkbenchRecipes
 							recipes={recipes}
-							workbenchId={workbench.id as WorkbenchId}
+							workbenchId={workbenchId}
 						/>
 					)}
 				</TabsContent>
@@ -79,9 +82,8 @@ export default function WorkbenchTiers({ workbench, curWbTier }: WorkbenchTiersP
 					className="w-full"
 				>
 					<WorkbenchRequirements
-						totalTiers={workbench.tiers.length}
+						tiers={tiers}
 						curWbTier={curWbTier}
-						workbench={workbench}
 					/>
 				</TabsContent>
 			</Tabs>
@@ -93,10 +95,10 @@ function WorkbenchRecipes({
 	recipes,
 	workbenchId,
 }: {
-	recipes: Recipe[];
-	workbenchId: WorkbenchId;
+	recipes: WorkbenchRecipe[];
+	workbenchId: Workbench["id"];
 }) {
-	const groupedRecipes = groupRecipesByWorkbenchTier(recipes, workbenchId);
+	const groupedRecipes = groupWorkbenchRecipesByTier(recipes);
 
 	return (
 		<div className="flex flex-col gap-6">
@@ -111,17 +113,11 @@ function WorkbenchRecipes({
 						</h4>
 					</div>
 					<div className="flex flex-wrap gap-4 w-full">
-						{recipes.map((recipe, index) => (
-							<React.Fragment key={recipe.id}>
-								<RecipeItem recipe={recipe} />
-								{!(
-									index === recipes.length - 1 &&
-									tier ===
-										Object.keys(groupedRecipes)[
-											Object.keys(groupedRecipes).length - 1
-										]
-								) && <div className="w-full h-1 rounded-lg bg-muted" />}
-							</React.Fragment>
+						{recipes.map((recipe) => (
+							<RecipeItem
+								key={recipe.recipeId}
+								recipe={recipe.recipe}
+							/>
 						))}
 					</div>
 				</div>
@@ -130,17 +126,9 @@ function WorkbenchRecipes({
 	);
 }
 
-function WorkbenchRequirements({
-	totalTiers,
-	curWbTier,
-	workbench,
-}: {
-	totalTiers: number;
-	curWbTier: number;
-	workbench: Workbench;
-}) {
+function WorkbenchRequirements({ tiers, curWbTier }: { tiers: Tier[]; curWbTier: number }) {
 	// --- Requirements ---
-	const allRequirements = getAllWorkbenchRequirements([workbench]);
+	const allRequirements = getAllWorkbenchRequirements(tiers);
 
 	return (
 		<div>
@@ -150,7 +138,7 @@ function WorkbenchRequirements({
 			<div className="p-2 bg-background rounded-lg">
 				<WorkbenchItemReqTable
 					requirements={allRequirements}
-					totalTiers={totalTiers}
+					totalTiers={tiers.length}
 					highlightTier={curWbTier}
 				/>
 			</div>

@@ -92,10 +92,12 @@ export type Tier = TierBase & {
 	recipes?: (WorkbenchRecipeBase & { recipe: Recipe })[];
 };
 
+export type WorkbenchRecipe = WorkbenchRecipeBase & { recipe: Recipe };
+
 // Workbench with tiers
 export type Workbench = WorkbenchBase & {
 	tiers: Tier[];
-	workbenchRecipes: (WorkbenchRecipeBase & { recipe: Recipe })[];
+	workbenchRecipes: WorkbenchRecipe[];
 };
 
 // Export enum types from the schema

@@ -1,4 +1,4 @@
-import { Recipe, RecipeLock } from "@/types";
+import { Recipe, RecipeItemBase, RecipeLockBase } from "@/types";
 import { useDialog } from "@/contexts/dialogContext";
 import { useItems } from "@/contexts/itemContext";
 import { cn } from "@/lib/utils";
@@ -18,9 +18,17 @@ import {
 export function RecipeItem({ recipe, className }: { recipe: Recipe; className?: string }) {
 	const { getItemById } = useItems();
 	const { openDialog } = useDialog();
-	const outputItem = getItemById(recipe.outputItemId);
+
+	const output = recipe.io.find((item) => item.role === "output");
+	if (!output) return null;
+
+	const outputCount = output.qty;
+	const outputItem = getItemById(output.itemId);
 
 	if (!outputItem) return null;
+
+	const inputs: RecipeItemBase[] = recipe.io.filter((item) => item.role === "input");
+	const locks = recipe.locks;
 
 	return (
 		<div
@@ -44,24 +52,22 @@ export function RecipeItem({ recipe, className }: { recipe: Recipe; className?: 
 							"bg"
 						)}`
 					)}
-					{recipe.outputCount > 1 && (
-						<p className="text-3xl font-mono">{recipe.outputCount}</p>
-					)}
+					{outputCount > 1 && <p className="text-3xl font-mono">{outputCount}</p>}
 					<p className="mb-[2px] text-xl">{outputItem.name}</p>
 				</div>
 				<div className="flex flex-col gap-2 text-md">
-					{recipe.requirements.length === 0 ? (
+					{inputs.length === 0 ? (
 						<div className="flex items-center gap-2 text-muted-foreground">
 							<p className="mb-[2px] font-bold font-mono">Unknown Requirements</p>
 						</div>
 					) : (
-						recipe.requirements.map((requirement) => {
-							const reqItem = getItemById(requirement.itemId);
+						inputs.map((input) => {
+							const reqItem = getItemById(input.itemId);
 							if (!reqItem) return null;
 
 							return (
 								<div
-									key={requirement.itemId}
+									key={input.itemId}
 									className="flex items-center gap-2 text-lg dark:text-muted-foreground hover:text-primary cursor-pointer"
 									onClick={() => {
 										openDialog("item", reqItem);
@@ -71,9 +77,7 @@ export function RecipeItem({ recipe, className }: { recipe: Recipe; className?: 
 										reqItem.icon,
 										`w-6 h-6 ${getRarityColor(reqItem.rarity, "text")}`
 									)}
-									<p className="mb-[3px] font-bold font-mono">
-										{requirement.count}
-									</p>
+									<p className="mb-[3px] font-bold font-mono">{input.qty}</p>
 									<p className="mb-[3px]">{reqItem.name}</p>
 								</div>
 							);
@@ -81,21 +85,21 @@ export function RecipeItem({ recipe, className }: { recipe: Recipe; className?: 
 					)}
 				</div>
 			</div>
-			{recipe.isLocked && (
+			{locks && (
 				<div className="flex flex-col items-center gap-2">
 					<div className="flex items-center gap-2 text-red-600 dark:text-red-400">
 						<Lock size={14} />
 						<span className="mb-[2px]">Unlock Requirements:</span>
 					</div>
-					<RecipeUnlockType recipeLock={recipe.lockedType} />
+					<RecipeUnlockType recipeLocks={locks} />
 				</div>
 			)}
 		</div>
 	);
 }
 
-function RecipeUnlockType({ recipeLock }: { recipeLock: RecipeLock | undefined }) {
-	if (!recipeLock) return null;
+function RecipeUnlockType({ recipeLocks }: { recipeLocks: RecipeLockBase | undefined }) {
+	if (!recipeLocks) return null;
 
 	const lockTypeDetails = (lockType: string) => {
 		const iconClasses = (color: string) => `w-4 h-4 text-${color}`;
@@ -125,11 +129,12 @@ function RecipeUnlockType({ recipeLock }: { recipeLock: RecipeLock | undefined }
 		let displayKey: string;
 		let displayValue: string;
 
+		// TODO: Make this look nicer, some values don't quite work with the current schema
 		if (typeof value === "boolean") {
 			displayKey = key;
 			displayValue = value ? "" : "";
 		} else {
-			displayKey = value === "Mastery" ? "" : value;
+			displayKey = value === "Mastery" || value === "Other" ? "" : value;
 			displayValue = key;
 		}
 
@@ -148,7 +153,10 @@ function RecipeUnlockType({ recipeLock }: { recipeLock: RecipeLock | undefined }
 
 	return (
 		<div className="flex flex-col gap-2 w-full">
-			{Object.entries(recipeLock).map(([key, value]) => {
+			{Object.entries(recipeLocks).map(([key, value]) => {
+				if (!value) return null;
+				if (key === "recipeId") return null;
+
 				return lockPill(key, value);
 			})}
 		</div>
