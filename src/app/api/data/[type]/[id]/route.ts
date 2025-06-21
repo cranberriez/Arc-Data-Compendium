@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
-import { getItems, getRecipes, getWorkbenches, getQuests } from "@/db/queries";
+import { getItems, getWeapons, getRecipes, getWorkbenches, getQuests } from "@/db/queries";
 
-type DataType = "items" | "recipes" | "workbenches" | "quests";
+type DataType = "items" | "weapons" | "recipes" | "workbenches" | "quests";
 
 const headers = {
 	"Access-Control-Allow-Origin": "*",
@@ -12,12 +12,13 @@ const headers = {
 type RouteParams = {
 	params: Promise<{
 		type: DataType;
-		id: string;
+		id?: string;
 	}>;
 };
 
-const typeToQuery: Record<DataType, (options: { id: string }) => any> = {
+const typeToQuery: Record<DataType, (options: { id?: string }) => Promise<any>> = {
 	items: getItems,
+	weapons: getWeapons,
 	recipes: getRecipes,
 	workbenches: getWorkbenches,
 	quests: getQuests,
@@ -25,7 +26,7 @@ const typeToQuery: Record<DataType, (options: { id: string }) => any> = {
 
 export const revalidate = 3600; // seconds
 
-export async function GET({ params }: RouteParams) {
+export async function GET(request: Request, { params }: RouteParams) {
 	const { type, id } = await params;
 
 	const queryFn = typeToQuery[type];
@@ -35,7 +36,20 @@ export async function GET({ params }: RouteParams) {
 	}
 
 	try {
-		const response = queryFn({ id });
+		let response = await queryFn({ id });
+
+		// If the query function returned an array (most Drizzle findMany calls do),
+		// unwrap the first element so the client receives a single object.
+		if (Array.isArray(response)) {
+			response = response[0] ?? null;
+		}
+
+		if (!response) {
+			return NextResponse.json(
+				{ error: `${type} with id ${id} not found` },
+				{ headers, status: 404 }
+			);
+		}
 
 		return NextResponse.json(response, { headers });
 	} catch (error) {

@@ -1,23 +1,7 @@
-import { Item } from "@/types";
-import { Quest } from "@/types";
-import { Recipe } from "@/types";
-import { Workbench } from "@/types";
-import { Weapon } from "@/types";
+import { Item, Quest, Recipe, Workbench, Weapon } from "@/types";
 import { isWeapon } from "@/data/items/subTypeUtils";
 
-import itemsData from "@/data/items/itemData.build.json";
-import recipesData from "@/data/recipes/recipeData.json";
-import workbenchesData from "@/data/workbenches/workbenchData.json";
-import questsData from "@/data/quests/questData.json";
-
 type DataType = "items" | "recipes" | "workbenches" | "quests";
-
-const dataMap: Record<DataType, any> = {
-	items: itemsData,
-	recipes: recipesData,
-	workbenches: workbenchesData,
-	quests: questsData,
-};
 
 /**
  * Generic function to fetch data from the API
@@ -25,25 +9,7 @@ const dataMap: Record<DataType, any> = {
  * @param id Optional ID to fetch a specific item
  * @returns Promise that resolves to an array of items or a single item if ID is provided
  */
-async function fetchData<T>(
-	type: DataType,
-	id?: string,
-	filterFn?: (item: any) => boolean
-): Promise<T[] | T | null> {
-	// Server-side: use imported data directly
-	// if (typeof window === "undefined") {
-	// 	let allData = dataMap[type] as T[];
-	// 	if (!allData) return null;
-	// 	if (id) {
-	// 		return allData.find((item: any) => item.id === id) ?? null;
-	// 	}
-	// 	if (filterFn) {
-	// 		allData = allData.filter(filterFn);
-	// 	}
-	// 	return allData;
-	// }
-
-	// Client-side: fetch from API
+async function fetchData<T>(type: DataType, id?: string): Promise<T[] | T | null> {
 	try {
 		const isServer = typeof window === "undefined";
 		const baseUrl = isServer ? process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000" : "";
@@ -174,11 +140,3 @@ export async function fetchWeaponById(id: string): Promise<Weapon | null> {
 	const result = await fetchData<Item>("items", id);
 	return result && !Array.isArray(result) && isWeapon(result) ? result : null;
 }
-
-// For backward compatibility
-export type DataTypes = {
-	workbench: Workbench;
-	item: Item;
-	recipe: Recipe;
-	quest: Quest;
-};

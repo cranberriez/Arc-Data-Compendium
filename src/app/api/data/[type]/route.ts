@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
-import { getItems, getRecipes, getWorkbenches, getQuests } from "@/db/queries";
+import { getItems, getWeapons, getRecipes, getWorkbenches, getQuests } from "@/db/queries";
 
-type DataType = "items" | "recipes" | "workbenches" | "quests";
+type DataType = "items" | "weapons" | "recipes" | "workbenches" | "quests";
 
 const headers = {
 	"Access-Control-Allow-Origin": "*",
@@ -17,6 +17,7 @@ type RouteParams = {
 
 const typeToQuery: Record<DataType, () => Promise<any>> = {
 	items: getItems,
+	weapons: getWeapons,
 	recipes: getRecipes,
 	workbenches: getWorkbenches,
 	quests: getQuests,
