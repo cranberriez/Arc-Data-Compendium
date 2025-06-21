@@ -50,8 +50,16 @@ export const questLinks = pgTable(
 );
 
 export const questLinksRelations = relations(questLinks, ({ one }) => ({
-	previous: one(quests, { fields: [questLinks.previous], references: [quests.id] }),
-	next: one(quests, { fields: [questLinks.next], references: [quests.id] }),
+	previous: one(quests, {
+		fields: [questLinks.previous],
+		references: [quests.id],
+		relationName: "previous",
+	}),
+	next: one(quests, {
+		fields: [questLinks.next],
+		references: [quests.id],
+		relationName: "next",
+	}),
 }));
 
 const questEntryTypeValues = ["objective", "reward"] as const;

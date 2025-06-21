@@ -1,5 +1,6 @@
 import { eq } from "drizzle-orm";
 import { db } from "../drizzle";
+import { items } from "../schema";
 
 /**
 import { items, weapons, weaponStats, upgrade, upgradeStats, recipes } from "../schema";

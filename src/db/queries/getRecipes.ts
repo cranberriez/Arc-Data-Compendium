@@ -5,6 +5,7 @@
 
 import { eq } from "drizzle-orm";
 import { db } from "../drizzle";
+import { recipes } from "../schema";
 
 // type GetRecipesOptions = {
 // 	id?: string;
