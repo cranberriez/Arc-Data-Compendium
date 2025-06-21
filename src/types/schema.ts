@@ -26,7 +26,6 @@ import {
 	questLinks,
 	questEntries,
 	questEntryItems,
-	questEntryType,
 	QuestEntryType,
 } from "@/db/schema/quest";
 import { workbenches, tiers, tierRequirements, workbenchRecipes } from "@/db/schema/workbenches";
@@ -56,54 +55,47 @@ export type TierBase = InferSelectModel<typeof tiers>;
 export type TierRequirementBase = InferSelectModel<typeof tierRequirements>;
 export type WorkbenchRecipeBase = InferSelectModel<typeof workbenchRecipes>;
 
-// Types for joined data
-export type RecipeIO = RecipeItemBase;
-
 // Recipe with inputs and outputs
 export type Recipe = RecipeBase & {
-	inputs: RecipeIO[];
-	outputs: RecipeIO[];
+	io: RecipeItemBase[];
 	locks: RecipeLockBase | null;
 };
 
 // Item with related data
 export type Item = ItemBase & {
-	weapon?: WeaponBase;
-	weaponStats?: WeaponStatsBase;
-	upgrades?: (UpgradeBase & { stats: UpgradeStatsBase[] })[];
+	weapon?: WeaponBase & {
+		stats?: WeaponStatsBase[];
+		upgrades?: (UpgradeBase & { stats?: UpgradeStatsBase[] })[];
+	};
 	recycling?: Recipe;
 	recyclingSources?: Recipe[];
-	quickUse: QuickUseData | null;
-	gear: GearData | null;
 };
 
 // Weapon (item that is a weapon)
-export type Weapon = Item & {
-	weapon: WeaponBase;
-	weaponStats: WeaponStatsBase;
-};
+export type Weapon = Item;
 
 // Quest entry with related items
 export type QuestEntry = QuestEntryBase & {
-	items: (QuestEntryItemBase & { item: ItemBase })[];
+	relatedItems?: (QuestEntryItemBase & { item?: ItemBase })[];
 };
 
 // Quest with entries, previous and next quests
 export type Quest = QuestBase & {
 	entries: QuestEntry[];
-	previous: (QuestLinkBase & { previous: QuestBase })[];
-	next: (QuestLinkBase & { next: QuestBase })[];
+	previous: (QuestLinkBase & { previous: QuestBase["id"] })[];
+	next: (QuestLinkBase & { next: QuestBase["id"] })[];
 };
 
 // Tier with requirements and recipes
 export type Tier = TierBase & {
 	requirements: (TierRequirementBase & { item: ItemBase })[];
-	recipes?: (WorkbenchRecipeBase & { recipe: RecipeBase })[];
+	recipes?: (WorkbenchRecipeBase & { recipe: Recipe })[];
 };
 
 // Workbench with tiers
 export type Workbench = WorkbenchBase & {
 	tiers: Tier[];
+	workbenchRecipes: (WorkbenchRecipeBase & { recipe: Recipe })[];
 };
 
 // Export enum types from the schema

@@ -22,6 +22,7 @@ export const workbenches = pgTable("workbenches", {
 
 export const workbenchesRelations = relations(workbenches, ({ many }) => ({
 	tiers: many(tiers),
+	workbenchRecipes: many(workbenchRecipes),
 }));
 
 export const tiers = pgTable(
