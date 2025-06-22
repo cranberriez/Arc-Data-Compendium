@@ -67,7 +67,9 @@ export type RecyclingRecipe = RecipeBase & {
 };
 
 export type ItemQuestEntry = QuestEntryItemBase & {
-	questEntry: QuestEntryBase;
+	questEntry: {
+		type: QuestEntryType;
+	};
 };
 
 // Item with related data
