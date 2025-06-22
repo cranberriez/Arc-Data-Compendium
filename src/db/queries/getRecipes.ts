@@ -1,15 +1,17 @@
 import { db } from "../drizzle";
 import { eq } from "drizzle-orm";
 import { recipes } from "../schema";
+import { Recipe } from "@/types";
 
 /**
  * Fetches all recipes (crafting and recycling) with all their details
  *
  * @returns Array of recipes with all their details, or empty array if none found
  */
-export const getRecipes = async () => {
+export const getRecipes = async ({ id }: { id?: string } = {}): Promise<Recipe[]> => {
 	try {
 		return await db.query.recipes.findMany({
+			where: id ? eq(recipes.id, id) : undefined,
 			with: {
 				io: true,
 				locks: true,
@@ -26,10 +28,10 @@ export const getRecipes = async () => {
  *
  * @returns Array of recipes with all their details, or empty array if none found
  */
-export const getCraftingRecipes = async () => {
+export const getCraftingRecipes = async ({ id }: { id?: string } = {}): Promise<Recipe[]> => {
 	try {
 		return await db.query.recipes.findMany({
-			where: eq(recipes.type, "crafting"),
+			where: id ? eq(recipes.id, id) : eq(recipes.type, "crafting"),
 			with: {
 				io: true,
 				locks: true,

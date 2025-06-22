@@ -1,8 +1,12 @@
 import { db } from "../drizzle";
 import { eq } from "drizzle-orm";
 import { quests } from "../schema/quest";
+import { Quest } from "@/types";
 
-export const getQuests = async ({ id, fillItems }: { id?: string; fillItems?: boolean } = {}) => {
+export const getQuests = async ({
+	id,
+	fillItems,
+}: { id?: string; fillItems?: boolean } = {}): Promise<Quest[]> => {
 	try {
 		// Fetch quests with entry & link relations first
 		const questsData = await db.query.quests.findMany({

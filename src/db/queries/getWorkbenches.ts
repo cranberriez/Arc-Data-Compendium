@@ -1,6 +1,7 @@
 import { db } from "../drizzle";
 import { eq } from "drizzle-orm";
 import { workbenches } from "../schema";
+import { Workbench } from "@/types";
 
 /**
  * Gets workbenches with optional recipe and tier requirement expansion.
@@ -10,7 +11,7 @@ import { workbenches } from "../schema";
 export const getWorkbenches = async ({
 	id,
 	fillTierRequirements,
-}: { id?: string; fillTierRequirements?: boolean } = {}) => {
+}: { id?: string; fillTierRequirements?: boolean } = {}): Promise<Workbench[]> => {
 	try {
 		return await db.query.workbenches.findMany({
 			where: id ? eq(workbenches.id, id) : undefined,

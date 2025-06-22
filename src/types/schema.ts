@@ -61,6 +61,11 @@ export type Recipe = RecipeBase & {
 	locks: RecipeLockBase | null;
 };
 
+// Modified recipe for recycling recipes
+export type RecyclingRecipe = RecipeBase & {
+	io: RecipeItemBase[];
+};
+
 export type ItemQuestEntry = QuestEntryItemBase & {
 	questEntry: QuestEntryBase;
 };
@@ -71,7 +76,7 @@ export type Item = ItemBase & {
 		weaponStats?: WeaponStatsBase;
 		upgrades?: (UpgradeBase & { upgradeStats?: UpgradeStatsBase[] })[];
 	};
-	recycling?: Recipe;
+	recycling: RecyclingRecipe | null;
 	recyclingSources?: Recipe[];
 	questEntries?: ItemQuestEntry[];
 	workbenchRequirements?: TierRequirementBase[];

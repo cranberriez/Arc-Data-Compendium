@@ -1,14 +1,14 @@
 import { db } from "../drizzle";
 import { eq } from "drizzle-orm";
 import { items } from "../schema";
+import { Item, Weapon } from "@/types";
 
-export const getItems = async ({ id }: { id?: string } = {}) => {
+export const getItems = async ({ id }: { id?: string } = {}): Promise<Item[]> => {
 	try {
 		return await db.query.items.findMany({
 			where: id ? eq(items.id, id) : undefined,
 			with: {
 				weapon: {
-					columns: { id: false, itemId: false },
 					with: {
 						weaponStats: true,
 						upgrades: { with: { upgradeStats: true } },
@@ -34,13 +34,12 @@ export const getItems = async ({ id }: { id?: string } = {}) => {
 	}
 };
 
-export const getWeapons = async ({ id }: { id?: string } = {}) => {
+export const getWeapons = async ({ id }: { id?: string } = {}): Promise<Weapon[]> => {
 	try {
 		return await db.query.items.findMany({
 			where: id ? eq(items.id, id) : eq(items.category, "weapon"),
 			with: {
 				weapon: {
-					columns: { id: false, itemId: false },
 					with: {
 						weaponStats: true,
 						upgrades: { with: { upgradeStats: true } },
