@@ -1,52 +1,8 @@
 "use server";
 
-import { Item, Quest, Recipe, Workbench, Weapon } from "@/types";
-import { isWeapon } from "@/utils/items/subTypeUtils";
+import { Item, Weapon, Quest, Recipe, Workbench } from "@/types";
 import { getItems, getWeapons } from "@/db/queries/getItems";
-import { getQuests, getRecipes, getWorkbenches } from "@/db/queries";
-
-type DataType = "items" | "recipes" | "workbenches" | "quests";
-
-/**
- * Generic function to fetch data from the API
- * @param type The type of data to fetch
- * @param id Optional ID to fetch a specific item
- * @returns Promise that resolves to an array of items or a single item if ID is provided
- */
-async function fetchData<T>(type: DataType, id?: string): Promise<T[] | T | null> {
-	try {
-		const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
-
-		const endpoint = id ? `${baseUrl}/api/data/${type}/${id}` : `${baseUrl}/api/data/${type}`;
-
-		const response = await fetch(endpoint, {
-			method: "GET",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			next: {
-				revalidate: process.env.NODE_ENV === "development" ? 0 : 3600,
-			},
-		});
-
-		if (!response.ok) {
-			// If we're trying to fetch a single item and it's not found, return null
-			if (id && response.status === 404) {
-				return null;
-			}
-			throw new Error(
-				`Failed to fetch ${type}${id ? ` with ID ${id}` : ""}: ${response.statusText}`
-			);
-		}
-
-		return response.json();
-	} catch (error) {
-		console.error(`Error fetching ${type}${id ? ` with ID ${id}` : ""}:`, error);
-		// Return appropriate default based on whether we're fetching a single item or a list
-		// The public API now handles this, but keeping for backward compatibility
-		return id ? null : [];
-	}
-}
+import { getQuestIds, getQuests, getRecipes, getWorkbenches } from "@/db/queries";
 
 // Fetch all items
 export async function fetchItems(): Promise<Item[]> {
@@ -64,13 +20,13 @@ export async function fetchItemById(id: string): Promise<Item | null> {
 }
 
 // Fetch all weapons
-export async function fetchWeapons(): Promise<Item[]> {
+export async function fetchWeapons(): Promise<Weapon[]> {
 	const weapons = await getWeapons();
 	return Array.isArray(weapons) ? weapons : [];
 }
 
 // Fetch a single weapon by ID
-export async function fetchWeaponById(id: string): Promise<Item | null> {
+export async function fetchWeaponById(id: string): Promise<Weapon | null> {
 	const weapons = await getWeapons({ id });
 	if (Array.isArray(weapons) && weapons.length > 0) {
 		return weapons[0];
@@ -142,4 +98,13 @@ export async function fetchQuestById(id: string): Promise<Quest | null> {
 		return quests[0];
 	}
 	return null;
+}
+
+/**
+ * Fetches all quest IDs from the API
+ * @returns Promise that resolves to an array of quest IDs
+ */
+export async function fetchQuestIds(): Promise<string[]> {
+	const questIds = await getQuestIds();
+	return Array.isArray(questIds) ? questIds : [];
 }

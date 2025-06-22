@@ -55,3 +55,18 @@ export const getQuests = async ({
 		return [];
 	}
 };
+
+export const getQuestIds = async (): Promise<string[]> => {
+	try {
+		return await db.query.quests
+			.findMany({
+				columns: {
+					id: true,
+				},
+			})
+			.then((quests) => quests.map((q) => q.id));
+	} catch (error) {
+		console.error("Error querying quest IDs:", error);
+		return [];
+	}
+};
