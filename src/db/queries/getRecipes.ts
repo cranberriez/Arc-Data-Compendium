@@ -1,5 +1,5 @@
-import { eq } from "drizzle-orm";
 import { db } from "../drizzle";
+import { eq } from "drizzle-orm";
 import { recipes } from "../schema";
 
 /**
@@ -7,13 +7,18 @@ import { recipes } from "../schema";
  *
  * @returns Array of recipes with all their details, or empty array if none found
  */
-export const getRecipes = () => {
-	return db.query.recipes.findMany({
-		with: {
-			io: true,
-			locks: true,
-		},
-	});
+export const getRecipes = async () => {
+	try {
+		return await db.query.recipes.findMany({
+			with: {
+				io: true,
+				locks: true,
+			},
+		});
+	} catch (error) {
+		console.error("Error querying recipes:", error);
+		return [];
+	}
 };
 
 /**
@@ -21,12 +26,17 @@ export const getRecipes = () => {
  *
  * @returns Array of recipes with all their details, or empty array if none found
  */
-export const getCraftingRecipes = () => {
-	return db.query.recipes.findMany({
-		where: eq(recipes.type, "crafting"),
-		with: {
-			io: true,
-			locks: true,
-		},
-	});
+export const getCraftingRecipes = async () => {
+	try {
+		return await db.query.recipes.findMany({
+			where: eq(recipes.type, "crafting"),
+			with: {
+				io: true,
+				locks: true,
+			},
+		});
+	} catch (error) {
+		console.error("Error querying crafting recipes:", error);
+		return [];
+	}
 };

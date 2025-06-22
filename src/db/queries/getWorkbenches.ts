@@ -7,32 +7,37 @@ import { workbenches } from "../schema";
  * @param id - Filter by workbench ID
  * @param fillTierRequirements - If true, includes item details for tier requirements
  */
-export const getWorkbenches = ({
+export const getWorkbenches = async ({
 	id,
 	fillTierRequirements,
 }: { id?: string; fillTierRequirements?: boolean } = {}) => {
-	return db.query.workbenches.findMany({
-		where: id ? eq(workbenches.id, id) : undefined,
-		with: {
-			tiers: {
-				with: {
-					requirements: {
-						with: {
-							item: fillTierRequirements ? true : undefined,
+	try {
+		return await db.query.workbenches.findMany({
+			where: id ? eq(workbenches.id, id) : undefined,
+			with: {
+				tiers: {
+					with: {
+						requirements: {
+							with: {
+								item: fillTierRequirements ? true : undefined,
+							},
+						},
+					},
+				},
+				workbenchRecipes: {
+					with: {
+						recipe: {
+							with: {
+								io: true,
+								locks: true,
+							},
 						},
 					},
 				},
 			},
-			workbenchRecipes: {
-				with: {
-					recipe: {
-						with: {
-							io: true,
-							locks: true,
-						},
-					},
-				},
-			},
-		},
-	});
+		});
+	} catch (error) {
+		console.error("Error querying workbenches:", error);
+		return [];
+	}
 };
