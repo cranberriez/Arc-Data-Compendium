@@ -1,5 +1,4 @@
 import { ClerkProvider, SignedIn, UserButton } from "@clerk/nextjs";
-import BulkUploadPanel from "./BulkUploadPanel";
 
 export default function AdminPage() {
 	return (
@@ -17,7 +16,6 @@ export default function AdminPage() {
 							/>
 						</SignedIn>
 					</header>
-					<BulkUploadPanel />
 				</div>
 			</article>
 		</ClerkProvider>
