@@ -4,7 +4,7 @@ import * as React from "react";
 import { Item } from "@/types";
 import { cn } from "@/lib/utils";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import { getTypeIcon, formatName } from "@/data/items/itemUtils";
+import { getTypeIcon, formatName } from "@/utils/items/itemUtils";
 
 export interface ItemHeaderProps {
 	/** The item to display */

@@ -1,12 +1,11 @@
 import { db } from "../src/db/drizzle"; // your db instance
 import questData from "../src/data/quests/questData.json";
-import { quests, questEntries, items, questEntryItems, questLinks } from "../src/db/schema";
-import { Quest } from "../src/types/quest";
+import { quests, questEntries, questEntryItems, questLinks } from "../src/db/schema";
 import { eq } from "drizzle-orm";
 
 export async function seedQuests() {
 	console.log("[seedQuests] Starting quest seeding process...");
-	const typedQuestData: Quest[] = questData;
+	const typedQuestData: any[] = questData;
 	let missingItems: string[] = [];
 
 	let questRelations: { previous: string; next: string }[] = [];

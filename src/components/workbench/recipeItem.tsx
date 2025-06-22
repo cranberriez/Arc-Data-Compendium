@@ -3,7 +3,7 @@ import { useDialog } from "@/contexts/dialogContext";
 import { useItems } from "@/contexts/itemContext";
 import { cn } from "@/lib/utils";
 import getItemIcon from "@/components/items/getItemIcon";
-import { formatName, getRarityColor } from "@/data/items/itemUtils";
+import { formatName, getRarityColor } from "@/utils/items/itemUtils";
 import {
 	BookMarked,
 	Box,

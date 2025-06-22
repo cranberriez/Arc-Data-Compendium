@@ -9,7 +9,7 @@ import {
 	TableHeader,
 	TableRow,
 } from "@/components/ui/table";
-import { getRarityColor, formatName } from "@/data/items/itemUtils";
+import { getRarityColor, formatName } from "@/utils/items/itemUtils";
 import { WorkbenchRequirement } from "@/utils/workbenchUtils";
 import { useDialog } from "@/contexts/dialogContext";
 import { useItems } from "@/contexts/itemContext";

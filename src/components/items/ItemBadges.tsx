@@ -4,7 +4,7 @@ import * as React from "react";
 import { Item } from "@/types";
 import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
-import { getRarityColor } from "@/data/items/itemUtils";
+import { getRarityColor } from "@/utils/items/itemUtils";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 export interface ItemBadgesProps {

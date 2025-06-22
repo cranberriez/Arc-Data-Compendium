@@ -2,12 +2,11 @@ import { db } from "../src/db/drizzle"; // your db instance
 import recipeData from "../src/data/recipes/recipeData.json";
 import { recipes, recipeItems, items, recipeLocks, workbenchRecipes } from "../src/db/schema";
 import { eq } from "drizzle-orm";
-import { Recipe } from "../src/types/recipe";
 
 export async function seedRecipes() {
 	console.log("[seedRecipes] Starting recipe seeding process...");
 
-	const typedRecipeData: Recipe[] = recipeData;
+	const typedRecipeData: any[] = recipeData;
 
 	for (const recipe of typedRecipeData) {
 		console.log(`[seedRecipes][ACTIVE] Seeding recipe: ${recipe.id}`);

@@ -1,12 +1,10 @@
 import { db } from "../src/db/drizzle"; // your db instance
 import workbenchData from "../src/data/workbenches/workbenchData.json";
 import { tierRequirements, tiers, workbenches } from "../src/db/schema";
-import { eq } from "drizzle-orm";
-import { Workbench as oldWorkbenchType } from "../src/types/workbench";
 
 export async function seedWorkbenches() {
 	console.log("[seedWorkbenches] Starting workbench seeding process...");
-	const typedWorkbenchData: oldWorkbenchType[] = workbenchData;
+	const typedWorkbenchData: any[] = workbenchData;
 
 	for (const workbench of typedWorkbenchData) {
 		console.log(

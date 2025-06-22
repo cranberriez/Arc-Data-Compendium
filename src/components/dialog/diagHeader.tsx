@@ -1,11 +1,11 @@
 import { DialogHeader } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
 import { Item } from "@/types";
-import { getRarityColor } from "@/data/items/itemUtils";
+import { getRarityColor } from "@/utils/items/itemUtils";
 import { DialogTitle } from "@/components/ui/dialog";
 import { Book } from "lucide-react";
 import React from "react";
-import { formatName, getTypeIcon } from "@/data/items/itemUtils";
+import { formatName, getTypeIcon } from "@/utils/items/itemUtils";
 import getItemIcon from "@/components/items/getItemIcon";
 
 // Component that displays item header information

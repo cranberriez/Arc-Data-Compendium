@@ -4,7 +4,7 @@ import { useWorkshop } from "@/contexts/workshopContext";
 import { useItems } from "@/contexts/itemContext";
 import ItemCard from "../items/ItemCard";
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card";
-import { formatName } from "@/data/items/itemUtils";
+import { formatName } from "@/utils/items/itemUtils";
 import { Skeleton } from "@/components/ui/skeleton";
 import { InfoIcon } from "lucide-react";
 import { Item, WorkbenchUpgradeSummary, WorkbenchUpgradeSummaryItem } from "@/types";

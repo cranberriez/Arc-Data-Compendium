@@ -5,7 +5,7 @@ import { Item } from "@/types";
 import { cn } from "@/lib/utils";
 import { ItemImage } from "../ItemImage";
 import { ItemBadges } from "../ItemBadges";
-import { getRarityColor } from "@/data/items/itemUtils";
+import { getRarityColor } from "@/utils/items/itemUtils";
 
 export interface CompactVariantProps {
 	item: Item;

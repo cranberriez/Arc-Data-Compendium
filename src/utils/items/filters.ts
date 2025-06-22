@@ -1,6 +1,6 @@
 import { Item, Rarity, ItemCategory } from "@/types";
 import { FilterOptions } from "./types";
-import { searchFunc } from "@/data/items/itemUtils";
+import { searchFunc } from "@/utils/items/itemUtils";
 
 // Individual filter predicates
 const matchesSearch = (item: Item, query: string): boolean => {

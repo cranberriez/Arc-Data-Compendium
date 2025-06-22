@@ -1,4 +1,4 @@
-import { formatCamelName } from "@/data/items/itemUtils";
+import { formatCamelName } from "@/utils/items/itemUtils";
 import { GearStat } from "@/types";
 import React from "react";
 import {

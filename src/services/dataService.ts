@@ -1,5 +1,5 @@
 import { Item, Quest, Recipe, Workbench, Weapon } from "@/types";
-import { isWeapon } from "@/data/items/subTypeUtils";
+import { isWeapon } from "@/utils/items/subTypeUtils";
 
 type DataType = "items" | "recipes" | "workbenches" | "quests";
 
