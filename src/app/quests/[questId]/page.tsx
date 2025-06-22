@@ -10,7 +10,13 @@ export async function generateStaticParams() {
 	return questIds.map((id) => ({ questId: id }));
 }
 
-export default async function QuestPage({ params }: { params: Promise<{ questId: string }> }) {
+interface QuestPageProps {
+	params: Promise<{
+		questId: string;
+	}>;
+}
+
+export default async function QuestPage({ params }: QuestPageProps) {
 	const questData = await fetchQuestById((await params).questId);
 
 	if (!questData) {
