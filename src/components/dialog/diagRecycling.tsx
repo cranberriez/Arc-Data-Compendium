@@ -1,4 +1,4 @@
-import { Item, Recipe } from "@/types";
+import { Item, RecyclingRecipe } from "@/types";
 import { useItems } from "@/contexts/itemContext";
 import { ItemCard } from "@/components/items/ItemCard";
 import { Recycle, ArrowRight } from "lucide-react";
@@ -8,7 +8,7 @@ export const RecyclingSection = ({
 	recyclingRecipe,
 }: {
 	outputItem: Item;
-	recyclingRecipe: Recipe;
+	recyclingRecipe: RecyclingRecipe;
 }) => {
 	const { getItemById } = useItems();
 
