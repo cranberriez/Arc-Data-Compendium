@@ -22,11 +22,6 @@ export function ItemDialog({ data, isOpen, closeDialog, backDialog }: ItemDialog
 	if (!data) return null;
 	const item = data;
 
-	const sourcesPresent = item.recyclingSources && item.recyclingSources.length > 0;
-	const recyclingPresent = item.recycling && item.recycling.length > 0;
-	const isQuickUse = item.quickUse;
-	const isGear = item.gear;
-
 	// Custom close handler to clear the queue
 	const handleCloseDialog = () => {
 		closeDialog();
@@ -36,6 +31,12 @@ export function ItemDialog({ data, isOpen, closeDialog, backDialog }: ItemDialog
 	const handleBack = () => {
 		backDialog();
 	};
+
+	const quickUseStats = item.quickUse?.stats;
+	const quickUseCharge = item.quickUse?.charge;
+	const gearStats = item.gear?.stats;
+	const gearType = item.gear?.category;
+	const recyclingRecipe = item.recycling;
 
 	return (
 		<Dialog
@@ -63,21 +64,37 @@ export function ItemDialog({ data, isOpen, closeDialog, backDialog }: ItemDialog
 
 				<DiagDescription item={item} />
 
-				{sourcesPresent || recyclingPresent || isQuickUse || isGear ? (
+				{quickUseStats || quickUseCharge || gearStats || gearType || recyclingRecipe ? (
 					<hr className="my-2 border-t border-t-secondary-foreground/20 dark:border-t-secondary-foreground/10" />
 				) : null}
 
 				{/* Quick Use Section */}
-				{isQuickUse && <QuickUseSection item={item} />}
+				{quickUseStats && quickUseCharge && (
+					<QuickUseSection
+						flavorText={item.flavorText}
+						stats={quickUseStats}
+						charge={quickUseCharge}
+					/>
+				)}
 
 				{/* Gear Section */}
-				{isGear && <GearSection item={item} />}
+				{gearStats && gearType && (
+					<GearSection
+						stats={gearStats}
+						type={gearType}
+					/>
+				)}
 
 				{/* Recycling Section */}
-				{recyclingPresent && <RecyclingSection item={item} />}
+				{recyclingRecipe && (
+					<RecyclingSection
+						outputItem={item}
+						recyclingRecipe={recyclingRecipe}
+					/>
+				)}
 
 				{/* Sources Section (with two columns) */}
-				{sourcesPresent && <SourcesSection item={item} />}
+				{/* {item.recyclingSources && <SourcesSection sources={item.recyclingSources} />} */}
 
 				{/* TODO: Recipe Section */}
 				{/* TODO: Uses Section quests/workshop */}

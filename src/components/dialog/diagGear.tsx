@@ -1,5 +1,5 @@
 import { formatCamelName } from "@/data/items/itemUtils";
-import { Item, GearStat } from "@/types";
+import { GearStat } from "@/types";
 import React from "react";
 import {
 	Shield,
@@ -214,10 +214,9 @@ export const AugmentSection = ({ stats }: { stats: GearStat }) => {
 };
 
 // Main component that routes to the appropriate section based on gear category
-export const GearSection = ({ item }: { item: Item }) => {
-	if (!item.gear) return null;
-	const gearType = item.gear.category;
-	const gearStats: GearStat | undefined = item.gear.stats;
+export const GearSection = ({ stats, type }: { stats: GearStat; type: string }) => {
+	const gearType = type;
+	const gearStats: GearStat | undefined = stats;
 
 	// Early return if no stats
 	if (!gearStats || Object.keys(gearStats).length === 0) return null;

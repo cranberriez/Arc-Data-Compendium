@@ -1,4 +1,4 @@
-import { Item, QuickUseCharge, QuickUseStat } from "@/types";
+import { QuickUseCharge, QuickUseStat } from "@/types";
 import {
 	ChartNoAxesColumn,
 	Dumbbell,
@@ -7,7 +7,6 @@ import {
 	Hourglass,
 	InfoIcon,
 	MoveHorizontal,
-	Shield,
 	ShieldPlus,
 	Swords,
 	Timer,
@@ -17,9 +16,15 @@ import React from "react";
 
 const formatName = (str: string) => str.charAt(0).toUpperCase() + str.replace("_", " ").slice(1);
 
-export const QuickUseSection = ({ item }: { item: Item }) => {
-	if (!item.quickUse) return null;
-
+export const QuickUseSection = ({
+	flavorText,
+	stats,
+	charge,
+}: {
+	flavorText: string | null;
+	stats: QuickUseStat[];
+	charge: QuickUseCharge;
+}) => {
 	return (
 		<div>
 			<div className="font-mono font-light w-fit flex items-center gap-2 mb-2">
@@ -32,13 +37,13 @@ export const QuickUseSection = ({ item }: { item: Item }) => {
 				</p>
 			</div>
 
-			{item.flavorText && (
-				<p className="text-sm opacity-75 mb-2 max-w-lg break-words">{item.flavorText}</p>
+			{flavorText && (
+				<p className="text-sm opacity-75 mb-2 max-w-lg break-words">{flavorText}</p>
 			)}
 
 			<div className="flex flex-col gap-2">
 				<div className="flex flex-col gap-2 py-4 px-4 bg-amber-100 text-amber-900 dark:text-amber-100 dark:bg-amber-900/10 rounded-md">
-					{item.quickUse?.stats?.map((stat, index) => (
+					{stats?.map((stat, index) => (
 						<StatItem
 							key={index}
 							stat={stat}
@@ -46,7 +51,7 @@ export const QuickUseSection = ({ item }: { item: Item }) => {
 					))}
 				</div>
 
-				{item.quickUse.charge && <Charge charge={item.quickUse.charge} />}
+				{charge && <Charge charge={charge} />}
 			</div>
 		</div>
 	);
