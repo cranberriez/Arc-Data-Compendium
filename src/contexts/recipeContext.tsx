@@ -1,6 +1,6 @@
 "use client";
 
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useState, useMemo } from "react";
 import { fetchRecipes } from "@/services/dataService";
 import { Recipe } from "@/types";
 
@@ -50,12 +50,12 @@ export function RecipeProvider({
 		return recipes.find((recipe) => recipe.id === id);
 	};
 
-	const recyclingRecipes = React.useMemo(
+	const recyclingRecipes = useMemo(
 		() => recipes.filter((recipe) => recipe.type === "recycling"),
 		[recipes]
 	);
 
-	const craftingRecipes = React.useMemo(
+	const craftingRecipes = useMemo(
 		() => recipes.filter((recipe) => recipe.type === "crafting"),
 		[recipes]
 	);

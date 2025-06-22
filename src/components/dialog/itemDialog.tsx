@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { ItemHeader, RecyclingSection, SourcesSection, QuickUseSection, GearSection } from ".";
 import DevTools from "./diagDevTools";
 import DiagDescription from "./diagDescription";
+import { useRecipes } from "@/contexts/recipeContext";
 
 type ItemDialogProps = {
 	data: Item;
@@ -18,6 +19,7 @@ type ItemDialogProps = {
 
 export function ItemDialog({ data, isOpen, closeDialog, backDialog }: ItemDialogProps) {
 	const { dialogQueue } = useDialog();
+	const { getRecyclingSourcesById } = useRecipes();
 
 	if (!data) return null;
 	const item = data;
@@ -37,6 +39,8 @@ export function ItemDialog({ data, isOpen, closeDialog, backDialog }: ItemDialog
 	const gearStats = item.gear?.stats;
 	const gearType = item.gear?.category;
 	const recyclingRecipe = item.recycling;
+	const recyclingSources = getRecyclingSourcesById(item.id);
+	console.log(recyclingSources);
 
 	return (
 		<Dialog
@@ -94,7 +98,12 @@ export function ItemDialog({ data, isOpen, closeDialog, backDialog }: ItemDialog
 				)}
 
 				{/* Sources Section (with two columns) */}
-				{/* {item.recyclingSources && <SourcesSection sources={item.recyclingSources} />} */}
+				{recyclingSources.length > 0 && (
+					<SourcesSection
+						item={item}
+						recyclingSources={recyclingSources}
+					/>
+				)}
 
 				{/* TODO: Recipe Section */}
 				{/* TODO: Uses Section quests/workshop */}
