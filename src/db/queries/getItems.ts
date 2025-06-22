@@ -149,6 +149,16 @@ export const getItems = ({ id }: { id?: string } = {}) => {
 			},
 			recipe: { with: { io: true, locks: true } },
 			recycling: { with: { io: true } },
+			questEntries: {
+				with: {
+					questEntry: {
+						columns: {
+							type: true,
+						},
+					},
+				},
+			},
+			workbenchRequirements: true,
 		},
 	});
 };
@@ -166,6 +176,16 @@ export const getWeapons = ({ id }: { id?: string } = {}) => {
 			},
 			recipe: { with: { io: true, locks: true } },
 			recycling: { with: { io: true } },
+			questEntries: {
+				with: {
+					questEntry: {
+						columns: {
+							type: true,
+						},
+					},
+				},
+			},
+			workbenchRequirements: true,
 		},
 	});
 };

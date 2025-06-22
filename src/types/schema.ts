@@ -29,8 +29,8 @@ import {
 	QuestEntryType,
 } from "@/db/schema/quest";
 import { workbenches, tiers, tierRequirements, workbenchRecipes } from "@/db/schema/workbenches";
-import { QuickUseData } from "./items/quickuse";
-import { GearData } from "./items/gear";
+import { QuickUseData, QuickUseCharge, QuickUseStat } from "./items/quickuse";
+import { GearData, GearStat } from "./items/gear";
 import { WeaponModSlot } from "./items/weapon";
 
 // Base schema-derived types
@@ -61,6 +61,10 @@ export type Recipe = RecipeBase & {
 	locks: RecipeLockBase | null;
 };
 
+export type ItemQuestEntry = QuestEntryItemBase & {
+	questEntry: QuestEntryBase;
+};
+
 // Item with related data
 export type Item = ItemBase & {
 	weapon?: WeaponBase & {
@@ -69,13 +73,15 @@ export type Item = ItemBase & {
 	};
 	recycling?: Recipe;
 	recyclingSources?: Recipe[];
+	questEntries?: ItemQuestEntry[];
+	workbenchRequirements?: TierRequirementBase[];
 };
 
 // Weapon (item that is a weapon)
 export type Weapon = Item;
 
 // Quest entry with related items
-export type QuestEntry = QuestEntryBase & {
+export type QuestEntry = ItemQuestEntry & {
 	relatedItems?: (QuestEntryItemBase & { item?: ItemBase })[];
 };
 
@@ -107,4 +113,4 @@ export type { Rarity, ItemCategory, AmmoType, WeaponClass, StatType, ModifierTyp
 export type { QuestEntryType };
 
 // Export JSON types that aren't directly in the schema
-export type { QuickUseData, GearData, WeaponModSlot };
+export type { QuickUseData, QuickUseCharge, QuickUseStat, GearData, GearStat, WeaponModSlot };

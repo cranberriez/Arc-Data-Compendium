@@ -1,4 +1,4 @@
-import { Item, RecipeRow } from "@/types";
+import { Item, Recipe } from "@/types";
 import { RecycleIcon, Book, LucideIcon, Boxes, ShoppingBasket, Hammer, Scroll } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
@@ -15,12 +15,20 @@ export type ItemTagData = {
 export function getItemTags(item: Item): ItemTagData[] {
 	const tags: ItemTagData[] = [];
 
-	const uses: { type: string }[] = []; // add item.uses when its implemented
+	// Only consider an item to be used for a quest if its use is "objective" not "reward"
+	const isQuestObjective = item.questEntries?.some(
+		(entry) => entry.questEntry.type === "objective"
+	);
+
+	const questUses = !!isQuestObjective;
+	const workbenchUses = !!item.workbenchRequirements?.length;
+
 	const sources: { type: string }[] = []; // add item.sources when its implemented
-	const recycling: RecipeRow[] = item.recycling || []; // add item.recycling when its implemented
+	const hasRecipe = !!item.recipeId; // add item.recycling when its implemented
+	const hasRecycling = !!item.recyclingId; // add item.recycling when its implemented
 
 	// Quest use
-	if (uses.some((use) => use.type === "quest")) {
+	if (questUses) {
 		tags.push({
 			key: "use-quest",
 			label: "Quest Item",
@@ -30,7 +38,7 @@ export function getItemTags(item: Item): ItemTagData[] {
 	}
 
 	// Workbench use
-	if (uses.some((use) => use.type === "workbench")) {
+	if (workbenchUses) {
 		tags.push({
 			key: "use-workbench",
 			label: "Workbench Upgrade Item",
@@ -39,7 +47,7 @@ export function getItemTags(item: Item): ItemTagData[] {
 		});
 	}
 
-	if (recycling.length > 0) {
+	if (hasRecycling) {
 		tags.push({
 			key: "recyclable",
 			label: "Is Recyclable",
@@ -48,7 +56,7 @@ export function getItemTags(item: Item): ItemTagData[] {
 		});
 	}
 
-	if (item.recipeId) {
+	if (hasRecipe) {
 		tags.push({
 			key: "craftable",
 			label: "Is Craftable",
