@@ -1,11 +1,10 @@
-"use client";
-
-import { Quest } from "@/types/quest";
+import { Quest, QuestEntryItem } from "@/types";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, ExternalLink, MoveLeft, MoveRight } from "lucide-react";
 import Image from "next/image";
-import QuestFullSkeleton from "./questFullSkeleton";
+import { QuestDescription } from "./questDescription";
+import { QuestRewards } from "./questRewards";
 
 function capitalizeId(id: string) {
 	return id
@@ -22,6 +21,18 @@ export function QuestFull({ questData }: { questData: Quest }) {
 	const starterImg =
 		"https://arcraiders.wiki/w/images/thumb/c/c6/Maps_Together.png/120px-Maps_Together.png.webp";
 	const fullImg = "/images/quests/348px-Maps_Together.png-1.webp";
+
+	const questEntries = questData.entries;
+	const objective = questEntries.find((entry) => entry.type === "objective");
+	const objectiveItems: QuestEntryItem[] = objective?.items || [];
+
+	const reward = questEntries.find((entry) => entry.type === "reward");
+	const rewardItems: QuestEntryItem[] = reward?.items || [];
+
+	const previousQuests: string[] = questData.previous;
+	const nextQuests: string[] = questData.next;
+
+	// TODO: IMPLEMENT ACTUAL ITEM PREVIEWS FOR REQUIREMENTS AND REWARDS
 
 	return (
 		<article className="w-full p-4">
@@ -58,8 +69,8 @@ export function QuestFull({ questData }: { questData: Quest }) {
 				<div className="flex justify-between p-2">
 					<div className="flex flex-col items-start gap-2">
 						<h2 className="text-sm pl-2">Prerequisites</h2>
-						{(questData.prereq ?? []).length > 0 ? (
-							(questData.prereq ?? []).map((prereqId: string) => (
+						{(previousQuests ?? []).length > 0 ? (
+							(previousQuests ?? []).map((prereqId: string) => (
 								<Link
 									key={prereqId}
 									href={`/quests/${prereqId}`}
@@ -82,8 +93,8 @@ export function QuestFull({ questData }: { questData: Quest }) {
 
 					<div className="flex flex-col items-end gap-2">
 						<h2 className="text-sm pr-2">Next Quests</h2>
-						{(questData.next ?? []).length > 0 ? (
-							(questData.next ?? []).map((nextId: string) => (
+						{(nextQuests ?? []).length > 0 ? (
+							(nextQuests ?? []).map((nextId: string) => (
 								<Link
 									key={nextId}
 									href={`/quests/${nextId}`}
@@ -121,26 +132,16 @@ export function QuestFull({ questData }: { questData: Quest }) {
 						{/* Requirements */}
 						<section className="mb-6">
 							<h2 className="text-xl font-semibold mb-2">Objectives</h2>
-							<ul className="list-disc ml-6">
-								{questData.requirements?.map((req, i) => (
-									<li key={i}>{req.description}</li>
-								))}
-							</ul>
+							<QuestDescription requirement={objective} />
 						</section>
 
 						{/* Rewards */}
 						<section>
 							<h2 className="text-xl font-semibold mb-2">Rewards</h2>
-							<ul className="list-disc ml-6">
-								{questData.rewards?.map((reward, i) => (
-									<li key={i}>
-										{typeof reward.count === "number" && (
-											<span>x{reward.count} </span>
-										)}
-										{reward.description}
-									</li>
-								))}
-							</ul>
+							<QuestRewards
+								rewardItems={rewardItems}
+								xpReward={questData.xpReward || 0}
+							/>
 						</section>
 					</div>
 
