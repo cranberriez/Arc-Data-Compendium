@@ -1,8 +1,8 @@
 "use client";
 
-import React, { createContext, useContext, useEffect, useState } from "react";
-import { fetchRecipes } from "@/services/dataService";
-import { Recipe } from "@/types/items/recipe";
+import React, { createContext, useContext, useState, useMemo } from "react";
+import { fetchRecipes } from "@/services/dataService.client";
+import { Recipe } from "@/types";
 
 interface RecipeContextType {
 	recipes: Recipe[];
@@ -10,14 +10,22 @@ interface RecipeContextType {
 	error: Error | null;
 	refreshRecipes: () => Promise<void>;
 	getRecipeById: (id: string) => Recipe | undefined;
-	getRecipesByWorkbench: (workbenchId: string) => Recipe[];
+	getRecyclingSourcesById: (id: string) => Recipe[];
+	recyclingRecipes: Recipe[];
+	craftingRecipes: Recipe[];
 }
 
 const RecipeContext = createContext<RecipeContextType | undefined>(undefined);
 
-export function RecipeProvider({ children }: { children: React.ReactNode }) {
-	const [recipes, setRecipes] = useState<Recipe[]>([]);
-	const [loading, setLoading] = useState<boolean>(true);
+export function RecipeProvider({
+	initialRecipes,
+	children,
+}: {
+	initialRecipes: Recipe[];
+	children: React.ReactNode;
+}) {
+	const [recipes, setRecipes] = useState<Recipe[]>(initialRecipes);
+	const [loading, setLoading] = useState<boolean>(false);
 	const [error, setError] = useState<Error | null>(null);
 
 	const fetchRecipeData = async () => {
@@ -34,10 +42,6 @@ export function RecipeProvider({ children }: { children: React.ReactNode }) {
 		}
 	};
 
-	useEffect(() => {
-		fetchRecipeData();
-	}, []);
-
 	const refreshRecipes = async () => {
 		await fetchRecipeData();
 	};
@@ -46,8 +50,21 @@ export function RecipeProvider({ children }: { children: React.ReactNode }) {
 		return recipes.find((recipe) => recipe.id === id);
 	};
 
-	const getRecipesByWorkbench = (workbenchId: string) => {
-		return recipes.filter((recipe) => recipe.workbench && workbenchId in recipe.workbench);
+	const recyclingRecipes = useMemo(
+		() => recipes.filter((recipe) => recipe.type === "recycling"),
+		[recipes]
+	);
+
+	const craftingRecipes = useMemo(
+		() => recipes.filter((recipe) => recipe.type === "crafting"),
+		[recipes]
+	);
+
+	// Get all RECYCLING recipes that output the given item
+	const getRecyclingSourcesById = (id: string) => {
+		return recyclingRecipes.filter((recipe) =>
+			recipe.io?.some((io) => io.role === "output" && io.itemId === id)
+		);
 	};
 
 	return (
@@ -58,7 +75,9 @@ export function RecipeProvider({ children }: { children: React.ReactNode }) {
 				error,
 				refreshRecipes,
 				getRecipeById,
-				getRecipesByWorkbench,
+				recyclingRecipes,
+				craftingRecipes,
+				getRecyclingSourcesById,
 			}}
 		>
 			{children}

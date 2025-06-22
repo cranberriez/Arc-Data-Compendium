@@ -1,10 +1,10 @@
-import { Item } from "@/types";
+import { Item, Recipe } from "@/types";
 import { RecycleIcon, Book, LucideIcon, Boxes, ShoppingBasket, Hammer, Scroll } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
 import React from "react";
 
-export type DescriptorBadgeData = {
+export type ItemTagData = {
 	key: string;
 	label: string;
 	icon?: LucideIcon;
@@ -12,12 +12,24 @@ export type DescriptorBadgeData = {
 	size?: "sm" | "md" | "lg" | "xl";
 };
 
-export function getDescriptorBadges(item: Item): DescriptorBadgeData[] {
-	const badges: DescriptorBadgeData[] = [];
+export function getItemTags(item: Item): ItemTagData[] {
+	const tags: ItemTagData[] = [];
 
-	// Badge for quest use
-	if (item.uses && item.uses.some((use) => use.type === "quest")) {
-		badges.push({
+	// Only consider an item to be used for a quest if its use is "objective" not "reward"
+	const isQuestObjective = item.questEntries?.some(
+		(entry) => entry.questEntry.type === "objective"
+	);
+
+	const questUses = !!isQuestObjective;
+	const workbenchUses = !!item.workbenchRequirements?.length;
+
+	const sources: { type: string }[] = []; // add item.sources when its implemented
+	const hasRecipe = !!item.recipeId; // add item.recycling when its implemented
+	const hasRecycling = !!item.recyclingId; // add item.recycling when its implemented
+
+	// Quest use
+	if (questUses) {
+		tags.push({
 			key: "use-quest",
 			label: "Quest Item",
 			icon: Scroll,
@@ -25,9 +37,9 @@ export function getDescriptorBadges(item: Item): DescriptorBadgeData[] {
 		});
 	}
 
-	// Badge for workbench use
-	if (item.uses && item.uses.some((use) => use.type === "workbench")) {
-		badges.push({
+	// Workbench use
+	if (workbenchUses) {
+		tags.push({
 			key: "use-workbench",
 			label: "Workbench Upgrade Item",
 			icon: Hammer,
@@ -35,8 +47,8 @@ export function getDescriptorBadges(item: Item): DescriptorBadgeData[] {
 		});
 	}
 
-	if (item.recycling && item.recycling.length > 0) {
-		badges.push({
+	if (hasRecycling) {
+		tags.push({
 			key: "recyclable",
 			label: "Is Recyclable",
 			icon: RecycleIcon,
@@ -44,8 +56,8 @@ export function getDescriptorBadges(item: Item): DescriptorBadgeData[] {
 		});
 	}
 
-	if (item.recipeId) {
-		badges.push({
+	if (hasRecipe) {
+		tags.push({
 			key: "craftable",
 			label: "Is Craftable",
 			icon: Book,
@@ -53,10 +65,10 @@ export function getDescriptorBadges(item: Item): DescriptorBadgeData[] {
 		});
 	}
 
-	if (item.sources && item.sources.length > 0) {
+	if (sources.length > 0) {
 		// Badge for recycle sources
-		if (item.sources.some((src) => src.type === "recycle")) {
-			badges.push({
+		if (sources.some((src) => src.type === "recycle")) {
+			tags.push({
 				key: "sources-recycle",
 				label: "Has Recycle Source",
 				icon: Boxes,
@@ -64,8 +76,8 @@ export function getDescriptorBadges(item: Item): DescriptorBadgeData[] {
 			});
 		}
 		// Badge for buy sources
-		if (item.sources.some((src) => src.type === "buy")) {
-			badges.push({
+		if (sources.some((src) => src.type === "buy")) {
+			tags.push({
 				key: "sources-buy",
 				label: "Can Be Bought",
 				icon: ShoppingBasket,
@@ -74,10 +86,10 @@ export function getDescriptorBadges(item: Item): DescriptorBadgeData[] {
 		}
 	}
 
-	return badges;
+	return tags;
 }
 
-type DescriptorBadgeProps = {
+type ItemTagProps = {
 	label: string;
 	icon?: LucideIcon;
 	colorClass?: string; // Tailwind background class for badge
@@ -85,7 +97,7 @@ type DescriptorBadgeProps = {
 	size?: "sm" | "md" | "lg" | "xl";
 };
 
-export const DescriptorBadge: React.FC<DescriptorBadgeProps> = ({
+export const ItemTag: React.FC<ItemTagProps> = ({
 	label,
 	icon,
 	colorClass,

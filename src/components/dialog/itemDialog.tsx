@@ -1,13 +1,14 @@
 "use client";
 
 import * as React from "react";
-import { Dialog, DialogContent, DialogDescription } from "@/components/ui/dialog";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Item } from "@/types";
 import { useDialog } from "@/contexts/dialogContext";
 import { Button } from "@/components/ui/button";
 import { ItemHeader, RecyclingSection, SourcesSection, QuickUseSection, GearSection } from ".";
 import DevTools from "./diagDevTools";
 import DiagDescription from "./diagDescription";
+import { useRecipes } from "@/contexts/recipeContext";
 
 type ItemDialogProps = {
 	data: Item;
@@ -18,14 +19,10 @@ type ItemDialogProps = {
 
 export function ItemDialog({ data, isOpen, closeDialog, backDialog }: ItemDialogProps) {
 	const { dialogQueue } = useDialog();
+	const { getRecyclingSourcesById } = useRecipes();
 
 	if (!data) return null;
 	const item = data;
-
-	const sourcesPresent = item.sources && item.sources.length > 0;
-	const recyclingPresent = item.recycling && item.recycling.length > 0;
-	const isQuickUse = item.quickUse;
-	const isGear = item.gear;
 
 	// Custom close handler to clear the queue
 	const handleCloseDialog = () => {
@@ -36,6 +33,13 @@ export function ItemDialog({ data, isOpen, closeDialog, backDialog }: ItemDialog
 	const handleBack = () => {
 		backDialog();
 	};
+
+	const quickUseStats = item.quickUse?.stats;
+	const quickUseCharge = item.quickUse?.charge;
+	const gearStats = item.gear?.stats;
+	const gearType = item.gear?.category;
+	const recyclingRecipe = item.recycling;
+	const recyclingSources = getRecyclingSourcesById(item.id);
 
 	return (
 		<Dialog
@@ -63,21 +67,42 @@ export function ItemDialog({ data, isOpen, closeDialog, backDialog }: ItemDialog
 
 				<DiagDescription item={item} />
 
-				{sourcesPresent || recyclingPresent || isQuickUse || isGear ? (
+				{quickUseStats || quickUseCharge || gearStats || gearType || recyclingRecipe ? (
 					<hr className="my-2 border-t border-t-secondary-foreground/20 dark:border-t-secondary-foreground/10" />
 				) : null}
 
 				{/* Quick Use Section */}
-				{isQuickUse && <QuickUseSection item={item} />}
+				{quickUseStats && quickUseCharge && (
+					<QuickUseSection
+						flavorText={item.flavorText}
+						stats={quickUseStats}
+						charge={quickUseCharge}
+					/>
+				)}
 
 				{/* Gear Section */}
-				{isGear && <GearSection item={item} />}
+				{gearStats && gearType && (
+					<GearSection
+						stats={gearStats}
+						type={gearType}
+					/>
+				)}
 
 				{/* Recycling Section */}
-				{recyclingPresent && <RecyclingSection item={item} />}
+				{recyclingRecipe && (
+					<RecyclingSection
+						outputItem={item}
+						recyclingRecipe={recyclingRecipe}
+					/>
+				)}
 
 				{/* Sources Section (with two columns) */}
-				{sourcesPresent && <SourcesSection item={item} />}
+				{recyclingSources.length > 0 && (
+					<SourcesSection
+						item={item}
+						recyclingSources={recyclingSources}
+					/>
+				)}
 
 				{/* TODO: Recipe Section */}
 				{/* TODO: Uses Section quests/workshop */}

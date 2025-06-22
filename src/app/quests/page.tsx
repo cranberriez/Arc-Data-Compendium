@@ -1,6 +1,7 @@
 import React from "react";
-import { fetchQuests } from "@/services/dataService";
+import { fetchQuests } from "@/services/dataService.server";
 import { QuestList } from "./components/questList";
+import { Quest } from "@/types";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -12,9 +13,9 @@ export const metadata: Metadata = {
 export default async function QuestsPage() {
 	// Artificial delay for testing loading skeleton
 	// await new Promise((res) => setTimeout(res, 5000));
-	const questData = await fetchQuests();
+	const questData: Quest[] = await fetchQuests();
 
-	if (!questData) return <p>No quests found.</p>;
+	if (!questData || questData.length === 0) return <p>No quests found.</p>;
 
 	return (
 		<article className="w-full p-4">

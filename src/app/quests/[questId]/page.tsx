@@ -1,13 +1,23 @@
-import { fetchQuestById } from "@/services/dataService";
+import { fetchQuestById, fetchQuestIds } from "@/services/dataService.server";
 import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { QuestFull } from "../components/questFull";
 
-export default async function QuestPage({ params }: { params: Promise<{ questId: string }> }) {
-	const { questId } = await params;
-	const questData = await fetchQuestById(questId);
+export async function generateStaticParams() {
+	const questIds = await fetchQuestIds();
+	return questIds.map((id) => ({ questId: id }));
+}
+
+interface QuestPageProps {
+	params: Promise<{
+		questId: string;
+	}>;
+}
+
+export default async function QuestPage({ params }: QuestPageProps) {
+	const questData = await fetchQuestById((await params).questId);
 
 	if (!questData) {
 		return (

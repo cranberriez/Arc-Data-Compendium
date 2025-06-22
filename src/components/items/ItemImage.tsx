@@ -5,7 +5,7 @@ import { useMemo, useState } from "react";
 import Image from "next/image";
 import { Item } from "@/types";
 import { cn } from "@/lib/utils";
-import { getRarityColor } from "@/data/items/itemUtils";
+import { getRarityColor } from "@/utils/items/itemUtils";
 import { getItemImagePath } from "@/utils/itemImage";
 import getItemIcon from "./getItemIcon";
 

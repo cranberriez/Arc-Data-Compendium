@@ -1,12 +1,18 @@
-import { Item } from "@/types";
+import { Item, RecyclingRecipe } from "@/types";
 import { useItems } from "@/contexts/itemContext";
 import { ItemCard } from "@/components/items/ItemCard";
 import { Recycle, ArrowRight } from "lucide-react";
 
-export const RecyclingSection = ({ item }: { item: Item }) => {
+export const RecyclingSection = ({
+	outputItem,
+	recyclingRecipe,
+}: {
+	outputItem: Item;
+	recyclingRecipe: RecyclingRecipe;
+}) => {
 	const { getItemById } = useItems();
 
-	if (!item.recycling || item.recycling.length === 0) return null;
+	const outputs = recyclingRecipe.io.filter((io) => io.role === "output");
 
 	return (
 		<div className="flex flex-col w-fit min-w-full gap-2">
@@ -18,10 +24,6 @@ export const RecyclingSection = ({ item }: { item: Item }) => {
 				<div className="flex md:flex-row flex-col w-full items-baseline">
 					<p>
 						<span className="inline-block text-lg">Recycling:</span>
-						<span className="text-xs text-muted-foreground">
-							{" "}
-							({item.recycling.length})
-						</span>
 					</p>
 					<p className="text-xs text-muted-foreground md:ml-auto whitespace-nowrap">
 						In Raid output is halved
@@ -30,7 +32,7 @@ export const RecyclingSection = ({ item }: { item: Item }) => {
 			</div>
 			<div className="flex flex-row items-center gap-2">
 				<ItemCard
-					item={item}
+					item={outputItem}
 					variant="compact"
 					onClick={() => {}}
 					innerCount={true}
@@ -40,16 +42,16 @@ export const RecyclingSection = ({ item }: { item: Item }) => {
 					}
 				/>
 				<ArrowRight className="size-4" />
-				{item.recycling.map((recycle, idx) => {
-					const recycledItem = getItemById(recycle.id);
+				{outputs.map((output, idx) => {
+					const recycledItem = getItemById(output.itemId);
 					if (!recycledItem) return null;
 					return (
 						<ItemCard
-							key={recycle.id + idx}
+							key={output.itemId + idx}
 							item={recycledItem}
 							variant="compact"
 							size="sm"
-							count={recycle.count}
+							count={output.qty}
 						/>
 					);
 				})}

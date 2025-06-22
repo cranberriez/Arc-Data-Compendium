@@ -1,5 +1,4 @@
 import { Item } from "@/types";
-import { ItemSource } from "@/types/items/types";
 import {
 	Anvil,
 	Cog,
@@ -15,98 +14,7 @@ import {
 	Zap,
 } from "lucide-react";
 
-// Cache for reverse lookup of recycle sources
-let recycleSourceCache: Map<string, ItemSource[]> | null = null;
-
-/**
- * Builds a reverse lookup map for recycling sources
- * @param items Array of all items
- * @returns Map where key is item ID and value is array of sources that can be recycled into it
- */
-function buildRecycleSourceMap(items: Item[]): Map<string, ItemSource[]> {
-	const sourceMap = new Map<string, ItemSource[]>();
-
-	items.forEach((item) => {
-		if (item.recycling) {
-			item.recycling.forEach((recycle) => {
-				if (!sourceMap.has(recycle.id)) {
-					sourceMap.set(recycle.id, []);
-				}
-
-				sourceMap.get(recycle.id)?.push({
-					type: "recycle",
-					fromItemId: item.id,
-					count: recycle.count,
-				});
-			});
-		}
-	});
-
-	return sourceMap;
-}
-
-/**
- * Gets all sources for an item, including reverse lookup of recycling sources
- * @param itemId ID of the item to get sources for
- * @param items Array of all items
- * @returns Array of all sources for the item
- */
-export function getItemSources(itemId: string, items: Item[]): ItemSource[] {
-	// Find the item
-	const item = items.find((i) => i.id === itemId);
-	if (!item) return [];
-
-	// Initialize the cache if needed
-	if (!recycleSourceCache) {
-		recycleSourceCache = buildRecycleSourceMap(items);
-	}
-
-	const sources: ItemSource[] = [];
-	// Get the original sources (buy only, now)
-	// if (item.sources) {
-	// 	for (const src of item.sources) {
-	// 		if (src.type === "buy") {
-	// 			// Only push buy sources, matching the new structure
-	// 			sources.push({
-	// 				type: "buy",
-	// 				trader: src.trader,
-	// 				value: src.value,
-	// 				count: src.count,
-	// 			});
-	// 		}
-	// 	}
-	// }
-
-	// Add recycling sources if any
-	const recycleSources = recycleSourceCache.get(itemId) || [];
-	sources.push(...recycleSources);
-
-	return sources;
-}
-
-/**
- * Gets items that can be recycled into the specified item
- * @param itemId ID of the item to check
- * @param items Array of all items
- * @returns Array of items that can be recycled into the specified item
- */
-export function getRecycleSources(itemId: string, items: Item[]): ItemSource[] {
-	if (!recycleSourceCache) {
-		recycleSourceCache = buildRecycleSourceMap(items);
-	}
-	return recycleSourceCache.get(itemId) || [];
-}
-
-/**
- * Invalidates the recycle source cache
- * Call this after modifying items that affect recycling
- */
-export function invalidateRecycleCache(): void {
-	recycleSourceCache = null;
-}
-
-import { LucideIcon } from "lucide-react";
-import { Rarity, ItemCategory } from "@/types/items/types";
+import { Rarity } from "@/types";
 
 const rarityClasses = {
 	common: {
@@ -205,8 +113,12 @@ export const searchFunc = (item: Item, query: string) => {
 	const queryTokens = queryNorm.split(" ").filter(Boolean);
 
 	// Prepare name and id tokens
-	const nameTokens = normalize(item.name).split(" ").filter(Boolean);
-	const idTokens = normalize(item.id).split(" ").filter(Boolean);
+	const nameTokens = normalize(item.name ?? "")
+		.split(" ")
+		.filter(Boolean);
+	const idTokens = normalize(item.id ?? "")
+		.split(" ")
+		.filter(Boolean);
 
 	// Also prepare compact versions (remove all spaces and underscores)
 	const compact = (str: string) =>
@@ -215,8 +127,8 @@ export const searchFunc = (item: Item, query: string) => {
 			.replace(/[_\s]+/g, "")
 			.replace(/[^a-z0-9]/g, "");
 	const compactQuery = compact(query);
-	const compactName = compact(item.name);
-	const compactId = compact(item.id);
+	const compactName = compact(item.name ?? "");
+	const compactId = compact(item.id ?? "");
 
 	// Match if every query token is found in either name or id tokens,
 	// or if the compact query is a substring of the compact name or id

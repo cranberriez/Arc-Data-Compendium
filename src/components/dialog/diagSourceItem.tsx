@@ -1,57 +1,58 @@
 // Component for a single source item
-import { Item } from "@/types";
-import { useItems } from "@/contexts/itemContext";
+import { Item, Recipe } from "@/types";
 import { ItemCard } from "@/components/items/ItemCard";
 import { ArrowRight } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
-import { cn } from "@/lib/utils";
+import { useItems } from "@/contexts/itemContext";
 
-export const SourceItem = ({
-	sourceItem,
-	item,
-	source,
+export const RecycleSourceItem = ({
+	sourceRecipe,
+	mainItem,
+	mainItemQty,
 }: {
-	sourceItem: Item;
-	item: Item;
-	source: any;
+	sourceRecipe: Recipe;
+	mainItem: Item;
+	mainItemQty: number;
 }) => {
-	const { getItemById } = useItems();
 	const isMobile = useIsMobile();
 	const size = isMobile ? "sm" : "sm";
+	const { getItemById } = useItems();
 
-	// Get recycle products for this sourceItem
-	const recycleProducts = (sourceItem.recycling || [])
-		.map((recycle) => getItemById(recycle.id))
-		.filter(Boolean)
-		.filter((recycledItem) => recycledItem && recycledItem.id !== item.id);
+	const sourceItem = sourceRecipe.io.filter((io) => io.role === "input")[0];
+	if (!sourceItem) return null;
+
+	const coproducts = sourceRecipe.io.filter(
+		(io) => io.role === "output" && io.itemId !== mainItem.id
+	);
 
 	return (
 		<div className="flex flex-row items-center gap-1 sm:gap-2 cursor-default border-2 border-dashed border-accent rounded-md">
 			<ItemCard
-				item={sourceItem}
+				item={getItemById(sourceItem.itemId)}
 				variant="compact"
 				size={size}
 			/>
 			<ArrowRight className="size-4" />
 			<ItemCard
-				item={item}
+				item={mainItem}
 				variant="compact"
 				onClick={() => {}}
-				count={source.count}
+				count={mainItemQty}
 				innerCount={true}
 				size={size}
 				className={"cursor-default bg-accent border-2 border-accent hover:border-accent/50"}
 			/>
-			{recycleProducts.length > 0 && (
+			{coproducts.length > 0 && (
 				<div className="flex flex-row items-center gap-1 ml-2">
-					{recycleProducts.map((recycledItem) => {
-						if (!recycledItem) return null;
+					{coproducts.map((coproduct) => {
+						if (!coproduct) return null;
+						const item = getItemById(coproduct.itemId);
 						return (
 							<ItemCard
-								key={recycledItem.id}
-								item={recycledItem}
+								key={coproduct.itemId}
+								item={item}
 								variant="compact"
-								count={source.count}
+								count={coproduct.qty}
 								innerCount={true}
 								size={size}
 							/>

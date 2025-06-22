@@ -2,7 +2,7 @@ import { Check, PlusIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { MoveLeft, MoveRight, Trash } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { Item, Workbench } from "@/types";
+import { Item, Tier, Workbench } from "@/types";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ItemCard } from "@/components/items/ItemCard";
 import { useItems } from "@/contexts/itemContext";
@@ -34,7 +34,7 @@ export const WorkbenchUpgrades = ({
 			/>
 			{!isMaxed && (
 				<WorkbenchUpgradeReqs
-					workbench={workbench}
+					tiers={workbench.tiers}
 					curWbTier={curWbTier}
 				/>
 			)}
@@ -134,17 +134,17 @@ export const WorkbenchTier = ({
 };
 
 export const WorkbenchUpgradeReqs = ({
-	workbench,
+	tiers,
 	curWbTier,
 }: {
-	workbench: Workbench;
+	tiers: Tier[];
 	curWbTier: number;
 }) => {
 	const { isLoading: itemsLoading, getItemById } = useItems();
 
 	return (
 		<div className="flex flex-col gap-1 min-h-[128px]">
-			{workbench.tiers[curWbTier].requiredItems.map((req) => (
+			{tiers[curWbTier].requirements.map((req) => (
 				<div
 					key={req.itemId}
 					className="flex items-center gap-2 w-full"

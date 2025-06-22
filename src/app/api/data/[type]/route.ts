@@ -1,24 +1,7 @@
 import { NextResponse } from "next/server";
-import { Item } from "@/types/items/item";
-import { Recipe } from "@/types/items/recipe";
-import { Workbench } from "@/types/items/workbench";
-import { Quest } from "@/types/items/quest";
+import { getItems, getWeapons, getRecipes, getWorkbenches, getQuests } from "@/db/queries";
 
-// Import all JSON data files
-import itemData from "@/data/items/itemData.build.json";
-import recipeData from "@/data/recipes/recipeData.json";
-import workbenchData from "@/data/workbenches/workbenchData.json";
-import questData from "@/data/quests/questData.json";
-
-type DataType = "items" | "recipes" | "workbenches" | "quests";
-
-// Map data types to their corresponding data sources
-const dataMap: Record<DataType, any> = {
-	items: itemData as Item[],
-	recipes: recipeData as Recipe[],
-	workbenches: workbenchData as Workbench[],
-	quests: questData as Quest[],
-};
+type DataType = "items" | "weapons" | "recipes" | "workbenches" | "quests";
 
 const headers = {
 	"Access-Control-Allow-Origin": "*",
@@ -32,19 +15,29 @@ type RouteParams = {
 	}>;
 };
 
+const typeToQuery: Record<DataType, () => Promise<any>> = {
+	items: getItems,
+	weapons: getWeapons,
+	recipes: getRecipes,
+	workbenches: getWorkbenches,
+	quests: getQuests,
+};
+
+export const revalidate = 3600; // seconds
+
 export async function GET(request: Request, { params }: RouteParams) {
+	const { type } = await params;
+
+	const queryFn = typeToQuery[type];
+
+	if (!queryFn) {
+		return NextResponse.json({ error: `Invalid data type: ${type}` }, { headers, status: 400 });
+	}
+
 	try {
-		const { type } = await params;
-		const data = dataMap[type];
+		const response = await queryFn();
 
-		if (!data) {
-			return NextResponse.json(
-				{ error: `Invalid data type: ${type}` },
-				{ headers, status: 400 }
-			);
-		}
-
-		return NextResponse.json(data, { headers });
+		return NextResponse.json(response, { headers });
 	} catch (error) {
 		console.error(`Error fetching data:`, error);
 		return NextResponse.json({ error: "Internal server error" }, { headers, status: 500 });

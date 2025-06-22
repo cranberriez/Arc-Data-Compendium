@@ -1,4 +1,4 @@
-import { fetchWeapons } from "@/services/dataService";
+import { fetchWeapons } from "@/services/dataService.server";
 import { WeaponsClient } from "./components/weaponClient";
 import { Metadata } from "next";
 

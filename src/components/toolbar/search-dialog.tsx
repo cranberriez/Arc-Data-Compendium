@@ -3,7 +3,7 @@
 import React from "react";
 import { useState, useEffect, useMemo } from "react";
 import { useItems } from "@/contexts/itemContext";
-import { getTypeIcon, getRarityColor, formatName, searchFunc } from "@/data/items/itemUtils";
+import { getTypeIcon, getRarityColor, formatName, searchFunc } from "@/utils/items/itemUtils";
 import { Item } from "@/types";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -15,7 +15,7 @@ import {
 	CommandList,
 	CommandSeparator,
 } from "@/components/ui/command";
-import { ItemCategory } from "@/types/items/types";
+import { ItemCategory } from "@/types";
 import { useDialog } from "@/contexts/dialogContext";
 import { usePathname, useRouter } from "next/navigation";
 import getItemIcon from "@/components/items/getItemIcon";

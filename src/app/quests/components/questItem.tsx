@@ -1,8 +1,10 @@
 import { cn } from "@/lib/utils";
 import { ExternalLink, Pin, FileText, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import type { Quest, QuestObjective, QuestReward } from "@/types";
+import type { Quest } from "@/types";
 import Link from "next/link";
+import { QuestRewards } from "./questRewards";
+import { QuestDescription } from "./questDescription";
 
 type QuestItemProps = {
 	quest: Quest;
@@ -16,6 +18,9 @@ function capitalizeId(id: string) {
 }
 
 export function QuestItem({ quest }: QuestItemProps) {
+	const requirement = quest.entries.find((entry) => entry.type === "objective");
+	const reward = quest.entries.find((entry) => entry.type === "reward");
+
 	return (
 		<li
 			key={quest.id}
@@ -25,8 +30,17 @@ export function QuestItem({ quest }: QuestItemProps) {
 			<div className="flex flex-col flex-1 gap-4 border rounded-lg p-4 shadow group/questcard">
 				<div className="flex md:flex-row flex-col gap-8">
 					<QuestHeader quest={quest} />
-					<QuestRequirements requirements={quest.requirements} />
-					<QuestRewards rewards={quest.rewards} />
+					<div className="flex-1">
+						<h3 className="text-lg font-semibold mb-2">Objectives</h3>
+						<QuestDescription requirement={requirement} />
+					</div>
+					<div className="flex-1">
+						<h3 className="text-lg font-semibold mb-2">Rewards</h3>
+						<QuestRewards
+							rewardItems={reward?.items || []}
+							xpReward={quest.xpReward || 0}
+						/>
+					</div>
 				</div>
 				<QuestButtons quest={quest} />
 			</div>
@@ -73,35 +87,6 @@ function QuestHeader({ quest }: { quest: Quest }) {
 			{quest.dialog && (
 				<blockquote className="italic text-gray-700">&quot;{quest.dialog}&quot;</blockquote>
 			)}
-		</div>
-	);
-}
-
-function QuestRequirements({ requirements }: { requirements: QuestObjective[] }) {
-	return (
-		<div className="flex-1">
-			<strong>Requirements:</strong>
-			<ul className="list-disc ml-6">
-				{requirements.map((req, i) => (
-					<li key={i}>{req.description}</li>
-				))}
-			</ul>
-		</div>
-	);
-}
-
-function QuestRewards({ rewards }: { rewards: QuestReward[] }) {
-	return (
-		<div className="flex-1">
-			<strong>Rewards:</strong>
-			<ul className="list-disc ml-6">
-				{rewards.map((reward, i) => (
-					<li key={i}>
-						{typeof reward.count === "number" && <span> x{reward.count} </span>}
-						{reward.description}
-					</li>
-				))}
-			</ul>
 		</div>
 	);
 }

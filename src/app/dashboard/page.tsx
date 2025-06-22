@@ -1,5 +1,5 @@
 // app/dashboard/page.tsx
-import { fetchItems } from "@/services/dataService";
+import { fetchItems } from "@/services/dataService.server";
 import { Swords, Hammer, Recycle, Shield, Package, Zap } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";

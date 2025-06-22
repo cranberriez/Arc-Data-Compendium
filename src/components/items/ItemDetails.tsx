@@ -3,9 +3,8 @@
 import * as React from "react";
 import { Item } from "@/types";
 import { cn } from "@/lib/utils";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import { Weight, BadgeCent, Book } from "lucide-react";
-import { DescriptorBadge, getDescriptorBadges } from "./itemTagBadges";
+import { TooltipProvider } from "@/components/ui/tooltip";
+import { getItemTags, ItemTag } from "./itemTags";
 
 export interface ItemDetailsProps {
 	/** The item to display */
@@ -67,7 +66,7 @@ export const ItemDetails = React.memo(function ItemDetails({
 
 	if (!item) return null;
 
-	const badges = getDescriptorBadges(item);
+	const tags = getItemTags(item);
 
 	return (
 		<div className={cn("flex flex-row items-center gap-3", "text-muted-foreground", className)}>
@@ -93,14 +92,14 @@ export const ItemDetails = React.memo(function ItemDetails({
 				</div>
 			)} */}
 
-			{badges && (
+			{tags && (
 				<TooltipProvider>
-					{badges.map((badge) => (
-						<DescriptorBadge
-							key={badge.key}
-							label={badge.label}
-							icon={badge.icon}
-							colorClass={badge.colorClass}
+					{tags.map((tag) => (
+						<ItemTag
+							key={tag.key}
+							label={tag.label}
+							icon={tag.icon}
+							colorClass={tag.colorClass}
 							size={size}
 						/>
 					))}

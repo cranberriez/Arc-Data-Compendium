@@ -3,7 +3,7 @@
 import * as React from "react";
 import { Item } from "@/types";
 import { cn } from "@/lib/utils";
-import { getRarityColor } from "@/data/items/itemUtils";
+import { getRarityColor } from "@/utils/items/itemUtils";
 import { ItemImage } from "../ItemImage";
 import { ItemBadges } from "../ItemBadges";
 

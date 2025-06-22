@@ -1,4 +1,4 @@
-import { fetchWorkbenches } from "@/services/dataService";
+import { fetchWorkbenches } from "@/services/dataService.server";
 import ItemChecklist from "@/components/checklist/overview";
 import { WorkbenchList } from "../../components/workbench/workbenchList";
 import ResetUserData from "../../components/workbench/resetUserData";

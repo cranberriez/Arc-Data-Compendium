@@ -1,9 +1,14 @@
-import { fetchWorkbenchById } from "@/services/dataService";
+import { fetchWorkbenchById, fetchWorkbenchIds } from "@/services/dataService.server";
 import { WorkbenchClient } from "../../../components/workbench/workbenchClient";
 import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
+
+export async function generateStaticParams() {
+	const workbenchIds = await fetchWorkbenchIds();
+	return workbenchIds.map((id) => ({ workbenchId: id }));
+}
 
 interface WorkbenchPageProps {
 	params: Promise<{
@@ -12,12 +17,8 @@ interface WorkbenchPageProps {
 }
 
 export default async function WorkbenchPage({ params }: WorkbenchPageProps) {
-	const { workbenchId } = await params;
+	const workbench = await fetchWorkbenchById((await params).workbenchId);
 
-	// Fetch workbench data based on the workbench param
-	const workbench = await fetchWorkbenchById(workbenchId);
-
-	// Handle not found case
 	if (!workbench) {
 		return (
 			<main className="mx-auto max-w-[1600px] mt-12">

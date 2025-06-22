@@ -1,8 +1,9 @@
 "use client";
 
 import React, { createContext, useContext, useEffect, useState, useCallback, useMemo } from "react";
-import { fetchWorkbenches } from "@/services/dataService";
-import { Workbench, WorkbenchUpgradeSummary } from "@/types/items/workbench";
+import { fetchWorkbenches } from "@/services/dataService.client";
+import { Workbench } from "@/types";
+import { WorkbenchUpgradeSummary } from "@/types/wbSummary";
 import { useCookies } from "@/contexts/cookieContext";
 
 interface WorkshopContextType {
@@ -57,22 +58,26 @@ export function WorkshopProvider({ children }: { children: React.ReactNode }) {
 
 			if (!nextTierData) return summary;
 
-			nextTierData.requiredItems.forEach((item) => {
-				if (!summary[item.itemId]) {
-					summary[item.itemId] = {
+			nextTierData.requirements.forEach((requirement) => {
+				if (!summary[requirement.itemId]) {
+					summary[requirement.itemId] = {
 						count: 0,
 						usedIn: [],
 					};
 				}
-				summary[item.itemId].count += item.count;
+				summary[requirement.itemId].count += requirement.count;
 
 				const workbenchInfo = {
 					workbenchId: workbench.id,
 					targetTier: nextTier,
 				};
 
-				if (!summary[item.itemId].usedIn.some((wb) => wb.workbenchId === workbench.id)) {
-					summary[item.itemId].usedIn.push(workbenchInfo);
+				if (
+					!summary[requirement.itemId].usedIn.some(
+						(wb) => wb.workbenchId === workbench.id
+					)
+				) {
+					summary[requirement.itemId].usedIn.push(workbenchInfo);
 				}
 			});
 

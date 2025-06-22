@@ -79,7 +79,7 @@ export function WorkbenchClient({ workbench }: WorkbenchClientProps) {
 							</h3>
 							{!isMaxed ? (
 								<WorkbenchUpgradeReqs
-									workbench={workbench}
+									tiers={workbench.tiers}
 									curWbTier={curWbTier}
 								/>
 							) : (
@@ -96,7 +96,9 @@ export function WorkbenchClient({ workbench }: WorkbenchClientProps) {
 			</Card>
 
 			<WorkbenchTiers
-				workbench={workbench}
+				workbenchId={workbench.id}
+				recipes={workbench.workbenchRecipes}
+				tiers={workbench.tiers}
 				curWbTier={curWbTier}
 			/>
 		</div>

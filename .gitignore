@@ -42,3 +42,9 @@ next-env.d.ts
 
 docs/tasks/reminders.md
 src/data/items/itemData.build.json
+
+# clerk configuration (can include secrets)
+/.clerk/
+
+# drizzle migrations
+migrations
