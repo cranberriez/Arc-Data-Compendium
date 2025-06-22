@@ -80,9 +80,13 @@ export type Item = ItemBase & {
 // Weapon (item that is a weapon)
 export type Weapon = Item;
 
+export type QuestEntryItem = QuestEntryItemBase & {
+	item?: ItemBase;
+};
+
 // Quest entry with related items
-export type QuestEntry = ItemQuestEntry & {
-	relatedItems?: (QuestEntryItemBase & { item?: ItemBase })[];
+export type QuestEntry = QuestEntryBase & {
+	items?: QuestEntryItem[];
 };
 
 // Quest with entries, previous and next quests
