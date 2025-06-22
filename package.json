@@ -6,7 +6,6 @@
 		"dev": "next dev",
 		"seed": "tsx scripts/seed.ts",
 		"devtb": "next dev --turbopack",
-		"prebuild": "tsx scripts/generateItemData.ts",
 		"build": "next build",
 		"start": "next start",
 		"lint": "next lint"
