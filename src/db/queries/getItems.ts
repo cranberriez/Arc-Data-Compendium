@@ -55,12 +55,3 @@ export const getWeapons = ({ id }: { id?: string } = {}) => {
 		},
 	});
 };
-
-export const getAllRecyclingRecipes = () => {
-	return db.query.recipes.findMany({
-		where: eq(recipes.type, "recycling"),
-		with: {
-			io: true,
-		},
-	});
-};

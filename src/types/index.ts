@@ -9,6 +9,7 @@
  */
 
 export * from "./schema";
+export * from "./wbSummary";
 
 // Utility types
 export type Nullable<T> = T | null;
