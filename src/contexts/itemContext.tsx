@@ -22,6 +22,7 @@ interface ItemContextType {
 	sortState: SortOptions;
 	isLoading: boolean;
 	error: string | null;
+	refreshItems: () => Promise<void>;
 	setSearchQuery: (query: string) => void;
 	setRarity: (rarities: Rarity[]) => void;
 	setCategory: (categories: ItemCategory[]) => void;
@@ -51,30 +52,35 @@ const defaultSortState: SortOptions = {
 
 const ItemContext = createContext<ItemContextType | undefined>(undefined);
 
-export function ItemProvider({ children }: { children: ReactNode }) {
+export function ItemProvider({
+	initialItems,
+	children,
+}: {
+	initialItems: Item[];
+	children: ReactNode;
+}) {
 	// State for storing fetched items
-	const [allItems, setAllItems] = useState<Item[]>([]);
-	const [isLoading, setIsLoading] = useState(true);
+	const [allItems, setAllItems] = useState<Item[]>(initialItems);
+	const [isLoading, setIsLoading] = useState(false);
 	const [error, setError] = useState<string | null>(null);
 
-	// Fetch data from API endpoints
-	useEffect(() => {
-		async function loadData() {
+	const fetchItemData = async () => {
+		try {
 			setIsLoading(true);
-			try {
-				const fetchedItems = await fetchItems();
-				setAllItems(fetchedItems);
-				setError(null);
-			} catch (err) {
-				console.error("Failed to fetch items:", err);
-				setError("Failed to load items. Please try again later.");
-			} finally {
-				setIsLoading(false);
-			}
+			setError(null);
+			const data = await fetchItems();
+			setAllItems(data);
+		} catch (err) {
+			console.error("Failed to fetch items:", err);
+			setError(err instanceof Error ? err.message : "Failed to fetch items");
+		} finally {
+			setIsLoading(false);
 		}
+	};
 
-		loadData();
-	}, []);
+	const refreshItems = async () => {
+		await fetchItemData();
+	};
 
 	// State for filter and sort
 	const [filterState, setFilterState] = useState<FilterOptions>(defaultFilterState);
@@ -187,6 +193,7 @@ export function ItemProvider({ children }: { children: ReactNode }) {
 			filteredItems,
 			filterState,
 			sortState,
+			refreshItems,
 			isLoading,
 			error,
 			setSearchQuery,
@@ -206,6 +213,7 @@ export function ItemProvider({ children }: { children: ReactNode }) {
 			filteredItems,
 			filterState,
 			sortState,
+			refreshItems,
 			isLoading,
 			error,
 			setSearchQuery,

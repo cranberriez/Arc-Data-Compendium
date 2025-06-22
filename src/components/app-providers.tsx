@@ -1,5 +1,3 @@
-"use client";
-
 import {
 	ThemeProvider,
 	RecipeProvider,
@@ -9,12 +7,16 @@ import {
 	DialogProvider,
 } from "@/contexts";
 import { SidebarProvider } from "@/components/ui/sidebar";
+import { fetchRecipes, fetchItems } from "@/services/dataService";
 
 interface AppProvidersProps {
 	children: React.ReactNode;
 }
 
-export function AppProviders({ children }: AppProvidersProps) {
+export async function AppProviders({ children }: AppProvidersProps) {
+	const initialRecipes = await fetchRecipes();
+	const initialItems = await fetchItems();
+
 	return (
 		<ThemeProvider
 			attribute="class"
@@ -22,8 +24,8 @@ export function AppProviders({ children }: AppProvidersProps) {
 			enableSystem
 		>
 			<SidebarProvider>
-				<RecipeProvider>
-					<ItemProvider>
+				<RecipeProvider initialRecipes={initialRecipes}>
+					<ItemProvider initialItems={initialItems}>
 						<CookieProvider>
 							<WorkshopProvider>
 								<DialogProvider>{children}</DialogProvider>
