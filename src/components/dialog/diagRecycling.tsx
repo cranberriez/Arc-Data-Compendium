@@ -12,8 +12,7 @@ export const RecyclingSection = ({
 }) => {
 	const { getItemById } = useItems();
 
-	const inputs = recyclingRecipe.io.filter((io) => io.role === "input");
-	const outputs = recyclingRecipe.io.filter((io) => io.role === "output"); // Currently unused
+	const outputs = recyclingRecipe.io.filter((io) => io.role === "output");
 
 	return (
 		<div className="flex flex-col w-fit min-w-full gap-2">
@@ -25,10 +24,6 @@ export const RecyclingSection = ({
 				<div className="flex md:flex-row flex-col w-full items-baseline">
 					<p>
 						<span className="inline-block text-lg">Recycling:</span>
-						<span className="text-xs text-muted-foreground">
-							{" "}
-							({recyclingRecipe.io.length})
-						</span>
 					</p>
 					<p className="text-xs text-muted-foreground md:ml-auto whitespace-nowrap">
 						In Raid output is halved
@@ -47,16 +42,16 @@ export const RecyclingSection = ({
 					}
 				/>
 				<ArrowRight className="size-4" />
-				{inputs.map((input, idx) => {
-					const recycledItem = getItemById(input.itemId);
+				{outputs.map((output, idx) => {
+					const recycledItem = getItemById(output.itemId);
 					if (!recycledItem) return null;
 					return (
 						<ItemCard
-							key={input.itemId + idx}
+							key={output.itemId + idx}
 							item={recycledItem}
 							variant="compact"
 							size="sm"
-							count={input.qty}
+							count={output.qty}
 						/>
 					);
 				})}
