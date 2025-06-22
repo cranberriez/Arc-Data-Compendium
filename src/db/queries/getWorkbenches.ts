@@ -42,3 +42,18 @@ export const getWorkbenches = async ({
 		return [];
 	}
 };
+
+export const getWorkbenchIds = async (): Promise<string[]> => {
+	try {
+		return await db.query.workbenches
+			.findMany({
+				columns: {
+					id: true,
+				},
+			})
+			.then((workbenches) => workbenches.map((w) => w.id));
+	} catch (error) {
+		console.error("Error querying workbench IDs:", error);
+		return [];
+	}
+};

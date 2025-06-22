@@ -2,7 +2,7 @@
 
 import { Item, Weapon, Quest, Recipe, Workbench } from "@/types";
 import { getItems, getWeapons } from "@/db/queries/getItems";
-import { getQuestIds, getQuests, getRecipes, getWorkbenches } from "@/db/queries";
+import { getQuestIds, getQuests, getRecipes, getWorkbenches, getWorkbenchIds } from "@/db/queries";
 
 // Fetch all items
 export async function fetchItems(): Promise<Item[]> {
@@ -76,6 +76,15 @@ export async function fetchWorkbenchById(id: string): Promise<Workbench | null> 
 		return workbenches[0];
 	}
 	return null;
+}
+
+/**
+ * Fetches all workbench IDs from the API
+ * @returns Promise that resolves to an array of workbench IDs
+ */
+export async function fetchWorkbenchIds(): Promise<string[]> {
+	const workbenchIds = await getWorkbenchIds();
+	return Array.isArray(workbenchIds) ? workbenchIds : [];
 }
 
 /**
