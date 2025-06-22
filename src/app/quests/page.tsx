@@ -1,5 +1,5 @@
 import React from "react";
-import { fetchQuests } from "@/services/dataService";
+import { fetchQuests } from "@/services/dataService.server";
 import { QuestList } from "./components/questList";
 import { Quest } from "@/types";
 

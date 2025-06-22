@@ -1,4 +1,4 @@
-import { fetchQuestById } from "@/services/dataService";
+import { fetchQuestById } from "@/services/dataService.server";
 import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";

@@ -1,4 +1,4 @@
-import { fetchItems } from "@/services/dataService";
+import { fetchItems } from "@/services/dataService.server";
 import { ItemList } from "./components/itemList";
 
 // Remove "use client" directive to make this a server component

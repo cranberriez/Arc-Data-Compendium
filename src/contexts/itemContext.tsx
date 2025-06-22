@@ -12,7 +12,7 @@ import {
 import { applyItemFilters, sortItems, SortField, SortOrder } from "@/utils/items";
 
 import { Item, ItemCategory, Rarity } from "@/types";
-import { fetchItems } from "@/services/dataService";
+import { fetchItems } from "@/services/dataService.client";
 import { FilterOptions, SortOptions } from "@/utils/items/types";
 
 interface ItemContextType {

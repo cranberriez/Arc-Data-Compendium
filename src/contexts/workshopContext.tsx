@@ -1,7 +1,7 @@
 "use client";
 
 import React, { createContext, useContext, useEffect, useState, useCallback, useMemo } from "react";
-import { fetchWorkbenches } from "@/services/dataService";
+import { fetchWorkbenches } from "@/services/dataService.client";
 import { Workbench } from "@/types";
 import { WorkbenchUpgradeSummary } from "@/types/wbSummary";
 import { useCookies } from "@/contexts/cookieContext";

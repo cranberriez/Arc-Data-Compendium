@@ -7,7 +7,7 @@ import {
 	DialogProvider,
 } from "@/contexts";
 import { SidebarProvider } from "@/components/ui/sidebar";
-import { fetchRecipes, fetchItems } from "@/services/dataService";
+import { fetchRecipes, fetchItems } from "@/services/dataService.server";
 
 interface AppProvidersProps {
 	children: React.ReactNode;

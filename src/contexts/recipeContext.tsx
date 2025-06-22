@@ -1,7 +1,7 @@
 "use client";
 
 import React, { createContext, useContext, useState, useMemo } from "react";
-import { fetchRecipes } from "@/services/dataService";
+import { fetchRecipes } from "@/services/dataService.client";
 import { Recipe } from "@/types";
 
 interface RecipeContextType {

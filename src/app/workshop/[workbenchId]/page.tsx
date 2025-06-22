@@ -1,4 +1,4 @@
-import { fetchWorkbenchById } from "@/services/dataService";
+import { fetchWorkbenchById } from "@/services/dataService.server";
 import { WorkbenchClient } from "../../../components/workbench/workbenchClient";
 import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
