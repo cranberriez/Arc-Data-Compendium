@@ -2,6 +2,13 @@ import React from "react";
 import { fetchQuests } from "@/services/dataService.server";
 import { QuestList } from "./components/questList";
 import { Quest } from "@/types";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+	title: "Quests | ARC Vault",
+	description:
+		"Quest page listing all quests with their names and descriptions and links for additional details.",
+};
 
 export default async function QuestsPage() {
 	// Artificial delay for testing loading skeleton

@@ -1,5 +1,11 @@
 import { fetchItems } from "@/services/dataService.server";
 import { ItemList } from "./components/itemList";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+	title: "Items | ARC Vault",
+	description: "Full item page for ARC Vault, listing all items in the game.",
+};
 
 // Remove "use client" directive to make this a server component
 export default async function ItemsPage() {

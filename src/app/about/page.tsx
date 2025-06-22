@@ -83,35 +83,57 @@ export const metadata: Metadata = {
 
 export default function LegalPage() {
 	return (
-		<div className="container mx-auto px-4 py-8 max-w-4xl">
-			<h1 className="text-3xl font-bold mb-8 text-center">Legal Information</h1>
-
-			<div className="space-y-12">
-				{sections.map((section, sectionIndex) => (
-					<section
-						key={sectionIndex}
-						className="bg-card rounded-lg p-6 shadow-sm"
+		<div className="container mx-auto px-4 py-8 max-w-[800px]">
+			<div className="prose prose-slate dark:prose-invert max-w-full">
+				<h2>Legal Information</h2>
+				<p>
+					<Link href="/terms">Terms of Service</Link>,{" "}
+					<Link href="/privacy">Privacy Policy</Link>,{" "}
+					<Link href="/cookies">Cookie Policy</Link>
+				</p>
+				<hr />
+				<h3>Game Content & IP</h3>
+				<h4>Copyright Notice</h4>
+				<p>
+					All game content, including images, names, and data featured on this site, is
+					the property of their respective copyright holders. ARC Vault does not claim
+					ownership of any original game assets or intellectual property.
+				</p>
+				<h4>Fair Use & Fan Content</h4>
+				<p>
+					This website is an unofficial, fan-made resource intended for educational and
+					informational purposes only. All content is used under the principles of fair
+					use. If you are a rights holder and believe your content is being used
+					improperly, please contact us for prompt removal or attribution.
+				</p>
+				<h4>Trademarks</h4>
+				<p>
+					All game titles, character names, and logos are registered trademarks of their
+					respective owners. Use of these trademarks on this site does not imply any
+					affiliation with or endorsement by the trademark holders.
+				</p>
+				<hr />
+				<h3>Contact & Credits</h3>
+				<h4>Attribution</h4>
+				<p>
+					ARC Vault is an independent project and is not affiliated with or endorsed by
+					any game developers or publishers. All data and resources are provided for the
+					benefit of the community.
+				</p>
+				<h4>DMCA & Takedown Requests</h4>
+				<p>
+					If you are a copyright holder and believe your work has been used on this site
+					without appropriate permission, please contact us at{" "}
+					<Link
+						href="mailto:official.arcvault@gmail.com"
+						className="text-primary hover:underline"
 					>
-						<h2 className="text-2xl font-semibold mb-4 flex items-center gap-2">
-							<span>{section.icon}</span>
-							{section.title}
-						</h2>
-
-						<div className="space-y-6">
-							{section.items.map((item, itemIndex) => (
-								<div
-									key={itemIndex}
-									className="border-l-4 border-primary pl-4 py-1"
-								>
-									<h3 className="text-lg font-medium">{item.title}</h3>
-									<p className="text-muted-foreground mt-1 whitespace-pre-line">
-										{item.description}
-									</p>
-								</div>
-							))}
-						</div>
-					</section>
-				))}
+						official.arcvault@gmail.com
+					</Link>{" "}
+					with proof of ownership and the specific content in question. We will respond
+					promptly to all legitimate requests and, if necessary, remove the infringing
+					material.
+				</p>
 			</div>
 
 			<div className="mt-12 text-center text-sm text-muted-foreground">

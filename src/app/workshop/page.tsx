@@ -2,6 +2,13 @@ import { fetchWorkbenches } from "@/services/dataService.server";
 import ItemChecklist from "@/components/checklist/overview";
 import { WorkbenchList } from "../../components/workbench/workbenchList";
 import ResetUserData from "../../components/workbench/resetUserData";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+	title: "Workshop | ARC Vault",
+	description:
+		"Workshop page listing all workbenches with recipes, requirements, item counters, and a checklist of all items required for upgrades.",
+};
 
 export default async function WorkshopOverview() {
 	const workbenches = await fetchWorkbenches();
