@@ -20,7 +20,7 @@ export function getCookie(name: string): string | null {
 export function deleteCookie(name: string): void {
 	if (typeof document === "undefined") return;
 
-	document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+	document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; secure;`;
 }
 
 /**
@@ -36,7 +36,7 @@ export function setCookie(name: string, value: string, days = 365): void {
 		expires = `; expires=${date.toUTCString()}`;
 	}
 
-	document.cookie = `${name}=${value || ""}${expires}; path=/`;
+	document.cookie = `${name}=${value || ""}${expires}; path=/; secure;`;
 }
 
 /**
