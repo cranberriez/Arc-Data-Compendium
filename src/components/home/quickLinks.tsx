@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { Button } from "../ui/button";
+import { tools } from "@/data/tools/tools";
 
 export function QuickLinks() {
 	return (
@@ -91,56 +92,28 @@ function InternalSiteLinks() {
 					<Wrench className="w-6 h-6 text-arc-green-600 dark:text-arc-green-400" />
 					Tools
 				</h3>
-				<Link href="/tools">
-					<Button
-						size="lg"
-						variant="ghost"
-						className="text-md cursor-pointer"
-					>
+				<Button
+					size="lg"
+					variant="ghost"
+					className="text-md cursor-pointer"
+					asChild
+				>
+					<Link href="/tools">
 						<p className="mb-1">Explore Tools</p>
 						<ArrowRight />
-					</Button>
-				</Link>
+					</Link>
+				</Button>
 			</div>
 			<div className="gap-2 grid grid-cols-1 xl:grid-cols-2 flex-1">
-				<ToolLink
-					name="Item Checklists"
-					link="/"
-					icon={ClipboardCheck}
-					iconColor="text-arc-green-600 dark:text-arc-green-400"
-				/>
-				<ToolLink
-					name="Recycling Calculator"
-					link="/"
-					icon={Calculator}
-					iconColor="text-arc-green-600 dark:text-arc-green-400"
-				/>
-
-				<ToolLink
-					name="Weapon Comparisons"
-					link="/"
-					icon={Diff}
-					iconColor="text-red-600 dark:text-red-400"
-				/>
-				<ToolLink
-					name="Weapon Modding"
-					link="/"
-					icon={Crosshair}
-					iconColor="text-red-600 dark:text-red-400"
-				/>
-
-				<ToolLink
-					name="Route Planner"
-					link="/"
-					icon={Route}
-					iconColor="text-blue-600 dark:text-blue-400"
-				/>
-				<ToolLink
-					name="Meta Analysis"
-					link="/"
-					icon={TrendingUpDown}
-					iconColor="text-purple-600 dark:text-purple-400"
-				/>
+				{tools.map((tool) => (
+					<ToolLink
+						key={tool.name}
+						name={tool.name}
+						link={tool.link}
+						icon={tool.icon}
+						iconColor={tool.iconColor}
+					/>
+				))}
 			</div>
 			<p className="text-muted-foreground text-sm text-center">
 				Tools are currently in development
