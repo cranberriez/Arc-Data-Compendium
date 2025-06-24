@@ -14,6 +14,7 @@ import {
 	WishlistNow,
 	FAQ,
 	Credits,
+	HomeFooter,
 } from "@/components/home";
 
 export default async function Page() {
@@ -35,6 +36,7 @@ export default async function Page() {
 				<WishlistNow />
 				<FAQ />
 				<Credits />
+				<HomeFooter />
 			</div>
 		</article>
 	);
