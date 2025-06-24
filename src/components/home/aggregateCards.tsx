@@ -24,24 +24,26 @@ export function CountCard({
 		>
 			<div
 				className={cn(
-					"flex w-full items-center justify-between gap-10 p-6 bg-card rounded-lg hover:shadow-lg transition-all cursor-pointer",
+					"flex w-full items-center justify-between gap-1 p-6 bg-card rounded-lg hover:shadow-lg transition-all cursor-pointer",
 					className
 				)}
 			>
 				<div>
-					<h3 className="text-lg text-muted-foreground whitespace-nowrap">{title}</h3>
+					<h3 className="text-sm sm:text-base text-muted-foreground whitespace-nowrap">
+						{title}
+					</h3>
 					<p className="font-bold text-3xl font-mono">{count}</p>
 				</div>
 				<div className="flex items-center relative">
 					<Icon
 						className={cn(
-							"w-8 h-8 transition-opacity duration-400 opacity-100 group-hover:opacity-0",
+							"w-8 h-8 transition-opacity duration-200 opacity-100 group-hover:opacity-0",
 							iconColor
 						)}
 					/>
 					<ArrowRight
 						className={cn(
-							"w-8 h-8 absolute right-4 group-hover:translate-x-8 transition-all duration-400 opacity-0 group-hover:opacity-100",
+							"w-8 h-8 absolute transition-opacity duration-200 opacity-0 group-hover:opacity-100 -rotate-40",
 							iconColor
 						)}
 					/>
@@ -65,7 +67,8 @@ export function AggregateCards({
 	workbenchUpgradeCount: number;
 }) {
 	return (
-		<div className="flex w-full items-center justify-between gap-6">
+		<div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 w-full gap-6">
+			<h2 className="sr-only">Database Aggregations</h2>
 			<CountCard
 				count={itemCount}
 				title="Total Items"
@@ -90,17 +93,17 @@ export function AggregateCards({
 				className="hover:shadow-purple-500/50"
 				cardLink="quests"
 			/>
-			<CountCard
+			{/* <CountCard
 				count={craftingRecipeCount}
 				title="Crafting Recipes"
 				icon={PencilRuler}
 				iconColor="text-amber-400"
 				className="hover:shadow-amber-500/50"
 				cardLink="recipes"
-			/>
+			/> */}
 			<CountCard
 				count={workbenchUpgradeCount}
-				title="Workbench Upgrade Items"
+				title="Workbench Items"
 				icon={Anvil}
 				iconColor="text-green-400"
 				className="hover:shadow-green-500/50"
