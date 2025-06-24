@@ -6,11 +6,15 @@ import {
 } from "@/components/ui/accordion";
 import { ExternalLink, Heart } from "lucide-react";
 import Link from "next/link";
-import { HeaderCard } from "@/components/home/headerCard";
 import { getAggregateCounts } from "@/db/queries/getAggregate";
-import { AggregateCards } from "@/components/home/aggregateCards";
-import { QuickLinks } from "@/components/home/quickLinks";
-import { WishlistNow } from "@/components/home/wishlistNow";
+import {
+	HeaderCard,
+	AggregateCards,
+	QuickLinks,
+	WishlistNow,
+	FAQ,
+	Credits,
+} from "@/components/home";
 
 export default async function Page() {
 	const { itemCount, craftingRecipeCount, questCount, weaponCount, workbenchUpgradeCount } =
@@ -29,6 +33,8 @@ export default async function Page() {
 				/>
 				<QuickLinks />
 				<WishlistNow />
+				<FAQ />
+				<Credits />
 			</div>
 		</article>
 	);
