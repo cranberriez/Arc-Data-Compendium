@@ -1,56 +1,18 @@
-"use client";
-
 import {
 	Accordion,
 	AccordionContent,
 	AccordionItem,
 	AccordionTrigger,
 } from "@/components/ui/accordion";
-import { Button } from "@/components/ui/button";
-import { ExternalLink, Heart, Info, Search } from "lucide-react";
+import { ExternalLink, Heart } from "lucide-react";
 import Link from "next/link";
+import { HeaderCard } from "@/components/home/headerCard";
 
 export default function Page() {
 	return (
 		<article className="w-full p-4">
 			<HeaderCard />
 		</article>
-	);
-}
-
-function HeaderCard() {
-	return (
-		<div className="flex flex-col gap-6 mx-auto max-w-[1600px]">
-			<div className="w-full flex flex-col items-start justify-center gap-6 p-4 lg:p-8 rounded-xl bg-gradient-to-r from-arc-green-400/20 to-transparent bg-[length:200%_100%] bg-[position:0_0]">
-				<h1 className="text-6xl font-bold">ARC Vault</h1>
-				<h2 className="text-lg lg:text-xl tracking-tight text-foreground/80 max-w-2xl">
-					The ultimate data compendium and tracker for ARC Raiders. Explore items,
-					weapons, armor, quests, recipes, and more.
-				</h2>
-				<div className="flex flex-wrap gap-2 ">
-					<Button
-						size="lg"
-						className="p-3 px-6 h-auto w-auto font-semibold text-black hover:text-black bg-arc-green-500 hover:bg-arc-green-300"
-						asChild
-					>
-						<Link href="/items">
-							<Search className="w-4 h-4" />
-							Explore Items
-						</Link>
-					</Button>
-					<Button
-						size="lg"
-						className="border-2 border-arc-green-500 bg-background text-arc-green-900 dark:text-arc-green-500 hover:text-black hover:border-arc-green-300 hover:bg-arc-green-300 p-3 px-6 h-auto w-auto font-semibold "
-						asChild
-					>
-						<Link href="/about">
-							<Info className="w-4 h-4" />
-							About
-						</Link>
-					</Button>
-				</div>
-			</div>
-		</div>
 	);
 }
 

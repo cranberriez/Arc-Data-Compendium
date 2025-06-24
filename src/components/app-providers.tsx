@@ -23,7 +23,7 @@ export async function AppProviders({ children }: AppProvidersProps) {
 			defaultTheme="dark"
 			enableSystem
 		>
-			<SidebarProvider defaultOpen={false}>
+			<SidebarProvider>
 				<RecipeProvider initialRecipes={initialRecipes}>
 					<ItemProvider initialItems={initialItems}>
 						<CookieProvider>
