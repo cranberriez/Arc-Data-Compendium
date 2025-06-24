@@ -32,14 +32,24 @@ export default function TermsOfServicePage() {
 					activity under your account.
 				</p>
 
-				<h2>4. Cookies and Tracking</h2>
+				<h2>4. Third-Party Services</h2>
+				<p>
+					This site uses Clerk for authentication, any data provided to Clerk is handled
+					in accordance with their privacy policy and terms of use. While we take
+					reasonable steps to select reputable third-party service providers, we are not
+					responsible for the privacy practices of Clerk or any other third-party
+					services. Please review Clerk&apos;s privacy policy for information on how they
+					collect, use, and protect your data.
+				</p>
+
+				<h2>5. Cookies and Tracking</h2>
 				<p>
 					We use cookies and similar technologies to improve your experience and for
 					essential site functionality. See our Privacy Policy and Cookie Policy for
 					details.
 				</p>
 
-				<h2>5. Appropriate Use</h2>
+				<h2>6. Appropriate Use</h2>
 				<p>You agree not to:</p>
 				<ul className="list-disc ml-6">
 					<li>Use the site for unlawful purposes.</li>
@@ -51,17 +61,17 @@ export default function TermsOfServicePage() {
 					</li>
 				</ul>
 
-				<h2>6. Disclaimer</h2>
+				<h2>7. Disclaimer</h2>
 				<p>
 					The content is provided for informational purposes only. We strive for accuracy
 					but do not guarantee completeness or error-free content.
 				</p>
 
-				<h2>7. Limitation of Liability</h2>
+				<h2>8. Limitation of Liability</h2>
 				<p>We are not liable for damages resulting from your use of the site.</p>
 
-				<h2>8. Governing Law</h2>
-				<p>These Terms are governed by the laws of [Your Jurisdiction].</p>
+				<h2>9. Governing Law</h2>
+				<p>These Terms are governed by the laws of the United States.</p>
 			</article>
 		</main>
 	);

@@ -13,7 +13,7 @@ export default function CookiePolicyPage() {
 			<article className="prose prose-slate dark:prose-invert max-w-full">
 				<h1>Cookie Policy</h1>
 				<p>
-					<strong>Last updated: June 13, 2025</strong>
+					<strong>Last updated: June 24, 2025</strong>
 				</p>
 				<p>
 					This Cookie Policy explains how <strong>ARC Vault</strong> uses cookies and
@@ -70,13 +70,53 @@ export default function CookiePolicyPage() {
 				<p>You have the right to decide whether to accept or reject cookies.</p>
 				<p>
 					You can manage your cookie preferences via our{" "}
-					<strong>Cookie Consent Manager</strong>, available on the notification banner or
-					the Website itself. Essential cookies cannot be rejected as they are strictly
-					necessary for functionality.
+					<strong>Cookie Consent Manager</strong> (if available), which may appear as a
+					notification banner on the Website. If this feature is not present, you can
+					always adjust your web browser settings to accept or refuse cookies. Essential
+					cookies cannot be rejected as they are strictly necessary for functionality.
 				</p>
 				<p>
 					Alternatively, you can adjust your web browser settings to accept or refuse
 					cookies. However, doing so may limit your access to certain features.
+				</p>
+				<p>We do not use cookies for advertising or marketing purposes.</p>
+				<p>
+					Third parties that serve cookies through our Website include Clerk (for
+					authentication) and analytics providers (if applicable). For more information,
+					please see their respective privacy and cookie policies:
+				</p>
+				<ul className="list-disc ml-6">
+					<li>
+						<a
+							href="https://clerk.com/privacy"
+							target="_blank"
+							rel="noopener noreferrer"
+						>
+							Clerk Privacy Policy
+						</a>
+					</li>
+					<li>
+						<a
+							href="https://vercel.com/legal/privacy-policy"
+							target="_blank"
+							rel="noopener noreferrer"
+						>
+							Vercel Analytics Privacy Policy
+						</a>
+					</li>
+				</ul>
+				<p>
+					Personal data collected by cookies is only used to support site functionality
+					and analytics, not for advertising or profiling.
+				</p>
+				<p>
+					Cookies may be session-based (deleted when you close your browser) or persistent
+					(retained for a set period). Retention depends on the type of cookie and your
+					browser settings.
+				</p>
+				<p>
+					For more details, see our <a href="/privacy">Privacy Policy</a> and{" "}
+					<a href="/terms">Terms of Service</a>.
 				</p>
 
 				<hr />

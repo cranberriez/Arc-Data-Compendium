@@ -87,6 +87,19 @@ export default function LegalPage() {
 			<div className="prose prose-slate dark:prose-invert max-w-full">
 				<h2>Legal Information</h2>
 				<p>
+					This site uses cookies to track user preferences, improve the user experience,
+					and manage state of trackers. This site does NOT sell any provided information
+					or tracking details.
+				</p>
+				<p>
+					This site uses Clerk for authentication, any data provided to Clerk is handled
+					in accordance with their privacy policy and terms of use. While we take
+					reasonable steps to select reputable third-party service providers, we are not
+					responsible for the privacy practices of Clerk or any other third-party
+					services. Please review Clerk&apos;s privacy policy for information on how they
+					collect, use, and protect your data.
+				</p>
+				<p>
 					<Link href="/terms">Terms of Service</Link>,{" "}
 					<Link href="/privacy">Privacy Policy</Link>,{" "}
 					<Link href="/cookies">Cookie Policy</Link>
