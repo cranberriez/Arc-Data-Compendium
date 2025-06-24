@@ -200,16 +200,18 @@ export function NavMain({
 	index,
 }: {
 	items: NavItem[];
-	category: string;
+	category: string | null;
 	index: number;
 }) {
 	const pathname = usePathname();
 
 	return (
 		<SidebarGroup style={{ zIndex: 99 - index }}>
-			<SidebarGroupLabel className="px-2 text-xs font-medium text-muted-foreground">
-				{category}
-			</SidebarGroupLabel>
+			{category && (
+				<SidebarGroupLabel className="px-2 text-xs font-medium text-muted-foreground">
+					{category}
+				</SidebarGroupLabel>
+			)}
 			<SidebarMenu>
 				{items.map((item) => (
 					<NavItem
