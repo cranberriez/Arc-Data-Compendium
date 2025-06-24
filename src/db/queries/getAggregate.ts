@@ -1,18 +1,34 @@
 // src/db/queries/getAggregate.ts
 import { db } from "../drizzle"; // your Drizzle client
-import { items, recipes, recipeLocks } from "../schema"; // adjust import paths as needed
+import { items, quests, recipes, tierRequirements } from "../schema"; // adjust import paths as needed
+import { eq } from "drizzle-orm";
+import { sql } from "drizzle-orm";
 
 export async function getAggregateCounts() {
-	const [itemCountResult, recipeCountResult, lockCountResult] = await Promise.all([
+	const [
+		itemCountResult,
+		craftingRecipeCountResult,
+		questCountResult,
+		weaponCountResult,
+		workbenchUpgradeCountResult,
+	] = await Promise.all([
 		db.$count(items),
-		db.$count(recipes),
-		db.$count(recipeLocks),
+		db.$count(recipes, eq(recipes.type, "crafting")),
+		db.$count(quests),
+		db.$count(items, eq(items.category, "weapon")),
+		db
+			.select({
+				value: sql<number>`sum(${tierRequirements.count})`,
+			})
+			.from(tierRequirements),
 	]);
 
 	return {
 		itemCount: Number(itemCountResult ?? 0),
-		recipeCount: Number(recipeCountResult ?? 0),
-		lockCount: Number(lockCountResult ?? 0),
+		craftingRecipeCount: Number(craftingRecipeCountResult ?? 0),
+		questCount: Number(questCountResult ?? 0),
+		weaponCount: Number(weaponCountResult ?? 0),
+		workbenchUpgradeCount: Number(workbenchUpgradeCountResult[0].value ?? 0),
 	};
 }
 

@@ -7,11 +7,25 @@ import {
 import { ExternalLink, Heart } from "lucide-react";
 import Link from "next/link";
 import { HeaderCard } from "@/components/home/headerCard";
+import { getAggregateCounts } from "@/db/queries/getAggregate";
+import { AggregateCards } from "@/components/home/aggregateCards";
 
-export default function Page() {
+export default async function Page() {
+	const { itemCount, craftingRecipeCount, questCount, weaponCount, workbenchUpgradeCount } =
+		await getAggregateCounts();
+
 	return (
 		<article className="w-full p-4">
-			<HeaderCard />
+			<div className="flex flex-col gap-6 mx-auto max-w-[1600px]">
+				<HeaderCard />
+				<AggregateCards
+					itemCount={itemCount}
+					craftingRecipeCount={craftingRecipeCount}
+					questCount={questCount}
+					weaponCount={weaponCount}
+					workbenchUpgradeCount={workbenchUpgradeCount}
+				/>
+			</div>
 		</article>
 	);
 }
