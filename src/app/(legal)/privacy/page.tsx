@@ -290,8 +290,8 @@ export default function PrivacyPolicyPage() {
 				</ul>
 				<p>
 					We only use this data to facilitate login and account creation. Please review
-					the respective social media provider's privacy policies. For more information on
-					how Clerk handles your authentication data, see the{" "}
+					the respective social media provider&apos;s privacy policies. For more
+					information on how Clerk handles your authentication data, see the{" "}
 					<a
 						href="https://clerk.com/privacy"
 						target="_blank"
