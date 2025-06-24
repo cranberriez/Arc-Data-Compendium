@@ -8,6 +8,7 @@ export const tools = [
 		link: "/tools/item-checklists",
 		icon: ClipboardCheck,
 		iconColor: "text-arc-green-600 dark:text-arc-green-400",
+		completed: false,
 	},
 	{
 		name: "Recycling Calculator",
@@ -16,6 +17,7 @@ export const tools = [
 		link: "/tools/recycling-calculator",
 		icon: Calculator,
 		iconColor: "text-arc-green-600 dark:text-arc-green-400",
+		completed: false,
 	},
 	{
 		name: "Weapon Comparisons",
@@ -24,6 +26,7 @@ export const tools = [
 		link: "/tools/weapon-comparisons",
 		icon: Diff,
 		iconColor: "text-red-600 dark:text-red-400",
+		completed: false,
 	},
 	{
 		name: "Weapon Modding",
@@ -33,6 +36,7 @@ export const tools = [
 		link: "/tools/weapon-modding",
 		icon: Crosshair,
 		iconColor: "text-red-600 dark:text-red-400",
+		completed: false,
 	},
 	{
 		name: "Route Planner",
@@ -41,6 +45,7 @@ export const tools = [
 		link: "/tools/route-planner",
 		icon: Route,
 		iconColor: "text-blue-600 dark:text-blue-400",
+		completed: false,
 	},
 	{
 		name: "Meta Analysis",
@@ -50,5 +55,6 @@ export const tools = [
 		link: "/tools/meta-analysis",
 		icon: TrendingUpDown,
 		iconColor: "text-purple-600 dark:text-purple-400",
+		completed: false,
 	},
 ];

@@ -19,6 +19,7 @@ export default function ToolsPage() {
 							link={tool.link}
 							icon={tool.icon}
 							iconColor={tool.iconColor}
+							completed={tool.completed}
 						/>
 					))}
 				</div>
@@ -34,6 +35,7 @@ function ToolItem({
 	link,
 	icon: Icon,
 	iconColor,
+	completed,
 }: {
 	name: string;
 	description: string;
@@ -41,11 +43,12 @@ function ToolItem({
 	link: string;
 	icon: LucideIcon;
 	iconColor: string;
+	completed: boolean;
 }) {
 	const imageUrl = image || "/images/quests/348px-Maps_Together.png-1.webp";
 
 	return (
-		<div className="flex flex-col gap-2 rounded-sm border-2">
+		<div className="flex flex-col gap-2 rounded-sm border-2 bg-card">
 			<Image
 				width={100}
 				height={100}
@@ -61,6 +64,7 @@ function ToolItem({
 						<h2 className="text-lg font-semibold">{name}</h2>
 					</div>
 					<p className="text-muted-foreground text-sm">{description}</p>
+					<CompletionTag completed={completed} />
 				</div>
 				<Button
 					size="lg"
@@ -74,6 +78,16 @@ function ToolItem({
 					</Link>
 				</Button>
 			</div>
+		</div>
+	);
+}
+
+function CompletionTag({ completed }: { completed: boolean }) {
+	return completed ? (
+		<></>
+	) : (
+		<div className="text-sm w-min whitespace-nowrap px-2 py-1 rounded-sm bg-amber-400 text-black">
+			Work In Progress
 		</div>
 	);
 }
