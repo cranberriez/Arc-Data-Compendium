@@ -137,14 +137,7 @@ export default function LegalPage() {
 			</div>
 
 			<div className="mt-12 text-center text-sm text-muted-foreground">
-				<p>
-					Last updated:{" "}
-					{new Date().toLocaleDateString("en-US", {
-						year: "numeric",
-						month: "long",
-						day: "numeric",
-					})}
-				</p>
+				<p>Last updated: June 24, 2025</p>
 				<p className="mt-2">
 					For any legal inquiries, please contact us at{" "}
 					<Link

@@ -24,6 +24,18 @@
 	--color-rare: oklch(0.55 0.22 250);
 	--color-epic: oklch(0.58 0.22 320);
 	--color-legendary: oklch(0.62 0.18 80);
+
+	--color-arc-green-50: #eefff6;
+	--color-arc-green-100: #d7ffeb;
+	--color-arc-green-200: #b2ffd9;
+	--color-arc-green-300: #76ffbc;
+	--color-arc-green-400: #33f597;
+	--color-arc-green-500: #09de77;
+	--color-arc-green-600: #00cc6a;
+	--color-arc-green-700: #04914e;
+	--color-arc-green-800: #0a7141;
+	--color-arc-green-900: #0a5d38;
+	--color-arc-green-950: #00341d;
 }
 
 /* Light Theme: richer and a bit darker than the original light palette */
@@ -33,6 +45,18 @@
 	--color-rare: oklch(0.72 0.28 250);
 	--color-epic: oklch(0.72 0.28 320);
 	--color-legendary: oklch(0.82 0.23 80);
+
+	--color-arc-green-50: #edfff6;
+	--color-arc-green-100: #d5ffec;
+	--color-arc-green-200: #aeffd9;
+	--color-arc-green-300: #70ffbe;
+	--color-arc-green-400: #2bfd9b;
+	--color-arc-green-500: #00ff88;
+	--color-arc-green-600: #00c062;
+	--color-arc-green-700: #009650;
+	--color-arc-green-800: #067542;
+	--color-arc-green-900: #076039;
+	--color-arc-green-950: #00371e;
 }
 
 @theme inline {
