@@ -9,6 +9,7 @@ import Link from "next/link";
 import { HeaderCard } from "@/components/home/headerCard";
 import { getAggregateCounts } from "@/db/queries/getAggregate";
 import { AggregateCards } from "@/components/home/aggregateCards";
+import { QuickLinks } from "@/components/home/quickLinks";
 
 export default async function Page() {
 	const { itemCount, craftingRecipeCount, questCount, weaponCount, workbenchUpgradeCount } =
@@ -25,6 +26,7 @@ export default async function Page() {
 					weaponCount={weaponCount}
 					workbenchUpgradeCount={workbenchUpgradeCount}
 				/>
+				<QuickLinks />
 			</div>
 		</article>
 	);
