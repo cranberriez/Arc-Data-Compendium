@@ -20,6 +20,7 @@ import {
 	Shirt,
 	Heart,
 	Vault,
+	Calculator,
 } from "lucide-react";
 
 import { NavMain } from "@/components/nav-main";
@@ -69,6 +70,12 @@ const data: NavData = {
 				title: "Dashboard",
 				url: "/dashboard",
 				icon: LayoutDashboard,
+				enabled: true,
+			},
+			{
+				title: "Tools",
+				url: "/tools",
+				icon: Calculator,
 				enabled: true,
 			},
 		],

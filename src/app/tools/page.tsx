@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, LucideIcon } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import { tools } from "@/data/tools/tools";
@@ -17,6 +17,8 @@ export default function ToolsPage() {
 							description={tool.description}
 							image={tool.image}
 							link={tool.link}
+							icon={tool.icon}
+							iconColor={tool.iconColor}
 						/>
 					))}
 				</div>
@@ -30,11 +32,15 @@ function ToolItem({
 	description,
 	image,
 	link,
+	icon: Icon,
+	iconColor,
 }: {
 	name: string;
 	description: string;
 	image?: string;
 	link: string;
+	icon: LucideIcon;
+	iconColor: string;
 }) {
 	const imageUrl = image || "/images/quests/348px-Maps_Together.png-1.webp";
 
@@ -50,7 +56,10 @@ function ToolItem({
 			/>
 			<div className="flex items-end justify-between gap-2 p-4 ">
 				<div className="flex flex-col gap-2">
-					<h2 className="text-lg font-semibold">{name}</h2>
+					<div className="flex items-center gap-2">
+						<Icon className={iconColor} />
+						<h2 className="text-lg font-semibold">{name}</h2>
+					</div>
 					<p className="text-muted-foreground text-sm">{description}</p>
 				</div>
 				<Button

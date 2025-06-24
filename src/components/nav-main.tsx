@@ -45,7 +45,7 @@ function NavItem({ item, pathname }: { item: NavItem; pathname: string | null })
 	if (hasItems && !isCollapsed) {
 		return (
 			<Collapsible
-				defaultOpen
+				defaultOpen={false}
 				className="group/collapsible z-10"
 			>
 				<SidebarMenuItem>

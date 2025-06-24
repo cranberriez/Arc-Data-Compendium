@@ -3,7 +3,7 @@ import { Calculator, ClipboardCheck, Crosshair, Diff, Route, TrendingUpDown } fr
 export const tools = [
 	{
 		name: "Item Checklists",
-		description: "Checklists for all items in the game",
+		description: "Checklists for all uses for items in quests, workshop, and pinned recipes.",
 		image: "/images/quests/348px-Maps_Together.png-1.webp",
 		link: "/tools/item-checklists",
 		icon: ClipboardCheck,
@@ -11,7 +11,7 @@ export const tools = [
 	},
 	{
 		name: "Recycling Calculator",
-		description: "Calculate the value of recycling items",
+		description: "Tree views for item's recycling tree, valuation calculator for items.",
 		image: "/images/quests/348px-Maps_Together.png-1.webp",
 		link: "/tools/recycling-calculator",
 		icon: Calculator,
@@ -19,7 +19,7 @@ export const tools = [
 	},
 	{
 		name: "Weapon Comparisons",
-		description: "Compare different weapons",
+		description: "Compare different weapons, including TTK, DPS, and more.",
 		image: "/images/quests/348px-Maps_Together.png-1.webp",
 		link: "/tools/weapon-comparisons",
 		icon: Diff,
@@ -27,7 +27,8 @@ export const tools = [
 	},
 	{
 		name: "Weapon Modding",
-		description: "Calculate the value of modding weapons",
+		description:
+			"Calculate the stat changes when modding weapons, including TTK, DPS, and more.",
 		image: "/images/quests/348px-Maps_Together.png-1.webp",
 		link: "/tools/weapon-modding",
 		icon: Crosshair,
@@ -35,7 +36,7 @@ export const tools = [
 	},
 	{
 		name: "Route Planner",
-		description: "Plan routes for hideout upgrades",
+		description: "Plan routes for checklist items, quests, and high value items.",
 		image: "/images/quests/348px-Maps_Together.png-1.webp",
 		link: "/tools/route-planner",
 		icon: Route,
@@ -43,7 +44,8 @@ export const tools = [
 	},
 	{
 		name: "Meta Analysis",
-		description: "Compare different meta items",
+		description:
+			"View community based meta items, meta shifts from patches, and use cases for items.",
 		image: "/images/quests/348px-Maps_Together.png-1.webp",
 		link: "/tools/meta-analysis",
 		icon: TrendingUpDown,
