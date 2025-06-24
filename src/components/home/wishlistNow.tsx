@@ -16,7 +16,10 @@ export function WishlistNow() {
                 dark:from-gray-900 dark:to-blue-900
             "
 		>
-			<CountdownTimer />
+			<CountdownTimer
+				releaseDate={new Date(Date.UTC(2025, 9, 30, 20, 0, 0))}
+				initialTimeLeft={{ total: 1000, days: 0, hours: 0, minutes: 0, seconds: 0 }}
+			/>
 			<div className="flex flex-col items-center gap-2 rounded p-2 bg-background/80 min-w-[287px]">
 				<div className="flex items-center gap-2">
 					<Link
@@ -62,9 +65,14 @@ function getTimeRemaining(target: Date) {
 	return { total, days, hours, minutes, seconds };
 }
 
-export function CountdownTimer() {
-	const releaseDate = new Date(Date.UTC(2025, 9, 30, 20, 0, 0)); // October 30th, 2025, 1pm PT == 20:00 UTC
-	const [timeLeft, setTimeLeft] = useState(getTimeRemaining(releaseDate));
+export function CountdownTimer({
+	releaseDate,
+	initialTimeLeft,
+}: {
+	releaseDate: Date;
+	initialTimeLeft: ReturnType<typeof getTimeRemaining>;
+}) {
+	const [timeLeft, setTimeLeft] = useState(initialTimeLeft);
 	const released = timeLeft.total <= 0;
 
 	useEffect(() => {
