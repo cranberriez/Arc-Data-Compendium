@@ -8,7 +8,12 @@ import {
 	QuestProvider,
 } from "@/contexts";
 import { SidebarProvider } from "@/components/ui/sidebar";
-import { fetchRecipes, fetchItems, fetchQuests } from "@/services/dataService.server";
+import {
+	fetchRecipes,
+	fetchItems,
+	fetchQuests,
+	fetchFirstQuestId,
+} from "@/services/dataService.server";
 
 interface AppProvidersProps {
 	children: React.ReactNode;
@@ -18,6 +23,7 @@ export async function AppProviders({ children }: AppProvidersProps) {
 	const initialRecipes = await fetchRecipes();
 	const initialItems = await fetchItems();
 	const initialQuests = await fetchQuests();
+	const firstQuestId = await fetchFirstQuestId();
 
 	return (
 		<ThemeProvider
@@ -26,17 +32,20 @@ export async function AppProviders({ children }: AppProvidersProps) {
 			enableSystem
 		>
 			<SidebarProvider>
-				<QuestProvider initialQuests={initialQuests}>
-					<RecipeProvider initialRecipes={initialRecipes}>
-						<ItemProvider initialItems={initialItems}>
-							<CookieProvider>
+				<RecipeProvider initialRecipes={initialRecipes}>
+					<ItemProvider initialItems={initialItems}>
+						<CookieProvider>
+							<QuestProvider
+								initialQuests={initialQuests}
+								firstQuestId={firstQuestId}
+							>
 								<WorkshopProvider>
 									<DialogProvider>{children}</DialogProvider>
 								</WorkshopProvider>
-							</CookieProvider>
-						</ItemProvider>
-					</RecipeProvider>
-				</QuestProvider>
+							</QuestProvider>
+						</CookieProvider>
+					</ItemProvider>
+				</RecipeProvider>
 			</SidebarProvider>
 		</ThemeProvider>
 	);

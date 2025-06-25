@@ -1,5 +1,5 @@
 import React from "react";
-import QuestItemSkeleton from "./components/questItemSkeleton";
+import QuestItemSkeleton from "./_components/questItemSkeleton";
 
 export default function Loading() {
 	// Show 5 skeletons for a realistic loading effect

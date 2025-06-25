@@ -3,12 +3,24 @@
 import { createContext, useContext, useState } from "react";
 import { Quest } from "@/types";
 import { fetchQuests } from "@/services/dataService.client";
+import { useCookies } from "./cookieContext";
 
 type QuestContextType = {
 	quests: Quest[];
 	setQuests: (quests: Quest[]) => void;
 	fetchQuestData: () => void;
 	refreshQuests: () => void;
+
+	activeQuests: string[];
+	completedQuests: string[];
+	isActive: (questId: string) => boolean;
+	isCompleted: (questId: string) => boolean;
+	addActive: (questId: string) => void;
+	removeActive: (questId: string) => void;
+	addCompleted: (questId: string) => void;
+	removeCompleted: (questId: string) => void;
+	resetQuests: () => void;
+
 	loading: boolean;
 	error: Error | null;
 };
@@ -26,6 +38,16 @@ export const QuestProvider = ({
 	const [loading, setLoading] = useState<boolean>(false);
 	const [error, setError] = useState<Error | null>(null);
 
+	const {
+		getActiveQuests,
+		getCompletedQuests,
+		addActiveQuest,
+		removeActiveQuest,
+		addCompletedQuest,
+		removeCompletedQuest,
+		resetQuests,
+	} = useCookies();
+
 	const fetchQuestData = async () => {
 		try {
 			setLoading(true);
@@ -40,13 +62,32 @@ export const QuestProvider = ({
 		}
 	};
 
+	const isActive = (questId: string) => getActiveQuests().includes(questId);
+	const isCompleted = (questId: string) => getCompletedQuests().includes(questId);
+
 	const refreshQuests = async () => {
 		await fetchQuestData();
 	};
 
 	return (
 		<QuestContext.Provider
-			value={{ quests, setQuests, fetchQuestData, refreshQuests, loading, error }}
+			value={{
+				quests,
+				setQuests,
+				fetchQuestData,
+				refreshQuests,
+				activeQuests: getActiveQuests(),
+				completedQuests: getCompletedQuests(),
+				isActive,
+				isCompleted,
+				addActive: addActiveQuest,
+				removeActive: removeActiveQuest,
+				addCompleted: addCompletedQuest,
+				removeCompleted: removeCompletedQuest,
+				resetQuests,
+				loading,
+				error,
+			}}
 		>
 			{children}
 		</QuestContext.Provider>

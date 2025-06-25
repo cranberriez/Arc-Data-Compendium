@@ -6,7 +6,10 @@ import { getCookie, setCookie, deleteCookie } from "@/utils/cookieUtils";
 // Define the structure of our cookie data
 interface CookieData {
 	workbenchLevels: Record<string, number>;
+	// Deprecated: use activeQuests instead
 	activeQuest: string | null;
+	activeQuests: string[];
+	completedQuests: string[];
 	itemCounts: Record<string, number>;
 	selections: Record<string, string | number | boolean>;
 	stringValues: Record<string, string>;
@@ -16,7 +19,9 @@ interface CookieData {
 // Initial state
 const initialCookieData: CookieData = {
 	workbenchLevels: {},
-	activeQuest: null,
+	activeQuest: null, // Deprecated
+	activeQuests: [],
+	completedQuests: [],
 	itemCounts: {},
 	selections: {},
 	stringValues: {},
@@ -33,8 +38,13 @@ interface CookieContextType {
 	resetWorkbenches: () => void;
 
 	// Quest methods
-	getActiveQuest: () => string | null;
-	setActiveQuest: (questId: string | null) => void;
+	getActiveQuests: () => string[];
+	addActiveQuest: (questId: string) => void;
+	removeActiveQuest: (questId: string) => void;
+	getCompletedQuests: () => string[];
+	addCompletedQuest: (questId: string) => void;
+	removeCompletedQuest: (questId: string) => void;
+	resetQuests: () => void;
 
 	// Item count methods
 	getItemCount: (id: string) => number;
@@ -65,7 +75,9 @@ const CookieContext = createContext<CookieContextType | undefined>(undefined);
 // Cookie keys
 const COOKIE_KEYS: Record<keyof CookieData, string> = {
 	workbenchLevels: "workbench_levels",
-	activeQuest: "active_quest",
+	activeQuest: "active_quest", // Deprecated
+	activeQuests: "active_quests",
+	completedQuests: "completed_quests",
 	itemCounts: "item_counts",
 	selections: "selections",
 	stringValues: "string_values",
@@ -101,7 +113,9 @@ export function CookieProvider({ children }: CookieProviderProps) {
 	useEffect(() => {
 		const loadedData: CookieData = {
 			workbenchLevels: safeParseJSON(getCookie(COOKIE_KEYS.workbenchLevels), {}),
-			activeQuest: getCookie(COOKIE_KEYS.activeQuest),
+			activeQuest: getCookie(COOKIE_KEYS.activeQuest), // Deprecated
+			activeQuests: safeParseJSON(getCookie(COOKIE_KEYS.activeQuests), []),
+			completedQuests: safeParseJSON(getCookie(COOKIE_KEYS.completedQuests), []),
 			itemCounts: safeParseJSON(getCookie(COOKIE_KEYS.itemCounts), {}),
 			selections: safeParseJSON(getCookie(COOKIE_KEYS.selections), {}),
 			stringValues: safeParseJSON(getCookie(COOKIE_KEYS.stringValues), {}),
@@ -172,8 +186,34 @@ export function CookieProvider({ children }: CookieProviderProps) {
 		updateCategory("workbenchLevels", () => ({}));
 	};
 
-	const getActiveQuest = (): string | null => data.activeQuest;
-	const setActiveQuest = (questId: string | null): void => set("activeQuest", "", questId);
+	// Multi-quest methods
+	const getActiveQuests = (): string[] => data.activeQuests || [];
+	const addActiveQuest = (questId: string): void => {
+		if (!data.activeQuests.includes(questId)) {
+			const updated = [...data.activeQuests, questId];
+			updateCategory("activeQuests", () => updated);
+		}
+	};
+	const removeActiveQuest = (questId: string): void => {
+		const updated = data.activeQuests.filter((id) => id !== questId);
+		updateCategory("activeQuests", () => updated);
+	};
+
+	const getCompletedQuests = (): string[] => data.completedQuests || [];
+	const addCompletedQuest = (questId: string): void => {
+		if (!data.completedQuests.includes(questId)) {
+			const updated = [...data.completedQuests, questId];
+			updateCategory("completedQuests", () => updated);
+		}
+	};
+	const removeCompletedQuest = (questId: string): void => {
+		const updated = data.completedQuests.filter((id) => id !== questId);
+		updateCategory("completedQuests", () => updated);
+	};
+	const resetQuests = () => {
+		updateCategory("activeQuests", () => []);
+		updateCategory("completedQuests", () => []);
+	};
 
 	const getItemCount = (id: string): number => get("itemCounts", id) || 0;
 	const getAllItemCounts = (): Record<string, number> => ({ ...data.itemCounts });
@@ -225,11 +265,14 @@ export function CookieProvider({ children }: CookieProviderProps) {
 		// Save to cookies
 		(Object.keys(importedData) as Array<keyof CookieData>).forEach((key) => {
 			if (key === "activeQuest") {
+				// Deprecated: single quest
 				if (newData[key]) {
 					setCookie(COOKIE_KEYS[key], newData[key] as string);
 				} else {
 					deleteCookie(COOKIE_KEYS[key]);
 				}
+			} else if (key === "activeQuests" || key === "completedQuests") {
+				safeSaveToCookie(COOKIE_KEYS[key], newData[key] || []);
 			} else {
 				safeSaveToCookie(COOKIE_KEYS[key], newData[key]);
 			}
@@ -279,6 +322,12 @@ export function CookieProvider({ children }: CookieProviderProps) {
 
 			if (data.activeQuest) {
 				rows.push(`activeQuest,"activeQuest","${data.activeQuest}"`);
+			}
+			if (data.activeQuests && data.activeQuests.length > 0) {
+				rows.push(`activeQuests,"activeQuests","${data.activeQuests.join("|")}"`);
+			}
+			if (data.completedQuests && data.completedQuests.length > 0) {
+				rows.push(`completedQuests,"completedQuests","${data.completedQuests.join("|")}"`);
 			}
 
 			const blob = new Blob([rows.join("\n")], { type: "text/csv" });
@@ -360,8 +409,14 @@ export function CookieProvider({ children }: CookieProviderProps) {
 		resetWorkbenches,
 		getWorkbenchLevel,
 		setWorkbenchLevel,
-		getActiveQuest,
-		setActiveQuest,
+		// Quest methods
+		getActiveQuests,
+		addActiveQuest,
+		removeActiveQuest,
+		getCompletedQuests,
+		addCompletedQuest,
+		removeCompletedQuest,
+		resetQuests,
 		getItemCount,
 		getAllItemCounts,
 		getItemCountEntries,
