@@ -12,18 +12,11 @@ const faqData = [
 		question: "Where do you source your item information from?",
 		answer: (
 			<p className="leading-loose">
-				A user by the name of Redstone_Gamer_1 has provided an excellent list of information
-				found{" "}
-				<Link
-					href="https://docs.google.com/document/d/1LPpXIYuTH54o3bWDx3Q7ClRDGLGNpIuNvisK-HwOwjk/edit?usp=sharing"
-					target="_blank"
-					rel="noopener noreferrer"
-					className="text-primary inline-flex items-center gap-1 underline"
-				>
-					here <ExternalLink className="w-3 h-3" />
-				</Link>
-				. Information not provided here was acquired from various YouTube videos. This is
-				the case for all information provided until the game releases.
+				A user by the name of Redstone_Gamer_1 provided an excellent list of information
+				which was the basis for the site. The information was moved to the ARC Raiders wiki
+				which is where most of the information is from. Information not provided on the wiki
+				was acquired from various YouTube videos, or from personal testing. This is the case
+				for all information provided until the game releases.
 			</p>
 		),
 	},
