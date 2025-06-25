@@ -1,16 +1,21 @@
 "use client";
 
 import { useQuests } from "@/contexts/questContext";
+import { useEffect } from "react";
 
 export function QuestListOverview({ firstQuestId }: { firstQuestId: string }) {
-	const { activeQuests, completedQuests, resetQuests } = useQuests();
+	const { addActive, activeQuests, completedQuests, resetQuests } = useQuests();
 
-	console.log(activeQuests, completedQuests);
+	// Fallback for new users with no active quests
+	useEffect(() => {
+		if (activeQuests.length === 0 && completedQuests.length === 0) {
+			addActive(firstQuestId);
+		}
+	}, [activeQuests, completedQuests]);
 
 	return (
-		<div>
-			<h2>Quest List Overview</h2>
-			<p>First Quest ID: {firstQuestId}</p>
+		<div className="w-full flex border-2 border-arcvault-primary-500/50 h-16 rounded-lg">
+			{activeQuests.join(", ")}
 		</div>
 	);
 }

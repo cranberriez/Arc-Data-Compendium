@@ -1,7 +1,8 @@
 import { Quest } from "@/types";
 import { QuestItem } from "./questItem";
+import { createQuestNodeList } from "@/utils/questUtils";
 
-export function QuestList({ quests }: { quests: Quest[] }) {
+export function QuestList({ quests, firstQuestId }: { quests: Quest[]; firstQuestId: string }) {
 	const questlineColors = [
 		"bg-blue-500",
 		"bg-green-500",
@@ -11,12 +12,18 @@ export function QuestList({ quests }: { quests: Quest[] }) {
 		"bg-pink-500",
 	];
 
+	const questNodes = createQuestNodeList(quests, firstQuestId);
+
 	return (
 		<ul className="flex flex-col gap-2">
-			{quests.map((quest) => (
+			{questNodes.map((questNode) => (
 				<QuestItem
-					key={quest.id}
-					quest={quest}
+					key={questNode.quest.id}
+					quest={questNode.quest}
+					questline={questNode.questline[0]}
+					questlineColor={
+						questlineColors[questNode.questline[0] % questlineColors.length]
+					}
 				/>
 			))}
 		</ul>

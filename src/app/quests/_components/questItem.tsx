@@ -1,3 +1,5 @@
+"use client";
+
 import { cn } from "@/lib/utils";
 import { ExternalLink, Pin, FileText, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -5,9 +7,12 @@ import type { Quest } from "@/types";
 import Link from "next/link";
 import { QuestRewards } from "./questRewards";
 import { QuestDescription } from "./questDescription";
+import { useQuests } from "@/contexts/questContext";
 
 type QuestItemProps = {
 	quest: Quest;
+	questline: number;
+	questlineColor: string;
 };
 
 function capitalizeId(id: string) {
@@ -17,17 +22,26 @@ function capitalizeId(id: string) {
 		.join("_");
 }
 
-export function QuestItem({ quest }: QuestItemProps) {
+export function QuestItem({ quest, questline, questlineColor }: QuestItemProps) {
+	const { activeQuests, completedQuests } = useQuests();
 	const requirement = quest.entries.find((entry) => entry.type === "objective");
 	const reward = quest.entries.find((entry) => entry.type === "reward");
+	const isActive = activeQuests.includes(quest.id);
+	const isCompleted = completedQuests.includes(quest.id);
 
 	return (
 		<li
 			key={quest.id}
-			className="flex flex-1 gap-2"
+			className="flex flex-1 gap-2 relative"
 		>
-			{/* TODO: Add questline connections (tree view visualization) */}
-			<div className="flex flex-col flex-1 gap-4 border rounded-lg p-4 shadow group/questcard">
+			<div className={cn("w-2 h-2 rounded-full absolute top-1 left-1", questlineColor)} />
+			<div
+				className={cn(
+					"flex flex-col flex-1 gap-4 border-2 rounded-lg p-4 shadow group/questcard",
+					isActive ? "border-arcvault-primary-500/50" : "",
+					isCompleted ? "border-arcvault-primary-500/50" : ""
+				)}
+			>
 				<div className="flex md:flex-row flex-col gap-8">
 					<QuestHeader quest={quest} />
 					<div className="flex-1">

@@ -24,7 +24,10 @@ export default async function QuestsPage() {
 			<div className="flex flex-col gap-6 mx-auto max-w-[1600px]">
 				<h1 className="text-2xl text-center font-bold">Quests</h1>
 				<QuestListOverview firstQuestId={firstQuestId} />
-				<QuestList quests={questData} />
+				<QuestList
+					quests={questData}
+					firstQuestId={firstQuestId}
+				/>
 			</div>
 		</article>
 	);
