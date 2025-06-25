@@ -6,25 +6,23 @@ import { tools } from "@/data/tools/tools";
 
 export default function ToolsPage() {
 	return (
-		<article className="w-full p-4">
-			<div className="flex flex-col gap-6 mx-auto max-w-[1600px]">
-				<h1 className="text-2xl text-center font-bold">Tools</h1>
-				<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-					{tools.map((tool) => (
-						<ToolItem
-							key={tool.name}
-							name={tool.name}
-							description={tool.description}
-							image={tool.image}
-							link={tool.link}
-							icon={tool.icon}
-							iconColor={tool.iconColor}
-							completed={tool.completed}
-						/>
-					))}
-				</div>
+		<div className="flex flex-col gap-6 mx-auto max-w-[1600px]">
+			<h1 className="text-2xl text-center font-bold">Tools</h1>
+			<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+				{tools.map((tool) => (
+					<ToolItem
+						key={tool.name}
+						name={tool.name}
+						description={tool.description}
+						image={tool.image}
+						link={tool.link}
+						icon={tool.icon}
+						iconColor={tool.iconColor}
+						completed={tool.completed}
+					/>
+				))}
 			</div>
-		</article>
+		</div>
 	);
 }
 

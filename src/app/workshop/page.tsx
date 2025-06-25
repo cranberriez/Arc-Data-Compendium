@@ -1,5 +1,5 @@
 import { fetchWorkbenches } from "@/services/dataService.server";
-import ItemChecklist from "@/components/checklist/overview";
+import ItemChecklist from "@/components/checklist/wbItemChecklist";
 import { WorkbenchList } from "../../components/workbench/workbenchList";
 import ResetUserData from "../../components/workbench/resetUserData";
 import { Metadata } from "next";
