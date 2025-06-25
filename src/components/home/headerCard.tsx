@@ -23,7 +23,7 @@ export function HeaderCard() {
 							Explore Items
 						</Link>
 					</Button>
-					<Button
+					{/* <Button
 						size="lg"
 						className="border-2 border-arc-green-500 bg-background text-arc-green-900 dark:text-arc-green-500 hover:text-black hover:border-arc-green-300 hover:bg-arc-green-300 p-3 px-6 h-auto w-auto font-semibold "
 						asChild
@@ -32,7 +32,7 @@ export function HeaderCard() {
 							<Info className="w-4 h-4" />
 							About
 						</Link>
-					</Button>
+					</Button> */}
 				</div>
 			</div>
 			<div className="absolute top-0 left-0 w-full h-full z-0 opacity-50">
