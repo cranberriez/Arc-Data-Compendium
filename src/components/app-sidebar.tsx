@@ -20,6 +20,7 @@ import {
 	Shirt,
 	Heart,
 	Vault,
+	Calculator,
 } from "lucide-react";
 
 import { NavMain } from "@/components/nav-main";
@@ -48,7 +49,7 @@ export interface NavItem {
 
 // Category type
 export interface NavCategory {
-	category: string;
+	category: string | null;
 	items: NavItem[];
 }
 
@@ -57,12 +58,24 @@ export type NavData = Record<string, NavCategory>;
 
 const data: NavData = {
 	Home: {
-		category: "Home",
+		category: null,
 		items: [
+			{
+				title: "Home",
+				url: "/",
+				icon: Home,
+				enabled: true,
+			},
 			{
 				title: "Dashboard",
 				url: "/dashboard",
 				icon: LayoutDashboard,
+				enabled: true,
+			},
+			{
+				title: "Tools",
+				url: "/tools",
+				icon: Calculator,
 				enabled: true,
 			},
 		],
@@ -233,7 +246,6 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 								usePathname() === "/" ? "" : ""
 							)}
 							size="lg"
-							isActive={usePathname() === "/"}
 						>
 							<Link
 								href="/"

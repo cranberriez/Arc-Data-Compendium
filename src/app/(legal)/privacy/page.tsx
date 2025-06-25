@@ -120,7 +120,7 @@ export default function PrivacyPolicyPage() {
 				</p>
 				<ul className="list-disc ml-6">
 					<li>Email addresses</li>
-					<li>Passwords</li>
+					<li>Passwords (encrypted, handled by Clerk authentication)</li>
 				</ul>
 				<p>
 					<strong>Sensitive Information:</strong> We do not collect sensitive personal
@@ -135,7 +135,7 @@ export default function PrivacyPolicyPage() {
 					You are responsible for providing accurate and up-to-date personal information.
 				</p>
 
-				<h3>Information automatically collected</h3>
+				<h3>Information automatically collected (including by third parties)</h3>
 				<p>
 					<strong>In short:</strong> Some information is collected automatically when you
 					use our Services.
@@ -144,7 +144,8 @@ export default function PrivacyPolicyPage() {
 				<ul className="list-disc ml-6">
 					<li>
 						<strong>Log and Usage Data:</strong> IP address, device type, browser, usage
-						activity, timestamps, and error reports.
+						activity, timestamps, and error reports. This may be collected by our
+						infrastructure and by third-party providers (e.g., Vercel Analytics).
 					</li>
 					<li>
 						<strong>Device Data:</strong> Type of device, operating system, device
@@ -242,57 +243,40 @@ export default function PrivacyPolicyPage() {
 
 				<h2>5. Do We Use Cookies or Tracking?</h2>
 				<p>
-					<strong>In short:</strong> Yes, we may use cookies and similar tracking
-					technologies.
+					<strong>In short:</strong> Yes, we use cookies and similar tracking
+					technologies, but not for advertising or marketing purposes.
 				</p>
 				<p>We use cookies and similar technologies (e.g., pixels, web beacons) to:</p>
 				<ul className="list-disc ml-6">
 					<li>Improve site performance and security</li>
 					<li>Save preferences and facilitate basic features</li>
-					<li>Provide analytics and advertising support</li>
+					<li>Provide analytics support (e.g., Vercel Analytics)</li>
 				</ul>
 				<p>
-					You can opt out or adjust cookie settings via your browser. Learn more in our
-					Cookie Notice.
+					You can opt out or adjust cookie settings via your browser. For full details,
+					see our <a href="/cookies">Cookie Policy</a>.
 				</p>
-				<h4>Google Analytics</h4>
-				<p>We use Google Analytics for usage tracking. You may opt out via:</p>
-				<ul className="list-disc ml-6">
-					<li>
-						<a
-							href="https://tools.google.com/dlpage/gaoptout"
-							target="_blank"
-							rel="noopener noreferrer"
-						>
-							Google Analytics Opt-Out
-						</a>
-					</li>
-					<li>
-						<a
-							href="https://adssettings.google.com"
-							target="_blank"
-							rel="noopener noreferrer"
-						>
-							Ads Settings
-						</a>
-					</li>
-					<li>
-						<a
-							href="http://optout.networkadvertising.org"
-							target="_blank"
-							rel="noopener noreferrer"
-						>
-							NAI Opt-Out
-						</a>
-					</li>
-				</ul>
+				<h4>Analytics Providers</h4>
+				<p>
+					We use Vercel Analytics to collect anonymized usage data to help us improve the
+					site. For more information, see the{" "}
+					<a
+						href="https://vercel.com/legal/privacy-policy"
+						target="_blank"
+						rel="noopener noreferrer"
+					>
+						Vercel Analytics Privacy Policy
+					</a>
+					.
+				</p>
 
 				<hr />
 
-				<h2>6. How Do We Handle Social Logins?</h2>
+				<h2>6. How Do We Handle Social Logins and Authentication?</h2>
 				<p>
-					<strong>In short:</strong> We may access limited personal information from your
-					social accounts.
+					<strong>In short:</strong> We use Clerk for authentication, and may access
+					limited personal information from your social accounts if you register or log in
+					using a social provider.
 				</p>
 				<p>
 					If you register or log in using social media (e.g., Facebook, X), we may collect
@@ -306,7 +290,16 @@ export default function PrivacyPolicyPage() {
 				</ul>
 				<p>
 					We only use this data to facilitate login and account creation. Please review
-					the respective social media provider&apos;s privacy policies.
+					the respective social media provider&apos;s privacy policies. For more
+					information on how Clerk handles your authentication data, see the{" "}
+					<a
+						href="https://clerk.com/privacy"
+						target="_blank"
+						rel="noopener noreferrer"
+					>
+						Clerk Privacy Policy
+					</a>
+					.
 				</p>
 
 				<hr />
