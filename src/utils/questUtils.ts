@@ -4,6 +4,7 @@ import { Quest } from "@/types";
 export type QuestNode = {
 	quest: Quest;
 	questline: number[];
+	tags: string[];
 };
 
 /**
@@ -33,31 +34,43 @@ export function createQuestNodeList(quests: Quest[], firstQuestId: string): Ques
 		const quest = questMap.get(questId)!;
 		path.add(questId);
 
-		// For merges: pick the lowest questline number from all previous quests
+		// Tag logic
+		const tags: string[] = [];
+
+		// Split: has multiple next
+		if (quest.next && quest.next.length > 1) {
+			tags.push("split");
+		}
+		// Merge: has multiple previous
+		if (quest.previous && quest.previous.length > 1) {
+			tags.push("merge");
+		}
+
+		// For merges: lowest parent questline - 1
 		let currentQuestline = questline;
 		if (quest.previous && quest.previous.length > 1) {
 			const prevLines = quest.previous
 				.map((pid) => questlineMap.get(pid))
 				.filter((x) => typeof x === "number") as number[];
 			if (prevLines.length) {
-				currentQuestline = Math.min(...prevLines);
-			}
-			// Always converge merges back to 0
-			if (currentQuestline !== 0) {
-				currentQuestline = 0;
+				currentQuestline = Math.min(...prevLines) - 1;
 			}
 		}
 
-		const node: QuestNode = { quest, questline: [currentQuestline] };
+		const node: QuestNode = { quest, questline: [currentQuestline], tags };
 		nodeMap.set(questId, node);
 		questlineMap.set(questId, currentQuestline);
 		visited.add(questId);
 		result.push(node);
 
+		// For splits: all children start at parent questline + idx + 1
 		if (quest.next && quest.next.length > 0) {
 			for (let idx = 0; idx < quest.next.length; idx++) {
 				const nid = quest.next[idx];
-				const nextLine = idx === 0 ? currentQuestline : currentQuestline + idx;
+				let nextLine = currentQuestline;
+				if (quest.next.length > 1) {
+					nextLine = currentQuestline + idx + 1;
+				}
 				traverseBranch(nid, nextLine, new Set([...path, questId]));
 			}
 		}

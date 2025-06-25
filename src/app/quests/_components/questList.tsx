@@ -21,9 +21,8 @@ export function QuestList({ quests, firstQuestId }: { quests: Quest[]; firstQues
 					key={questNode.quest.id}
 					quest={questNode.quest}
 					questline={questNode.questline[0]}
-					questlineColor={
-						questlineColors[questNode.questline[0] % questlineColors.length]
-					}
+					questlineColors={questlineColors}
+					tags={questNode.tags}
 				/>
 			))}
 		</ul>

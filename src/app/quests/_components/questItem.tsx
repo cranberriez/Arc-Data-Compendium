@@ -1,7 +1,7 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { ExternalLink, Pin, FileText, User } from "lucide-react";
+import { ExternalLink, Pin, FileText, User, Split, Merge } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import type { Quest } from "@/types";
 import Link from "next/link";
@@ -12,7 +12,8 @@ import { useQuests } from "@/contexts/questContext";
 type QuestItemProps = {
 	quest: Quest;
 	questline: number;
-	questlineColor: string;
+	questlineColors: string[];
+	tags: string[];
 };
 
 function capitalizeId(id: string) {
@@ -22,19 +23,21 @@ function capitalizeId(id: string) {
 		.join("_");
 }
 
-export function QuestItem({ quest, questline, questlineColor }: QuestItemProps) {
+export function QuestItem({ quest, questline, questlineColors, tags }: QuestItemProps) {
 	const { activeQuests, completedQuests } = useQuests();
 	const requirement = quest.entries.find((entry) => entry.type === "objective");
 	const reward = quest.entries.find((entry) => entry.type === "reward");
 	const isActive = activeQuests.includes(quest.id);
 	const isCompleted = completedQuests.includes(quest.id);
+	const questlineColor = questlineColors[questline % questlineColors.length];
+	const nextQuestLength = quest.next.length;
+	const prevQuestLength = quest.previous.length;
 
 	return (
 		<li
 			key={quest.id}
 			className="flex flex-1 gap-2 relative"
 		>
-			<div className={cn("w-2 h-2 rounded-full absolute top-1 left-1", questlineColor)} />
 			<div
 				className={cn(
 					"flex flex-col flex-1 gap-4 border-2 rounded-lg p-4 shadow group/questcard",
@@ -56,7 +59,16 @@ export function QuestItem({ quest, questline, questlineColor }: QuestItemProps) 
 						/>
 					</div>
 				</div>
-				<QuestButtons quest={quest} />
+				<div className="flex flex-row items-end justify-between gap-2">
+					<QuestButtons quest={quest} />
+					<QuestTags
+						tags={tags}
+						questlineColors={questlineColors}
+						questline={questline}
+						nextQuestLength={nextQuestLength}
+						prevQuestLength={prevQuestLength}
+					/>
+				</div>
 			</div>
 		</li>
 	);
@@ -107,7 +119,7 @@ function QuestHeader({ quest }: { quest: Quest }) {
 
 function QuestButtons({ quest }: { quest: Quest }) {
 	return (
-		<div className="flex flex-row gap-2">
+		<div className="flex flex-row items-center gap-2">
 			<Button
 				variant="ghost"
 				asChild
@@ -140,4 +152,56 @@ function QuestButtons({ quest }: { quest: Quest }) {
 			</Button>
 		</div>
 	);
+}
+
+function QuestTags({
+	tags,
+	questlineColors,
+	questline,
+	nextQuestLength,
+	prevQuestLength,
+}: {
+	tags: string[];
+	questlineColors: string[];
+	questline: number;
+	nextQuestLength: number;
+	prevQuestLength: number;
+}) {
+	if (tags.includes("split")) {
+		return (
+			<div className="flex flex-row items-center gap-2">
+				<ColorBubble color={questlineColors[questline % questlineColors.length]} />
+				<Split className="h-4 w-4 rotate-90" />
+				{Array.from({ length: nextQuestLength }, (_, i) => i + 1).map((i) => (
+					<ColorBubble
+						key={i}
+						color={questlineColors[(questline + i) % questlineColors.length]}
+					/>
+				))}
+			</div>
+		);
+	} else if (tags.includes("merge")) {
+		return (
+			<div className="flex flex-row items-center gap-2">
+				{Array.from({ length: prevQuestLength }, (_, i) => i + 1).map((i) => (
+					<ColorBubble
+						key={i}
+						color={questlineColors[(questline + i) % questlineColors.length]}
+					/>
+				))}
+				<Merge className="h-4 w-4 rotate-90" />
+				<ColorBubble color={questlineColors[questline % questlineColors.length]} />
+			</div>
+		);
+	} else {
+		return (
+			<div className="flex flex-row items-center gap-2">
+				<ColorBubble color={questlineColors[questline % questlineColors.length]} />
+			</div>
+		);
+	}
+}
+
+function ColorBubble({ color, className }: { color: string; className?: string }) {
+	return <div className={cn("h-3 w-3 rounded-full", color, className)} />;
 }

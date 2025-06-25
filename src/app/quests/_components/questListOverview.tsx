@@ -13,6 +13,9 @@ export function QuestListOverview({ firstQuestId }: { firstQuestId: string }) {
 		}
 	}, [activeQuests, completedQuests]);
 
+	// remove display output for now
+	return null;
+
 	return (
 		<div className="w-full flex border-2 border-arcvault-primary-500/50 h-16 rounded-lg">
 			{activeQuests.join(", ")}
