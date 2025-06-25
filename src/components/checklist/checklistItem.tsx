@@ -1,7 +1,7 @@
 import { Item, WorkbenchUpgradeSummary, WorkbenchUpgradeSummaryItem } from "@/types";
 import { Skeleton } from "../ui/skeleton";
 import ItemCard from "../items/ItemCard";
-import { HoverCard, HoverCardContent, HoverCardTrigger } from "@radix-ui/react-hover-card";
+import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card";
 import { InfoIcon } from "lucide-react";
 import { formatName } from "@/utils/format";
 
