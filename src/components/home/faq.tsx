@@ -55,7 +55,7 @@ export function FAQ() {
 	return (
 		<div className="w-full bg-card p-8 rounded-lg">
 			<h3 className="text-2xl font-semibold mb-4 text-foreground flex items-center gap-4">
-				<MessageCircleQuestion className="w-6 h-6 text-arc-green-600 dark:text-arc-green-400" />
+				<MessageCircleQuestion className="w-6 h-6 text-arcvault-primary-600 dark:text-arcvault-primary-400" />
 				Frequently Asked Questions
 			</h3>
 			<Accordion

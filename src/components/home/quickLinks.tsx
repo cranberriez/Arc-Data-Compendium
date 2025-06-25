@@ -29,7 +29,7 @@ function ExternalSiteLinks() {
 	return (
 		<div className="flex flex-col gap-2 bg-card rounded-lg p-6">
 			<h3 className="text-2xl font-semibold mb-4 text-foreground flex items-center gap-4">
-				<ExternalLink className="w-6 h-6 text-arc-green-600 dark:text-arc-green-400" />
+				<ExternalLink className="w-6 h-6 text-arcvault-primary-600 dark:text-arcvault-primary-400" />
 				Useful Sites
 			</h3>
 			<div className="flex flex-col gap-6">
@@ -89,7 +89,7 @@ function InternalSiteLinks() {
 		<div className="flex flex-col gap-2 bg-card rounded-lg p-6">
 			<div className="flex items-center justify-between gap-2 mb-4">
 				<h3 className="text-2xl font-semibold text-foreground flex items-center gap-4">
-					<Wrench className="w-6 h-6 text-arc-green-600 dark:text-arc-green-400" />
+					<Wrench className="w-6 h-6 text-arcvault-primary-600 dark:text-arcvault-primary-400" />
 					Tools
 				</h3>
 				<Button
