@@ -2,23 +2,22 @@
 
 import { useQuests } from "@/contexts/questContext";
 import { useEffect } from "react";
+import ConfirmationButton from "@/components/confirmation-button";
 
 export function QuestListOverview({ firstQuestId }: { firstQuestId: string }) {
 	const { addActive, activeQuests, completedQuests, resetQuests } = useQuests();
 
-	// Fallback for new users with no active quests
-	useEffect(() => {
-		if (activeQuests.length === 0 && completedQuests.length === 0) {
-			addActive(firstQuestId);
-		}
-	}, [activeQuests, completedQuests]);
-
-	// remove display output for now
-	return null;
-
 	return (
-		<div className="w-full flex border-2 border-arcvault-primary-500/50 h-16 rounded-lg">
-			{activeQuests.join(", ")}
+		<div className="w-full flex items-center border-2 h-16 rounded-lg">
+			<ConfirmationButton
+				children="Reset Quests"
+				onClick={resetQuests}
+				variant="destructive"
+				confirmText="Reset"
+				confirmVariant="destructive"
+				cancelText="Cancel"
+				cancelVariant="outline"
+			/>
 		</div>
 	);
 }

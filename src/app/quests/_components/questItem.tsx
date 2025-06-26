@@ -1,7 +1,7 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { ExternalLink, Pin, FileText, User, Split, Merge } from "lucide-react";
+import { ExternalLink, Pin, FileText, User, Split, Merge, Check, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import type { Quest } from "@/types";
 import Link from "next/link";
@@ -24,14 +24,42 @@ function capitalizeId(id: string) {
 }
 
 export function QuestItem({ quest, questline, questlineColors, tags }: QuestItemProps) {
-	const { activeQuests, completedQuests } = useQuests();
+	const {
+		addActive,
+		removeActive,
+		activeQuests,
+		addCompleted,
+		removeCompleted,
+		completedQuests,
+	} = useQuests();
 	const requirement = quest.entries.find((entry) => entry.type === "objective");
 	const reward = quest.entries.find((entry) => entry.type === "reward");
 	const isActive = activeQuests.includes(quest.id);
 	const isCompleted = completedQuests.includes(quest.id);
-	const questlineColor = questlineColors[questline % questlineColors.length];
 	const nextQuestLength = quest.next.length;
 	const prevQuestLength = quest.previous.length;
+
+	const handleComplete = () => {
+		removeActive(quest.id);
+		addCompleted(quest.id);
+
+		for (const nextQuestId of quest.next) {
+			if (!completedQuests.includes(nextQuestId)) {
+				console.log("Adding active quest:", nextQuestId);
+				addActive(nextQuestId);
+			}
+		}
+	};
+
+	const handleReset = () => {
+		addActive(quest.id);
+		removeCompleted(quest.id);
+
+		for (const nextQuestId of quest.next) {
+			removeActive(nextQuestId);
+			console.log("Removing active quest:", nextQuestId);
+		}
+	};
 
 	return (
 		<li
@@ -40,8 +68,8 @@ export function QuestItem({ quest, questline, questlineColors, tags }: QuestItem
 		>
 			<div
 				className={cn(
-					"flex flex-col flex-1 gap-4 border-2 rounded-lg p-4 shadow group/questcard",
-					isActive ? "border-arcvault-primary-500/50" : "",
+					"flex flex-col flex-1 gap-4 border-2 border-muted-foreground/20 rounded-lg p-4 shadow group/questcard transition-colors",
+					isActive ? "border-blue-500/50" : "",
 					isCompleted ? "border-arcvault-primary-500/50" : ""
 				)}
 			>
@@ -59,7 +87,14 @@ export function QuestItem({ quest, questline, questlineColors, tags }: QuestItem
 						/>
 					</div>
 				</div>
-				<div className="flex flex-row items-end justify-between gap-2">
+				<div className="flex flex-row items-end gap-2">
+					<TrackerInteractions
+						questId={quest.id}
+						isActive={isActive}
+						isCompleted={isCompleted}
+						handleComplete={handleComplete}
+						handleReset={handleReset}
+					/>
 					<QuestButtons quest={quest} />
 					<QuestTags
 						tags={tags}
@@ -67,6 +102,7 @@ export function QuestItem({ quest, questline, questlineColors, tags }: QuestItem
 						questline={questline}
 						nextQuestLength={nextQuestLength}
 						prevQuestLength={prevQuestLength}
+						className="flex flex-row items-center gap-2 ml-auto"
 					/>
 				</div>
 			</div>
@@ -124,10 +160,7 @@ function QuestButtons({ quest }: { quest: Quest }) {
 				variant="ghost"
 				asChild
 			>
-				<Link
-					href={`/quests/${quest.id}`}
-					className="group-hover/questcard:bg-secondary"
-				>
+				<Link href={`/quests/${quest.id}`}>
 					<FileText className="h-4 w-4" />
 					Details
 				</Link>
@@ -160,16 +193,18 @@ function QuestTags({
 	questline,
 	nextQuestLength,
 	prevQuestLength,
+	className,
 }: {
 	tags: string[];
 	questlineColors: string[];
 	questline: number;
 	nextQuestLength: number;
 	prevQuestLength: number;
+	className?: string;
 }) {
 	if (tags.includes("split")) {
 		return (
-			<div className="flex flex-row items-center gap-2">
+			<div className={cn("", className)}>
 				<ColorBubble color={questlineColors[questline % questlineColors.length]} />
 				<Split className="h-4 w-4 rotate-90" />
 				{Array.from({ length: nextQuestLength }, (_, i) => i + 1).map((i) => (
@@ -182,7 +217,7 @@ function QuestTags({
 		);
 	} else if (tags.includes("merge")) {
 		return (
-			<div className="flex flex-row items-center gap-2">
+			<div className={cn("", className)}>
 				{Array.from({ length: prevQuestLength }, (_, i) => i + 1).map((i) => (
 					<ColorBubble
 						key={i}
@@ -195,7 +230,7 @@ function QuestTags({
 		);
 	} else {
 		return (
-			<div className="flex flex-row items-center gap-2">
+			<div className={cn("", className)}>
 				<ColorBubble color={questlineColors[questline % questlineColors.length]} />
 			</div>
 		);
@@ -204,4 +239,43 @@ function QuestTags({
 
 function ColorBubble({ color, className }: { color: string; className?: string }) {
 	return <div className={cn("h-3 w-3 rounded-full", color, className)} />;
+}
+
+function TrackerInteractions({
+	questId,
+	isActive,
+	isCompleted,
+	handleComplete,
+	handleReset,
+}: {
+	questId: string;
+	isActive: boolean;
+	isCompleted: boolean;
+	handleComplete: () => void;
+	handleReset: () => void;
+}) {
+	return (
+		<div className="flex flex-row items-center gap-2">
+			{!isCompleted && (
+				<Button
+					variant="outline"
+					size="icon"
+					className="cursor-pointer hover:border-arcvault-primary-500 hover:text-arcvault-primary-500 hover:bg-arcvault-primary-500/10!"
+					onClick={handleComplete}
+				>
+					<Check className="h-4 w-4" />
+				</Button>
+			)}
+			{isCompleted && (
+				<Button
+					variant="outline"
+					size="icon"
+					className="cursor-pointer hover:border-red-500 hover:text-red-500 hover:bg-red-500/10!"
+					onClick={handleReset}
+				>
+					<X className="h-4 w-4" />
+				</Button>
+			)}
+		</div>
+	);
 }

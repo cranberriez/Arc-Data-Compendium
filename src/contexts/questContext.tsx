@@ -39,6 +39,7 @@ export const QuestProvider = ({
 	const [error, setError] = useState<Error | null>(null);
 
 	const {
+		data,
 		getActiveQuests,
 		getCompletedQuests,
 		addActiveQuest,
@@ -76,8 +77,8 @@ export const QuestProvider = ({
 				setQuests,
 				fetchQuestData,
 				refreshQuests,
-				activeQuests: getActiveQuests(),
-				completedQuests: getCompletedQuests(),
+				activeQuests: data.activeQuests,
+				completedQuests: data.completedQuests,
 				isActive,
 				isCompleted,
 				addActive: addActiveQuest,
