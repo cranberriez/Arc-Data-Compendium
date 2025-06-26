@@ -18,6 +18,7 @@ type QuestItemProps = {
 	isCompleted: boolean;
 	handleComplete: () => void;
 	handleReset: () => void;
+	compactView?: boolean;
 };
 
 function capitalizeId(id: string) {
@@ -36,11 +37,50 @@ export function QuestItem({
 	isCompleted,
 	handleComplete,
 	handleReset,
+	compactView,
 }: QuestItemProps) {
 	const requirement = quest.entries.find((entry) => entry.type === "objective");
 	const reward = quest.entries.find((entry) => entry.type === "reward");
 	const nextQuestLength = quest.next.length;
 	const prevQuestLength = quest.previous.length;
+
+	if (compactView)
+		return (
+			<li
+				key={quest.id}
+				className="flex flex-1 gap-2 relative"
+			>
+				<div
+					className={cn(
+						"flex flex-col flex-1 gap-4 border-2 border-muted-foreground/20 rounded-lg p-2 shadow group/questcard transition-colors",
+						isActive ? "border-blue-500/50" : "",
+						isCompleted ? "border-arcvault-primary-500/50" : ""
+					)}
+				>
+					<div className="flex flex-row flex-wrap items-end gap-2">
+						<h2 className="text-xl font-semibold flex-1 max-w-sm min-w-3xs h-9 flex items-center">
+							{quest.name}
+						</h2>
+						<TrackerInteractions
+							questId={quest.id}
+							isActive={isActive}
+							isCompleted={isCompleted}
+							handleComplete={handleComplete}
+							handleReset={handleReset}
+						/>
+						<QuestButtons quest={quest} />
+						<QuestTags
+							tags={tags}
+							questlineColors={questlineColors}
+							questline={questline}
+							nextQuestLength={nextQuestLength}
+							prevQuestLength={prevQuestLength}
+							className="flex flex-row items-center justify-end gap-2 ml-auto w-[80px]"
+						/>
+					</div>
+				</div>
+			</li>
+		);
 
 	return (
 		<li

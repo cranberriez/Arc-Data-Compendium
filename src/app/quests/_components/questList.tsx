@@ -4,6 +4,7 @@ import { Quest } from "@/types";
 import { QuestItem } from "./questItem";
 import { createQuestNodeList } from "@/utils/questUtils";
 import { useQuests } from "@/contexts/questContext";
+import { useState, useEffect } from "react";
 
 export function QuestList({ quests, firstQuestId }: { quests: Quest[]; firstQuestId: string }) {
 	const {
@@ -133,9 +134,39 @@ export function QuestList({ quests, firstQuestId }: { quests: Quest[]; firstQues
 		reactivateQuests(quest);
 	};
 
+	// State for UI preferences
+	const [hideCompleted, setHideCompleted] = useState<boolean>(false);
+	const [compactView, setCompactView] = useState<boolean>(false);
+
+	// Listen for preference changes from QuestListOverview
+	useEffect(() => {
+		const handlePreferencesChanged = (e: CustomEvent) => {
+			const { hideCompleted: newHideCompleted, compactView: newCompactView } = e.detail;
+			setHideCompleted(newHideCompleted);
+			setCompactView(newCompactView);
+		};
+
+		document.addEventListener(
+			"questViewPreferencesChanged", 
+			handlePreferencesChanged as EventListener
+		);
+
+		return () => {
+			document.removeEventListener(
+				"questViewPreferencesChanged", 
+				handlePreferencesChanged as EventListener
+			);
+		};
+	}, []);
+
+	// Filter quests based on preferences
+	const filteredQuestNodes = hideCompleted
+		? questNodes.filter(node => !completedQuests.includes(node.quest.id))
+		: questNodes;
+
 	return (
-		<ul className="flex flex-col gap-2">
-			{questNodes.map((questNode) => (
+		<ul className={`flex flex-col ${compactView ? 'gap-1' : 'gap-2'}`}>
+			{filteredQuestNodes.map((questNode) => (
 				<QuestItem
 					key={questNode.quest.id}
 					quest={questNode.quest}
@@ -146,6 +177,7 @@ export function QuestList({ quests, firstQuestId }: { quests: Quest[]; firstQues
 					isCompleted={completedQuests.includes(questNode.quest.id)}
 					handleComplete={() => handleComplete(questNode.quest)}
 					handleReset={() => handleReset(questNode.quest)}
+					compactView={compactView}
 				/>
 			))}
 		</ul>
