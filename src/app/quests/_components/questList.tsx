@@ -26,99 +26,112 @@ export function QuestList({ quests, firstQuestId }: { quests: Quest[]; firstQues
 
 	const questNodes = createQuestNodeList(quests, firstQuestId);
 
-	const handleComplete = (quest: Quest) => {
-		removeActive(quest.id);
+	// Helper function to find a quest by ID
+	const findQuest = (id: string): Quest => quests.find((q) => q.id === id)!;
 
-		// 1. Build a temporary completed set
-		const completedSet = new Set(completedQuests);
-		function completeDependenciesToSet(q: Quest) {
-			for (const prevQuestId of q.previous) {
-				if (!completedSet.has(prevQuestId)) {
-					completeDependenciesToSet(quests.find((x) => x.id === prevQuestId)!);
-					completedSet.add(prevQuestId);
-				}
-			}
-		}
-		completeDependenciesToSet(quest);
-		completedSet.add(quest.id);
-
-		// 2. Actually update state
-		completeDependencies(quest);
-		addCompleted(quest.id);
-
-		// 3. Use completedSet for logic
-		for (const nextQuestId of quest.next) {
-			const nextQuest = quests.find((q) => q.id === nextQuestId);
-			if (
-				nextQuest &&
-				!completedSet.has(nextQuestId) &&
-				nextQuest.previous.every((prevId) => completedSet.has(prevId))
-			) {
-				addActive(nextQuestId);
-			}
-		}
+	// Helper function to check if all prerequisites are completed
+	const areAllPrerequisitesCompleted = (quest: Quest, completedIds: Set<string>): boolean => {
+		return quest.previous.every((prevId) => completedIds.has(prevId));
 	};
 
-	function completeDependencies(quest: Quest, prevQuestId?: string) {
-		for (const prevQuestId of quest.previous) {
-			if (!completedQuests.includes(prevQuestId)) {
-				completeDependencies(quests.find((q) => q.id === prevQuestId)!, quest.id);
-				addCompleted(prevQuestId);
-			}
-		}
+	const handleComplete = (quest: Quest) => {
+		// Remove from active quests immediately
+		removeActive(quest.id);
 
-		// Update actives for splitting quests leading to the current quest
-		if (prevQuestId && quest.next.length > 1) {
-			for (const nextQuestId of quest.next) {
-				if (!completedQuests.includes(nextQuestId) && nextQuestId !== prevQuestId) {
+		// Create a set to track all quests that will be completed
+		const newCompletedSet = new Set(completedQuests);
+
+		// Recursive function to mark all dependencies as completed
+		const processCompletedQuest = (q: Quest, fromQuestId?: string) => {
+			// First complete all prerequisites recursively
+			for (const prevQuestId of q.previous) {
+				if (!newCompletedSet.has(prevQuestId)) {
+					const prevQuest = findQuest(prevQuestId);
+					processCompletedQuest(prevQuest, q.id);
+					newCompletedSet.add(prevQuestId);
+					addCompleted(prevQuestId);
+					// Make sure to remove from active when completing
+					removeActive(prevQuestId);
+				}
+			}
+
+			// Mark this quest as completed if it's not already
+			if (!newCompletedSet.has(q.id)) {
+				newCompletedSet.add(q.id);
+				addCompleted(q.id);
+				// Make sure to remove from active when completing
+				removeActive(q.id);
+			}
+
+			// Handle splitting paths - activate other branches if this is coming from a specific quest
+			if (fromQuestId && q.next.length > 1) {
+				for (const nextQuestId of q.next) {
+					if (!newCompletedSet.has(nextQuestId) && nextQuestId !== fromQuestId) {
+						addActive(nextQuestId);
+					}
+				}
+			}
+
+			// Activate next quests if all their prerequisites are now completed
+			for (const nextQuestId of q.next) {
+				const nextQuest = findQuest(nextQuestId);
+				if (
+					!newCompletedSet.has(nextQuestId) &&
+					areAllPrerequisitesCompleted(nextQuest, newCompletedSet)
+				) {
 					addActive(nextQuestId);
 				}
 			}
-		}
-	}
+		};
 
-	const handleReset = (quest: Quest) => {
-		// 1. Build a temporary completed set
-		const completedSet = new Set(completedQuests);
-
-		function unCompleteDependentsToSet(q: Quest) {
-			for (const nextQuestId of q.next) {
-				if (completedSet.has(nextQuestId)) {
-					unCompleteDependentsToSet(quests.find((x) => x.id === nextQuestId)!);
-					completedSet.delete(nextQuestId);
-				}
-			}
-		}
-		unCompleteDependentsToSet(quest);
-		completedSet.delete(quest.id);
-
-		// 2. Actually update state
-		unCompleteDependents(quest); // This should call removeCompleted for all dependents
-		removeCompleted(quest.id);
-
-		// 3. Update actives for this quest and its dependents
-		// (A quest is active if all its previous quests are completed and it is not completed)
-		function maybeReactivate(q: Quest) {
-			if (!completedSet.has(q.id) && q.previous.every((prevId) => completedSet.has(prevId))) {
-				addActive(q.id);
-			}
-			for (const nextQuestId of q.next) {
-				const nextQuest = quests.find((x) => x.id === nextQuestId);
-				if (nextQuest) maybeReactivate(nextQuest);
-			}
-		}
-		maybeReactivate(quest);
+		// Process the quest that was completed
+		processCompletedQuest(quest);
 	};
 
-	function unCompleteDependents(quest: Quest) {
-		for (const nextQuestId of quest.next) {
-			if (completedQuests.includes(nextQuestId)) {
-				unCompleteDependents(quests.find((q) => q.id === nextQuestId)!);
-				removeCompleted(nextQuestId);
+	const handleReset = (quest: Quest) => {
+		// Create a set to track the updated completion state
+		const newCompletedSet = new Set(completedQuests);
+
+		// Recursive function to uncomplete a quest and all its dependents
+		const processResetQuest = (q: Quest) => {
+			// First, remove this quest from completed
+			if (newCompletedSet.has(q.id)) {
+				newCompletedSet.delete(q.id);
+				removeCompleted(q.id);
 			}
-			removeActive(nextQuestId);
-		}
-	}
+
+			// Remove from active quests as well
+			removeActive(q.id);
+
+			// Then recursively process all dependent quests
+			for (const nextQuestId of q.next) {
+				if (newCompletedSet.has(nextQuestId)) {
+					processResetQuest(findQuest(nextQuestId));
+				}
+				// Always remove from active regardless of completion status
+				removeActive(nextQuestId);
+			}
+		};
+
+		// Process the quest that was reset
+		processResetQuest(quest);
+
+		// Reactivate quests that should be active based on the new completion state
+		const reactivateQuests = (q: Quest) => {
+			// A quest is active if all its prerequisites are completed and it's not completed
+			if (!newCompletedSet.has(q.id) && areAllPrerequisitesCompleted(q, newCompletedSet)) {
+				addActive(q.id);
+			}
+
+			// Check next quests recursively
+			for (const nextQuestId of q.next) {
+				reactivateQuests(findQuest(nextQuestId));
+			}
+		};
+
+		// Start reactivation from the reset quest
+		reactivateQuests(quest);
+	};
 
 	return (
 		<ul className="flex flex-col gap-2">
