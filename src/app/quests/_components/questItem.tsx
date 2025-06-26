@@ -14,6 +14,10 @@ type QuestItemProps = {
 	questline: number;
 	questlineColors: string[];
 	tags: string[];
+	isActive: boolean;
+	isCompleted: boolean;
+	handleComplete: () => void;
+	handleReset: () => void;
 };
 
 function capitalizeId(id: string) {
@@ -23,43 +27,20 @@ function capitalizeId(id: string) {
 		.join("_");
 }
 
-export function QuestItem({ quest, questline, questlineColors, tags }: QuestItemProps) {
-	const {
-		addActive,
-		removeActive,
-		activeQuests,
-		addCompleted,
-		removeCompleted,
-		completedQuests,
-	} = useQuests();
+export function QuestItem({
+	quest,
+	questline,
+	questlineColors,
+	tags,
+	isActive,
+	isCompleted,
+	handleComplete,
+	handleReset,
+}: QuestItemProps) {
 	const requirement = quest.entries.find((entry) => entry.type === "objective");
 	const reward = quest.entries.find((entry) => entry.type === "reward");
-	const isActive = activeQuests.includes(quest.id);
-	const isCompleted = completedQuests.includes(quest.id);
 	const nextQuestLength = quest.next.length;
 	const prevQuestLength = quest.previous.length;
-
-	const handleComplete = () => {
-		removeActive(quest.id);
-		addCompleted(quest.id);
-
-		for (const nextQuestId of quest.next) {
-			if (!completedQuests.includes(nextQuestId)) {
-				console.log("Adding active quest:", nextQuestId);
-				addActive(nextQuestId);
-			}
-		}
-	};
-
-	const handleReset = () => {
-		addActive(quest.id);
-		removeCompleted(quest.id);
-
-		for (const nextQuestId of quest.next) {
-			removeActive(nextQuestId);
-			console.log("Removing active quest:", nextQuestId);
-		}
-	};
 
 	return (
 		<li
@@ -260,7 +241,7 @@ function TrackerInteractions({
 				<Button
 					variant="outline"
 					size="icon"
-					className="cursor-pointer hover:border-arcvault-primary-500 hover:text-arcvault-primary-500 hover:bg-arcvault-primary-500/10!"
+					className="cursor-pointer hover:border-arcvault-primary-500 hover:text-arcvault-primary-500 hover:bg-arcvault-primary-500/10! border-2"
 					onClick={handleComplete}
 				>
 					<Check className="h-4 w-4" />
@@ -270,7 +251,7 @@ function TrackerInteractions({
 				<Button
 					variant="outline"
 					size="icon"
-					className="cursor-pointer hover:border-red-500 hover:text-red-500 hover:bg-red-500/10!"
+					className="cursor-pointer hover:border-red-500 hover:text-red-500 hover:bg-red-500/10! border-2"
 					onClick={handleReset}
 				>
 					<X className="h-4 w-4" />
