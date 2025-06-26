@@ -1,5 +1,5 @@
 import { db } from "../drizzle";
-import { eq } from "drizzle-orm";
+import { eq, sql } from "drizzle-orm";
 import { quests } from "../schema/quest";
 import { Quest } from "@/types";
 
@@ -68,5 +68,21 @@ export const getQuestIds = async (): Promise<string[]> => {
 	} catch (error) {
 		console.error("Error querying quest IDs:", error);
 		return [];
+	}
+};
+
+export const getFirstQuestId = async (): Promise<string> => {
+	try {
+		return db.query.quests
+			.findFirst({
+				columns: {
+					id: true,
+				},
+				where: sql`NOT EXISTS (SELECT 1 FROM quest_links WHERE quest_links.next = quests.id)`,
+			})
+			.then((quest) => quest?.id ?? "");
+	} catch (error) {
+		console.error("Error querying first quest ID:", error);
+		return "";
 	}
 };

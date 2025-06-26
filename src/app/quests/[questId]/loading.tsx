@@ -1,5 +1,5 @@
 import React from "react";
-import QuestFullSkeleton from "../components/questFullSkeleton";
+import QuestFullSkeleton from "../_components/questFullSkeleton";
 
 export default function Loading() {
 	// Show 5 skeletons for a realistic loading effect

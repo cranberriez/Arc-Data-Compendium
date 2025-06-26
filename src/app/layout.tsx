@@ -3,15 +3,15 @@ import { AppSidebar } from "@/components/app-sidebar";
 import { SidebarInset } from "@/components/ui/sidebar";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { AppProviders } from "@/components/app-providers";
-import Toolbar from "@/components/toolbar/toolbar";
+import { LayoutHeader } from "@/components/toolbar/layoutHeader";
 import { Analytics } from "@vercel/analytics/react";
 
 import "./globals.css";
 
 export const metadata: Metadata = {
-	title: "ARC Vault Data Compendium",
+	title: "ARCVault - ARC Raiders Companion & Data Vault",
 	description:
-		"Your ultimate resource for ARC Raiders with detailed item stats, locations, and game data.",
+		"Your ultimate resource for ARC Raiders with detailed item stats, recycle chains, quests, tracking, and more. Browse every item in the game and find out how to get it, what it's for, and how to use it. Track your progress and plan your next raid with ease. Create item checklists and see every item you will ahead of time in one place.",
 	keywords: [
 		"ARC Raiders vault",
 		"ARC Raiders items",
@@ -28,11 +28,11 @@ export const metadata: Metadata = {
 		canonical: "/",
 	},
 	openGraph: {
-		title: "ARC Vault Data Compendium",
+		title: "ARCVault - ARC Raiders Companion & Data Vault",
 		description:
-			"Your ultimate resource for ARC Raiders with detailed item stats and recycle chains, quests, tracking, and more.",
+			"Your ultimate resource for ARC Raiders with detailed item stats, recycle chains, quests, tracking, and more. Browse every item in the game and find out how to get it, what it's for, and how to use it. Track your progress and plan your next raid with ease. Create item checklists and see every item you will ahead of time in one place.",
 		url: "https://arcvault.app",
-		siteName: "ARC Data Compendium",
+		siteName: "ARCVault - ARC Raiders Companion & Data Vault",
 		locale: "en_US",
 		type: "website",
 	},
@@ -58,12 +58,11 @@ export default function RootLayout({
 			<body>
 				<AppProviders>
 					<AppSidebar />
-					<SidebarInset className="max-h-[calc(100vh-theme(spacing.4))]">
-						<header className="flex h-12 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12">
-							<Toolbar />
-						</header>
+					<SidebarInset className="max-h-[calc(100vh-theme(spacing.4))] relative">
+						<LayoutHeader />
 
 						<ScrollArea className="flex-1 overflow-auto h-full mb-2 relative">
+							<div className="h-12" />
 							{children}
 						</ScrollArea>
 					</SidebarInset>

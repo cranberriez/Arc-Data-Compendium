@@ -2,7 +2,14 @@
 
 import { Item, Weapon, Quest, Recipe, Workbench } from "@/types";
 import { getItems, getWeapons } from "@/db/queries/getItems";
-import { getQuestIds, getQuests, getRecipes, getWorkbenches, getWorkbenchIds } from "@/db/queries";
+import {
+	getQuestIds,
+	getQuests,
+	getRecipes,
+	getWorkbenches,
+	getWorkbenchIds,
+	getFirstQuestId,
+} from "@/db/queries";
 
 // Fetch all items
 export async function fetchItems(): Promise<Item[]> {
@@ -116,4 +123,12 @@ export async function fetchQuestById(id: string): Promise<Quest | null> {
 export async function fetchQuestIds(): Promise<string[]> {
 	const questIds = await getQuestIds();
 	return Array.isArray(questIds) ? questIds : [];
+}
+
+/**
+ * Fetches the first quest ID from the API
+ * @returns Promise that resolves to the first quest ID
+ */
+export async function fetchFirstQuestId(): Promise<string> {
+	return await getFirstQuestId();
 }

@@ -6,7 +6,8 @@ import { getCookie, setCookie, deleteCookie } from "@/utils/cookieUtils";
 // Define the structure of our cookie data
 interface CookieData {
 	workbenchLevels: Record<string, number>;
-	activeQuest: string | null;
+	activeQuests: string[];
+	completedQuests: string[];
 	itemCounts: Record<string, number>;
 	selections: Record<string, string | number | boolean>;
 	stringValues: Record<string, string>;
@@ -16,7 +17,8 @@ interface CookieData {
 // Initial state
 const initialCookieData: CookieData = {
 	workbenchLevels: {},
-	activeQuest: null,
+	activeQuests: ["topside"],
+	completedQuests: [],
 	itemCounts: {},
 	selections: {},
 	stringValues: {},
@@ -33,8 +35,13 @@ interface CookieContextType {
 	resetWorkbenches: () => void;
 
 	// Quest methods
-	getActiveQuest: () => string | null;
-	setActiveQuest: (questId: string | null) => void;
+	getActiveQuests: () => string[];
+	addActiveQuest: (questId: string) => void;
+	removeActiveQuest: (questId: string) => void;
+	getCompletedQuests: () => string[];
+	addCompletedQuest: (questId: string) => void;
+	removeCompletedQuest: (questId: string) => void;
+	resetQuests: () => void;
 
 	// Item count methods
 	getItemCount: (id: string) => number;
@@ -65,7 +72,8 @@ const CookieContext = createContext<CookieContextType | undefined>(undefined);
 // Cookie keys
 const COOKIE_KEYS: Record<keyof CookieData, string> = {
 	workbenchLevels: "workbench_levels",
-	activeQuest: "active_quest",
+	activeQuests: "active_quests",
+	completedQuests: "completed_quests",
 	itemCounts: "item_counts",
 	selections: "selections",
 	stringValues: "string_values",
@@ -101,7 +109,8 @@ export function CookieProvider({ children }: CookieProviderProps) {
 	useEffect(() => {
 		const loadedData: CookieData = {
 			workbenchLevels: safeParseJSON(getCookie(COOKIE_KEYS.workbenchLevels), {}),
-			activeQuest: getCookie(COOKIE_KEYS.activeQuest),
+			activeQuests: safeParseJSON(getCookie(COOKIE_KEYS.activeQuests), [""]),
+			completedQuests: safeParseJSON(getCookie(COOKIE_KEYS.completedQuests), []),
 			itemCounts: safeParseJSON(getCookie(COOKIE_KEYS.itemCounts), {}),
 			selections: safeParseJSON(getCookie(COOKIE_KEYS.selections), {}),
 			stringValues: safeParseJSON(getCookie(COOKIE_KEYS.stringValues), {}),
@@ -119,17 +128,7 @@ export function CookieProvider({ children }: CookieProviderProps) {
 			const newValue = updater(prev[category]);
 			const newData = { ...prev, [category]: newValue };
 
-			// Handle special case for activeQuest (string vs object)
-			if (category === "activeQuest") {
-				if (newValue) {
-					setCookie(COOKIE_KEYS[category], newValue as string);
-				} else {
-					deleteCookie(COOKIE_KEYS[category]);
-				}
-			} else {
-				safeSaveToCookie(COOKIE_KEYS[category], newValue);
-			}
-
+			safeSaveToCookie(COOKIE_KEYS[category], newValue);
 			return newData;
 		});
 	};
@@ -144,14 +143,10 @@ export function CookieProvider({ children }: CookieProviderProps) {
 	};
 
 	const set = (category: keyof CookieData, key: string, value: any): void => {
-		if (category === "activeQuest") {
-			updateCategory("activeQuest", () => value);
-		} else {
-			updateCategory(category, (current) => ({
-				...(current as Record<string, any>),
-				[key]: value,
-			}));
-		}
+		updateCategory(category, (current) => ({
+			...(current as Record<string, any>),
+			[key]: value,
+		}));
 	};
 
 	const remove = (category: keyof CookieData, key: string): void => {
@@ -172,8 +167,30 @@ export function CookieProvider({ children }: CookieProviderProps) {
 		updateCategory("workbenchLevels", () => ({}));
 	};
 
-	const getActiveQuest = (): string | null => data.activeQuest;
-	const setActiveQuest = (questId: string | null): void => set("activeQuest", "", questId);
+	// Multi-quest methods
+	const getActiveQuests = (): string[] => data.activeQuests || [];
+	const addActiveQuest = (questId: string): void => {
+		updateCategory("activeQuests", (prev: string[]) =>
+			prev.includes(questId) ? prev : [...prev, questId]
+		);
+	};
+	const removeActiveQuest = (questId: string): void => {
+		updateCategory("activeQuests", (prev: string[]) => prev.filter((id) => id !== questId));
+	};
+
+	const getCompletedQuests = (): string[] => data.completedQuests || [];
+	const addCompletedQuest = (questId: string): void => {
+		updateCategory("completedQuests", (prev: string[]) =>
+			prev.includes(questId) ? prev : [...prev, questId]
+		);
+	};
+	const removeCompletedQuest = (questId: string): void => {
+		updateCategory("completedQuests", (prev: string[]) => prev.filter((id) => id !== questId));
+	};
+	const resetQuests = () => {
+		updateCategory("activeQuests", () => initialCookieData.activeQuests);
+		updateCategory("completedQuests", () => initialCookieData.completedQuests);
+	};
 
 	const getItemCount = (id: string): number => get("itemCounts", id) || 0;
 	const getAllItemCounts = (): Record<string, number> => ({ ...data.itemCounts });
@@ -224,12 +241,8 @@ export function CookieProvider({ children }: CookieProviderProps) {
 
 		// Save to cookies
 		(Object.keys(importedData) as Array<keyof CookieData>).forEach((key) => {
-			if (key === "activeQuest") {
-				if (newData[key]) {
-					setCookie(COOKIE_KEYS[key], newData[key] as string);
-				} else {
-					deleteCookie(COOKIE_KEYS[key]);
-				}
+			if (key === "activeQuests" || key === "completedQuests") {
+				safeSaveToCookie(COOKIE_KEYS[key], newData[key] || []);
 			} else {
 				safeSaveToCookie(COOKIE_KEYS[key], newData[key]);
 			}
@@ -277,8 +290,11 @@ export function CookieProvider({ children }: CookieProviderProps) {
 			addRows("stringValue", data.stringValues);
 			addRows("numberValue", data.numberValues);
 
-			if (data.activeQuest) {
-				rows.push(`activeQuest,"activeQuest","${data.activeQuest}"`);
+			if (data.activeQuests && data.activeQuests.length > 0) {
+				rows.push(`activeQuests,"activeQuests","${data.activeQuests.join("|")}"`);
+			}
+			if (data.completedQuests && data.completedQuests.length > 0) {
+				rows.push(`completedQuests,"completedQuests","${data.completedQuests.join("|")}"`);
 			}
 
 			const blob = new Blob([rows.join("\n")], { type: "text/csv" });
@@ -305,7 +321,8 @@ export function CookieProvider({ children }: CookieProviderProps) {
 
 			const importedData: Partial<CookieData> = {
 				workbenchLevels: {},
-				activeQuest: null,
+				activeQuests: [],
+				completedQuests: [],
 				itemCounts: {},
 				selections: {},
 				stringValues: {},
@@ -325,8 +342,8 @@ export function CookieProvider({ children }: CookieProviderProps) {
 					numberValue: "numberValues",
 				};
 
-				if (type === "activeQuest") {
-					importedData.activeQuest = value;
+				if (type === "activeQuests") {
+					importedData.activeQuests = value.split("|");
 				} else if (categories[type]) {
 					const category = categories[type];
 					let parsedValue: any = value;
@@ -360,8 +377,14 @@ export function CookieProvider({ children }: CookieProviderProps) {
 		resetWorkbenches,
 		getWorkbenchLevel,
 		setWorkbenchLevel,
-		getActiveQuest,
-		setActiveQuest,
+		// Quest methods
+		getActiveQuests,
+		addActiveQuest,
+		removeActiveQuest,
+		getCompletedQuests,
+		addCompletedQuest,
+		removeCompletedQuest,
+		resetQuests,
 		getItemCount,
 		getAllItemCounts,
 		getItemCountEntries,

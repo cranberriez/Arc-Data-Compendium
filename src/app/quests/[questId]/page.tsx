@@ -3,7 +3,7 @@ import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/ca
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
-import { QuestFull } from "../components/questFull";
+import { QuestFull } from "../_components/questFull";
 
 export async function generateStaticParams() {
 	const questIds = await fetchQuestIds();

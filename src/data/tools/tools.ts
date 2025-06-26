@@ -7,7 +7,7 @@ export const tools = [
 		image: "/images/quests/348px-Maps_Together.png-1.webp",
 		link: "/tools/item-checklists",
 		icon: ClipboardCheck,
-		iconColor: "text-arc-green-600 dark:text-arc-green-400",
+		iconColor: "text-arcvault-primary-600 dark:text-arcvault-primary-400",
 		completed: false,
 	},
 	{
@@ -16,7 +16,7 @@ export const tools = [
 		image: "/images/quests/348px-Maps_Together.png-1.webp",
 		link: "/tools/recycling-calculator",
 		icon: Calculator,
-		iconColor: "text-arc-green-600 dark:text-arc-green-400",
+		iconColor: "text-arcvault-primary-600 dark:text-arcvault-primary-400",
 		completed: false,
 	},
 	{

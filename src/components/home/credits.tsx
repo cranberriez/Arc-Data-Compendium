@@ -7,7 +7,7 @@ export function Credits() {
 			{/* Add smaller acknowledgments here */}
 			<div>
 				<h3 className="text-2xl font-semibold mb-4 text-foreground flex items-center gap-4">
-					<Heart className="w-6 h-6 text-arc-green-600 dark:text-arc-green-400" />
+					<Heart className="w-6 h-6 text-arcvault-primary-600 dark:text-arcvault-primary-400" />
 					Acknowledgments
 				</h3>
 				<div className="gap-4 grid grid-cols-1 lg:grid-cols-2">
