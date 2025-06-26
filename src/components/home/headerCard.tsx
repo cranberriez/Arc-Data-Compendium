@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
-import { Info, Search } from "lucide-react";
+import { Search } from "lucide-react";
 import Link from "next/link";
-import Image from "next/image";
+import { HeaderImage } from "./headerImage";
 
 export function HeaderCard() {
 	return (
@@ -36,13 +36,7 @@ export function HeaderCard() {
 				</div>
 			</div>
 			<div className="absolute top-0 left-0 w-full h-full z-0 opacity-50">
-				<Image
-					src="/images/arc-raiders-1-d56d47a693fa.gif"
-					alt="ARC Raiders"
-					width={1600}
-					height={900}
-					className="w-full h-full object-cover rounded-xl"
-				/>
+				<HeaderImage />
 			</div>
 		</div>
 	);
