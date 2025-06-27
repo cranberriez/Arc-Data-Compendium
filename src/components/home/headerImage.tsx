@@ -2,11 +2,12 @@
 
 import { useState } from "react";
 import { cn } from "@/lib/utils";
+import Image from "next/image";
 
 export function HeaderImage() {
 	const [imgLoaded, setImgLoaded] = useState(false);
 	return (
-		<img
+		<Image
 			src="/images/arc-raiders-1-d56d47a693fa.gif"
 			alt="ARC Raiders"
 			width={1600}
