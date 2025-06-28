@@ -9,11 +9,23 @@ import { formatName, getTypeIcon } from "@/utils/items/itemUtils";
 import getItemIcon from "@/components/items/getItemIcon";
 
 // Component that displays item header information
-export const ItemHeader = ({ item }: { item: Item }) => {
+export const ItemHeader = ({
+	name,
+	icon,
+	category,
+	rarity,
+	recipeId,
+}: {
+	name: string;
+	icon: string;
+	category: string;
+	rarity: string;
+	recipeId: string | null;
+}) => {
 	const rarityColors = {
-		bg: getRarityColor(item.rarity, "bg"),
-		text: getRarityColor(item.rarity, "text"),
-		border: getRarityColor(item.rarity, "border"),
+		bg: getRarityColor(rarity, "bg"),
+		text: getRarityColor(rarity, "text"),
+		border: getRarityColor(rarity, "border"),
 	};
 
 	return (
@@ -28,21 +40,25 @@ export const ItemHeader = ({ item }: { item: Item }) => {
 						`dark:${rarityColors.bg}/10`
 					)}
 				>
-					{getItemIcon(item.icon, cn("w-8 h-8", rarityColors.text))}
+					{getItemIcon(icon, cn("w-8 h-8", rarityColors.text))}
 				</div>
 				<div className="flex flex-col items-start">
 					<DialogTitle className="text-left text-2xl font-normal pr-6 sm:pr-0">
-						{item.name}
+						{name}
 					</DialogTitle>
 					<ItemTags
-						item={item}
+						category={category}
+						rarity={rarity}
+						hasRecipe={!!recipeId}
 						className="hidden sm:block"
 						bgColor={rarityColors.bg}
 					/>
 				</div>
 			</div>
 			<ItemTags
-				item={item}
+				category={category}
+				rarity={rarity}
+				hasRecipe={!!recipeId}
 				className="block sm:hidden"
 				bgColor={rarityColors.bg}
 			/>
@@ -51,11 +67,15 @@ export const ItemHeader = ({ item }: { item: Item }) => {
 };
 
 export const ItemTags = ({
-	item,
+	category,
+	rarity,
+	hasRecipe,
 	className,
 	bgColor,
 }: {
-	item: Item;
+	category: string;
+	rarity: string;
+	hasRecipe: boolean;
 	className?: string;
 	bgColor?: string;
 }) => {
@@ -64,22 +84,20 @@ export const ItemTags = ({
 			<div className="flex items-center gap-4">
 				<div className="flex items-center gap-1">
 					<div className="flex items-center w-fit h-fit">
-						{React.createElement(getTypeIcon(item.category), {
+						{React.createElement(getTypeIcon(category), {
 							size: 12,
 						})}
 					</div>
 					<p className="text-sm text-muted-foreground font-mono">
-						{formatName(item.category)}
+						{formatName(category)}
 					</p>
 				</div>
 				<div className="flex items-center gap-1">
 					<div className={cn("w-3 h-3 rounded-full", bgColor)} />
-					<p className="text-sm text-muted-foreground font-mono">
-						{formatName(item.rarity)}
-					</p>
+					<p className="text-sm text-muted-foreground font-mono">{formatName(rarity)}</p>
 				</div>
 
-				{item.recipeId && (
+				{hasRecipe && (
 					<div className="flex items-center gap-1">
 						<div className="w-fit h-fit">
 							<Book size={12} />

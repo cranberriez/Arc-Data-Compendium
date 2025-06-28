@@ -1,4 +1,4 @@
-import { QuickUseCharge, QuickUseStat } from "@/types";
+import { QuickUseCharge, QuickUseData, QuickUseStat } from "@/types";
 import {
 	ChartNoAxesColumn,
 	Dumbbell,
@@ -18,13 +18,15 @@ const formatName = (str: string) => str.charAt(0).toUpperCase() + str.replace("_
 
 export const QuickUseSection = ({
 	flavorText,
-	stats,
+	quickUse,
 	charge,
 }: {
 	flavorText: string | null;
-	stats: QuickUseStat[];
-	charge: QuickUseCharge;
+	quickUse: QuickUseData | null;
+	charge: QuickUseCharge | null;
 }) => {
+	const stats = quickUse?.stats ?? null;
+
 	return (
 		<div>
 			<div className="font-mono font-light w-fit flex items-center gap-2 mb-2">
@@ -57,7 +59,9 @@ export const QuickUseSection = ({
 	);
 };
 
-const StatItem = ({ stat }: { stat: QuickUseStat }) => {
+const StatItem = ({ stat }: { stat: QuickUseStat | null }) => {
+	if (!stat) return null;
+
 	const iconMap = {
 		healing: HeartPulseIcon,
 		damage: Swords,

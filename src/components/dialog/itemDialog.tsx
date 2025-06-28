@@ -34,8 +34,8 @@ export function ItemDialog({ data, isOpen, closeDialog, backDialog }: ItemDialog
 		backDialog();
 	};
 
-	const quickUseStats = item.quickUse?.stats;
-	const quickUseCharge = item.quickUse?.charge;
+	const quickUseStats = item.quickUse?.stats ?? null;
+	const quickUseCharge = item.quickUse?.charge ?? null;
 	const gearStats = item.gear?.stats;
 	const gearType = item.gear?.category;
 	const recyclingRecipe = item.recycling;
@@ -63,19 +63,33 @@ export function ItemDialog({ data, isOpen, closeDialog, backDialog }: ItemDialog
 					</div>
 				)}
 				{/* Dialog Header */}
-				<ItemHeader item={item} />
+				<ItemHeader
+					name={item.name}
+					icon={item.icon}
+					category={item.category}
+					rarity={item.rarity}
+					recipeId={item.recipeId}
+				/>
 
-				<DiagDescription item={item} />
+				<DiagDescription
+					name={item.name}
+					rarity={item.rarity}
+					category={item.category}
+					recipeId={item.recipeId}
+					itemDescription={item.description}
+					weight={item.weight}
+					sellValue={item.value}
+				/>
 
 				{quickUseStats || quickUseCharge || gearStats || gearType || recyclingRecipe ? (
 					<hr className="my-2 border-t border-t-secondary-foreground/20 dark:border-t-secondary-foreground/10" />
 				) : null}
 
 				{/* Quick Use Section */}
-				{quickUseStats && quickUseCharge && (
+				{quickUseStats && (
 					<QuickUseSection
 						flavorText={item.flavorText}
-						stats={quickUseStats}
+						quickUse={item.quickUse}
 						charge={quickUseCharge}
 					/>
 				)}
