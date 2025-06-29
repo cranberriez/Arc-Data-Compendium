@@ -55,7 +55,7 @@ export default function RootLayout({
 			lang="en"
 			suppressHydrationWarning
 		>
-			<body>
+			<body className="max-h-screen overflow-hidden">
 				<AppProviders>
 					<AppSidebar />
 					<SidebarInset className="max-h-[calc(100vh-theme(spacing.4))]">
