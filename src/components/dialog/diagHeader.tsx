@@ -1,9 +1,7 @@
 import { DialogHeader } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
-import { Item } from "@/types";
 import { getRarityColor } from "@/utils/items/itemUtils";
 import { DialogTitle } from "@/components/ui/dialog";
-import { Book } from "lucide-react";
 import React from "react";
 import { formatName, getTypeIcon } from "@/utils/items/itemUtils";
 import getItemIcon from "@/components/items/getItemIcon";
@@ -31,6 +29,8 @@ export const ItemHeader = ({
 		border: getRarityColor(rarity, "border"),
 	};
 
+	const filteredTags = itemTags.filter((tag) => tag.key !== category);
+
 	return (
 		<DialogHeader className="flex flex-col justify-start gap-4">
 			{/* Keep existing header content from DialogHeader */}
@@ -49,23 +49,25 @@ export const ItemHeader = ({
 					<DialogTitle className="text-left text-2xl font-normal pr-6 sm:pr-0">
 						{name}
 					</DialogTitle>
+					{/* Desktop Tags */}
 					<ItemDiagTags
 						category={category}
 						rarity={rarity}
 						hasRecipe={!!recipeId}
 						className="hidden sm:block"
 						bgColor={rarityColors.bg}
-						itemTags={itemTags}
+						itemTags={filteredTags}
 					/>
 				</div>
 			</div>
+			{/* Mobile Tags */}
 			<ItemDiagTags
 				category={category}
 				rarity={rarity}
 				hasRecipe={!!recipeId}
 				className="block sm:hidden"
 				bgColor={rarityColors.bg}
-				itemTags={itemTags}
+				itemTags={filteredTags}
 			/>
 		</DialogHeader>
 	);
