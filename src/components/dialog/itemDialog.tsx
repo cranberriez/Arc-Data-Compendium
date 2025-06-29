@@ -9,6 +9,7 @@ import { ItemHeader, RecyclingSection, SourcesSection, QuickUseSection, GearSect
 import DevTools from "./diagDevTools";
 import DiagDescription from "./diagDescription";
 import { useRecipes } from "@/contexts/recipeContext";
+import { getItemTags } from "@/utils/items";
 
 type ItemDialogProps = {
 	data: Item;
@@ -40,6 +41,7 @@ export function ItemDialog({ data, isOpen, closeDialog, backDialog }: ItemDialog
 	const gearType = item.gear?.category;
 	const recyclingRecipe = item.recycling;
 	const recyclingSources = getRecyclingSourcesById(item.id);
+	const itemTags = getItemTags(item);
 
 	return (
 		<Dialog
@@ -69,6 +71,7 @@ export function ItemDialog({ data, isOpen, closeDialog, backDialog }: ItemDialog
 					category={item.category}
 					rarity={item.rarity}
 					recipeId={item.recipeId}
+					itemTags={itemTags}
 				/>
 
 				<DiagDescription
@@ -122,7 +125,7 @@ export function ItemDialog({ data, isOpen, closeDialog, backDialog }: ItemDialog
 				{/* TODO: Uses Section quests/workshop */}
 
 				{/* Dev Tools */}
-				<DevTools item={item} />
+				{/* <DevTools item={item} /> */}
 			</DialogContent>
 		</Dialog>
 	);

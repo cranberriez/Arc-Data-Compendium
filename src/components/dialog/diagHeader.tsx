@@ -7,6 +7,7 @@ import { Book } from "lucide-react";
 import React from "react";
 import { formatName, getTypeIcon } from "@/utils/items/itemUtils";
 import getItemIcon from "@/components/items/getItemIcon";
+import { ItemTagData } from "@/utils/items";
 
 // Component that displays item header information
 export const ItemHeader = ({
@@ -15,12 +16,14 @@ export const ItemHeader = ({
 	category,
 	rarity,
 	recipeId,
+	itemTags,
 }: {
 	name: string;
 	icon: string;
 	category: string;
 	rarity: string;
 	recipeId: string | null;
+	itemTags: ItemTagData[];
 }) => {
 	const rarityColors = {
 		bg: getRarityColor(rarity, "bg"),
@@ -46,42 +49,46 @@ export const ItemHeader = ({
 					<DialogTitle className="text-left text-2xl font-normal pr-6 sm:pr-0">
 						{name}
 					</DialogTitle>
-					<ItemTags
+					<ItemDiagTags
 						category={category}
 						rarity={rarity}
 						hasRecipe={!!recipeId}
 						className="hidden sm:block"
 						bgColor={rarityColors.bg}
+						itemTags={itemTags}
 					/>
 				</div>
 			</div>
-			<ItemTags
+			<ItemDiagTags
 				category={category}
 				rarity={rarity}
 				hasRecipe={!!recipeId}
 				className="block sm:hidden"
 				bgColor={rarityColors.bg}
+				itemTags={itemTags}
 			/>
 		</DialogHeader>
 	);
 };
 
-export const ItemTags = ({
+export const ItemDiagTags = ({
 	category,
 	rarity,
 	hasRecipe,
 	className,
 	bgColor,
+	itemTags,
 }: {
 	category: string;
 	rarity: string;
 	hasRecipe: boolean;
 	className?: string;
 	bgColor?: string;
+	itemTags: ItemTagData[];
 }) => {
 	return (
 		<div className={cn("space-y-4", className)}>
-			<div className="flex items-center gap-4">
+			<div className="flex flex-wrap items-center gap-4">
 				<div className="flex items-center gap-1">
 					<div className="flex items-center w-fit h-fit">
 						{React.createElement(getTypeIcon(category), {
@@ -97,14 +104,26 @@ export const ItemTags = ({
 					<p className="text-sm text-muted-foreground font-mono">{formatName(rarity)}</p>
 				</div>
 
-				{hasRecipe && (
-					<div className="flex items-center gap-1">
-						<div className="w-fit h-fit">
-							<Book size={12} />
+				{itemTags.map((tag) => {
+					return (
+						<div
+							className="flex items-center gap-1"
+							key={tag.key}
+						>
+							{tag.icon &&
+								React.createElement(tag.icon, {
+									className: cn(
+										"w-4 h-4",
+										tag.size === "lg" && "w-4 h-4",
+										tag.size === "xl" && "w-5 h-5",
+										tag.colorClass
+									),
+									strokeWidth: 2,
+								})}
+							<p className="text-sm text-muted-foreground font-mono">{tag.label}</p>
 						</div>
-						<p className="text-sm text-muted-foreground font-mono">Craftable</p>
-					</div>
-				)}
+					);
+				})}
 			</div>
 		</div>
 	);
