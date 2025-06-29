@@ -70,7 +70,7 @@ const data: NavData = {
 				title: "Dashboard",
 				url: "/dashboard",
 				icon: LayoutDashboard,
-				enabled: true,
+				enabled: false,
 			},
 			{
 				title: "Tools",
