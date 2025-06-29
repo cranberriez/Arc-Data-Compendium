@@ -4,7 +4,9 @@ import { SidebarInset } from "@/components/ui/sidebar";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { AppProviders } from "@/components/app-providers";
 import { LayoutHeader } from "@/components/toolbar/layoutHeader";
+
 import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 import "./globals.css";
 
@@ -68,6 +70,7 @@ export default function RootLayout({
 					</SidebarInset>
 				</AppProviders>
 				<Analytics />
+				<SpeedInsights />
 			</body>
 		</html>
 	);
