@@ -1,11 +1,3 @@
-import {
-	Accordion,
-	AccordionContent,
-	AccordionItem,
-	AccordionTrigger,
-} from "@/components/ui/accordion";
-import { ExternalLink, Heart } from "lucide-react";
-import Link from "next/link";
 import { getAggregateCounts } from "@/db/queries/getAggregate";
 import {
 	HeaderCard,

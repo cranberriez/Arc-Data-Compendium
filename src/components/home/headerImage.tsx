@@ -8,8 +8,8 @@ export function HeaderImage() {
 	const [imgLoaded, setImgLoaded] = useState(false);
 	return (
 		<Image
-			src="/images/arc-raiders-1-d56d47a693fa.gif"
-			alt="ARC Raiders"
+			src="/images/arc-raiders-homepage-optimized-1.webp"
+			alt="ARC Raiders Gif of Raider gearing up and leaving Speranza"
 			width={1600}
 			height={400}
 			className={cn(
@@ -17,7 +17,7 @@ export function HeaderImage() {
 				imgLoaded ? "opacity-100" : "opacity-0"
 			)}
 			onLoad={() => setImgLoaded(true)}
-			loading="lazy"
+			loading="eager"
 		/>
 	);
 }
