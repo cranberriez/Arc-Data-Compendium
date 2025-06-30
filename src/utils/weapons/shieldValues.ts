@@ -22,9 +22,9 @@ export const SHIELD_VALUES: Shield_Data = {
 };
 
 export const AMMO_TYPE_COLORS: Record<string, string> = {
-	light: "bg-amber-200 text-amber-900 dark:bg-transparent dark:text-amber-400",
-	medium: "bg-blue-200 text-blue-900 dark:bg-transparent dark:text-blue-300",
-	heavy: "bg-rose-200 text-rose-900 dark:bg-transparent dark:text-rose-300",
-	shotgun: "bg-red-200 text-red-900 dark:bg-transparent dark:text-red-400",
-	energy: "bg-green-200 text-green-900 dark:bg-transparent dark:text-green-300",
+	light: "bg-amber-200/25 text-amber-800 dark:text-amber-400",
+	medium: "bg-blue-200/25 text-blue-800 dark:text-blue-400",
+	heavy: "bg-rose-200/25 text-rose-800 dark:text-rose-400",
+	shotgun: "bg-purple-200/25 text-purple-800 dark:text-purple-400",
+	energy: "bg-green-200/25 text-green-800 dark:text-green-400",
 };

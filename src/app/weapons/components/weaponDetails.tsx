@@ -17,13 +17,13 @@ export function WeaponDetailsPanel({ weapon }: { weapon: Weapon }) {
 
 	console.log(upgradeStats);
 	return (
-		<div className="bg-card border-1 p-3 rounded-lg max-h-[calc(100vh-2rem)] overflow-y-auto">
-			<div className="flex items-center justify-center mt-4 p-2 border-amber-500 bg-amber-500/10 text-primary/90 border-2 rounded-lg">
+		<div className="flex flex-col gap-4 bg-card border-1 p-3 rounded-lg max-h-[calc(100vh-2rem)] overflow-y-auto">
+			<div className="flex items-center justify-center p-2 border-amber-500 bg-amber-500/10 text-primary/90 border-2 rounded-lg">
 				Stats are probably incorrect
 			</div>
 
-			<h2 className="text-2xl font-bold mb-1 tracking-tight">{weapon.name}</h2>
-			<div className="text-sm text-muted-foreground space-y-0.5 mb-3">
+			<h2 className="text-2xl font-bold tracking-tight">{weapon.name}</h2>
+			<div className="text-sm text-muted-foreground">
 				<div>
 					Class:{" "}
 					<span className="font-medium text-foreground/90">
@@ -48,8 +48,8 @@ export function WeaponDetailsPanel({ weapon }: { weapon: Weapon }) {
 				</div>
 			</div>
 
-			<h3 className="mt-4 mb-2 text-base font-semibold">Base Stats</h3>
-			<div className="space-y-2.5">
+			<h3 className="text-base font-semibold">Base Stats</h3>
+			<div>
 				{Object.entries(weaponStats)
 					.filter(([key]) => statFilters.includes(key))
 					.map(([key, value]) => (
@@ -61,8 +61,8 @@ export function WeaponDetailsPanel({ weapon }: { weapon: Weapon }) {
 					))}
 			</div>
 
-			<div className="mt-4 pt-3 border-t border-border/50 text-sm space-y-1">
-				<p className="font-semibold mb-2">Upgrades:</p>
+			<div className="pt-3 border-t border-border/50 text-sm space-y-1">
+				<p className="font-semibold">Upgrades:</p>
 				{upgradeStats
 					? upgradeStats.map((upgrade, index) => {
 							return (

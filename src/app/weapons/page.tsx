@@ -1,6 +1,7 @@
 import { fetchWeapons } from "@/services/dataService.server";
-import { WeaponsClient } from "./components/weaponClient";
+import { WeaponClient } from "./components/weaponClient";
 import { Metadata } from "next";
+import { Weapon } from "@/types";
 
 export const metadata: Metadata = {
 	title: "Weapons | ARC Vault",
@@ -10,5 +11,7 @@ export const metadata: Metadata = {
 
 export default async function WeaponsPage() {
 	const weapons = await fetchWeapons();
-	return <WeaponsClient weapons={weapons} />;
+
+	return <WeaponClient weapons={weapons} />;
+	// return <WeaponsClient weapons={weapons} />;
 }
