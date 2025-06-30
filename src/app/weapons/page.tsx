@@ -1,7 +1,6 @@
 import { fetchWeapons } from "@/services/dataService.server";
-import { WeaponClient } from "./components/weaponClient";
+import { WeaponClient } from "./_components/weaponClient";
 import { Metadata } from "next";
-import { Weapon } from "@/types";
 
 export const metadata: Metadata = {
 	title: "Weapons | ARC Vault",
