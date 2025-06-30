@@ -325,7 +325,6 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 			<SidebarFooter>
 				<NavSettings pages={settingsPages} />
 			</SidebarFooter>
-			<SidebarRail />
 		</Sidebar>
 	);
 }
