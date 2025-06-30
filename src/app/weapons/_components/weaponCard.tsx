@@ -19,7 +19,14 @@ export function WeaponCard({ weapon }: { weapon: Weapon }) {
 				"flex items-center justify-between p-4 border-2 rounded-lg cursor-pointer hover:bg-card hover:border-blue-500/60 hover:border-dashed hover:shadow-sm",
 				selected && "border-blue-500/60 border-solid!"
 			)}
-			onClick={() => setSelectedId(weapon.id)}
+			onClick={() => {
+				setSelectedId((prev) => {
+					if (prev === weapon.id) {
+						return null;
+					}
+					return weapon.id;
+				});
+			}}
 		>
 			<h3>{formatName(weapon.name)}</h3>
 			{ammoType && (

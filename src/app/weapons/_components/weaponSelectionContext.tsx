@@ -1,7 +1,7 @@
-import { createContext, useContext } from "react";
+import { createContext, useContext, Dispatch, SetStateAction } from "react";
 export const WeaponSelectionContext = createContext<{
 	selectedId: string | null;
-	setSelectedId: (id: string | null) => void;
+	setSelectedId: Dispatch<SetStateAction<string | null>>;
 }>(null!);
 
 export const useWeaponSelection = () => useContext(WeaponSelectionContext);
