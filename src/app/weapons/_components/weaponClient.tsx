@@ -22,11 +22,13 @@ export function WeaponClient({ weapons }: { weapons: Weapon[] }) {
 		return map;
 	};
 
+	console.log(JSON.stringify(weapons[0], null, 2));
+
 	return (
 		<WeaponSelectionContext value={{ selectedId, setSelectedId }}>
 			<div className="flex flex-1">
 				{/* Weapon List */}
-				<div className="flex flex-col gap-4 w-full sm:w-72 rounded-l-xl overflow-y-auto max-h-[calc(100vh-4rem)] pr-2">
+				<div className="flex flex-col gap-4 w-full sm:w-3xs lg:w-sm rounded-l-xl overflow-y-auto max-h-[calc(100vh-4rem)] pr-2">
 					{Object.entries(weaponGroups()).map(([weaponClass, list]) => (
 						<WeaponGroup
 							key={weaponClass}
@@ -37,7 +39,9 @@ export function WeaponClient({ weapons }: { weapons: Weapon[] }) {
 				</div>
 
 				{/* Stats Section */}
-				<div className="flex-1 rounded-r-xl overflow-y-auto max-h-[calc(100vh-4rem)]"></div>
+				<div className="flex-1 rounded-r-xl overflow-y-auto max-h-[calc(100vh-4rem)]">
+					<pre></pre>
+				</div>
 			</div>
 		</WeaponSelectionContext>
 	);
