@@ -63,10 +63,9 @@ export default function RootLayout({
 					<SidebarInset className="max-h-[calc(100vh-theme(spacing.4))]">
 						<LayoutHeader />
 
-						<ScrollArea className="flex-1 overflow-auto mb-2 relative">
-							<div className="h-12" />
+						<div className="flex flex-col flex-1 h-full overflow-y-auto relative pt-12">
 							{children}
-						</ScrollArea>
+						</div>
 					</SidebarInset>
 				</AppProviders>
 				<Analytics />
