@@ -17,7 +17,8 @@ export function HeaderImage() {
 				imgLoaded ? "opacity-100" : "opacity-0"
 			)}
 			onLoad={() => setImgLoaded(true)}
-			loading="eager"
+			loading="lazy"
+			unoptimized
 		/>
 	);
 }
