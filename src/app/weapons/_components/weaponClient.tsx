@@ -10,6 +10,8 @@ import { StatsContainer } from "./stats/statsContainer";
 export function WeaponClient({ weapons }: { weapons: Weapon[] }) {
 	const [selectedId, setSelectedId] = useState<string | null>(null);
 
+	const selectedWeapon: Weapon | null = weapons.find((w) => w.id === selectedId) ?? null;
+
 	const weaponGroups = () => {
 		const map: Record<string, Weapon[]> = {};
 		weapons.forEach((w) => {
@@ -23,13 +25,11 @@ export function WeaponClient({ weapons }: { weapons: Weapon[] }) {
 		return map;
 	};
 
-	console.log(JSON.stringify(weapons[0], null, 2));
-
 	return (
 		<WeaponSelectionContext.Provider value={{ selectedId, setSelectedId }}>
 			<div className="flex flex-1">
 				{/* Weapon List */}
-				<div className="flex flex-col gap-4 w-full sm:w-3xs lg:w-sm rounded-l-xl overflow-y-auto max-h-[calc(100vh-4rem)] pr-2">
+				<div className="flex flex-col gap-4 w-full min-w-[200px] sm:max-w-xs flex-1 rounded-l-xl overflow-y-auto max-h-[calc(100vh-4rem)] sm:pr-2">
 					{Object.entries(weaponGroups()).map(([weaponClass, list]) => (
 						<WeaponGroup
 							key={weaponClass}
@@ -40,8 +40,8 @@ export function WeaponClient({ weapons }: { weapons: Weapon[] }) {
 				</div>
 
 				{/* Stats Section */}
-				<div className="hidden sm:flex flex-1 rounded-r-xl overflow-y-auto max-h-[calc(100vh-4rem)]">
-					<StatsContainer />
+				<div className="hidden sm:flex flex-1 min-w-fit overflow-y-auto max-h-[calc(100vh-4rem)]">
+					<StatsContainer weapon={selectedWeapon} />
 				</div>
 			</div>
 		</WeaponSelectionContext.Provider>
