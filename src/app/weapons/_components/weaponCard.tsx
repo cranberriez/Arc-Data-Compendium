@@ -14,12 +14,7 @@ export function WeaponCard({ weapon }: { weapon: Weapon }) {
 	const selected = weapon.id === selectedId;
 
 	const handleClick = () => {
-		setSelectedId((prev) => {
-			if (prev === weapon.id) {
-				return null;
-			}
-			return weapon.id;
-		});
+		setSelectedId(weapon.id);
 	};
 
 	return (
