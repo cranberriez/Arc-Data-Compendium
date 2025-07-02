@@ -1,13 +1,14 @@
-import { getAggregateCounts } from "@/db/queries/getAggregate";
 import {
 	HeaderCard,
-	AggregateCards,
 	QuickLinks,
 	WishlistNow,
 	FAQ,
 	Credits,
 	HomeFooter,
+	AggregateCardsWithData,
+	AggregateCards,
 } from "@/components/home";
+import { Suspense } from "react";
 
 export const metadata = {
 	title: "ARCVault - ARC Raiders Companion & Data Vault",
@@ -25,21 +26,14 @@ export const metadata = {
 	],
 };
 
-export default async function Page() {
-	const { itemCount, craftingRecipeCount, questCount, weaponCount, workbenchUpgradeCount } =
-		await getAggregateCounts();
-
+export default function Page() {
 	return (
 		<article className="w-full p-4">
 			<div className="flex flex-col gap-6 mx-auto max-w-[1600px]">
 				<HeaderCard />
-				<AggregateCards
-					itemCount={itemCount}
-					craftingRecipeCount={craftingRecipeCount}
-					questCount={questCount}
-					weaponCount={weaponCount}
-					workbenchUpgradeCount={workbenchUpgradeCount}
-				/>
+				<Suspense fallback={<AggregateCards />}>
+					<AggregateCardsWithData />
+				</Suspense>
 				<QuickLinks />
 				<WishlistNow />
 				<FAQ />

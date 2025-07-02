@@ -54,17 +54,17 @@ export function CountCard({
 }
 
 export function AggregateCards({
-	itemCount,
-	questCount,
-	craftingRecipeCount,
-	weaponCount,
-	workbenchUpgradeCount,
+	itemCount = 0,
+	questCount = 0,
+	craftingRecipeCount = 0,
+	weaponCount = 0,
+	workbenchUpgradeCount = 0,
 }: {
-	itemCount: number;
-	questCount: number;
-	craftingRecipeCount: number;
-	weaponCount: number;
-	workbenchUpgradeCount: number;
+	itemCount?: number;
+	questCount?: number;
+	craftingRecipeCount?: number;
+	weaponCount?: number;
+	workbenchUpgradeCount?: number;
 }) {
 	return (
 		<div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 w-full gap-6">
