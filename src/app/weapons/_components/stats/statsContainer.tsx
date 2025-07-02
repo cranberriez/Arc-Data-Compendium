@@ -1,6 +1,6 @@
 import { Weapon } from "@/types";
-import Image from "next/image";
 import { cn } from "@/lib/utils";
+import { WeaponImage } from "../weaponImage";
 
 export function StatsContainer({ weapon }: { weapon: Weapon | null }) {
 	if (!weapon) return null;
@@ -42,47 +42,6 @@ function BasicInfo({
 		<div className={cn("flex flex-col gap-4 bg-card p-4 rounded-lg", className)}>
 			<h2 className="text-3xl font-semibold tracking-wide"> {name} </h2>
 			<p> {description ?? "No description"} </p>
-		</div>
-	);
-}
-
-function WeaponImage({
-	name,
-	className,
-	rarity,
-}: {
-	name: string;
-	className?: string;
-	rarity: string;
-}) {
-	const getUrlName = (name: string) => {
-		return name.replace(/ /g, "_");
-	};
-
-	return (
-		<div
-			className={cn(
-				"bg-card rounded-lg p-2 relative overflow-hidden flex items-center justify-center",
-				`border-2 border-${rarity}`,
-				className
-			)}
-		>
-			<div
-				className="absolute inset-0 z-0 pointer-events-none opacity-40"
-				style={{
-					background: `radial-gradient(circle at bottom right, var(--color-${rarity}) 0%, transparent 80%)`,
-				}}
-			></div>
-			<div className="w-full h-full relative z-10">
-				<Image
-					fill
-					alt={`${name} Image`}
-					src={`https://gkatpmmnctjyuskg.public.blob.vercel-storage.com/weapon-images/${getUrlName(
-						name
-					)}-Level1.webp`}
-					className="object-contain"
-				/>
-			</div>
 		</div>
 	);
 }

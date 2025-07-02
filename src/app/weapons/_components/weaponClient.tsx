@@ -32,26 +32,41 @@ export function WeaponClient({ weapons }: { weapons: Weapon[] }) {
 	// Acquire weapon object from passed weapons array
 	const selectedWeapon: Weapon | null = weapons.find((w) => w.id === selectedId) ?? null;
 
-	// Seperate weapons into groups for rendering, useful for group collapse later
+	// Separate weapons into groups for rendering, useful for group collapse later
+	const weaponClassOrder = [
+		"assault_rifle",
+		"battle_rifle",
+		"smg",
+		"shotgun",
+		"pistol",
+		"sniper_rifle",
+		"light_machinegun",
+		"special",
+	];
+
 	const weaponGroups = () => {
 		const map: Record<string, Weapon[]> = {};
 		weapons.forEach((w) => {
 			const weaponData = w.weapon;
 			if (!weaponData) return;
 			const weaponClass = weaponData.weaponClass!;
-
 			if (!map[weaponClass]) map[weaponClass] = [];
 			map[weaponClass].push(w);
 		});
-		return map;
+		// Return ordered array of [weaponClass, Weapon[]]
+		return weaponClassOrder
+			.filter((weaponClass) => map[weaponClass])
+			.map((weaponClass) => [weaponClass, map[weaponClass]] as [string, Weapon[]]);
 	};
 
 	return (
 		<WeaponSelectionContext.Provider value={{ selectedId, setSelectedId: handleSelect }}>
 			<div className="flex flex-1">
+				{/* TODO: Selected Weapon bar and selection dropdown */}
+
 				{/* Weapon List */}
-				<div className="flex flex-col gap-4 w-full min-w-[200px] sm:max-w-xs flex-1 rounded-l-xl overflow-y-auto max-h-[calc(100vh-4rem)] sm:pr-2">
-					{Object.entries(weaponGroups()).map(([weaponClass, list]) => (
+				<div className="flex flex-col gap-4 w-full flex-1 rounded-l-xl sm:pr-2">
+					{weaponGroups().map(([weaponClass, list]) => (
 						<WeaponGroup
 							key={weaponClass}
 							weaponClass={weaponClass}
@@ -61,9 +76,9 @@ export function WeaponClient({ weapons }: { weapons: Weapon[] }) {
 				</div>
 
 				{/* Stats Section */}
-				<div className="hidden sm:flex flex-1 overflow-y-auto max-h-[calc(100vh-4rem)]">
+				{/* <div className="hidden sm:flex flex-1 overflow-y-auto max-h-[calc(100vh-4rem)]">
 					<StatsContainer weapon={selectedWeapon} />
-				</div>
+				</div> */}
 			</div>
 		</WeaponSelectionContext.Provider>
 	);

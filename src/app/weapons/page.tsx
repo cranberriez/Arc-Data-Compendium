@@ -11,6 +11,11 @@ export const metadata: Metadata = {
 export default async function WeaponsPage() {
 	const weapons = await fetchWeapons();
 
-	return <WeaponClient weapons={weapons} />;
-	// return <WeaponsClient weapons={weapons} />;
+	return (
+		<article className="w-full p-4">
+			<div className="flex flex-col gap-6 mx-auto max-w-[1600px]">
+				<WeaponClient weapons={weapons} />
+			</div>
+		</article>
+	);
 }
