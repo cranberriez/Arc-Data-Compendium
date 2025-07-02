@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { ArrowRight, LucideIcon } from "lucide-react";
+import { ArrowRight, Construction, LucideIcon } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import { tools } from "@/data/tools/tools";
@@ -18,6 +18,7 @@ export default function ToolsPage() {
 						link={tool.link}
 						icon={tool.icon}
 						iconColor={tool.iconColor}
+						completed={tool.completed}
 					/>
 				))}
 			</div>
@@ -32,6 +33,7 @@ function ToolItem({
 	link,
 	icon: Icon,
 	iconColor,
+	completed,
 }: {
 	name: string;
 	description: string;
@@ -39,6 +41,7 @@ function ToolItem({
 	link: string;
 	icon: LucideIcon;
 	iconColor: string;
+	completed: boolean;
 }) {
 	const imageUrl = image || "/images/quests/348px-Maps_Together.png-1.webp";
 
@@ -60,17 +63,28 @@ function ToolItem({
 					</div>
 					<p className="text-muted-foreground text-sm">{description}</p>
 				</div>
-				<Button
-					size="lg"
-					variant="ghost"
-					className="text-md ml-auto w-fit cursor-pointer border-2 border-transparent hover:border-muted-foreground/20 bg-background hover:bg-card transition-colors"
-					asChild
-				>
-					<Link href={link}>
-						<p className="mb-1">Open Tool</p>
-						<ArrowRight />
-					</Link>
-				</Button>
+				<div className="flex items-center justify-end gap-2">
+					{!completed && (
+						<div className="flex items-center gap-1">
+							<Construction className="h-8 w-8 text-amber-500 bg-amber-500/20 rounded-full p-1.5" />
+						</div>
+					)}
+					<Button
+						size="lg"
+						variant="ghost"
+						className="text-md w-fit cursor-pointer border-2 border-transparent hover:border-muted-foreground/20 bg-background hover:bg-card transition-colors"
+						disabled={!completed}
+						asChild
+					>
+						<Link
+							href={completed ? link : "#"}
+							aria-disabled={!completed}
+						>
+							<p className="mb-1">Open Tool</p>
+							<ArrowRight />
+						</Link>
+					</Button>
+				</div>
 			</div>
 		</div>
 	);
