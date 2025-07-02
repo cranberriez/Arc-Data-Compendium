@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# Sitemaps (optional, update if you have a sitemap)
+# Sitemap: https://arcvault.app/sitemap.xml
