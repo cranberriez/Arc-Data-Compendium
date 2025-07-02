@@ -61,7 +61,7 @@ export function WeaponClient({ weapons }: { weapons: Weapon[] }) {
 				</div>
 
 				{/* Stats Section */}
-				<div className="hidden sm:flex flex-1 min-w-fit overflow-y-auto max-h-[calc(100vh-4rem)]">
+				<div className="hidden sm:flex flex-1 overflow-y-auto max-h-[calc(100vh-4rem)]">
 					<StatsContainer weapon={selectedWeapon} />
 				</div>
 			</div>

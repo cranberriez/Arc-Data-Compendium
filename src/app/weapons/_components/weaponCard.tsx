@@ -20,7 +20,7 @@ export function WeaponCard({ weapon }: { weapon: Weapon }) {
 	return (
 		<div
 			className={cn(
-				"flex items-center justify-between p-4 border-2 rounded-lg cursor-pointer hover:bg-card hover:border-blue-500/60 hover:border-dashed hover:shadow-sm",
+				"flex items-center justify-between p-2 border-2 rounded-lg cursor-pointer hover:bg-card hover:border-blue-500/60 hover:border-dashed hover:shadow-sm",
 				selected && "border-blue-500/60 border-solid!"
 			)}
 			onClick={handleClick}
