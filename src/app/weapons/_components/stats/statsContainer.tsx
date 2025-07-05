@@ -10,16 +10,18 @@ export function StatsContainer({ weapon }: { weapon: Weapon | null }) {
 			<div className="flex flex-row flex-wrap gap-2">
 				<WeaponImage
 					name={weapon.name}
-					className="aspect-video w-lg"
+					className="aspect-video w-1/3 min-w-2xs max-w-lg"
 					rarity={weapon.rarity}
 				/>
-				<BasicInfo
-					name={weapon.name}
-					description={weapon.description}
-					rarity={weapon.rarity}
-					ammoType={weapon.weapon?.ammoType!}
-					className="w-lg"
-				/>
+				<div className="flex-1 flex flex-col gap-4">
+					<BasicInfo
+						name={weapon.name}
+						description={weapon.description}
+						rarity={weapon.rarity}
+						ammoType={weapon.weapon?.ammoType!}
+						className="w-full"
+					/>
+				</div>
 			</div>
 		</div>
 	);
