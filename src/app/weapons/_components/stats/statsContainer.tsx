@@ -1,6 +1,7 @@
 import { Weapon } from "@/types";
 import { cn } from "@/lib/utils";
 import { WeaponImage } from "../weaponImage";
+import { formatName } from "@/utils/format";
 
 export function StatsContainer({ weapon }: { weapon: Weapon | null }) {
 	if (!weapon) return null;
@@ -47,8 +48,8 @@ function BasicInfo({
 		<div className={cn("flex flex-col gap-4 bg-card p-4 rounded-lg", className)}>
 			<h2 className="text-3xl font-semibold tracking-wide"> {name} </h2>
 			<p> {description ?? "No description"} </p>
-			<p> {ammoType ?? "No ammo type"} </p>
-			<p> {rarity} </p>
+			<p> {ammoType ? formatName(ammoType) : "No ammo type"} </p>
+			<p> {formatName(rarity)} </p>
 		</div>
 	);
 }
