@@ -5,6 +5,9 @@ import { WeaponImage } from "../weaponImage";
 export function StatsContainer({ weapon }: { weapon: Weapon | null }) {
 	if (!weapon) return null;
 
+	const weaponData = weapon.weapon;
+	if (!weaponData) return null;
+
 	return (
 		<div className="w-full h-full flex flex-col gap-4 sm:p-2">
 			<div className="flex flex-row flex-wrap gap-2">
@@ -18,7 +21,7 @@ export function StatsContainer({ weapon }: { weapon: Weapon | null }) {
 						name={weapon.name}
 						description={weapon.description}
 						rarity={weapon.rarity}
-						ammoType={weapon.weapon?.ammoType!}
+						ammoType={weaponData.ammoType ?? null}
 						className="w-full"
 					/>
 				</div>
@@ -37,13 +40,15 @@ function BasicInfo({
 	name: string;
 	description: string | null;
 	rarity: string;
-	ammoType: string;
+	ammoType: string | null;
 	className?: string;
 }) {
 	return (
 		<div className={cn("flex flex-col gap-4 bg-card p-4 rounded-lg", className)}>
 			<h2 className="text-3xl font-semibold tracking-wide"> {name} </h2>
 			<p> {description ?? "No description"} </p>
+			<p> {ammoType ?? "No ammo type"} </p>
+			<p> {rarity} </p>
 		</div>
 	);
 }
