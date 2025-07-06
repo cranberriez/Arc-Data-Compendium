@@ -1,6 +1,7 @@
 import { fetchWeapons } from "@/services/dataService.server";
 import { WeaponClient } from "./_components/weaponClient";
 import { Metadata } from "next";
+import { Suspense } from "react";
 
 export const metadata: Metadata = {
 	title: "Weapons | ARC Vault",
@@ -14,7 +15,9 @@ export default async function WeaponsPage() {
 	return (
 		<article className="w-full p-4">
 			<div className="flex flex-col gap-6 mx-auto max-w-[1600px]">
-				<WeaponClient weapons={weapons} />
+				<Suspense fallback={<div>Loading...</div>}>
+					<WeaponClient weapons={weapons} />
+				</Suspense>
 			</div>
 		</article>
 	);
