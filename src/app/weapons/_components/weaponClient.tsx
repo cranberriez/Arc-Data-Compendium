@@ -12,6 +12,39 @@ import { WeaponSelectionBar } from "./weaponSelectionBar";
 import { cn } from "@/lib/utils";
 import { useIsMobile } from "@/hooks/use-mobile";
 
+function WeaponList({
+	visible,
+	weaponGroups,
+}: {
+	visible: boolean;
+	weaponGroups: () => [string, Weapon[]][];
+}) {
+	if (!visible) return null;
+	return (
+		<div
+			key="weapon-list"
+			className="flex flex-col gap-4 w-full flex-1 rounded-l-xl"
+		>
+			{weaponGroups().map(([weaponClass, list]) => (
+				<WeaponGroup
+					key={weaponClass}
+					weaponClass={weaponClass}
+					list={list}
+				/>
+			))}
+		</div>
+	);
+}
+
+function StatsPanel({ visible, weapon }: { visible: boolean; weapon: Weapon | null }) {
+	if (!visible) return null;
+	return (
+		<div className="flex flex-1 overflow-y-auto max-h-[calc(100vh-4rem)]">
+			<StatsContainer weapon={weapon} />
+		</div>
+	);
+}
+
 export function WeaponClient({ weapons }: { weapons: Weapon[] }) {
 	const isMobile = useIsMobile();
 	const searchParams = useSearchParams();
@@ -20,6 +53,7 @@ export function WeaponClient({ weapons }: { weapons: Weapon[] }) {
 	// Initialize state from query param on first render, if query param exists
 	const initialId = searchParams.get("id") || null;
 	const [selectedId, setSelectedId] = useState<string | null>(initialId);
+	// Only used on mobile. On desktop, stats are always shown if a weapon is selected.
 	const [showStats, setShowStats] = useState(false);
 
 	// Create function to modify selectedId state and query param asynchronously
@@ -38,7 +72,18 @@ export function WeaponClient({ weapons }: { weapons: Weapon[] }) {
 	// Acquire weapon object from passed weapons array
 	const selectedWeapon: Weapon | null = weapons.find((w) => w.id === selectedId) ?? null;
 
-	const showSelectionBar = isMobile || (!isMobile && selectedId);
+	// Always show selection bar if a weapon is selected
+	const showSelectionBar = !!selectedId;
+
+	// Compute mode for easier downstream logic
+	// Modes: 'desktop-list', 'desktop-stats', 'mobile-list', 'mobile-stats'
+	const mode = isMobile
+		? showStats
+			? "mobile-stats"
+			: "mobile-list"
+		: selectedWeapon
+		? "desktop-stats"
+		: "desktop-list";
 
 	// Separate weapons into groups for rendering, useful for group collapse later
 	const weaponClassOrder = [
@@ -71,38 +116,32 @@ export function WeaponClient({ weapons }: { weapons: Weapon[] }) {
 		<WeaponSelectionContext.Provider value={{ selectedId, setSelectedId: handleSelect }}>
 			<div className={cn("flex flex-col gap-4 flex-1 relative")}>
 				{/* Selected Weapon bar and selection dropdown */}
-				{showSelectionBar && (
-					<WeaponSelectionBar
-						selectedWeapon={selectedWeapon}
-						setSelectedId={handleSelect}
-						showStats={showStats}
-						setShowStats={setShowStats}
-						isMobile={isMobile}
-					/>
-				)}
+				{showSelectionBar &&
+					(isMobile ? (
+						<WeaponSelectionBar
+							selectedWeapon={selectedWeapon}
+							setSelectedId={handleSelect}
+							showStats={showStats}
+							setShowStats={setShowStats}
+							isMobile={true}
+						/>
+					) : (
+						<WeaponSelectionBar
+							selectedWeapon={selectedWeapon}
+							setSelectedId={handleSelect}
+							showStats={true}
+							isMobile={false}
+						/>
+					))}
 
-				{/* Weapon List */}
-				{!showStats && (
-					<div
-						key="weapon-list"
-						className="flex flex-col gap-4 w-full flex-1 rounded-l-xl"
-					>
-						{weaponGroups().map(([weaponClass, list]) => (
-							<WeaponGroup
-								key={weaponClass}
-								weaponClass={weaponClass}
-								list={list}
-							/>
-						))}
-					</div>
-				)}
-
-				{/* Stats Section */}
-				{showStats && (
-					<div className="flex flex-1 overflow-y-auto max-h-[calc(100vh-4rem)]">
-						<StatsContainer weapon={selectedWeapon} />
-					</div>
-				)}
+				<WeaponList
+					visible={mode === "desktop-list" || mode === "mobile-list"}
+					weaponGroups={weaponGroups}
+				/>
+				<StatsPanel
+					visible={mode === "desktop-stats" || mode === "mobile-stats"}
+					weapon={selectedWeapon}
+				/>
 			</div>
 		</WeaponSelectionContext.Provider>
 	);
