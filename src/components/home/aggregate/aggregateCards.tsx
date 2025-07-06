@@ -24,30 +24,24 @@ export function CountCard({
 		>
 			<div
 				className={cn(
-					"flex w-full items-center justify-between gap-1 p-6 bg-card rounded-lg hover:shadow-lg transition-all cursor-pointer",
+					"flex w-full items-center justify-start gap-4 md:gap-4 p-6 bg-card rounded-lg hover:shadow-lg transition-all cursor-pointer relative",
 					className
 				)}
 			>
+				<Icon className={cn("w-8 h-8 transition-opacity duration-200", iconColor)} />
 				<div>
-					<h3 className="text-sm sm:text-base text-muted-foreground whitespace-nowrap">
+					<h3 className="text-xs sm:text-sm text-muted-foreground whitespace-nowrap">
 						{title}
 					</h3>
 					<p className="font-bold text-3xl font-mono">{count}</p>
 				</div>
-				<div className="flex items-center relative">
-					<Icon
-						className={cn(
-							"w-8 h-8 transition-opacity duration-200 opacity-100 group-hover:opacity-0",
-							iconColor
-						)}
-					/>
-					<ArrowRight
-						className={cn(
-							"w-8 h-8 absolute transition-opacity duration-200 opacity-0 group-hover:opacity-100 -rotate-40",
-							iconColor
-						)}
-					/>
-				</div>
+
+				<ArrowRight
+					className={cn(
+						"w-8 h-8 absolute right-4 transition-opacity duration-200 opacity-60",
+						iconColor
+					)}
+				/>
 			</div>
 		</Link>
 	);
@@ -56,13 +50,11 @@ export function CountCard({
 export function AggregateCards({
 	itemCount = 0,
 	questCount = 0,
-	craftingRecipeCount = 0,
 	weaponCount = 0,
 	workbenchUpgradeCount = 0,
 }: {
 	itemCount?: number;
 	questCount?: number;
-	craftingRecipeCount?: number;
 	weaponCount?: number;
 	workbenchUpgradeCount?: number;
 }) {

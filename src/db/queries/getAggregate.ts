@@ -5,27 +5,20 @@ import { eq } from "drizzle-orm";
 import { sql } from "drizzle-orm";
 
 export async function getAggregateCounts() {
-	const [
-		itemCountResult,
-		craftingRecipeCountResult,
-		questCountResult,
-		weaponCountResult,
-		workbenchUpgradeCountResult,
-	] = await Promise.all([
-		db.$count(items),
-		db.$count(recipes, eq(recipes.type, "crafting")),
-		db.$count(quests),
-		db.$count(items, eq(items.category, "weapon")),
-		db
-			.select({
-				value: sql<number>`sum(${tierRequirements.count})`,
-			})
-			.from(tierRequirements),
-	]);
+	const [itemCountResult, questCountResult, weaponCountResult, workbenchUpgradeCountResult] =
+		await Promise.all([
+			db.$count(items),
+			db.$count(quests),
+			db.$count(items, eq(items.category, "weapon")),
+			db
+				.select({
+					value: sql<number>`sum(${tierRequirements.count})`,
+				})
+				.from(tierRequirements),
+		]);
 
 	return {
 		itemCount: Number(itemCountResult ?? 0),
-		craftingRecipeCount: Number(craftingRecipeCountResult ?? 0),
 		questCount: Number(questCountResult ?? 0),
 		weaponCount: Number(weaponCountResult ?? 0),
 		workbenchUpgradeCount: Number(workbenchUpgradeCountResult[0].value ?? 0),
