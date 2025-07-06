@@ -4,17 +4,21 @@ import { Weapon } from "@/types";
 
 export function WeaponSelectionBar({
 	selectedWeapon,
+	setSelectedId,
 	showStats,
 	setShowStats,
+	isMobile,
 }: {
 	selectedWeapon: Weapon | null;
+	setSelectedId: (id: string | null) => void;
 	showStats: boolean;
 	setShowStats: (show: boolean) => void;
+	isMobile: boolean;
 }) {
-	return (
+	return isMobile ? (
 		<div
 			className={cn(
-				"flex items-center gap-2 sticky top-0 z-99 bg-background transition-all duration-400 ease-in-out",
+				"flex items-center gap-2 sticky top-0 z-99 bg-background transition-all duration-400 ease-in-out p-2",
 				selectedWeapon ? "h-16 opacity-100" : "h-0 opacity-0"
 			)}
 		>
@@ -22,12 +26,20 @@ export function WeaponSelectionBar({
 			<p className="text-sm text-muted-foreground">{selectedWeapon?.name}</p>
 			<Button
 				onClick={() => setShowStats(!showStats)}
-				disabled={!selectedWeapon}
 				variant="default"
 				className="ml-auto font-mono"
 			>
 				{showStats ? "Hide Stats" : "Show Stats"}
 			</Button>
+		</div>
+	) : (
+		<div>
+			<button
+				onClick={() => setSelectedId(null)}
+				className="font-mono p-2 bg-card rounded-lg cursor-pointer"
+			>
+				Change Weapon
+			</button>
 		</div>
 	);
 }

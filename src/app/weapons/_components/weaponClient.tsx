@@ -10,8 +10,10 @@ import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 import { WeaponSelectionBar } from "./weaponSelectionBar";
 import { cn } from "@/lib/utils";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 export function WeaponClient({ weapons }: { weapons: Weapon[] }) {
+	const isMobile = useIsMobile();
 	const searchParams = useSearchParams();
 	const router = useRouter();
 
@@ -35,6 +37,8 @@ export function WeaponClient({ weapons }: { weapons: Weapon[] }) {
 
 	// Acquire weapon object from passed weapons array
 	const selectedWeapon: Weapon | null = weapons.find((w) => w.id === selectedId) ?? null;
+
+	const showSelectionBar = isMobile || (!isMobile && selectedId);
 
 	// Separate weapons into groups for rendering, useful for group collapse later
 	const weaponClassOrder = [
@@ -67,17 +71,21 @@ export function WeaponClient({ weapons }: { weapons: Weapon[] }) {
 		<WeaponSelectionContext.Provider value={{ selectedId, setSelectedId: handleSelect }}>
 			<div className={cn("flex flex-col gap-4 flex-1 relative")}>
 				{/* Selected Weapon bar and selection dropdown */}
-				<WeaponSelectionBar
-					selectedWeapon={selectedWeapon}
-					showStats={showStats}
-					setShowStats={setShowStats}
-				/>
+				{showSelectionBar && (
+					<WeaponSelectionBar
+						selectedWeapon={selectedWeapon}
+						setSelectedId={handleSelect}
+						showStats={showStats}
+						setShowStats={setShowStats}
+						isMobile={isMobile}
+					/>
+				)}
 
 				{/* Weapon List */}
 				{!showStats && (
 					<div
 						key="weapon-list"
-						className="flex flex-col gap-4 w-full flex-1 rounded-l-xl sm:pr-2"
+						className="flex flex-col gap-4 w-full flex-1 rounded-l-xl"
 					>
 						{weaponGroups().map(([weaponClass, list]) => (
 							<WeaponGroup

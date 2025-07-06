@@ -6,11 +6,11 @@ export function StatsContainer({ weapon }: { weapon: Weapon | null }) {
 	if (!weapon) return null;
 
 	return (
-		<div className="w-full h-full flex flex-col gap-4 p-4">
+		<div className="w-full h-full flex flex-col gap-4 sm:p-2">
 			<div className="flex flex-row flex-wrap gap-2">
 				<WeaponImage
 					name={weapon.name}
-					className="aspect-video w-1/3 min-w-2xs max-w-lg"
+					className="aspect-video w-full sm:w-1/3 sm:min-w-sm sm:max-w-xl"
 					rarity={weapon.rarity}
 				/>
 				<div className="flex-1 flex flex-col gap-4">
