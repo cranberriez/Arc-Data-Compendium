@@ -89,8 +89,8 @@ function BasicStatItem({ label, stat }: { label: string; stat: number | null }) 
 
 	return (
 		<div className="flex items-center gap-1 w-full h-full">
-			<p className="text-xs text-muted-foreground w-2/3">{label}</p>
-			<p className="text-xs w-1/3 text-center">{statValue}</p>
+			<p className="text-sm text-muted-foreground w-2/3">{label}</p>
+			<p className="text-sm w-1/3 text-center">{statValue}</p>
 		</div>
 	);
 }

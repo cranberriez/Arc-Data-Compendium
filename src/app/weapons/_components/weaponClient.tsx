@@ -2,48 +2,14 @@
 
 import React, { useState } from "react";
 import { Weapon } from "@/types";
-
-import { WeaponGroup } from "./weaponGroup";
 import { WeaponSelectionContext } from "./weaponSelectionContext";
-import { StatsContainer } from "./stats/statsContainer";
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 import { WeaponSelectionBar } from "./weaponSelectionBar";
 import { cn } from "@/lib/utils";
 import { useIsMobile } from "@/hooks/use-mobile";
-
-function WeaponList({
-	visible,
-	weaponGroups,
-}: {
-	visible: boolean;
-	weaponGroups: () => [string, Weapon[]][];
-}) {
-	if (!visible) return null;
-	return (
-		<div
-			key="weapon-list"
-			className="flex flex-col gap-4 w-full flex-1 rounded-l-xl"
-		>
-			{weaponGroups().map(([weaponClass, list]) => (
-				<WeaponGroup
-					key={weaponClass}
-					weaponClass={weaponClass}
-					list={list}
-				/>
-			))}
-		</div>
-	);
-}
-
-function StatsPanel({ visible, weapon }: { visible: boolean; weapon: Weapon | null }) {
-	if (!visible) return null;
-	return (
-		<div className="flex flex-1 overflow-y-auto max-h-[calc(100vh-4rem)]">
-			<StatsContainer weapon={weapon} />
-		</div>
-	);
-}
+import { StatsPanel } from "./stats/statsPanel";
+import { WeaponList } from "./weaponList";
 
 export function WeaponClient({ weapons }: { weapons: Weapon[] }) {
 	const isMobile = useIsMobile();
