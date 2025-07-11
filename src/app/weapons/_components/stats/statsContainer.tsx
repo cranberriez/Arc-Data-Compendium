@@ -28,6 +28,20 @@ export function StatsContainer({ weapon }: { weapon: Weapon | null }) {
 			<StatsBreakdown weapon={weapon} />
 		</div>
 	);
+
+	// TODO: Add More Information
+	// - TTK calculations
+	// - shots fire until gun breaks
+	// - damage falloff at range
+	// - mod selection
+	// - upgrade stat viewing
+	// - arc damage
+	// - sources (crafting, quest, drops)
+
+	// Data Dependent:
+	// - bullet spread based on recoil
+	// - bullet spread based on range
+	// - bullet spread based on ammo type
 }
 
 function StatsBreakdown({ weapon }: { weapon: Weapon | null }) {

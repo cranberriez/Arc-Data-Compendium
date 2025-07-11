@@ -149,7 +149,7 @@ export function QuestFull({ questData }: { questData: Quest }) {
 					<aside className="w-full md:w-64 flex-shrink-0">
 						<div className="flex flex-col gap-4 bg-card p-4 rounded-lg shadow">
 							<div>
-								<strong>Trader:</strong> {questData.trader}
+								<strong>Trader:</strong> {questData.traderId}
 							</div>
 							<div>
 								<strong>Location:</strong>{" "}

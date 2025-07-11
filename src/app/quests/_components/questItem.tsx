@@ -8,6 +8,7 @@ import Link from "next/link";
 import { QuestRewards } from "./questRewards";
 import { QuestDescription } from "./questDescription";
 import { useQuests } from "@/contexts/questContext";
+import { formatName } from "@/utils/format";
 
 type QuestItemProps = {
 	quest: Quest;
@@ -134,15 +135,15 @@ export function QuestItem({
 function QuestHeader({ quest }: { quest: Quest }) {
 	const getTraderColor = (trader: string) => {
 		switch (trader) {
-			case "Shani":
+			case "shani":
 				return "bg-blue-500/20";
-			case "Apollo":
+			case "apollo":
 				return "bg-red-500/20";
-			case "Celeste":
+			case "celeste":
 				return "bg-green-500/20";
-			case "Lance":
+			case "lance":
 				return "bg-yellow-500/20";
-			case "Tian Wen":
+			case "tian_wen":
 				return "bg-purple-500/20";
 			default:
 				return "bg-gray-500/20";
@@ -156,12 +157,12 @@ function QuestHeader({ quest }: { quest: Quest }) {
 				<div
 					className={cn(
 						"flex items-center border-1 rounded-full p-2",
-						getTraderColor(quest.trader)
+						getTraderColor(quest.traderId)
 					)}
 				>
 					<User size={16} />
 				</div>
-				<span className="font-medium">{quest.trader}</span>
+				<span className="font-medium">{formatName(quest.traderId)}</span>
 			</div>
 			<p className="text-gray-500 text-sm">
 				Location:{" "}

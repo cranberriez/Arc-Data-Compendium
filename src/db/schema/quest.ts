@@ -13,12 +13,14 @@ import {
 import { createdUpdatedColumns } from "./base";
 import { relations, sql } from "drizzle-orm";
 import { items } from "./items";
+import { traders } from "./trader";
 
 export const quests = pgTable("quests", {
 	id: varchar("id", { length: 255 }).primaryKey(),
 	name: varchar("name", { length: 255 }).notNull(),
-	trader: varchar("trader", { length: 255 }).notNull(),
-
+	traderId: varchar("trader_id", { length: 255 })
+		.notNull()
+		.references(() => traders.id),
 	dialog: text("dialog").default(""),
 	location: varchar("location", { length: 255 }), // expand later with locations (aka map)
 	link: text("link"),
@@ -30,6 +32,7 @@ export const questRelations = relations(quests, ({ one, many }) => ({
 	entries: many(questEntries),
 	previous: many(questLinks, { relationName: "previous" }),
 	next: many(questLinks, { relationName: "next" }),
+	trader: one(traders, { fields: [quests.traderId], references: [traders.id] }),
 }));
 
 export const questLinks = pgTable(
