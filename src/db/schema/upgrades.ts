@@ -10,22 +10,27 @@ import {
 	primaryKey,
 } from "drizzle-orm/pg-core";
 import { weapons } from "./weapons";
-import { upgradeTypeEnum, statTypeEnum, modifierTypeEnum } from "./enums";
+import { statTypeEnum, modifierTypeEnum } from "./enums";
 
 // Upgrade table
 export const upgrade = pgTable(
 	"weapon_upgrade",
 	{
 		id: serial("id").primaryKey(),
-		parentId: integer("parent_id").notNull(),
-		parentType: upgradeTypeEnum("parent_type").default("weapon").notNull(),
+		weaponId: integer("weapon_id")
+			.notNull()
+			.references(() => weapons.id),
 		level: integer("level").notNull(),
 		description: text("description"),
 	},
-	(table) => [unique("unique_upgrade").on(table.parentType, table.parentId, table.level)]
+	(table) => [
+		foreignKey({ columns: [table.weaponId], foreignColumns: [weapons.id] }),
+		unique("unique_weapon_upgrade").on(table.weaponId, table.level),
+	]
 );
 
 export const upgradeRelations = relations(upgrade, ({ one, many }) => ({
+	weapon: one(weapons, { fields: [upgrade.weaponId], references: [weapons.id] }),
 	upgradeStats: many(upgradeStats),
 }));
 
