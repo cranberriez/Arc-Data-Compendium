@@ -1,7 +1,7 @@
 "use server";
 
 import { Item, Weapon, Quest, Recipe, Workbench } from "@/types";
-import { getItems, getWeapons } from "@/db/queries/getItems";
+import { getItems, getWeapons } from "@/db/queries";
 import {
 	getQuestIds,
 	getQuests,
