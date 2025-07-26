@@ -1,12 +1,12 @@
 import { db } from "../drizzle";
 import { eq } from "drizzle-orm";
 import { items } from "../schema";
-import { Item } from "@/types";
+import { Weapon } from "@/types";
 
-export const getItems = async ({ id }: { id?: string } = {}): Promise<Item[]> => {
+export const getWeapons = async ({ id }: { id?: string } = {}): Promise<Weapon[]> => {
 	try {
 		return await db.query.items.findMany({
-			where: id ? eq(items.id, id) : undefined,
+			where: id ? eq(items.id, id) : eq(items.category, "weapon"),
 			with: {
 				weapon: {
 					with: {
@@ -29,7 +29,7 @@ export const getItems = async ({ id }: { id?: string } = {}): Promise<Item[]> =>
 			},
 		});
 	} catch (error) {
-		console.error("Error querying items:", error);
+		console.error("Error querying weapons:", error);
 		return [];
 	}
 };
