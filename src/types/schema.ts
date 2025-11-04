@@ -19,7 +19,7 @@ import {
 	StatType,
 	ModifierType,
 	StatUsage,
-} from "@/db/schema/items";
+} from "@/db/schema";
 import { recipes, recipeItems, recipeLocks } from "@/db/schema/recipes";
 import {
 	quests,
