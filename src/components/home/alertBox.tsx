@@ -7,7 +7,7 @@ export function AlertBox() {
 			This Site is currently in development. Items are missing, quests are incorrect,
 			workbench requirements are old. Show your support by joining our Discord.
 			<span className="ml-auto text-blue-500 bg-card px-4 py-1 rounded-full">
-				<a href="https://discord.gg/7HJzeg3uBu" target="_blank" rel="noopener noreferrer">
+				<a href="https://discord.gg/uZfNEsrn5s" target="_blank" rel="noopener noreferrer">
 					Join our Discord
 				</a>
 			</span>
