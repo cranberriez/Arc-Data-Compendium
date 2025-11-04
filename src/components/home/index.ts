@@ -6,3 +6,4 @@ export { QuickLinks } from "./quickLinks";
 export { WishlistNow } from "./wishlistNow";
 export { Credits } from "./credits";
 export { HomeFooter } from "./homeFooter";
+export { AlertBox } from "./alertBox";

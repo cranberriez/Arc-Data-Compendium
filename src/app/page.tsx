@@ -7,6 +7,7 @@ import {
 	HomeFooter,
 	AggregateCardsWithData,
 	AggregateCards,
+	AlertBox,
 } from "@/components/home";
 import { Suspense } from "react";
 
@@ -31,6 +32,7 @@ export default function Page() {
 		<article className="w-full p-4">
 			<div className="flex flex-col gap-6 mx-auto max-w-[1600px]">
 				<HeaderCard />
+				<AlertBox />
 				<Suspense fallback={<AggregateCards />}>
 					<AggregateCardsWithData />
 				</Suspense>
