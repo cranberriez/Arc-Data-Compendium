@@ -1,4 +1,4 @@
-import { db } from "../src/db/drizzle"; // your db instance
+import { db } from "../src/db/drizzle";
 import {
 	AmmoType,
 	WeaponClass,
@@ -7,7 +7,7 @@ import {
 	upgradeStats,
 	weaponStats,
 	weapons,
-} from "../src/db/schema/items";
+} from "../src/db/schema";
 import itemData from "../src/data/items/itemData.json";
 import { recipeItems, recipes } from "../src/db/schema";
 import { eq } from "drizzle-orm";
