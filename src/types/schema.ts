@@ -58,7 +58,6 @@ export type WorkbenchRecipeBase = InferSelectModel<typeof workbenchRecipes>;
 // Recipe with inputs and outputs
 export type Recipe = RecipeBase & {
 	io: RecipeItemBase[];
-	locks: RecipeLockBase | null;
 };
 
 // Modified recipe for recycling recipes

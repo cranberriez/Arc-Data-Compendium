@@ -14,7 +14,7 @@ export const getWeapons = async ({ id }: { id?: string } = {}): Promise<Weapon[]
 						upgrades: { with: { upgradeStats: true } },
 					},
 				},
-				recipe: { with: { io: true, locks: true } },
+				recipe: { with: { io: true } },
 				recycling: { with: { io: true } },
 				questEntries: {
 					with: {
