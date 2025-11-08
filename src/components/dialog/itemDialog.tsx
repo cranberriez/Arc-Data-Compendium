@@ -44,10 +44,7 @@ export function ItemDialog({ data, isOpen, closeDialog, backDialog }: ItemDialog
 	const itemTags = getItemTags(item);
 
 	return (
-		<Dialog
-			open={isOpen}
-			onOpenChange={(open) => !open && handleCloseDialog()}
-		>
+		<Dialog open={isOpen} onOpenChange={(open) => !open && handleCloseDialog()}>
 			<DialogContent className="p-2 sm:p-6">
 				{/* Back buttons */}
 				{dialogQueue.length > 0 && (
@@ -65,14 +62,7 @@ export function ItemDialog({ data, isOpen, closeDialog, backDialog }: ItemDialog
 					</div>
 				)}
 				{/* Dialog Header */}
-				<ItemHeader
-					name={item.name}
-					icon={item.icon}
-					category={item.category}
-					rarity={item.rarity}
-					recipeId={item.recipeId}
-					itemTags={itemTags}
-				/>
+				<ItemHeader item={item} itemTags={itemTags} />
 
 				<DiagDescription
 					name={item.name}
@@ -98,27 +88,16 @@ export function ItemDialog({ data, isOpen, closeDialog, backDialog }: ItemDialog
 				)}
 
 				{/* Gear Section */}
-				{gearStats && gearType && (
-					<GearSection
-						stats={gearStats}
-						type={gearType}
-					/>
-				)}
+				{gearStats && gearType && <GearSection stats={gearStats} type={gearType} />}
 
 				{/* Recycling Section */}
 				{recyclingRecipe && (
-					<RecyclingSection
-						outputItem={item}
-						recyclingRecipe={recyclingRecipe}
-					/>
+					<RecyclingSection outputItem={item} recyclingRecipe={recyclingRecipe} />
 				)}
 
 				{/* Sources Section (with two columns) */}
 				{recyclingSources.length > 0 && (
-					<SourcesSection
-						item={item}
-						recyclingSources={recyclingSources}
-					/>
+					<SourcesSection item={item} recyclingSources={recyclingSources} />
 				)}
 
 				{/* TODO: Recipe Section */}

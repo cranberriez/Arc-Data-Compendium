@@ -6,54 +6,34 @@ import React from "react";
 import { formatName, getTypeIcon } from "@/utils/items/itemUtils";
 import getItemIcon from "@/components/items/getItemIcon";
 import { ItemTagData } from "@/utils/items";
+import ItemImage from "../items/ItemImage";
+import { Item } from "@/types";
 
 // Component that displays item header information
-export const ItemHeader = ({
-	name,
-	icon,
-	category,
-	rarity,
-	recipeId,
-	itemTags,
-}: {
-	name: string;
-	icon: string;
-	category: string;
-	rarity: string;
-	recipeId: string | null;
-	itemTags: ItemTagData[];
-}) => {
+export const ItemHeader = ({ item, itemTags }: { item: Item; itemTags: ItemTagData[] }) => {
 	const rarityColors = {
-		bg: getRarityColor(rarity, "bg"),
-		text: getRarityColor(rarity, "text"),
-		border: getRarityColor(rarity, "border"),
+		bg: getRarityColor(item.rarity, "bg"),
+		text: getRarityColor(item.rarity, "text"),
+		border: getRarityColor(item.rarity, "border"),
 	};
 
-	const filteredTags = itemTags.filter((tag) => tag.key !== category);
+	const filteredTags = itemTags.filter((tag) => tag.key !== item.category);
 
 	return (
 		<DialogHeader className="flex flex-col justify-start gap-4">
 			{/* Keep existing header content from DialogHeader */}
 			<div className="flex flex-row items-center gap-4 sm:pr-2">
-				<div
-					className={cn(
-						"flex items-center justify-center rounded-lg w-16 h-16 border-2 p-2",
-						rarityColors.border,
-						rarityColors.text,
-						`dark:${rarityColors.bg}/10`
-					)}
-				>
-					{getItemIcon(icon, cn("w-8 h-8", rarityColors.text))}
+				<div className="flex flex-col items-start">
+					<ItemImage item={item} size="xl" />
 				</div>
 				<div className="flex flex-col items-start">
 					<DialogTitle className="text-left text-2xl font-normal pr-6 sm:pr-0">
-						{name}
+						{item.name}
 					</DialogTitle>
 					{/* Desktop Tags */}
 					<ItemDiagTags
-						category={category}
-						rarity={rarity}
-						hasRecipe={!!recipeId}
+						category={item.category}
+						rarity={item.rarity}
 						className="hidden sm:block"
 						bgColor={rarityColors.bg}
 						itemTags={filteredTags}
@@ -62,9 +42,8 @@ export const ItemHeader = ({
 			</div>
 			{/* Mobile Tags */}
 			<ItemDiagTags
-				category={category}
-				rarity={rarity}
-				hasRecipe={!!recipeId}
+				category={item.category}
+				rarity={item.rarity}
 				className="block sm:hidden"
 				bgColor={rarityColors.bg}
 				itemTags={filteredTags}
@@ -76,14 +55,12 @@ export const ItemHeader = ({
 export const ItemDiagTags = ({
 	category,
 	rarity,
-	hasRecipe,
 	className,
 	bgColor,
 	itemTags,
 }: {
 	category: string;
 	rarity: string;
-	hasRecipe: boolean;
 	className?: string;
 	bgColor?: string;
 	itemTags: ItemTagData[];
@@ -108,10 +85,7 @@ export const ItemDiagTags = ({
 
 				{itemTags.map((tag) => {
 					return (
-						<div
-							className="flex items-center gap-1"
-							key={tag.key}
-						>
+						<div className="flex items-center gap-1" key={tag.key}>
 							{tag.icon &&
 								React.createElement(tag.icon, {
 									className: cn(
