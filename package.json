@@ -5,6 +5,11 @@
 	"scripts": {
 		"dev": "next dev",
 		"seed": "tsx scripts/seed.ts",
+		"import:items": "tsx scripts/import-items.ts",
+		"scan:taxonomy": "tsx scripts/scan-taxonomy.ts",
+		"import:recipes:recycling": "tsx scripts/import-recipes-recycling.ts",
+		"import:recipes:crafting": "tsx scripts/import-recipes-crafting.ts",
+		"import:workbenches": "tsx scripts/import-workbenches.ts",
 		"devtb": "next dev --turbopack",
 		"build": "next build",
 		"start": "next start",

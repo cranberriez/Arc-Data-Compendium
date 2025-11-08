@@ -15,6 +15,12 @@ const itemCategoryValues = [
 	"misc",
 	"topside_material",
 	"refined_material",
+	"advanced_material",
+	"basic_material",
+	"augment",
+	"shield",
+	"nature",
+	"trap",
 	"key",
 ] as const;
 export type ItemCategory = (typeof itemCategoryValues)[number];

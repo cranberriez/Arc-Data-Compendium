@@ -21,6 +21,7 @@ export const items = pgTable("items", {
 	category: itemCategoryEnum("category").notNull(),
 	flavorText: text("flavor_text"),
 	recipeId: varchar("recipe_id", { length: 255 }).references(() => recipes.id),
+	foundIn: text("found_in").array().default([]),
 
 	quickUse: jsonb("quick_use").$type<QuickUseData>(),
 	gear: jsonb("gear").$type<GearData>(),
