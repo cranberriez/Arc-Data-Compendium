@@ -77,7 +77,7 @@ const data: NavData = {
 				title: "Tools",
 				url: "/tools",
 				icon: Calculator,
-				enabled: true,
+				enabled: false,
 			},
 		],
 	},
@@ -192,7 +192,7 @@ const data: NavData = {
 				title: "Quests",
 				url: "/quests",
 				icon: BookMarked,
-				enabled: true,
+				enabled: false,
 			},
 			{
 				title: "Store",
