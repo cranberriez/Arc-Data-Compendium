@@ -1,16 +1,7 @@
 import { relations } from "drizzle-orm";
-import {
-	pgTable,
-	integer,
-	real,
-	serial,
-	text,
-	foreignKey,
-	unique,
-	primaryKey,
-} from "drizzle-orm/pg-core";
+import { pgTable, integer, serial, text, foreignKey, unique, varchar, jsonb } from "drizzle-orm/pg-core";
 import { weapons } from "./weapons";
-import { statTypeEnum, modifierTypeEnum } from "./enums";
+import { recipes } from "./recipes";
 
 // Upgrade table
 export const upgrade = pgTable(
@@ -22,6 +13,11 @@ export const upgrade = pgTable(
 			.references(() => weapons.id),
 		level: integer("level").notNull(),
 		description: text("description"),
+		// Per-tier perks stored as canonical JSON (object keyed by normalized metric)
+		perks: jsonb("perks").notNull().default(JSON.stringify({})),
+		// Optional cost linkage via recipes table
+		recipeId: varchar("recipe_id", { length: 255 }).references(() => recipes.id),
+		sellPrice: integer("sell_price"),
 	},
 	(table) => [
 		foreignKey({ columns: [table.weaponId], foreignColumns: [weapons.id] }),
@@ -29,32 +25,6 @@ export const upgrade = pgTable(
 	]
 );
 
-export const upgradeRelations = relations(upgrade, ({ one, many }) => ({
+export const upgradeRelations = relations(upgrade, ({ one }) => ({
 	weapon: one(weapons, { fields: [upgrade.weaponId], references: [weapons.id] }),
-	upgradeStats: many(upgradeStats),
-}));
-
-export const upgradeStats = pgTable(
-	"weapon_upgrade_stats",
-	{
-		upgradeId: integer("upgrade_id")
-			.notNull()
-			.references(() => upgrade.id),
-		statType: statTypeEnum("stat_type").notNull(),
-		modifierType: modifierTypeEnum("modifier_type").notNull(),
-		value: real("value").notNull(),
-	},
-	(table) => [
-		foreignKey({
-			columns: [table.upgradeId],
-			foreignColumns: [upgrade.id],
-		}),
-		primaryKey({
-			columns: [table.upgradeId, table.statType],
-		}),
-	]
-);
-
-export const upgradeStatsRelations = relations(upgradeStats, ({ one }) => ({
-	upgrade: one(upgrade, { fields: [upgradeStats.upgradeId], references: [upgrade.id] }),
 }));

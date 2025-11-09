@@ -27,7 +27,7 @@ export type ItemCategory = (typeof itemCategoryValues)[number];
 export const itemCategoryEnum = pgEnum("item_category", itemCategoryValues);
 
 // Weapon specific enums
-const ammoTypeValues = ["light", "medium", "heavy", "shotgun", "energy"] as const;
+const ammoTypeValues = ["light", "medium", "heavy", "shotgun", "energy", "launcher"] as const;
 export const ammoTypeEnum = pgEnum("ammo_type", ammoTypeValues);
 export type AmmoType = (typeof ammoTypeValues)[number];
 
@@ -37,7 +37,8 @@ const weaponClassValues = [
 	"smg",
 	"shotgun",
 	"pistol",
-	"light_machinegun",
+	"lmg",
+	"hand_cannon",
 	"sniper_rifle",
 	"special",
 ] as const;

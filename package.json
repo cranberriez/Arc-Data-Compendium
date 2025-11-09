@@ -13,6 +13,7 @@
 		"import:recipes:recycling": "tsx scripts/import-recipes-recycling.ts",
 		"import:recipes:crafting": "tsx scripts/import-recipes-crafting.ts",
 		"import:workbenches": "tsx scripts/import-workbenches.ts",
+		"import:weapons": "tsx scripts/import-weapons.ts",
 		"devtb": "next dev --turbopack",
 		"build": "next build",
 		"start": "next start",
