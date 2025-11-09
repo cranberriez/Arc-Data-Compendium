@@ -10,8 +10,7 @@ export const getWeapons = async ({ id }: { id?: string } = {}): Promise<Weapon[]
 			with: {
 				weapon: {
 					with: {
-						weaponStats: true,
-						upgrades: { with: { upgradeStats: true } },
+						upgrades: true,
 					},
 				},
 				recipe: { with: { io: true } },

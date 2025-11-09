@@ -4,23 +4,24 @@ import { items } from "./items";
 import { ammoTypeEnum, weaponClassEnum } from "./enums";
 import { WeaponModSlot } from "@/types";
 import { upgrade } from "./upgrades";
+import { WeaponBaseStats } from "@/types/items/weapon";
 
 // Weapon extension table (1-to-1 with items)
 export const weapons = pgTable("weapons", {
-  id: serial("id").primaryKey(),
-  itemId: varchar("item_id", { length: 255 })
-    .notNull()
-    .unique()
-    .references(() => items.id),
-  ammoType: ammoTypeEnum("ammo_type"),
-  weaponClass: weaponClassEnum("weapon_class"),
-  modSlots: jsonb("mod_slots").$type<WeaponModSlot[]>().notNull(),
-  compatibleMods: text("compatible_mods").array().default([]).notNull(),
-  // Base weapon stats stored as canonical JSON (keyed by normalized metric)
-  statsBase: jsonb("stats_base"),
+	id: serial("id").primaryKey(),
+	itemId: varchar("item_id", { length: 255 })
+		.notNull()
+		.unique()
+		.references(() => items.id),
+	ammoType: ammoTypeEnum("ammo_type"),
+	weaponClass: weaponClassEnum("weapon_class"),
+	modSlots: jsonb("mod_slots").$type<WeaponModSlot[]>().notNull(),
+	compatibleMods: text("compatible_mods").array().default([]).notNull(),
+	// Base weapon stats stored as canonical JSON (keyed by normalized metric)
+	statsBase: jsonb("stats_base").$type<WeaponBaseStats>(),
 });
 
 export const weaponsRelations = relations(weapons, ({ one, many }) => ({
-  item: one(items, { fields: [weapons.itemId], references: [items.id] }),
-  upgrades: many(upgrade),
+	item: one(items, { fields: [weapons.itemId], references: [items.id] }),
+	upgrades: many(upgrade),
 }));
