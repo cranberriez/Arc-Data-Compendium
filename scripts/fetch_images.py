@@ -15,6 +15,9 @@ DATA_FILES = [
     DATA_DIR / "healing_items_enriched.json",
     DATA_DIR / "quick_use_items_enriched.json",
     DATA_DIR / "trap_items_enriched.json",
+    DATA_DIR / "shields.json",
+    DATA_DIR / "weapon_items_enriched.json",
+    DATA_DIR / "modification_items_enriched.json",
 ]
 
 for data_file in DATA_FILES:
