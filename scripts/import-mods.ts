@@ -174,6 +174,8 @@ async function ensureCraftRecipe(rec: ScrapedMod) {
     }
   }
   await db.insert(recipeItems).values({ recipeId, itemId: rec.id, role: "output", qty: 1 });
+  // set canonical crafting recipe pointer on item
+  await db.update(items).set({ recipeId }).where(eq(items.id, rec.id));
 }
 
 async function ensureRecycleRecipe(rec: ScrapedMod) {
@@ -191,6 +193,8 @@ async function ensureRecycleRecipe(rec: ScrapedMod) {
     if (n <= 0) continue;
     await db.insert(recipeItems).values({ recipeId, itemId, role: "output", qty: n });
   }
+  // set canonical recycling recipe pointer on item
+  await db.update(items).set({ recyclingId: recipeId }).where(eq(items.id, rec.id));
 }
 
 async function main() {

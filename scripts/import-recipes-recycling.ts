@@ -17,6 +17,7 @@ const FILES = [
 	"healing_items_enriched.json",
 	"quick_use_items_enriched.json",
 	"trap_items_enriched.json",
+	"shields.json",
 ];
 
 async function readJson(filePath: string) {
@@ -74,6 +75,8 @@ async function upsertRecyclingRecipe(inputItemId: string, outputs: Record<string
 	];
 
 	await db.insert(recipeItems).values(values);
+	// Link the input item to its recycling recipe
+	await db.update(items).set({ recyclingId: recipeId }).where(eq(items.id, inputItemId));
 	return {
 		created: existingRecipe.length === 0,
 		updated: existingRecipe.length > 0,

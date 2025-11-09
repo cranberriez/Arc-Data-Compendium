@@ -239,6 +239,8 @@ async function ensureRecycleRecipe(rec: ScrapedWeapon) {
 			.insert(recipeItems)
 			.values({ recipeId, itemId: materialId, role: "output", qty: n });
 	}
+    // set canonical recycling recipe pointer on item
+    await db.update(items).set({ recyclingId: recipeId }).where(eq(items.id, rec.id));
 }
 
 async function ensureCraftRecipe(rec: ScrapedWeapon) {
@@ -271,6 +273,8 @@ async function ensureCraftRecipe(rec: ScrapedWeapon) {
 	}
 	// output: the weapon item itself (qty 1)
 	await db.insert(recipeItems).values({ recipeId, itemId: rec.id, role: "output", qty: 1 });
+    // set canonical crafting recipe pointer on item
+    await db.update(items).set({ recipeId }).where(eq(items.id, rec.id));
 }
 
 (async function main() {
