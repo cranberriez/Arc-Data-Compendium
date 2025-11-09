@@ -12,31 +12,60 @@ const faqData = [
 		question: "Where do you source your item information from?",
 		answer: (
 			<p className="leading-loose">
-				A user by the name of Redstone_Gamer_1 provided an excellent list of information
-				which was the basis for the site. The information was moved to the ARC Raiders wiki
-				which is where most of the information is from. Information not provided on the wiki
-				was acquired from various YouTube videos, or from personal testing. This is the case
-				for all information provided until the game releases.
+				Most of the information comes from the ARC Raiders wikipedia. This site is mainly an
+				aggregation of the data provided there. Some information is pulled from the game by
+				me, or provided by members of the community.
 			</p>
 		),
 	},
 	{
 		question: "Is the data up to date and accurate?",
-		answer: "The game is not available yet, so the data is updated semi-regularly, but it is not guaranteed to be 100% accurate. When the game fully releases the data will be updated to be as accurate as possible as quickly as possible. We'll do our best to keep it up to date and tag items to show their accuracy.",
-	},
-	{
-		question: "Is the site official?",
-		answer: "No, this is a fan project.",
+		answer: (
+			<p className="leading-loose">
+				As of 11/9/2025, the data present is as accurate as possible. I will do my best to
+				update information as the game is updated. If you find anything wrong with the site
+				please contact me on our{" "}
+				<a
+					href="https://discord.gg/uZfNEsrn5s"
+					target="_blank"
+					rel="noopener noreferrer"
+					className="text-primary inline-flex items-center gap-1 underline"
+				>
+					Discord
+				</a>{" "}
+				or send an email to{" "}
+				<a
+					href="mailto:official.arcvault@gmail.com"
+					className="text-primary inline-flex items-center gap-1 underline"
+				>
+					official.arcvault@gmail.com
+				</a>
+				.
+			</p>
+		),
 	},
 	{
 		question: "I've found an item to be incorrect or missing, what do I do?",
-		answer: "Fill out the provided form (coming soon) or contact us on our discord (coming soon).",
+		answer: (
+			<p className="leading-loose">
+				Contact us on our{" "}
+				<a
+					href="https://discord.gg/uZfNEsrn5s"
+					target="_blank"
+					rel="noopener noreferrer"
+					className="text-primary inline-flex items-center gap-1 underline"
+				>
+					discord
+				</a>
+				.
+			</p>
+		),
 	},
 	{
 		question: "Who made this site?",
 		answer: (
 			<p className="leading-loose">
-				This site was developed with love by{" "}
+				This site is a solo passion project by{" "}
 				<Link
 					href="https://github.com/cranberriez"
 					target="_blank"
@@ -58,11 +87,7 @@ export function FAQ() {
 				<MessageCircleQuestion className="w-6 h-6 text-arcvault-primary-600 dark:text-arcvault-primary-400" />
 				Frequently Asked Questions
 			</h3>
-			<Accordion
-				type="single"
-				collapsible
-				className="w-full flex flex-col gap-4"
-			>
+			<Accordion type="single" collapsible className="w-full flex flex-col gap-4">
 				{faqData.map((item) => (
 					<AccordionItem
 						key={item.question}
