@@ -33,9 +33,9 @@ export default function Page() {
 			<div className="flex flex-col gap-6 mx-auto max-w-[1600px]">
 				<HeaderCard />
 				<AlertBox />
-				<Suspense fallback={<AggregateCards />}>
+				{/* <Suspense fallback={<AggregateCards />}>
 					<AggregateCardsWithData />
-				</Suspense>
+				</Suspense> */}
 				<QuickLinks />
 				<WishlistNow />
 				<FAQ />
