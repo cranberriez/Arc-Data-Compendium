@@ -44,10 +44,17 @@ export const ItemImage = React.memo(function ItemImage({
 
 	// Size mapping for the component
 	const sizeClasses = {
-		sm: "w-6 h-6",
-		md: "w-8 h-8",
-		lg: "w-12 h-12",
-		xl: "w-16 h-16",
+		sm: "w-10 h-10",
+		md: "w-12 h-12",
+		lg: "w-16 h-16",
+		xl: "w-20 h-20",
+	};
+
+	const imageSizes = {
+		sm: "48px",
+		md: "64px",
+		lg: "96px",
+		xl: "128px",
 	};
 
 	// Border color based on item rarity
@@ -96,18 +103,9 @@ export const ItemImage = React.memo(function ItemImage({
 							"object-contain transition-opacity",
 							isLoading ? "opacity-0" : "opacity-100"
 						)}
-						sizes={
-							size === "xl"
-								? "128px"
-								: size === "lg"
-									? "96px"
-									: size === "md"
-										? "64px"
-										: "48px"
-						}
 						onLoad={handleImageLoad}
 						onError={handleImageError}
-						priority={size === "lg" || size === "xl"}
+						sizes={imageSizes[size]}
 					/>
 				</div>
 			);
