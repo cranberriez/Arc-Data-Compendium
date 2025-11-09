@@ -1,5 +1,5 @@
 import { relations } from "drizzle-orm";
-import { pgTable, integer, varchar, serial, jsonb } from "drizzle-orm/pg-core";
+import { pgTable, integer, varchar, serial, jsonb, text } from "drizzle-orm/pg-core";
 import { items } from "./items";
 import { ammoTypeEnum, weaponClassEnum } from "./enums";
 import { WeaponModSlot } from "@/types";
@@ -15,6 +15,7 @@ export const weapons = pgTable("weapons", {
   ammoType: ammoTypeEnum("ammo_type"),
   weaponClass: weaponClassEnum("weapon_class"),
   modSlots: jsonb("mod_slots").$type<WeaponModSlot[]>().notNull(),
+  compatibleMods: text("compatible_mods").array().default([]).notNull(),
   // Base weapon stats stored as canonical JSON (keyed by normalized metric)
   statsBase: jsonb("stats_base"),
 });

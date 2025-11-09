@@ -96,74 +96,21 @@ const KNOWN_KEYS: Record<string, string> = {
 };
 
 function extractBaseStats(obj: any) {
-	const canonical: Record<
-		string,
-		{ kind: "additive" | "multiplicative"; unit: "percent" | "absolute"; value: number }
-	> = {};
-	const srcs: any[] = [];
-	if (obj && typeof obj === "object") {
-		if (obj.stats) srcs.push(obj.stats);
-		if (obj.weapon_stats) srcs.push(obj.weapon_stats);
-		srcs.push(obj);
-	}
-	const seen = new Set<string>();
-	// helper to coerce numeric
-	const asNum = (x: any): number | null => {
-		if (typeof x === "number" && Number.isFinite(x)) return x;
-		if (typeof x === "string" && x.trim() !== "" && !isNaN(Number(x))) return Number(x);
-		return null;
-	};
-	for (const s of srcs) {
-		if (!s || typeof s !== "object") continue;
-		const entries = Object.entries(s);
-		for (const [k, v] of entries) {
-			const slug = toSlug(k);
-			if (seen.has(slug)) continue;
-			const n = asNum(v);
-			if (n !== null) {
-				const norm = KNOWN_KEYS[slug];
-				if (norm) {
-					canonical[norm] = { kind: "additive", unit: "absolute", value: n };
-					seen.add(slug);
-					continue;
-				}
-				if (slug.endsWith("_pct")) {
-					const baseKey = slug.replace(/_pct$/, "");
-					canonical[baseKey] = {
-						kind: "multiplicative",
-						unit: "percent",
-						value: n / 100,
-					};
-					seen.add(slug);
-					continue;
-				}
-			}
-			// shallow nested objects: e.g. { base: { damage: 10 } }
-			if (v && typeof v === "object") {
-				for (const [k2, v2] of Object.entries(v)) {
-					const slug2 = toSlug(`${k2}`);
-					if (seen.has(slug2)) continue;
-					const n2 = asNum(v2);
-					if (n2 !== null) {
-						const norm2 = KNOWN_KEYS[slug2];
-						if (norm2) {
-							canonical[norm2] = { kind: "additive", unit: "absolute", value: n2 };
-							seen.add(slug2);
-						} else if (slug2.endsWith("_pct")) {
-							const baseKey2 = slug2.replace(/_pct$/, "");
-							canonical[baseKey2] = {
-								kind: "multiplicative",
-								unit: "percent",
-								value: n2 / 100,
-							};
-							seen.add(slug2);
-						}
-					}
-				}
-			}
+	const out: Record<string, number | string> = {};
+	if (!obj || typeof obj !== "object") return out;
+	// stats object: numeric entries only
+	if (obj.stats && typeof obj.stats === "object") {
+		for (const [k, v] of Object.entries(obj.stats)) {
+			if (typeof v === "number" && Number.isFinite(v)) out[toSlug(k)] = v;
 		}
 	}
-	return canonical;
+	// top-level fields we want to include
+	if (typeof obj.magazine_size === "number") out["magazine_size"] = obj.magazine_size;
+	if (typeof obj.firing_mode === "string" && obj.firing_mode.trim() !== "")
+		out["firing_mode"] = obj.firing_mode;
+	if (typeof obj.arc_armor_penetration === "string" && obj.arc_armor_penetration.trim() !== "")
+		out["arc_armor_penetration"] = obj.arc_armor_penetration;
+	return out;
 }
 
 function mapAmmoType(v?: string) {
@@ -294,6 +241,38 @@ async function ensureRecycleRecipe(rec: ScrapedWeapon) {
 	}
 }
 
+async function ensureCraftRecipe(rec: ScrapedWeapon) {
+	const rawList = (rec as any).recipe;
+	if (!Array.isArray(rawList) || rawList.length === 0) return;
+	const first = rawList[0] as any;
+	const recipeId = `craft_${rec.id}`;
+	const isBlueprintLocked = Boolean(first?.blueprint);
+	// upsert recipe header
+	const existing = await db.select().from(recipes).where(eq(recipes.id, recipeId));
+	if (existing.length === 0) {
+		await db
+			.insert(recipes)
+			.values({ id: recipeId, type: "crafting", isBlueprintLocked, inRaid: false });
+	} else if (existing.length > 0) {
+		await db
+			.update(recipes)
+			.set({ type: "crafting", isBlueprintLocked, inRaid: false })
+			.where(eq(recipes.id, recipeId));
+	}
+	// reset IO rows
+	await db.delete(recipeItems).where(eq(recipeItems.recipeId, recipeId));
+	// inputs
+	if (first?.ingredients && typeof first.ingredients === "object") {
+		for (const [itemId, qty] of Object.entries(first.ingredients)) {
+			const n = typeof qty === "number" ? qty : Number(qty as any) || 0;
+			if (n <= 0) continue;
+			await db.insert(recipeItems).values({ recipeId, itemId, role: "input", qty: n });
+		}
+	}
+	// output: the weapon item itself (qty 1)
+	await db.insert(recipeItems).values({ recipeId, itemId: rec.id, role: "output", qty: 1 });
+}
+
 (async function main() {
 	try {
 		const list = await readJson(WEAPONS_FILE);
@@ -326,6 +305,7 @@ async function ensureRecycleRecipe(rec: ScrapedWeapon) {
 					);
 				}
 				const b = await upsertWeapon({ ...rec });
+				await ensureCraftRecipe(rec);
 				await ensureRecycleRecipe(rec);
 				ok++;
 				console.log(`Weapon ${rec.id}: item ${a.action}, weapon ${b.action}`);

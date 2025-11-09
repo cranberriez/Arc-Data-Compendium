@@ -20,16 +20,17 @@ export type CompatibleMods = {
 	[slot in WeaponModSlot]?: string[];
 };
 
-// Canonical weapon stat entry (used for base stats and modifier perks)
+// Canonical weapon stat entry (used for modifier perks)
 export type WeaponStatEntry = {
 	kind: "additive" | "multiplicative";
 	unit: "percent" | "absolute";
 	value: number;
 };
 
-// Canonical stats object keyed by normalized metric name
+// Canonical modifier stats object keyed by normalized metric name
 export type WeaponStatsCanonical = Record<string, WeaponStatEntry>;
 
-// For clarity in usage sites
-export type WeaponBaseStats = WeaponStatsCanonical;
+// Base stats stored on weapons.stats_base as simple raw JSON
+// Numeric stats are numbers; categorical stats are strings (e.g., firing_mode)
+export type WeaponBaseStats = Record<string, number | string>;
 export type WeaponModifierStats = WeaponStatsCanonical;

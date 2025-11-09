@@ -11,6 +11,7 @@ const itemCategoryValues = [
 	"quick_use",
 	"ammo",
 	"weapon",
+	"modification",
 	"gear",
 	"misc",
 	"topside_material",

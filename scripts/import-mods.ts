@@ -1,35 +1,91 @@
-import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'fs';
-import { join, basename } from 'path';
+import { readFile } from "fs/promises";
+import path from "path";
+import { db } from "../src/db/drizzle";
+import { items, recipes, recipeItems, weapons } from "../src/db/schema";
+import { eq } from "drizzle-orm";
+import type { Rarity } from "../src/db/schema/enums";
 
-const ROOT = process.cwd();
-const SRC_PATH = join(ROOT, 'scripts', 'data', 'modification_items_enriched.json');
-const METRICS_PATH = join(ROOT, 'scripts', 'data', 'stat_mapping_metrics.json');
-const OUT_DIR = join(ROOT, 'scripts', 'data', '_generated');
-const OUT_PATH = join(OUT_DIR, 'mods_normalized.json');
-
-function ensureDir(p: string) {
-  if (!existsSync(p)) mkdirSync(p, { recursive: true });
+// Input shapes from scraped JSON
+interface ScrapedMod {
+  id: string;
+  name: string;
+  description?: string;
+  caption?: string;
+  image?: string;
+  rarity?: string;
+  weight?: number;
+  stack_size?: number;
+  sell_price?: number;
+  found_in?: string[];
+  recipe?: Array<{
+    result: Record<string, number>;
+    ingredients?: Record<string, number>;
+    workbenches?: Record<string, number>;
+    blueprint?: boolean;
+  }>;
+  recycling?: Record<string, number>;
+  stat_modifiers?: Record<string, number>;
+  compatible_weapons?: string[];
+  category_icon?: string; // not used here
 }
 
+// Metrics mapping types
 type MappingEntry = {
   key_raw: string;
   key_slug: string;
   normalized: string;
-  kind: 'additive' | 'multiplicative';
-  unit: 'percent' | 'absolute';
-  sign: 'positive' | 'negative';
+  kind: "additive" | "multiplicative";
+  unit: "percent" | "absolute";
+  sign: "positive" | "negative";
 };
 
 type Metrics = {
   mods: MappingEntry[];
 };
 
+const DATA_DIR = path.resolve(process.cwd(), "scripts/data");
+const MODS_FILE = path.join(DATA_DIR, "modification_items_enriched.json");
+const METRICS_FILE = path.join(DATA_DIR, "stat_mapping_metrics.json");
+
+const rarityMap = new Map<string, Rarity>([
+  ["common", "common"],
+  ["uncommon", "uncommon"],
+  ["rare", "rare"],
+  ["epic", "epic"],
+  ["legendary", "legendary"],
+]);
+
+function normalizeRarity(value?: string): Rarity {
+  const key = (value ?? "").trim().toLowerCase();
+  return rarityMap.get(key) ?? "common";
+}
+
+function titleCase(word: string): string {
+  return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+}
+
+function normalizeFoundIn(list: string[] | undefined): string[] | undefined {
+  if (!Array.isArray(list)) return undefined;
+  const raw = list.map((s) => (s ?? "").trim()).filter(Boolean);
+  const lowerSet = new Set(raw.map((s) => s.toLowerCase()));
+  if (lowerSet.has("old") || lowerSet.has("world")) {
+    lowerSet.delete("old");
+    lowerSet.delete("world");
+    lowerSet.add("old world");
+  }
+  const final = Array.from(lowerSet).map((s) =>
+    s === "arc" ? "ARC" : s.split(/\s+/).map(titleCase).join(" ")
+  );
+  final.sort((a, b) => a.localeCompare(b));
+  return final;
+}
+
 function toSlug(s: string) {
-  return (s || '')
+  return String(s || "")
     .toLowerCase()
-    .replace(/[^a-z0-9]+/g, '_')
-    .replace(/^_+|_+$/g, '')
-    .replace(/__+/g, '_');
+    .replace(/[^a-z0-9]+/g, "_")
+    .replace(/^_+|_+$/g, "")
+    .replace(/__+/g, "_");
 }
 
 function buildModsMappingIndex(metrics: Metrics) {
@@ -42,111 +98,142 @@ function buildModsMappingIndex(metrics: Metrics) {
   return { byRaw, bySlug };
 }
 
-function mapToCanonicalModifiers(rawMods: Record<string, number>, idx: ReturnType<typeof buildModsMappingIndex>) {
-  const out: Record<string, { kind: 'additive' | 'multiplicative'; unit: 'percent' | 'absolute'; value: number }> = {};
-  const unmapped: Array<{ raw_key: string; raw_value: number; hint_slug: string }> = [];
+function mapToCanonicalModifiers(
+  rawMods: Record<string, number> | undefined,
+  idx: ReturnType<typeof buildModsMappingIndex>
+) {
+  const out: Record<string, { kind: "additive" | "multiplicative"; unit: "percent" | "absolute"; value: number }> = {};
   for (const [key, val] of Object.entries(rawMods || {})) {
     const slug = toSlug(key);
     const hit = idx.byRaw.get(key) || idx.bySlug.get(slug);
-    if (!hit) {
-      unmapped.push({ raw_key: key, raw_value: Number(val), hint_slug: slug });
-      continue;
-    }
+    if (!hit) continue;
     let valueSigned: number;
-    if (hit.kind === 'multiplicative' && hit.unit === 'percent') {
+    if (hit.kind === "multiplicative" && hit.unit === "percent") {
       const v = Number(val) / 100;
-      valueSigned = hit.sign === 'positive' ? +v : -v;
-    } else if (hit.kind === 'additive' && hit.unit === 'absolute') {
+      valueSigned = hit.sign === "positive" ? +v : -v;
+    } else if (hit.kind === "additive" && hit.unit === "absolute") {
       const v = Number(val);
-      valueSigned = hit.sign === 'positive' ? +v : -v;
+      valueSigned = hit.sign === "positive" ? +v : -v;
     } else {
       valueSigned = Number(val);
     }
     out[hit.normalized] = { kind: hit.kind, unit: hit.unit, value: valueSigned };
   }
-  return { canonical: out, unmapped };
+  return out;
 }
 
-function toLower(s?: string) {
-  return (s || '').toLowerCase();
+async function readJson<T>(filePath: string): Promise<T> {
+  const raw = await readFile(filePath, "utf-8");
+  return JSON.parse(raw) as T;
 }
 
-function detectSlotFromIcon(iconUrl?: string): string | null {
-  if (!iconUrl) return null;
-  const file = basename(iconUrl).toLowerCase();
-  // Common patterns observed in data
-  if (file.includes('underbarrel')) return 'grip';
-  if (file.includes('muzzle')) return 'muzzle';
-  if (file.includes('light-mag') || file.includes('medium-mag') || file.includes('shotgun-mag') || file.includes('mag')) return 'magazine';
-  if (file.includes('stock')) return 'stock';
-  return null;
-}
+async function upsertModItem(rec: ScrapedMod, modifiersCanonical: Record<string, any>) {
+  const desc = (rec.description ?? "").trim();
+  const mapped = {
+    id: rec.id,
+    name: rec.name,
+    description: desc.startsWith("File:") ? "?" : desc,
+    flavorText: rec.caption ? rec.caption.trim() : undefined,
+    rarity: normalizeRarity(rec.rarity),
+    value: typeof rec.sell_price === "number" ? Math.trunc(rec.sell_price) : 0,
+    weight: typeof rec.weight === "number" ? rec.weight : 0,
+    maxStack: typeof rec.stack_size === "number" ? Math.trunc(rec.stack_size) : 1,
+    category: "modification" as const,
+    foundIn: normalizeFoundIn(rec.found_in) ?? [],
+    modifiers: Object.keys(modifiersCanonical).length ? modifiersCanonical : null,
+  } as const;
 
-function detectSlotHeuristic(id?: string, name?: string, iconUrl?: string): { slot: string | null; source: string } {
-  const idL = toLower(id);
-  const nameL = toLower(name);
-
-  // Explicit exceptions from user notes
-  if (idL === 'anvil_splitter' || nameL.includes('anvil splitter')) {
-    return { slot: 'tech', source: 'explicit_exception' };
+  const existing = await db.select().from(items).where(eq(items.id, rec.id));
+  if (existing.length > 0) {
+    await db.update(items).set(mapped).where(eq(items.id, rec.id));
+    return { id: rec.id, action: "updated" as const };
+  } else {
+    await db.insert(items).values(mapped);
+    return { id: rec.id, action: "inserted" as const };
   }
-  if (idL === 'kinetic_converter' || nameL.includes('kinetic converter')) {
-    return { slot: 'stock', source: 'explicit_exception' };
-  }
-
-  // Heuristics by keywords
-  if (nameL.includes('compensator') || idL.includes('compensator')) return { slot: 'muzzle', source: 'keyword' };
-  if (nameL.includes('silencer') || idL.includes('silencer')) return { slot: 'muzzle', source: 'keyword' };
-  if (nameL.includes('extended barrel') || idL.includes('extended_barrel')) return { slot: 'muzzle', source: 'keyword' };
-  if (nameL.includes('choke') || idL.includes('choke')) return { slot: 'muzzle', source: 'keyword' };
-  if (nameL.includes('muzzle') || idL.includes('muzzle')) return { slot: 'muzzle', source: 'keyword' };
-
-  if (nameL.includes('grip') || idL.includes('grip') || nameL.includes('underbarrel') || idL.includes('underbarrel')) return { slot: 'grip', source: 'keyword' };
-
-  if (nameL.includes('magazine') || idL.includes('magazine') || nameL.includes('mag ') || idL.includes('mag_') || idL.endsWith('_mag')) return { slot: 'magazine', source: 'keyword' };
-
-  if (nameL.includes('stock') || idL.includes('stock')) return { slot: 'stock', source: 'keyword' };
-
-  // Fallback to icon filename
-  const iconSlot = detectSlotFromIcon(iconUrl);
-  if (iconSlot) return { slot: iconSlot, source: 'icon' };
-
-  return { slot: null, source: 'unknown' };
 }
 
-(function main() {
-  const mods = JSON.parse(readFileSync(SRC_PATH, 'utf-8')) as any[];
-  const metrics = JSON.parse(readFileSync(METRICS_PATH, 'utf-8')) as Metrics;
-  const index = buildModsMappingIndex(metrics);
+async function ensureCraftRecipe(rec: ScrapedMod) {
+  const rawList = rec.recipe;
+  if (!Array.isArray(rawList) || rawList.length === 0) return;
+  const first = rawList[0] as any;
+  const recipeId = `craft_${rec.id}`;
+  const isBlueprintLocked = Boolean(first?.blueprint);
+  const existing = await db.select().from(recipes).where(eq(recipes.id, recipeId));
+  if (existing.length === 0) {
+    await db.insert(recipes).values({ id: recipeId, type: "crafting", isBlueprintLocked, inRaid: false });
+  } else {
+    await db.update(recipes).set({ type: "crafting", isBlueprintLocked, inRaid: false }).where(eq(recipes.id, recipeId));
+  }
+  await db.delete(recipeItems).where(eq(recipeItems.recipeId, recipeId));
+  if (first?.ingredients && typeof first.ingredients === "object") {
+    for (const [itemId, qty] of Object.entries(first.ingredients)) {
+      const n = typeof qty === "number" ? qty : Number(qty as any) || 0;
+      if (n <= 0) continue;
+      await db.insert(recipeItems).values({ recipeId, itemId, role: "input", qty: n });
+    }
+  }
+  await db.insert(recipeItems).values({ recipeId, itemId: rec.id, role: "output", qty: 1 });
+}
 
-  const out: any[] = [];
-  let counts: Record<string, number> = { muzzle: 0, grip: 0, magazine: 0, stock: 0, tech: 0, unknown: 0 };
+async function ensureRecycleRecipe(rec: ScrapedMod) {
+  const recycled = rec.recycling;
+  if (!recycled || typeof recycled !== "object") return;
+  const recipeId = `recycle_${rec.id}`;
+  const existing = await db.select().from(recipes).where(eq(recipes.id, recipeId));
+  if (existing.length === 0) {
+    await db.insert(recipes).values({ id: recipeId, type: "recycling", isBlueprintLocked: false, inRaid: false });
+  }
+  await db.delete(recipeItems).where(eq(recipeItems.recipeId, recipeId));
+  await db.insert(recipeItems).values({ recipeId, itemId: rec.id, role: "input", qty: 1 });
+  for (const [itemId, qty] of Object.entries(recycled)) {
+    const n = typeof qty === "number" ? qty : Number(qty as any) || 0;
+    if (n <= 0) continue;
+    await db.insert(recipeItems).values({ recipeId, itemId, role: "output", qty: n });
+  }
+}
 
-  const diagnostics: Record<string, number> = {};
-  for (const mod of mods) {
-    const { slot, source } = detectSlotHeuristic(mod.id, mod.name, mod.category_icon || mod.image);
-    const { canonical, unmapped } = mapToCanonicalModifiers(mod.stat_modifiers || {}, index);
+async function main() {
+  const mods = await readJson<ScrapedMod[]>(MODS_FILE);
+  const metrics = await readJson<Metrics>(METRICS_FILE);
+  const idx = buildModsMappingIndex(metrics);
 
-    const normalized = {
-      ...mod,
-      slot,
-      slot_detect_source: source,
-      allowed_weapons: Array.isArray(mod.compatible_weapons) ? mod.compatible_weapons : [],
-      modifiers: canonical,
-    };
+  // Collect compatible mods per weaponId
+  const compat: Record<string, Set<string>> = {};
 
-    out.push(normalized);
-    counts[slot ?? 'unknown'] = (counts[slot ?? 'unknown'] || 0) + 1;
-    for (const u of unmapped) diagnostics[u.raw_key] = (diagnostics[u.raw_key] || 0) + 1;
+  let ok = 0;
+  let fail = 0;
+  for (const rec of mods) {
+    try {
+      const modifiers = mapToCanonicalModifiers(rec.stat_modifiers || {}, idx);
+      const a = await upsertModItem(rec, modifiers);
+      await ensureCraftRecipe(rec);
+      await ensureRecycleRecipe(rec);
+
+      const allowed = Array.isArray(rec.compatible_weapons) ? rec.compatible_weapons : [];
+      for (const wid of allowed) {
+        if (!compat[wid]) compat[wid] = new Set<string>();
+        compat[wid].add(rec.id);
+      }
+
+      ok++;
+      console.log(`Mod ${rec.id}: item ${a.action}`);
+    } catch (e: any) {
+      fail++;
+      console.error(`Failed ${rec.id}:`, e?.message || e);
+    }
   }
 
-  ensureDir(OUT_DIR);
-  writeFileSync(OUT_PATH, JSON.stringify(out, null, 2), 'utf-8');
+  // Update weapons.compatible_mods
+  for (const [weaponId, set] of Object.entries(compat)) {
+    const arr = Array.from(set);
+    await db.update(weapons).set({ compatibleMods: arr }).where(eq(weapons.itemId, weaponId));
+  }
 
-  // Also write a small report next to it
-  const reportPath = join(OUT_DIR, 'mods_normalized.report.json');
-  writeFileSync(reportPath, JSON.stringify({ counts, unmapped_keys: diagnostics }, null, 2), 'utf-8');
+  console.log(`Done. Success: ${ok}, Failures: ${fail}. Updated weapons with compat: ${Object.keys(compat).length}`);
+}
 
-  console.log('Wrote:', OUT_PATH);
-  console.log('Wrote:', reportPath);
-})();
+main().catch((e) => {
+  console.error("Mod importer error:", e);
+  process.exit(1);
+});
