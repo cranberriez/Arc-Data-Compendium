@@ -61,25 +61,16 @@ export function WeaponCard({ weapon }: { weapon: Weapon }) {
 
 function BasicWeaponStats({ weapon }: { weapon: Weapon }) {
 	const weaponData = weapon.weapon;
-	if (!weaponData || !weaponData.weaponStats) return null;
-	const weaponStats = weaponData.weaponStats;
+	if (!weaponData || !weaponData.statsBase) return null;
+	const weaponStats = weaponData.statsBase;
 
-	const { damage = 0, fireRate = 0, range = 0 } = weaponStats;
+	const { damage = 0, fire_rate = 0, range = 0 } = weaponStats;
 
 	return (
 		<div className="flex flex-col items-center justify-between h-full max-h-24 w-24 min-w-fit">
-			<BasicStatItem
-				label="Damage"
-				stat={damage}
-			/>
-			<BasicStatItem
-				label="Fire Rate"
-				stat={fireRate}
-			/>
-			<BasicStatItem
-				label="Range"
-				stat={range}
-			/>
+			<BasicStatItem label="Damage" stat={damage} />
+			<BasicStatItem label="Fire Rate" stat={fire_rate} />
+			<BasicStatItem label="Range" stat={range} />
 		</div>
 	);
 }
