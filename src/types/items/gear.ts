@@ -9,15 +9,13 @@ export type GearCategory = "shield" | "augment";
 
 export type ShieldTypes = "light" | "medium" | "heavy";
 
-export type Segments = 5 | 8 | 12;
-
 // Stats for quick use items
 export type GearStat =
 	| {
 			shieldCharge: number;
 			damageMitigation: number; // damage reduced percentage, represented as a decimal
 			movePenalty: number; // movement penalty percentage, represented as a decimal
-			segments: Segments;
+			segments: number;
 			shieldType: ShieldTypes;
 	  }
 	| {

@@ -29,6 +29,11 @@ interface ScrapedItem {
 		weight_limit?: number;
 		shield_compatibility?: string[];
 	};
+	stats?: {
+		shield_charge?: number;
+		damage_mitigation?: number; // percentage in source data, e.g. 40 -> 0.4
+		movement_penalty?: number; // percentage in source data, e.g. 5 -> 0.05
+	};
 }
 
 const DATA_DIR = path.resolve(process.cwd(), "scripts/data");
@@ -39,6 +44,7 @@ const FILES = [
 	{ file: "healing_items_enriched.json", kind: "healing" as const },
 	{ file: "quick_use_items_enriched.json", kind: "quick_use" as const },
 	{ file: "trap_items_enriched.json", kind: "trap" as const },
+	{ file: "shields.json", kind: "shield" as const },
 ];
 
 const rarityMap = new Map<string, Rarity>([
@@ -84,6 +90,7 @@ function mapCategory(scraped: ScrapedItem, kind: (typeof FILES)[number]["kind"])
 
 	// dataset-specific defaults
 	if (kind === "augment") return "augment";
+	if (kind === "shield") return "shield";
 	if (kind === "grenade" || kind === "healing" || kind === "quick_use") return "quick_use";
 
 	// fallback
@@ -157,6 +164,38 @@ function mapAugmentStatsOrThrow(rec: ScrapedItem) {
 	} as const;
 }
 
+function inferShieldType(rec: ScrapedItem): "light" | "medium" | "heavy" {
+	const s = `${rec.id ?? ""} ${rec.name ?? ""}`.toLowerCase();
+	if (s.includes("heavy")) return "heavy";
+	if (s.includes("medium")) return "medium";
+	return "light";
+}
+
+function mapShieldStatsOrThrow(rec: ScrapedItem) {
+	const s = rec.stats ?? {};
+	const shieldCharge = s.shield_charge;
+	const damageMitigationPct = s.damage_mitigation; // percentage value in data
+	const movementPenaltyPct = s.movement_penalty ?? 0; // percentage value in data
+
+	const missing: string[] = [];
+	if (!Number.isFinite(shieldCharge)) missing.push("stats.shield_charge");
+	if (!Number.isFinite(damageMitigationPct)) missing.push("stats.damage_mitigation");
+
+	if (missing.length) {
+		throw new Error(`Shield stats missing for ${rec.id}: ${missing.join(", ")}`);
+	}
+
+	const segments = (shieldCharge as number) / 10;
+
+	return {
+		shieldCharge: shieldCharge as number,
+		damageMitigation: (damageMitigationPct as number) / 100,
+		movePenalty: (movementPenaltyPct as number) / 100,
+		segments,
+		shieldType: inferShieldType(rec),
+	} as const;
+}
+
 function buildQuickUse(kind: (typeof FILES)[number]["kind"]): QuickUseData | undefined {
 	if (kind === "grenade") return { category: "throwable", stats: [] };
 	if (kind === "healing") return { category: "healing", stats: [] };
@@ -190,7 +229,12 @@ async function upsertItem(rec: ScrapedItem, kind: (typeof FILES)[number]["kind"]
 						category: "augment" as const,
 						stats: mapAugmentStatsOrThrow(rec),
 					}
-				: undefined,
+				: kind === "shield"
+					? {
+							category: "shield" as const,
+							stats: mapShieldStatsOrThrow(rec),
+						}
+					: undefined,
 		foundIn: normalizeFoundIn(rec.found_in) ?? [],
 	} as const;
 
