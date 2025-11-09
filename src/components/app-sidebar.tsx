@@ -21,6 +21,7 @@ import {
 	Heart,
 	Vault,
 	Calculator,
+	Bomb,
 } from "lucide-react";
 
 import { NavMain } from "@/components/nav-main";
@@ -103,7 +104,7 @@ const data: NavData = {
 				enabled: true,
 			},
 			{
-				title: "Workbenches",
+				title: "Workshop",
 				icon: Hammer,
 				enabled: true,
 				items: [
@@ -114,33 +115,39 @@ const data: NavData = {
 						enabled: true,
 					},
 					{
-						title: "Basic Bench",
+						title: "Workbench",
 						icon: Hammer,
-						url: "/workshop/basic_bench",
+						url: "/workshop/workbench",
 						enabled: true,
 					},
 					{
-						title: "Equipment Bench",
+						title: "Gear Bench",
 						icon: Shirt,
-						url: "/workshop/equipment_bench",
+						url: "/workshop/gear_bench",
 						enabled: true,
 					},
 					{
-						title: "Weapon Bench",
+						title: "Gunsmith",
 						icon: Swords,
-						url: "/workshop/weapon_bench",
+						url: "/workshop/gunsmith",
 						enabled: true,
 					},
 					{
-						title: "Utility Bench",
+						title: "Utility Station",
 						icon: Layers,
-						url: "/workshop/utility_bench",
+						url: "/workshop/utility_station",
 						enabled: true,
 					},
 					{
-						title: "Med Station",
+						title: "Medical Lab",
 						icon: Heart,
-						url: "/workshop/medical_station",
+						url: "/workshop/medical_lab",
+						enabled: true,
+					},
+					{
+						title: "Explosives Station",
+						icon: Bomb,
+						url: "/workshop/explosives_station",
 						enabled: true,
 					},
 					{
@@ -161,7 +168,7 @@ const data: NavData = {
 				title: "Weapons",
 				url: "/weapons",
 				icon: Swords,
-				enabled: true,
+				enabled: false,
 			},
 			{
 				title: "Armor",
@@ -231,11 +238,7 @@ const settingsPages = {
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 	return (
-		<Sidebar
-			collapsible="icon"
-			{...props}
-			variant="inset"
-		>
+		<Sidebar collapsible="icon" {...props} variant="inset">
 			<SidebarHeader>
 				<SidebarMenu>
 					<SidebarMenuItem className="p-0">
@@ -247,10 +250,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 							)}
 							size="lg"
 						>
-							<Link
-								href="/"
-								className="relative group h-fit transition-all"
-							>
+							<Link href="/" className="relative group h-fit transition-all">
 								<div className="flex items-center justify-center gap-2 min-w-8 min-h-8 aspect-square transition-all duration-500 rounded-lg bg-gradient-to-r from-blue-400 to-purple-400 dark:from-teal-400 dark:to-yellow-200 bg-[length:200%_100%] bg-[position:0_0] group-hover/home:bg-[position:100%_100%]">
 									<svg
 										xmlns="http://www.w3.org/2000/svg"
@@ -293,11 +293,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 											fill="currentColor"
 										></circle>
 										<path d="m13.4 13.4 2.7 2.7"></path>
-										<circle
-											cx="12"
-											cy="12"
-											r="2"
-										></circle>
+										<circle cx="12" cy="12" r="2"></circle>
 									</svg>
 								</div>
 								<span
