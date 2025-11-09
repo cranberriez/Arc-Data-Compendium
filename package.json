@@ -15,6 +15,7 @@
 		"import:workbenches": "tsx scripts/import-workbenches.ts",
 		"import:weapons": "tsx scripts/import-weapons.ts",
 		"import:mods": "tsx scripts/import-mods.ts",
+		"import:upgrades": "tsx scripts/import-upgrades.ts",
 		"devtb": "next dev --turbopack",
 		"build": "next build",
 		"start": "next start",

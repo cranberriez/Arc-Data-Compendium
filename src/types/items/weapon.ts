@@ -32,5 +32,25 @@ export type WeaponStatsCanonical = Record<string, WeaponStatEntry>;
 
 // Base stats stored on weapons.stats_base as simple raw JSON
 // Numeric stats are numbers; categorical stats are strings (e.g., firing_mode)
-export type WeaponBaseStats = Record<string, number | string>;
+export interface WeaponBaseStats {
+	// Core numeric combat stats
+	damage?: number;
+	fire_rate?: number;
+	range?: number;
+	stability?: number;
+	agility?: number;
+	stealth?: number;
+
+	// Common weapon numerics
+	magazine_size?: number;
+	reload_time?: number;
+	bullet_velocity?: number;
+	recoil_horizontal?: number;
+	recoil_vertical?: number;
+
+	// Categorical/base descriptors
+	firing_mode?: string;
+	arc_armor_penetration?: string;
+}
+
 export type WeaponModifierStats = WeaponStatsCanonical;

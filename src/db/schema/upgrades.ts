@@ -1,5 +1,14 @@
 import { relations } from "drizzle-orm";
-import { pgTable, integer, serial, text, foreignKey, unique, varchar, jsonb } from "drizzle-orm/pg-core";
+import {
+	pgTable,
+	integer,
+	serial,
+	text,
+	foreignKey,
+	unique,
+	varchar,
+	jsonb,
+} from "drizzle-orm/pg-core";
 import { weapons } from "./weapons";
 import { recipes } from "./recipes";
 
@@ -13,8 +22,8 @@ export const upgrade = pgTable(
 			.references(() => weapons.id),
 		level: integer("level").notNull(),
 		description: text("description"),
-		// Per-tier perks stored as canonical JSON (object keyed by normalized metric)
-		perks: jsonb("perks").notNull().default(JSON.stringify({})),
+		// Per-tier modifiers stored as canonical JSON (object keyed by normalized metric)
+		modifiers: jsonb("modifiers").notNull().default(JSON.stringify({})),
 		// Optional cost linkage via recipes table
 		recipeId: varchar("recipe_id", { length: 255 }).references(() => recipes.id),
 		sellPrice: integer("sell_price"),
