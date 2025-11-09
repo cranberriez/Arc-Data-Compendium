@@ -6,5 +6,5 @@
 export function getItemImagePath(itemId: string): string | null {
 	if (!itemId) return null;
 
-	return `/images/items/${itemId}.png`;
+	return `/images/items/${itemId}.webp`;
 }

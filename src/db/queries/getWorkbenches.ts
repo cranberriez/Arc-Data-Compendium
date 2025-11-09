@@ -30,7 +30,6 @@ export const getWorkbenches = async ({
 						recipe: {
 							with: {
 								io: true,
-								locks: true,
 							},
 						},
 					},

@@ -19,7 +19,7 @@ export const WorkshopItemChecklist = () => {
 					{loading
 						? Array.from({ length: 12 }).map((_, idx) => (
 								<ItemChecklistSkeleton key={idx} />
-						  ))
+							))
 						: Object.entries(summary)
 								.sort((a, b) => b[1].count - a[1].count)
 								.map(([itemId, itemSummary]) => {
@@ -37,10 +37,7 @@ export const WorkshopItemChecklist = () => {
 				</div>
 			</div>
 			<div className="w-full flex flex-col sm:flex-row sm:items-center sm:justify-center gap-2 p-2 rounded dark:text-amber-200 text-cyan-600">
-				<InfoIcon
-					size={16}
-					className="min-w-8"
-				/>
+				<InfoIcon size={16} className="min-w-8" />
 				<h3 className="text-sm lg:max-w-[260px]">
 					Pin Workbench levels in game for live item counters!
 				</h3>

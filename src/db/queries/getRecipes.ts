@@ -14,7 +14,6 @@ export const getRecipes = async ({ id }: { id?: string } = {}): Promise<Recipe[]
 			where: id ? eq(recipes.id, id) : undefined,
 			with: {
 				io: true,
-				locks: true,
 			},
 		});
 	} catch (error) {
@@ -34,7 +33,6 @@ export const getCraftingRecipes = async ({ id }: { id?: string } = {}): Promise<
 			where: id ? eq(recipes.id, id) : eq(recipes.type, "crafting"),
 			with: {
 				io: true,
-				locks: true,
 			},
 		});
 	} catch (error) {

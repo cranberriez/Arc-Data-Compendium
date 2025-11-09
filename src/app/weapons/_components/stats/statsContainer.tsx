@@ -50,7 +50,7 @@ function StatsBreakdown({ weapon }: { weapon: Weapon | null }) {
 	const weaponData = weapon.weapon;
 	if (!weaponData) return null;
 
-	const weaponStats = weaponData.weaponStats;
+	const weaponStats = weaponData.statsBase;
 	if (!weaponStats) return null;
 
 	return (
@@ -58,11 +58,7 @@ function StatsBreakdown({ weapon }: { weapon: Weapon | null }) {
 			<h2 className="text-2xl font-semibold">Stats Breakdown</h2>
 			<div className="flex flex-col gap-2 w-fit">
 				{Object.entries(weaponStats).map(([key, value]) => (
-					<StatItem
-						key={key}
-						label={key}
-						stat={value as number | null}
-					/>
+					<StatItem key={key} label={key} stat={value as number | null} />
 				))}
 			</div>
 		</div>

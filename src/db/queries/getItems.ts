@@ -10,11 +10,10 @@ export const getItems = async ({ id }: { id?: string } = {}): Promise<Item[]> =>
 			with: {
 				weapon: {
 					with: {
-						weaponStats: true,
-						upgrades: { with: { upgradeStats: true } },
+						upgrades: true,
 					},
 				},
-				recipe: { with: { io: true, locks: true } },
+				recipe: { with: { io: true } },
 				recycling: { with: { io: true } },
 				questEntries: {
 					with: {

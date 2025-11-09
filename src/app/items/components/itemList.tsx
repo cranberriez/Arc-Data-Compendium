@@ -94,11 +94,7 @@ export function ItemList({ initialItems }: ItemListProps) {
 								{capitalized || "Unknown"}
 							</div>
 						)}
-						<ItemCard
-							item={item}
-							variant="default"
-							size="md"
-						/>
+						<ItemCard item={item} variant="default" size="xl" />
 					</Fragment>
 				);
 			})}

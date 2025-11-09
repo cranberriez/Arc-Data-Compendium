@@ -74,12 +74,7 @@ export const IconVariant = React.memo(function IconVariant({
 			/>
 
 			{count !== undefined && (
-				<ItemBadges
-					item={item}
-					count={count}
-					size={size}
-					position="top-right"
-				/>
+				<ItemBadges item={item} count={count} size={size} position="top-right" />
 			)}
 		</div>
 	) : (
@@ -104,16 +99,15 @@ export const IconVariant = React.memo(function IconVariant({
 				}
 			}}
 		>
-			{count !== undefined && (
-				<span className="text-base text-right font-mono min-w-6 w-6">{count}</span>
-			)}
-
 			<ItemImage
 				item={item}
 				size={size === "sm" ? "sm" : size === "md" ? "md" : size === "lg" ? "lg" : "xl"}
 				showBorder={false}
 				containerClassName="p-0"
 			/>
+			{count !== undefined && (
+				<span className="text-base text-right font-mono min-w-6 w-6">{count}</span>
+			)}
 			<span className="text-base text-nowrap truncate">{item.name}</span>
 		</div>
 	);

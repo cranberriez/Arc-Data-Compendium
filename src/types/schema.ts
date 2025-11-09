@@ -9,9 +9,7 @@ import { InferSelectModel } from "drizzle-orm";
 import {
 	items,
 	weapons,
-	weaponStats,
 	upgrade,
-	upgradeStats,
 	Rarity,
 	ItemCategory,
 	AmmoType,
@@ -20,7 +18,7 @@ import {
 	ModifierType,
 	StatUsage,
 } from "@/db/schema";
-import { recipes, recipeItems, recipeLocks } from "@/db/schema/recipes";
+import { recipes, recipeItems } from "@/db/schema/recipes";
 import {
 	quests,
 	questLinks,
@@ -36,12 +34,9 @@ import { WeaponModSlot } from "./items/weapon";
 // Base schema-derived types
 export type ItemBase = InferSelectModel<typeof items>;
 export type WeaponBase = InferSelectModel<typeof weapons>;
-export type WeaponStatsBase = InferSelectModel<typeof weaponStats>;
 export type UpgradeBase = InferSelectModel<typeof upgrade>;
-export type UpgradeStatsBase = InferSelectModel<typeof upgradeStats>;
 export type RecipeBase = InferSelectModel<typeof recipes>;
 export type RecipeItemBase = InferSelectModel<typeof recipeItems>;
-export type RecipeLockBase = InferSelectModel<typeof recipeLocks>;
 
 // Quest schema-derived types
 export type QuestBase = InferSelectModel<typeof quests>;
@@ -58,7 +53,6 @@ export type WorkbenchRecipeBase = InferSelectModel<typeof workbenchRecipes>;
 // Recipe with inputs and outputs
 export type Recipe = RecipeBase & {
 	io: RecipeItemBase[];
-	locks: RecipeLockBase | null;
 };
 
 // Modified recipe for recycling recipes
@@ -75,17 +69,18 @@ export type ItemQuestEntry = QuestEntryItemBase & {
 // Item with related data
 export type Item = ItemBase & {
 	weapon?: WeaponBase & {
-		weaponStats?: WeaponStatsBase;
-		upgrades?: (UpgradeBase & { upgradeStats?: UpgradeStatsBase[] })[];
+		upgrades?: UpgradeBase[];
 	};
-	recycling: RecyclingRecipe | null;
+	recycling?: RecyclingRecipe | null;
 	recyclingSources?: Recipe[];
 	questEntries?: ItemQuestEntry[];
 	workbenchRequirements?: TierRequirementBase[];
 };
 
 // Weapon (item that is a weapon)
-export type Weapon = Item;
+export type Weapon = Item & {
+	weapon: WeaponBase;
+};
 
 export type QuestEntryItem = QuestEntryItemBase & {
 	item?: ItemBase;

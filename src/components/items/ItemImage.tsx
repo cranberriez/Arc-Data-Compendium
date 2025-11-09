@@ -10,7 +10,7 @@ import { getItemImagePath } from "@/utils/itemImage";
 import getItemIcon from "./getItemIcon";
 
 // This can be moved to environment variables if needed
-const USE_ACTUAL_IMAGES = false;
+const USE_ACTUAL_IMAGES = true;
 
 export interface ItemImageProps {
 	/** The item to display */
@@ -44,10 +44,17 @@ export const ItemImage = React.memo(function ItemImage({
 
 	// Size mapping for the component
 	const sizeClasses = {
-		sm: "w-6 h-6",
-		md: "w-8 h-8",
-		lg: "w-12 h-12",
-		xl: "w-16 h-16",
+		sm: "w-10 h-10",
+		md: "w-12 h-12",
+		lg: "w-16 h-16",
+		xl: "w-20 h-20",
+	};
+
+	const imageSizes = {
+		sm: "48px",
+		md: "64px",
+		lg: "96px",
+		xl: "128px",
 	};
 
 	// Border color based on item rarity
@@ -82,7 +89,7 @@ export const ItemImage = React.memo(function ItemImage({
 		const imagePath = getItemImagePath(item.id);
 		if (USE_ACTUAL_IMAGES && imagePath && !imageError) {
 			return (
-				<div className="relative w-full h-full">
+				<div className={cn("relative", sizeClasses[size])}>
 					{isLoading && (
 						<div className="absolute inset-0 flex items-center justify-center bg-muted/20 animate-pulse">
 							<span className="sr-only">Loading image...</span>
@@ -96,19 +103,9 @@ export const ItemImage = React.memo(function ItemImage({
 							"object-contain transition-opacity",
 							isLoading ? "opacity-0" : "opacity-100"
 						)}
-						sizes={
-							size === "xl"
-								? "128px"
-								: size === "lg"
-								? "96px"
-								: size === "md"
-								? "64px"
-								: "48px"
-						}
-						unoptimized={process.env.NODE_ENV !== "production"}
 						onLoad={handleImageLoad}
 						onError={handleImageError}
-						priority={size === "lg" || size === "xl"}
+						sizes={imageSizes[size]}
 					/>
 				</div>
 			);
