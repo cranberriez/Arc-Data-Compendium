@@ -35,7 +35,7 @@ export const DefaultVariant = React.memo(function DefaultVariant({
 				"flex flex-row items-center gap-2 rounded-lg w-full",
 				"bg-transparent border-zinc-700 cursor-pointer",
 				"hover:bg-zinc-100 dark:hover:bg-zinc-800",
-				"max-w-full sm:max-w-[300px] md:max-w-[400px] relative",
+				"max-w-full sm:max-w-[400px] md:max-w-[500px] relative",
 				size === "sm" && "h-12 gap-1 p-0.5 pr-2",
 				size === "md" && "h-16 gap-2 p-0.5 pr-2",
 				size === "lg" && "h-20 gap-3 p-1 pr-3",
@@ -80,12 +80,7 @@ export const DefaultVariant = React.memo(function DefaultVariant({
 			/>
 
 			{count !== undefined && (
-				<ItemBadges
-					item={item}
-					count={count}
-					size={size}
-					position="top-left"
-				/>
+				<ItemBadges item={item} count={count} size={size} position="top-left" />
 			)}
 		</Card>
 	);
