@@ -51,3 +51,6 @@ migrations
 
 # private stuff
 _private/
+
+# data
+/scripts/data/*
