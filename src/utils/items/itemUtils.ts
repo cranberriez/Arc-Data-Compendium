@@ -9,9 +9,15 @@ import {
 	Package,
 	Shield,
 	Sword,
-	Trophy,
+	Gem,
 	Wrench,
 	Zap,
+	Leaf,
+	KeyRound,
+	Settings,
+	Box,
+	Cuboid,
+	Hexagon,
 } from "lucide-react";
 
 import { Rarity } from "@/types";
@@ -60,7 +66,7 @@ export const getTypeIcon = (category: string): LucideIconType => {
 		case "gear":
 			return Shield;
 		case "trinket":
-			return Trophy;
+			return Gem;
 		case "consumable":
 			return Heart;
 		case "recyclable":
@@ -73,6 +79,20 @@ export const getTypeIcon = (category: string): LucideIconType => {
 			return MapPin;
 		case "refined_material":
 			return Anvil;
+		case "basic_material":
+			return Box;
+		case "advanced_material":
+			return Cuboid;
+		case "augment":
+			return Hexagon;
+		case "key":
+			return KeyRound;
+		case "nature":
+			return Leaf;
+		case "modification":
+			return Settings;
+		case "shield":
+			return Shield;
 		default:
 			return Info;
 	}
