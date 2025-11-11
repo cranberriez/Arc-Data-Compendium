@@ -2,7 +2,7 @@
 
 import React from "react";
 import { useState, useEffect, useMemo } from "react";
-import { useItems } from "@/contexts/itemContext";
+import { useItemFilters } from "@/hooks/useUI";
 import { getTypeIcon, getRarityColor, formatName, searchFunc } from "@/utils/items/itemUtils";
 import { Item } from "@/types";
 import { Badge } from "@/components/ui/badge";
@@ -16,7 +16,7 @@ import {
 	CommandSeparator,
 } from "@/components/ui/command";
 import { ItemCategory } from "@/types";
-import { useDialog } from "@/contexts/dialogContext";
+import { useDialog } from "@/hooks/useUI";
 import { usePathname, useRouter } from "next/navigation";
 import getItemIcon from "@/components/items/getItemIcon";
 
@@ -31,7 +31,7 @@ export function SearchDialog({
 	allItems: Item[];
 	showCategories?: boolean;
 }) {
-	const { setSearchQuery, setCategory } = useItems();
+	const { setSearchQuery, setCategories } = useItemFilters();
 	// Local search state that doesn't affect global filtering until selection
 	const [localSearch, setLocalSearch] = useState("");
 	// Local category state that doesn't affect global filtering until selection
@@ -110,7 +110,7 @@ export function SearchDialog({
 
 		// Apply both search term and category filter
 		setSearchQuery(localSearch);
-		setCategory([category]);
+		setCategories([category]);
 		onOpenChange(false);
 	};
 
@@ -124,11 +124,7 @@ export function SearchDialog({
 	};
 
 	return (
-		<CommandDialog
-			open={open}
-			onOpenChange={onOpenChange}
-			className="top-[3rem] translate-y-0"
-		>
+		<CommandDialog open={open} onOpenChange={onOpenChange} className="top-[3rem] translate-y-0">
 			<CommandInput
 				placeholder="Search for items..."
 				value={localSearch}
@@ -158,10 +154,7 @@ export function SearchDialog({
 								<span>{formatName(category)}</span>
 
 								{/* Count badge */}
-								<Badge
-									variant="secondary"
-									className="ml-auto"
-								>
+								<Badge variant="secondary" className="ml-auto">
 									{categoryCounts[category]}
 								</Badge>
 							</div>

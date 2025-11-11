@@ -1,4 +1,4 @@
-import { useItems } from "@/contexts/itemContext";
+import { useItems } from "@/hooks/useData";
 import { useIsPageName } from "@/hooks/use-pagename";
 import { cn } from "@/lib/utils";
 
@@ -9,17 +9,17 @@ export default function ToolbarItemCount({
 	initialCount: number;
 	className?: string;
 }) {
-	const { filteredItems } = useItems();
+	const { items } = useItems();
 	const onItemsPage = useIsPageName("items");
-	const areItemsFiltered = filteredItems.length !== initialCount;
+	const areItemsFiltered = items.length !== initialCount;
 
 	return onItemsPage && areItemsFiltered ? (
 		<>
 			<p className={cn("text-sm text-muted-foreground hidden sm:inline", className)}>
-				Viewing {filteredItems.length} of {initialCount} items
+				Viewing {items.length} of {initialCount} items
 			</p>
 			<p className={cn("text-sm text-muted-foreground inline sm:hidden", className)}>
-				{filteredItems.length} of {initialCount}
+				{items.length} of {initialCount}
 			</p>
 		</>
 	) : (

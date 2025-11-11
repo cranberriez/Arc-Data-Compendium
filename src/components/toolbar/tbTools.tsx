@@ -2,7 +2,8 @@
 
 import { Button } from "@/components/ui/button";
 import { SearchIcon, SlidersHorizontal, RefreshCwIcon } from "lucide-react";
-import { useItems } from "@/contexts/itemContext";
+import { useItems } from "@/hooks/useData";
+import { useItemFilters } from "@/hooks/useUI";
 import { useIsPageName } from "@/hooks/use-pagename";
 import { Popover, PopoverTrigger, PopoverContent } from "@/components/ui/popover";
 import FilterSort from "./tbFilterSort";
@@ -15,20 +16,19 @@ export default function Tools({
 	setSearchOpen: (open: boolean) => void;
 	className?: string;
 }) {
-	const { resetFilters, filterState, sortState, isLoading } = useItems();
+	const { items, isLoading } = useItems();
+	const { resetFilters, filters } = useItemFilters();
 
 	const onItemsPage = useIsPageName("items");
 
 	// Check if any filters are currently active
 	const hasActiveFilters =
-		filterState.searchQuery !== "" ||
-		filterState.rarities.length > 0 ||
-		filterState.categories.length > 0 ||
-		filterState.showRecyclable ||
-		filterState.showCraftable ||
-		filterState.showHasStats ||
-		sortState.sortField !== "none" ||
-		sortState.sortOrder !== "none";
+		filters.searchQuery !== "" ||
+		filters.rarities.length > 0 ||
+		filters.categories.length > 0 ||
+		filters.showRecyclable ||
+		filters.showCraftable ||
+		filters.showHasStats;
 
 	return (
 		<div className={cn("flex items-center gap-1", className)}>
