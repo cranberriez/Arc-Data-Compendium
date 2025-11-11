@@ -110,12 +110,8 @@ export const formatCamelName = (type: string) => {
 };
 
 export const formatValue = (value: number) => {
-	return value.toLocaleString("en-US", {
-		style: "currency",
-		currency: "USD",
-		minimumFractionDigits: 0,
-		maximumFractionDigits: 0,
-	});
+	// comma seperated number
+	return value.toLocaleString();
 };
 
 export const searchFunc = (item: Item, query: string) => {

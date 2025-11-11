@@ -3,11 +3,11 @@
 import { Button } from "@/components/ui/button";
 import { SearchIcon, SlidersHorizontal, RefreshCwIcon } from "lucide-react";
 import { useItems } from "@/hooks/useData";
-import { useItemFilters } from "@/hooks/useUI";
 import { useIsPageName } from "@/hooks/use-pagename";
 import { Popover, PopoverTrigger, PopoverContent } from "@/components/ui/popover";
 import FilterSort from "./tbFilterSort";
 import { cn } from "@/lib/utils";
+import { useItemFilters, useItemSort } from "@/hooks/useUI";
 
 export default function Tools({
 	setSearchOpen,
@@ -16,8 +16,9 @@ export default function Tools({
 	setSearchOpen: (open: boolean) => void;
 	className?: string;
 }) {
-	const { items, isLoading } = useItems();
+	const { isLoading } = useItems();
 	const { resetFilters, filters } = useItemFilters();
+	const { sort, setSortField } = useItemSort();
 
 	const onItemsPage = useIsPageName("items");
 
@@ -28,7 +29,9 @@ export default function Tools({
 		filters.categories.length > 0 ||
 		filters.showRecyclable ||
 		filters.showCraftable ||
-		filters.showHasStats;
+		filters.showHasStats ||
+		sort.sortField !== "none" ||
+		sort.sortOrder !== "none";
 
 	return (
 		<div className={cn("flex items-center gap-1", className)}>
@@ -51,6 +54,7 @@ export default function Tools({
 							size="sm"
 							aria-label="Sort & Filter Options"
 							className="cursor-pointer"
+							onClick={() => setSortField("none", "none")}
 						>
 							<SlidersHorizontal />
 							<p className="hidden sm:inline">Options</p>
