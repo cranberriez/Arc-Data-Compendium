@@ -6,6 +6,8 @@ import { cn } from "@/lib/utils";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { ItemTag } from "./itemTags";
 import { getItemTags } from "@/utils/items";
+import { BadgeCent } from "lucide-react";
+import { formatValue } from "@/utils/items/itemUtils";
 
 export interface ItemDetailsProps {
 	/** The item to display */
@@ -14,8 +16,6 @@ export interface ItemDetailsProps {
 	size?: "sm" | "md" | "lg" | "xl";
 	/** Additional class names */
 	className?: string;
-	/** Whether to show the weight */
-	showWeight?: boolean;
 	/** Whether to show the value */
 	showValue?: boolean;
 	/** Whether to show craftable indicator */
@@ -29,7 +29,7 @@ export const ItemDetails = React.memo(function ItemDetails({
 	item,
 	size = "md",
 	className,
-	showWeight = true,
+
 	showValue = true,
 	showCraftable = true,
 }: ItemDetailsProps) {
@@ -71,27 +71,12 @@ export const ItemDetails = React.memo(function ItemDetails({
 
 	return (
 		<div className={cn("flex flex-row items-center gap-3", "text-muted-foreground", className)}>
-			{/* {showWeight && (
-				<div className={cn("flex items-center gap-1", textSizeClass)}>
-					<Weight
-						size={iconSize}
-						strokeWidth={3}
-						aria-hidden="true"
-					/>
-					<span className="font-mono tabular-nums">{item.weight}kg</span>
-				</div>
-			)}
-
 			{showValue && (
 				<div className={cn("flex items-center gap-1", textSizeClass)}>
-					<BadgeCent
-						size={iconSize}
-						strokeWidth={3}
-						aria-hidden="true"
-					/>
-					<span className="font-mono tabular-nums">{item.value}</span>
+					<BadgeCent size={iconSize} strokeWidth={3} aria-hidden="true" />
+					<span className="font-mono tabular-nums">{formatValue(item.value)}</span>
 				</div>
-			)} */}
+			)}
 
 			{tags && (
 				<TooltipProvider>
