@@ -8,6 +8,8 @@ import {
 	fetchWorkbenches,
 } from "@/services/dataService.server";
 
+import { ItemDialog } from "./dialog/itemDialog";
+
 interface AppProvidersProps {
 	children: React.ReactNode;
 }
@@ -32,6 +34,7 @@ export async function AppProvidersZustand({ children }: AppProvidersProps) {
 						workbenches: initialWorkbenches,
 					}}
 				>
+					<ItemDialog />
 					{children}
 				</StoreProvider>
 			</SidebarProvider>

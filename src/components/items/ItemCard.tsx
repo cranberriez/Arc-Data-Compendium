@@ -3,8 +3,7 @@
 import * as React from "react";
 import { useCallback } from "react";
 import { Item } from "@/types";
-import { useDialog } from "@/contexts/dialogContext";
-import { useItems } from "@/contexts/itemContext";
+import { useDialog } from "@/hooks/useUI";
 import { IconVariant, CompactVariant, DetailedVariant, DefaultVariant } from "./variants";
 
 export interface ItemCardProps {
@@ -48,7 +47,6 @@ export const ItemCard = React.memo(
 		showBorder = true,
 	}: ItemCardProps) {
 		const { openDialog } = useDialog();
-		const { getItemById } = useItems();
 
 		// Track render performance if callback provided
 		React.useEffect(() => {
@@ -62,9 +60,9 @@ export const ItemCard = React.memo(
 			if (onClick) {
 				onClick();
 			} else {
-				openDialog("item", getItemById(item.id));
+				openDialog("item", item);
 			}
-		}, [item, onClick, openDialog, getItemById]);
+		}, [item, onClick, openDialog]);
 
 		// Early return if no item
 		if (!item) return null;
