@@ -61,6 +61,9 @@ export const DefaultVariant = React.memo(function DefaultVariant({
 					size === "lg" && "rounded-md",
 					size === "xl" && "rounded-lg"
 				)}
+				style={{
+					background: `radial-gradient(circle at right top, transparent 75%, var(--color-${item.rarity.toLowerCase()})) 100%`,
+				}}
 			>
 				<ItemImage
 					item={item}

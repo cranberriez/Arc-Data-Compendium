@@ -63,12 +63,6 @@ export const ItemImage = React.memo(function ItemImage({
 		[item, showBorder]
 	);
 
-	// Background color based on item rarity (lighter version)
-	const bgClass = useMemo(
-		() => (item ? `${getRarityColor(item.rarity, "bg")}/90` : undefined),
-		[item]
-	);
-
 	// Handle image load completion
 	const handleImageLoad = React.useCallback(() => {
 		setIsLoading(false);
@@ -89,9 +83,9 @@ export const ItemImage = React.memo(function ItemImage({
 		const imagePath = getItemImagePath(item.id);
 		if (USE_ACTUAL_IMAGES && imagePath && !imageError) {
 			return (
-				<div className={cn("relative", sizeClasses[size])}>
+				<div className={cn("relative bg-muted/25", sizeClasses[size])}>
 					{isLoading && (
-						<div className="absolute inset-0 flex items-center justify-center bg-muted/20 animate-pulse">
+						<div className="absolute inset-0 flex items-center justify-center animate-pulse">
 							<span className="sr-only">Loading image...</span>
 						</div>
 					)}
@@ -126,7 +120,6 @@ export const ItemImage = React.memo(function ItemImage({
 				"flex items-center justify-center aspect-square relative",
 				showBorder && "border-2 rounded-sm p-[2px]",
 				borderClass,
-				bgClass,
 				containerClassName
 			)}
 			aria-label={`Image of ${item.name}`}
