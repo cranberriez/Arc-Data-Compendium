@@ -35,6 +35,7 @@ export interface DataStore {
 export interface UserStore {
 	// Workbench levels
 	workbenchLevels: Record<string, number>;
+	hasHydrated: boolean;
 
 	// Quest progress
 	activeQuests: string[];
@@ -52,6 +53,7 @@ export interface UserStore {
 	setWorkbenchLevel: (id: string, level: number) => void;
 	getWorkbenchLevel: (id: string) => number | null;
 	resetWorkbenches: () => void;
+	setHasHydrated: () => void;
 
 	addActiveQuest: (questId: string) => void;
 	removeActiveQuest: (questId: string) => void;

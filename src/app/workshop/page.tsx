@@ -1,5 +1,3 @@
-import { fetchWorkbenches } from "@/services/dataService.server";
-import { WorkshopItemChecklist } from "@/components/checklist/wbItemChecklist";
 import { WorkbenchList } from "../../components/workbench/workbenchList";
 import ResetUserData from "../../components/workbench/resetUserData";
 import { Metadata } from "next";
@@ -11,14 +9,12 @@ export const metadata: Metadata = {
 };
 
 export default async function WorkshopOverview() {
-	const workbenches = await fetchWorkbenches();
-
 	return (
 		<main className="mx-auto max-w-[1600px]">
 			<h1 className="text-2xl font-bold text-center mb-6">Workshop Overview</h1>
 			<div className="flex flex-col-reverse xl:grid xl:grid-cols-[1fr_auto] gap-6 items-stretch">
-				<WorkbenchList workbenches={workbenches} />
-				<WorkshopItemChecklist />
+				<WorkbenchList />
+				{/* <WorkshopItemChecklist /> */}
 			</div>
 			<div className="flex my-8">
 				<ResetUserData />

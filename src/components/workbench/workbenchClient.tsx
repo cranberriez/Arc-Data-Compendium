@@ -5,24 +5,36 @@ import { Card } from "@/components/ui/card";
 
 import { Workbench } from "@/types";
 import getItemIcon from "@/components/items/getItemIcon";
-import { useWorkshop } from "@/contexts/workshopContext";
 import WorkbenchTiers from "./workbenchTiers";
 import { WorkbenchUpgradeReqs } from "./workbenchUpgrade";
 import { Button } from "@/components/ui/button";
 import { Image, MoveLeft, MoveRight } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useWorkbenchLevels } from "@/hooks/useUser";
 
 interface WorkbenchClientProps {
 	workbench: Workbench;
 }
 
 export function WorkbenchClient({ workbench }: WorkbenchClientProps) {
-	const { getLevel, upgradeWorkbench, downgradeWorkbench } = useWorkshop();
+	if (!workbench) return null;
+
+	const { getWorkbenchLevel, setWorkbenchLevel, hasHydrated } = useWorkbenchLevels();
+	const storedLevel = hasHydrated ? getWorkbenchLevel(workbench.id) : null;
 
 	// Calculate derived values
-	const curWbTier = getLevel(workbench.id);
+	const curWbTier = storedLevel ?? workbench.baseTier;
+
 	const isMaxed = curWbTier === workbench.tiers.length;
 	const icon = getItemIcon(workbench.icon);
+
+	const upgradeWorkbench = () => {
+		setWorkbenchLevel(workbench.id, curWbTier + 1);
+	};
+
+	const downgradeWorkbench = () => {
+		setWorkbenchLevel(workbench.id, curWbTier - 1);
+	};
 
 	return (
 		<div className="space-y-6">
@@ -51,7 +63,7 @@ export function WorkbenchClient({ workbench }: WorkbenchClientProps) {
 							variant="outline"
 							disabled={curWbTier === 0}
 							aria-label="Downgrade"
-							onClick={() => downgradeWorkbench(workbench.id)}
+							onClick={() => downgradeWorkbench()}
 							className={cn("cursor-pointer")}
 						>
 							<MoveLeft className="size-6" />
@@ -63,7 +75,7 @@ export function WorkbenchClient({ workbench }: WorkbenchClientProps) {
 							variant="outline"
 							disabled={isMaxed}
 							aria-label="Upgrade"
-							onClick={() => upgradeWorkbench(workbench.id)}
+							onClick={() => upgradeWorkbench()}
 							className="cursor-pointer"
 						>
 							<MoveRight className="size-6" />

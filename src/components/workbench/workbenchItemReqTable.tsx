@@ -11,8 +11,8 @@ import {
 } from "@/components/ui/table";
 import { getRarityColor, formatName } from "@/utils/items/itemUtils";
 import { WorkbenchRequirement } from "@/utils/workbenchUtils";
-import { useDialog } from "@/contexts/dialogContext";
-import { useItems } from "@/contexts/itemContext";
+import { useDialog } from "@/hooks/useUI";
+import { useItems } from "@/hooks/useData";
 import { Skeleton } from "@/components/ui/skeleton";
 
 export function WorkbenchItemReqTable({

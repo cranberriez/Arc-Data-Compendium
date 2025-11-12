@@ -1,19 +1,9 @@
 import { Recipe, RecipeItemBase } from "@/types";
-import { useDialog } from "@/contexts/dialogContext";
-import { useItems } from "@/contexts/itemContext";
 import { cn } from "@/lib/utils";
 import getItemIcon from "@/components/items/getItemIcon";
-import { formatName, getRarityColor } from "@/utils/items/itemUtils";
-import {
-	BookMarked,
-	Box,
-	CircleHelp,
-	Crown,
-	Hexagon,
-	Lock,
-	TicketCheck,
-	Timer,
-} from "lucide-react";
+import { getRarityColor } from "@/utils/items/itemUtils";
+import { useDialog } from "@/hooks/useUI";
+import { useItems } from "@/hooks/useData";
 
 export function RecipeItem({ recipe, className }: { recipe: Recipe; className?: string }) {
 	const { getItemById } = useItems();

@@ -44,17 +44,17 @@ export const ItemImage = React.memo(function ItemImage({
 
 	// Size mapping for the component
 	const sizeClasses = {
-		sm: "w-10 h-10",
-		md: "w-12 h-12",
-		lg: "w-16 h-16",
-		xl: "w-20 h-20",
+		sm: "w-9 h-9",
+		md: "w-11 h-11",
+		lg: "w-15 h-15",
+		xl: "w-19 h-19",
 	};
 
 	const imageSizes = {
-		sm: "48px",
-		md: "64px",
-		lg: "96px",
-		xl: "128px",
+		sm: "36px",
+		md: "44px",
+		lg: "60px",
+		xl: "92px",
 	};
 
 	// Border color based on item rarity
@@ -83,7 +83,7 @@ export const ItemImage = React.memo(function ItemImage({
 		const imagePath = getItemImagePath(item.id);
 		if (USE_ACTUAL_IMAGES && imagePath && !imageError) {
 			return (
-				<div className={cn("relative bg-muted/25", sizeClasses[size])}>
+				<div className={cn("relative", sizeClasses[size])}>
 					{isLoading && (
 						<div className="absolute inset-0 flex items-center justify-center animate-pulse">
 							<span className="sr-only">Loading image...</span>

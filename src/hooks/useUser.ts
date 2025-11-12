@@ -7,12 +7,14 @@ export const useWorkbenchLevels = () => {
 	const setWorkbenchLevel = useUserStore((state: UserStore) => state.setWorkbenchLevel);
 	const getWorkbenchLevel = useUserStore((state: UserStore) => state.getWorkbenchLevel);
 	const resetWorkbenches = useUserStore((state: UserStore) => state.resetWorkbenches);
+	const hasHydrated = useUserStore((state: UserStore) => state.hasHydrated);
 
 	return {
 		workbenchLevels,
 		setWorkbenchLevel,
 		getWorkbenchLevel,
 		resetWorkbenches,
+		hasHydrated,
 	};
 };
 

@@ -2,10 +2,10 @@ import { Check, PlusIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { MoveLeft, MoveRight, Trash } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { Item, Tier, Workbench } from "@/types";
+import { Tier, Workbench } from "@/types";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ItemCard } from "@/components/items/ItemCard";
-import { useItems } from "@/contexts/itemContext";
+import { useItems } from "@/hooks/useData";
 
 export const WorkbenchUpgrades = ({
 	curWbTier,
@@ -32,12 +32,7 @@ export const WorkbenchUpgrades = ({
 				upgradeWorkbench={upgradeWorkbench}
 				downgradeWorkbench={downgradeWorkbench}
 			/>
-			{!isMaxed && (
-				<WorkbenchUpgradeReqs
-					tiers={workbench.tiers}
-					curWbTier={curWbTier}
-				/>
-			)}
+			{!isMaxed && <WorkbenchUpgradeReqs tiers={workbench.tiers} curWbTier={curWbTier} />}
 		</div>
 	);
 };
@@ -70,17 +65,11 @@ export const WorkbenchTier = ({
 					)}
 				>
 					<p className="text-blue-400 dark:text-blue-400/60 group-hover:hidden flex items-center gap-1">
-						<PlusIcon
-							size={16}
-							className="mt-1"
-						/>
+						<PlusIcon size={16} className="mt-1" />
 						<span>Not Built</span>
 					</p>
 					<p className="hidden group-hover:flex text-primary/80 dark:text-primary/80 items-center gap-1">
-						<PlusIcon
-							size={16}
-							className="mt-1"
-						/>
+						<PlusIcon size={16} className="mt-1" />
 						<span>Click to build</span>
 					</p>
 				</div>
@@ -95,13 +84,10 @@ export const WorkbenchTier = ({
 							className="cursor-pointer"
 							disabled={currentTier === baseTier}
 						>
-							{currentTier === baseTier ? <Trash /> : <MoveLeft />}
+							{currentTier === baseTier ? <></> : <MoveLeft />}
 						</Button>
 						<p className="dark:text-green-500 text-green-700 p-2 mb-1">Max Level</p>
-						<Button
-							variant="ghost"
-							disabled
-						>
+						<Button variant="ghost" disabled>
 							<Check />
 						</Button>
 					</div>
@@ -145,11 +131,7 @@ export const WorkbenchUpgradeReqs = ({
 	return (
 		<div className="flex flex-col gap-1 min-h-[128px]">
 			{tiers[curWbTier].requirements.map((req) => (
-				<div
-					key={req.itemId}
-					className="flex items-center gap-2 w-full"
-				>
-					<span className="text-sm w-4 text-right">{req.count}</span>
+				<div key={req.itemId} className="flex items-center gap-2 w-full">
 					{itemsLoading ? (
 						<>
 							<Skeleton className="min-w-10 h-10" />
@@ -161,8 +143,8 @@ export const WorkbenchUpgradeReqs = ({
 							variant="icon"
 							orientation="horizontal"
 							size="sm"
-							showBorder={false}
 							className="w-full"
+							count={req.count}
 						/>
 					)}
 				</div>

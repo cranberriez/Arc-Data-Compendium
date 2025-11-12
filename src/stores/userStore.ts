@@ -50,6 +50,7 @@ export const useUserStore = create<UserStore>()(
 		(set, get) => ({
 			// Initial state
 			workbenchLevels: {},
+			hasHydrated: false,
 			activeQuests: [],
 			completedQuests: [],
 			itemCounts: {},
@@ -71,6 +72,10 @@ export const useUserStore = create<UserStore>()(
 
 			resetWorkbenches: () => {
 				set({ workbenchLevels: {} });
+			},
+
+			setHasHydrated: () => {
+				set({ hasHydrated: true });
 			},
 
 			// Quest actions
@@ -200,6 +205,9 @@ export const useUserStore = create<UserStore>()(
 						document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
 					}
 				},
+			},
+			onRehydrateStorage: () => (state) => {
+				state?.setHasHydrated?.();
 			},
 		}
 	)
