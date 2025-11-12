@@ -28,7 +28,9 @@ export interface DataStore {
 	getWorkbenchById: (id: string) => Workbench | undefined;
 	getRecyclingSourcesById: (id: string) => Recipe[];
 	getCraftingRecipes: () => Recipe[];
+	getCraftingRecipesById: (id: string) => Recipe[];
 	getRecyclingRecipes: () => Recipe[];
+	getRecyclingRecipesById: (id: string) => Recipe[];
 }
 
 // User data store - persistent user preferences and progress

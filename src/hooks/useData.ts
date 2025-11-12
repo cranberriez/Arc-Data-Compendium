@@ -19,7 +19,11 @@ export const useRecipes = () => {
 	const recipes = useDataStore((state: DataStore) => state.recipes);
 	const getRecipeById = useDataStore((state: DataStore) => state.getRecipeById);
 	const getCraftingRecipes = useDataStore((state: DataStore) => state.getCraftingRecipes);
+	const getCraftingRecipesById = useDataStore((state: DataStore) => state.getCraftingRecipesById);
 	const getRecyclingRecipes = useDataStore((state: DataStore) => state.getRecyclingRecipes);
+	const getRecyclingRecipesById = useDataStore(
+		(state: DataStore) => state.getRecyclingRecipesById
+	);
 	const getRecyclingSourcesById = useDataStore(
 		(state: DataStore) => state.getRecyclingSourcesById
 	);
@@ -30,7 +34,9 @@ export const useRecipes = () => {
 		recipes,
 		getRecipeById,
 		getCraftingRecipes,
+		getCraftingRecipesById,
 		getRecyclingRecipes,
+		getRecyclingRecipesById,
 		getRecyclingSourcesById,
 		isLoading,
 		error,

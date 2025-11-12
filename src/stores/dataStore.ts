@@ -53,8 +53,18 @@ export const useDataStore = create<DataStore>((set, get) => ({
 		return recipes.filter((recipe) => recipe.type === "crafting");
 	},
 
+	getCraftingRecipesById: (id) => {
+		const { recipes } = get();
+		return recipes.filter((recipe) => recipe.id === id);
+	},
+
 	getRecyclingRecipes: () => {
 		const { recipes } = get();
 		return recipes.filter((recipe) => recipe.type === "recycling");
+	},
+
+	getRecyclingRecipesById: (id) => {
+		const { recipes } = get();
+		return recipes.filter((recipe) => recipe.id === id);
 	},
 }));
