@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect } from "react";
-import { useDataStore } from "./dataStore";
+import { useMemo } from "react";
+import { createDataStore, DataStoreProvider } from "./dataStore";
 import { Item, Recipe, Quest, Workbench } from "@/types";
 
 interface StoreProviderProps {
@@ -15,15 +15,17 @@ interface StoreProviderProps {
 }
 
 export function StoreProvider({ children, initialData }: StoreProviderProps) {
-	const { setItems, setRecipes, setQuests, setWorkbenches } = useDataStore();
+	const store = useMemo(
+		() =>
+			createDataStore({
+				items: initialData.items,
+				recipes: initialData.recipes,
+				quests: initialData.quests,
+				workbenches: initialData.workbenches,
+			}),
+		// Memoize per set of initialData references (from server component)
+		[initialData]
+	);
 
-	// Initialize stores with server-side data
-	useEffect(() => {
-		setItems(initialData.items);
-		setRecipes(initialData.recipes);
-		setQuests(initialData.quests);
-		setWorkbenches(initialData.workbenches);
-	}, [initialData, setItems, setRecipes, setQuests, setWorkbenches]);
-
-	return <>{children}</>;
+	return <DataStoreProvider store={store}>{children}</DataStoreProvider>;
 }

@@ -20,6 +20,12 @@ export interface DataStore {
 	setWorkbenches: (workbenches: Workbench[]) => void;
 	setLoading: (loading: boolean) => void;
 	setError: (error: string | null) => void;
+	setAll: (args: {
+		items: Item[];
+		recipes: Recipe[];
+		quests: Quest[];
+		workbenches: Workbench[];
+	}) => void;
 
 	// Selectors
 	getItemById: (id: string) => Item | undefined;

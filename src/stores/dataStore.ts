@@ -1,72 +1,95 @@
-import { create } from "zustand";
 import { DataStore } from "./types";
+import { createStore, type StoreApi } from "zustand/vanilla";
+import React, { createContext, useContext } from "react";
+import { useStore } from "zustand";
 
-export const useDataStore = create<DataStore>((set, get) => ({
-	// Initial state
-	items: [],
-	recipes: [],
-	quests: [],
-	workbenches: [],
-	isLoading: false,
-	error: null,
+export type DataStoreApi = StoreApi<DataStore>;
 
-	// Actions
-	setItems: (items) => set({ items }),
-	setRecipes: (recipes) => set({ recipes }),
-	setQuests: (quests) => set({ quests }),
-	setWorkbenches: (workbenches) => set({ workbenches }),
-	setLoading: (isLoading) => set({ isLoading }),
-	setError: (error) => set({ error }),
+export const createDataStore = (initial?: Partial<DataStore>): DataStoreApi =>
+	createStore<DataStore>((set, get) => ({
+		// Initial state
+		items: initial?.items ?? [],
+		recipes: initial?.recipes ?? [],
+		quests: initial?.quests ?? [],
+		workbenches: initial?.workbenches ?? [],
+		isLoading: initial?.isLoading ?? false,
+		error: initial?.error ?? null,
 
-	// Selectors
-	getItemById: (id) => {
-		const { items } = get();
-		return items.find((item) => item.id === id);
-	},
+		// Actions
+		setItems: (items) => set({ items }),
+		setRecipes: (recipes) => set({ recipes }),
+		setQuests: (quests) => set({ quests }),
+		setWorkbenches: (workbenches) => set({ workbenches }),
+		setLoading: (isLoading) => set({ isLoading }),
+		setError: (error) => set({ error }),
 
-	getRecipeById: (id) => {
-		const { recipes } = get();
-		return recipes.find((recipe) => recipe.id === id);
-	},
+		// Batched action to reduce notifications on initial hydration
+		setAll: ({ items, recipes, quests, workbenches }) =>
+			set({ items, recipes, quests, workbenches }),
 
-	getQuestById: (id) => {
-		const { quests } = get();
-		return quests.find((quest) => quest.id === id);
-	},
+		// Selectors
+		getItemById: (id) => {
+			const { items } = get();
+			return items.find((item) => item.id === id);
+		},
 
-	getWorkbenchById: (id) => {
-		const { workbenches } = get();
-		return workbenches.find((workbench) => workbench.id === id);
-	},
+		getRecipeById: (id) => {
+			const { recipes } = get();
+			return recipes.find((recipe) => recipe.id === id);
+		},
 
-	getRecyclingSourcesById: (id) => {
-		const { recipes } = get();
-		const filteredRecipes = recipes.filter(
-			(recipe) =>
-				recipe.type === "recycling" &&
-				recipe.io?.some((io) => io.role === "output" && io.itemId === id)
-		);
+		getQuestById: (id) => {
+			const { quests } = get();
+			return quests.find((quest) => quest.id === id);
+		},
 
-		return filteredRecipes;
-	},
+		getWorkbenchById: (id) => {
+			const { workbenches } = get();
+			return workbenches.find((workbench) => workbench.id === id);
+		},
 
-	getCraftingRecipes: () => {
-		const { recipes } = get();
-		return recipes.filter((recipe) => recipe.type === "crafting");
-	},
+		getRecyclingSourcesById: (id) => {
+			const { recipes } = get();
+			const filteredRecipes = recipes.filter(
+				(recipe) =>
+					recipe.type === "recycling" &&
+					recipe.io?.some((io) => io.role === "output" && io.itemId === id)
+			);
 
-	getCraftingRecipesById: (id) => {
-		const { recipes } = get();
-		return recipes.filter((recipe) => recipe.id === id);
-	},
+			return filteredRecipes;
+		},
 
-	getRecyclingRecipes: () => {
-		const { recipes } = get();
-		return recipes.filter((recipe) => recipe.type === "recycling");
-	},
+		getCraftingRecipes: () => {
+			const { recipes } = get();
+			return recipes.filter((recipe) => recipe.type === "crafting");
+		},
 
-	getRecyclingRecipesById: (id) => {
-		const { recipes } = get();
-		return recipes.filter((recipe) => recipe.id === id);
-	},
-}));
+		getCraftingRecipesById: (id) => {
+			const { recipes } = get();
+			return recipes.filter((recipe) => recipe.id === id);
+		},
+
+		getRecyclingRecipes: () => {
+			const { recipes } = get();
+			return recipes.filter((recipe) => recipe.type === "recycling");
+		},
+
+		getRecyclingRecipesById: (id) => {
+			const { recipes } = get();
+			return recipes.filter((recipe) => recipe.id === id);
+		},
+	}));
+
+const DataStoreContext = createContext<DataStoreApi | null>(null);
+
+export function DataStoreProvider({ store, children }: { store: DataStoreApi; children: React.ReactNode }) {
+    return React.createElement(DataStoreContext.Provider, { value: store }, children);
+}
+
+export function useDataStore<T>(selector: (state: DataStore) => T): T {
+	const store = useContext(DataStoreContext);
+	if (!store) {
+		throw new Error("useDataStore must be used within a DataStoreProvider");
+	}
+	return useStore(store, selector);
+}
