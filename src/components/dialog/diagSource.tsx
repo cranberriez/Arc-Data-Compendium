@@ -26,13 +26,12 @@ export function SourcesSection({ item, recyclingSources }: SourcesSectionProps) 
 	const leftColumnSources = displaySources.slice(0, halfLength);
 	const rightColumnSources = displaySources.slice(halfLength);
 
+	console.log(recyclingSources);
+
 	return (
 		<div className="w-full m-w-fit">
 			<div className="font-mono font-light w-fit flex items-center gap-2 mb-2">
-				<Link
-					className="inline-block"
-					size={24}
-				/>
+				<Link className="inline-block" size={24} />
 				<p>
 					<span className="inline-block text-lg">Recycling Sources:</span>
 					<span className="text-xs text-muted-foreground">
@@ -89,9 +88,14 @@ export function SourcesSection({ item, recyclingSources }: SourcesSectionProps) 
 }
 
 const getRecycleSourceItem = (item: Item, sourceRecipe: Recipe) => {
-	const mainItemQty = sourceRecipe.io.filter(
-		(io) => io.role === "output" && io.itemId === item.id
-	)[0].qty;
+	if (!sourceRecipe.io) return null;
+
+	const mainItem = sourceRecipe.io.filter((io) => io.role === "output" && io.itemId === item.id);
+
+	if (!mainItem) return null;
+
+	const mainItemQty = mainItem[0].qty;
+
 	const sourceItem = sourceRecipe.io.filter((io) => io.role === "input")[0];
 
 	if (!sourceItem) return null;

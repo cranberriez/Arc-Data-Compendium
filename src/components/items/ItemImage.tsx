@@ -15,8 +15,8 @@ const USE_ACTUAL_IMAGES = true;
 export interface ItemImageProps {
 	/** The item to display */
 	item: Item;
-	/** Size variant of the image */
-	size?: "sm" | "md" | "lg" | "xl";
+	/** Expected size of the image */
+	expectedSize?: number;
 	/** Additional class names */
 	className?: string;
 	/** Container class names */
@@ -33,7 +33,7 @@ export interface ItemImageProps {
  */
 export const ItemImage = React.memo(function ItemImage({
 	item,
-	size = "md",
+	expectedSize,
 	className,
 	containerClassName,
 	showBorder = true,
@@ -41,21 +41,6 @@ export const ItemImage = React.memo(function ItemImage({
 }: ItemImageProps) {
 	const [imageError, setImageError] = useState(false);
 	const [isLoading, setIsLoading] = useState(true);
-
-	// Size mapping for the component
-	const sizeClasses = {
-		sm: "w-9 h-9",
-		md: "w-11 h-11",
-		lg: "w-15 h-15",
-		xl: "w-19 h-19",
-	};
-
-	const imageSizes = {
-		sm: "36px",
-		md: "44px",
-		lg: "60px",
-		xl: "92px",
-	};
 
 	// Border color based on item rarity
 	const borderClass = useMemo(
@@ -83,7 +68,7 @@ export const ItemImage = React.memo(function ItemImage({
 		const imagePath = getItemImagePath(item.id);
 		if (USE_ACTUAL_IMAGES && imagePath && !imageError) {
 			return (
-				<div className={cn("relative", sizeClasses[size])}>
+				<div className="relative w-full h-full aspect-square">
 					{isLoading && (
 						<div className="absolute inset-0 flex items-center justify-center animate-pulse">
 							<span className="sr-only">Loading image...</span>
@@ -99,25 +84,22 @@ export const ItemImage = React.memo(function ItemImage({
 						)}
 						onLoad={handleImageLoad}
 						onError={handleImageError}
-						sizes={imageSizes[size]}
+						sizes={expectedSize ? `${expectedSize}px` : undefined}
 					/>
 				</div>
 			);
 		}
 
 		// Use the icon as fallback
-		return getItemIcon(
-			item.icon,
-			cn(sizeClasses[size], getRarityColor(item.rarity, "text"), className)
-		);
-	}, [item, imageError, isLoading, size, className, handleImageLoad, handleImageError]);
+		return getItemIcon(item.icon, cn(getRarityColor(item.rarity, "text"), className));
+	}, [item, imageError, isLoading, className, handleImageLoad, handleImageError]);
 
 	if (!item) return null;
 
 	return (
 		<div
 			className={cn(
-				"flex items-center justify-center aspect-square relative",
+				"relative flex items-center justify-center w-full h-full",
 				showBorder && "border-2 rounded-sm p-[2px]",
 				borderClass,
 				containerClassName

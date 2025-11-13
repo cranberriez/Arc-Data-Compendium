@@ -16,7 +16,7 @@ export interface ItemCardProps {
 	/** Orientation of the layout */
 	orientation?: "horizontal" | "vertical";
 	/** Item count to display */
-	count?: number;
+	count?: number | string | undefined;
 	/** Item count to display inside the card */
 	innerCount?: boolean;
 	/** Click handler */
@@ -67,6 +67,8 @@ export const ItemCard = React.memo(
 		// Early return if no item
 		if (!item) return null;
 
+		const countString = count !== undefined ? count.toString() : undefined;
+
 		// Render the appropriate variant
 		switch (variant) {
 			case "icon":
@@ -74,7 +76,7 @@ export const ItemCard = React.memo(
 					<IconVariant
 						item={item}
 						size={size}
-						count={count}
+						count={countString}
 						onClick={handleClick}
 						className={className + " group/itemcard"}
 						showBorder={showBorder}
@@ -86,7 +88,7 @@ export const ItemCard = React.memo(
 					<CompactVariant
 						item={item}
 						size={size}
-						count={count}
+						count={countString}
 						innerCount={innerCount}
 						onClick={handleClick}
 						showBorder={showBorder}
@@ -100,7 +102,7 @@ export const ItemCard = React.memo(
 						item={item}
 						size={size}
 						orientation={orientation}
-						count={count}
+						count={countString}
 						onClick={handleClick}
 						className={className + " group/itemcard"}
 					/>
@@ -110,7 +112,7 @@ export const ItemCard = React.memo(
 					<DefaultVariant
 						item={item}
 						size={size}
-						count={count}
+						count={countString}
 						onClick={handleClick}
 						className={className + " group/itemcard"}
 					/>

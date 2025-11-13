@@ -41,11 +41,13 @@ export const useDataStore = create<DataStore>((set, get) => ({
 
 	getRecyclingSourcesById: (id) => {
 		const { recipes } = get();
-		return recipes.filter(
+		const filteredRecipes = recipes.filter(
 			(recipe) =>
 				recipe.type === "recycling" &&
 				recipe.io?.some((io) => io.role === "output" && io.itemId === id)
 		);
+
+		return filteredRecipes;
 	},
 
 	getCraftingRecipes: () => {

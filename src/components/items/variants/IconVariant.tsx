@@ -10,7 +10,7 @@ import { ItemBadges } from "../ItemBadges";
 export interface IconVariantProps {
 	item: Item;
 	size?: "sm" | "md" | "lg" | "xl";
-	count?: number;
+	count?: string;
 	onClick?: () => void;
 	className?: string;
 	showBorder?: boolean;
@@ -66,12 +66,7 @@ export const IconVariant = React.memo(function IconVariant({
 				}
 			}}
 		>
-			<ItemImage
-				item={item}
-				size={size === "sm" ? "sm" : size === "md" ? "md" : size === "lg" ? "lg" : "xl"}
-				showBorder={false}
-				containerClassName="p-0"
-			/>
+			<ItemImage item={item} showBorder={false} containerClassName="p-0" />
 
 			{count !== undefined && (
 				<ItemBadges item={item} count={count} size={size} position="top-right" />
@@ -98,12 +93,7 @@ export const IconVariant = React.memo(function IconVariant({
 				}
 			}}
 		>
-			<ItemImage
-				item={item}
-				size={size === "sm" ? "sm" : size === "md" ? "md" : size === "lg" ? "lg" : "xl"}
-				showBorder={true}
-				containerClassName="p-0"
-			/>
+			<ItemImage item={item} showBorder={true} containerClassName="p-0" />
 			{count !== undefined && (
 				<span className="text-base text-right font-mono min-w-6 w-6">{count}</span>
 			)}

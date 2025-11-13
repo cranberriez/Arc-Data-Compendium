@@ -12,8 +12,7 @@ import { Item, Recipe } from "@/types";
 
 export function ItemDialog() {
 	const { dialogQueue, dialogOpen, dialogData, closeDialog, backDialog } = useDialog();
-	const { getRecyclingSourcesById, getRecyclingRecipesById, getCraftingRecipesById } =
-		useRecipes();
+	const { getRecyclingSourcesById } = useRecipes();
 
 	if (!dialogData) return null;
 	const item = dialogData as Item;
@@ -34,7 +33,7 @@ export function ItemDialog() {
 	const gearType = item.gear?.category;
 	const recyclingRecipe: Recipe | null = item.recycling ?? null;
 	const craftingRecipes: Recipe[] = item.recipe ?? [];
-	const recyclingSources = getRecyclingSourcesById(item.recyclingId ?? "");
+	const recyclingSources = getRecyclingSourcesById(item.id ?? "");
 	const itemTags = getItemTags(item);
 
 	return (
@@ -57,16 +56,6 @@ export function ItemDialog() {
 				)}
 				{/* Dialog Header */}
 				<ItemHeader item={item} itemTags={itemTags} />
-
-				<DiagDescription
-					name={item.name}
-					rarity={item.rarity}
-					category={item.category}
-					recipeId={item.recipeId}
-					itemDescription={item.description}
-					weight={item.weight}
-					sellValue={item.value}
-				/>
 
 				{quickUseStats ||
 				quickUseCharge ||

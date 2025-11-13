@@ -12,7 +12,7 @@ export interface DetailedVariantProps {
 	item: Item;
 	size?: "sm" | "md" | "lg" | "xl";
 	orientation?: "horizontal" | "vertical";
-	count?: number;
+	count?: string;
 	onClick?: () => void;
 	className?: string;
 }
@@ -65,11 +65,7 @@ export const DetailedVariant = React.memo(function DetailedVariant({
 							orientation === "vertical" && "flex justify-center w-full"
 						)}
 					>
-						<ItemImage
-							item={item}
-							size={size === "sm" ? "md" : size === "md" ? "lg" : "xl"}
-							showBorder={true}
-						/>
+						<ItemImage item={item} showBorder={true} />
 						{count !== undefined && (
 							<ItemBadges
 								item={item}

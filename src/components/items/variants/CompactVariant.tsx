@@ -10,7 +10,7 @@ import { getRarityColor } from "@/utils/items/itemUtils";
 export interface CompactVariantProps {
 	item: Item;
 	size?: "sm" | "md" | "lg" | "xl";
-	count?: number;
+	count?: string;
 	innerCount?: boolean;
 	onClick?: () => void;
 	showBorder?: boolean;
@@ -81,12 +81,8 @@ export const CompactVariant = React.memo(function CompactVariant({
 				}
 			}}
 		>
-			<div className="flex items-center justify-center">
-				<ItemImage
-					item={item}
-					size={size === "sm" ? "md" : size === "md" ? "lg" : size === "lg" ? "xl" : "xl"}
-					showBorder={false}
-				/>
+			<div className="flex items-center justify-center absolute h-full w-full top-0 left-0 z-1">
+				<ItemImage item={item} showBorder={false} expectedSize={64} />
 			</div>
 
 			{count !== undefined && orientation === "vertical" && (
@@ -112,11 +108,14 @@ export const CompactVariant = React.memo(function CompactVariant({
 
 			<span
 				className={cn(
-					"font-mono leading-tight break-words overflow-hidden z-99 absolute bottom-0 left-0 right-0 text-shadow-lg",
+					"font-mono leading-tight break-words overflow-hidden z-2 absolute bottom-0 left-0 right-0",
 					orientation === "horizontal" ? "text-left" : "text-center",
 					textClasses[size]
 				)}
 				title={item.name}
+				style={{
+					textShadow: `0px 0px 4px rgba(0, 0, 0, 1)`,
+				}}
 			>
 				{item.name}
 			</span>
