@@ -3,7 +3,7 @@ import { Item, Recipe } from "@/types";
 import { ItemCard } from "@/components/items/ItemCard";
 import { ArrowRight } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
-import { useItems } from "@/contexts/itemContext";
+import { useItems } from "@/hooks/useData";
 
 export const RecycleSourceItem = ({
 	sourceRecipe,
@@ -27,11 +27,7 @@ export const RecycleSourceItem = ({
 
 	return (
 		<div className="flex flex-row items-center gap-1 sm:gap-2 cursor-default border-2 border-dashed border-accent rounded-md">
-			<ItemCard
-				item={getItemById(sourceItem.itemId)}
-				variant="compact"
-				size={size}
-			/>
+			<ItemCard item={getItemById(sourceItem.itemId)} variant="compact" size={size} />
 			<ArrowRight className="size-4" />
 			<ItemCard
 				item={mainItem}

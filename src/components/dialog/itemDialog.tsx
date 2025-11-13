@@ -8,11 +8,12 @@ import DiagDescription from "./diagDescription";
 import { getItemTags } from "@/utils/items";
 import { useDialog } from "@/hooks/useUI";
 import { useRecipes } from "@/hooks/useData";
-import { Item } from "@/types";
+import { Item, Recipe } from "@/types";
 
 export function ItemDialog() {
 	const { dialogQueue, dialogOpen, dialogData, closeDialog, backDialog } = useDialog();
-	const { getRecyclingSourcesById } = useRecipes();
+	const { getRecyclingSourcesById, getRecyclingRecipesById, getCraftingRecipesById } =
+		useRecipes();
 
 	if (!dialogData) return null;
 	const item = dialogData as Item;
@@ -31,8 +32,9 @@ export function ItemDialog() {
 	const quickUseCharge = item.quickUse?.charge ?? null;
 	const gearStats = item.gear?.stats;
 	const gearType = item.gear?.category;
-	const recyclingRecipe = item.recycling;
-	const recyclingSources = getRecyclingSourcesById(item.id);
+	const recyclingRecipe: Recipe | null = item.recycling ?? null;
+	const craftingRecipes: Recipe[] = item.recipe ?? [];
+	const recyclingSources = getRecyclingSourcesById(item.recyclingId ?? "");
 	const itemTags = getItemTags(item);
 
 	return (
@@ -66,7 +68,12 @@ export function ItemDialog() {
 					sellValue={item.value}
 				/>
 
-				{quickUseStats || quickUseCharge || gearStats || gearType || recyclingRecipe ? (
+				{quickUseStats ||
+				quickUseCharge ||
+				gearStats ||
+				gearType ||
+				recyclingRecipe ||
+				craftingRecipes.length > 0 ? (
 					<hr className="my-2 border-t border-t-secondary-foreground/20 dark:border-t-secondary-foreground/10" />
 				) : null}
 
@@ -80,17 +87,17 @@ export function ItemDialog() {
 				)} */}
 
 				{/* Gear Section */}
-				{/* {gearStats && gearType && <GearSection stats={gearStats} type={gearType} />} */}
+				{gearStats && gearType && <GearSection stats={gearStats} type={gearType} />}
 
 				{/* Recycling Section */}
-				{/* {recyclingRecipe && (
+				{recyclingRecipe && (
 					<RecyclingSection outputItem={item} recyclingRecipe={recyclingRecipe} />
-				)} */}
+				)}
 
 				{/* Sources Section (with two columns) */}
-				{/* {recyclingSources.length > 0 && (
+				{recyclingSources.length > 0 && (
 					<SourcesSection item={item} recyclingSources={recyclingSources} />
-				)} */}
+				)}
 
 				{/* TODO: Recipe Section */}
 				{/* TODO: Uses Section quests/workshop */}

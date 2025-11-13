@@ -1,5 +1,5 @@
 import { Item, RecyclingRecipe } from "@/types";
-import { useItems } from "@/contexts/itemContext";
+import { useItems } from "@/hooks/useData";
 import { ItemCard } from "@/components/items/ItemCard";
 import { Recycle, ArrowRight } from "lucide-react";
 
@@ -17,16 +17,13 @@ export const RecyclingSection = ({
 	return (
 		<div className="flex flex-col w-fit min-w-full gap-2">
 			<div className="font-mono font-light w-full flex items-center gap-2 mb-2">
-				<Recycle
-					className="inline-block"
-					size={24}
-				/>
+				<Recycle className="inline-block" size={24} />
 				<div className="flex md:flex-row flex-col w-full items-baseline">
 					<p>
 						<span className="inline-block text-lg">Recycling:</span>
 					</p>
 					<p className="text-xs text-muted-foreground md:ml-auto whitespace-nowrap">
-						In Raid output is halved
+						In Raid output may be different
 					</p>
 				</div>
 			</div>
