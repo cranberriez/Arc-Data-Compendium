@@ -128,22 +128,28 @@ async function upsertCraftingRecipeForItem(itemId: string, def: ScrapedRecipeDef
 
 	for (const [wbId, tier] of Object.entries(workbenches)) {
 		if (wbId === "inventory") continue; // handled via inRaid
+
+		let correctedWBID = wbId;
+		if (wbId === "workbench_i") correctedWBID = "workbench";
+		else if (wbId === "gear_bench_i") correctedWBID = "gear_bench";
+		else if (wbId === "explosive_station") correctedWBID = "explosives_station";
+
 		const tierNum = typeof tier === "number" ? tier : parseInt(String(tier), 10);
 		if (!Number.isFinite(tierNum)) continue;
 		// Ensure the referenced workbench tier exists to satisfy FK
 		const tierRow = await db
 			.select({ t: tiers.tier })
 			.from(tiers)
-			.where(and(eq(tiers.workbenchId, wbId), eq(tiers.tier, tierNum)));
+			.where(and(eq(tiers.workbenchId, correctedWBID), eq(tiers.tier, tierNum)));
 		if (tierRow.length === 0) {
 			console.warn(
-				`Skip linking recipe ${recipeId} to ${wbId} tier ${tierNum}: tier not found (seed workbench tiers first)`
+				`Skip linking recipe ${recipeId} to ${correctedWBID} tier ${tierNum}: tier not found (seed workbench tiers first)`
 			);
 			continue;
 		}
 		await db
 			.insert(workbenchRecipes)
-			.values({ workbenchId: wbId, workbenchTier: tierNum, recipeId });
+			.values({ workbenchId: correctedWBID, workbenchTier: tierNum, recipeId });
 	}
 
 	return {
