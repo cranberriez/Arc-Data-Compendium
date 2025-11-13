@@ -82,7 +82,7 @@ export const CompactVariant = React.memo(function CompactVariant({
 			}}
 		>
 			<div className="flex items-center justify-center absolute h-full w-full top-0 left-0 z-1">
-				<ItemImage item={item} showBorder={false} expectedSize={64} />
+				<ItemImage item={item} showBorder={false} expectedSize={128} />
 			</div>
 
 			{count !== undefined && orientation === "vertical" && (
