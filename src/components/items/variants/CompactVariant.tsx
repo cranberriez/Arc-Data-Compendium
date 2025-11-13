@@ -108,7 +108,7 @@ export const CompactVariant = React.memo(function CompactVariant({
 
 			<span
 				className={cn(
-					"font-mono leading-tight break-words overflow-hidden z-2 absolute bottom-0 left-0 right-0",
+					"font-mono leading-tight break-words overflow-hidden z-2 absolute bottom-0 left-0 right-0 bg-black/1 backdrop-blur-xs",
 					orientation === "horizontal" ? "text-left" : "text-center",
 					textClasses[size]
 				)}
