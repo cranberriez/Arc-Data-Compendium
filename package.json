@@ -6,6 +6,7 @@
 		"dev": "next dev",
 		"seed": "tsx scripts/seed.ts",
 		"import:items": "tsx scripts/import-items.ts",
+		"import:quick-use": "tsx scripts/import-quick-use.ts",
 		"scan:taxonomy": "tsx scripts/tools/scan-taxonomy.ts",
 		"scan:stat-keys": "tsx scripts/tools/extract_stat_keys.ts",
 		"preview:weapon-upgrades": "tsx scripts/tools/preview_weapon_upgrades.ts",

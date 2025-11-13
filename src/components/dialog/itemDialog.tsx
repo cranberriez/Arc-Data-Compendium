@@ -67,13 +67,13 @@ export function ItemDialog() {
 				) : null}
 
 				{/* Quick Use Section */}
-				{/* {quickUseStats && (
+				{quickUseStats && (
 					<QuickUseSection
 						flavorText={item.flavorText}
 						quickUse={item.quickUse}
 						charge={quickUseCharge}
 					/>
-				)} */}
+				)}
 
 				{/* Gear Section */}
 				{gearStats && gearType && <GearSection stats={gearStats} type={gearType} />}

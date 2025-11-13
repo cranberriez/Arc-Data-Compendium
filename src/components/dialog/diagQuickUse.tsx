@@ -25,15 +25,14 @@ export const QuickUseSection = ({
 	quickUse: QuickUseData | null;
 	charge: QuickUseCharge | null;
 }) => {
+	console.log(quickUse);
 	const stats = quickUse?.stats ?? null;
+	if (!stats || stats.length === 0) return null;
 
 	return (
 		<div>
 			<div className="font-mono font-light w-fit flex items-center gap-2 mb-2">
-				<ChartNoAxesColumn
-					className="inline-block"
-					size={24}
-				/>
+				<ChartNoAxesColumn className="inline-block" size={24} />
 				<p>
 					<span className="inline-block text-lg">Quick Use Stats</span>
 				</p>
@@ -45,11 +44,8 @@ export const QuickUseSection = ({
 
 			<div className="flex flex-col gap-2">
 				<div className="flex flex-col gap-2 py-4 px-4 bg-amber-100 text-amber-900 dark:text-amber-100 dark:bg-amber-900/10 rounded-md">
-					{stats?.map((stat, index) => (
-						<StatItem
-							key={index}
-							stat={stat}
-						/>
+					{stats.map((stat, index) => (
+						<StatItem key={index} stat={stat} />
 					))}
 				</div>
 
@@ -59,8 +55,8 @@ export const QuickUseSection = ({
 	);
 };
 
-const StatItem = ({ stat }: { stat: QuickUseStat | null }) => {
-	if (!stat) return null;
+const StatItem = ({ stat }: { stat: QuickUseStat }) => {
+	if (stat.name === "projectiles" && stat.value === 1) return null;
 
 	const iconMap = {
 		healing: HeartPulseIcon,
@@ -86,10 +82,7 @@ const StatItem = ({ stat }: { stat: QuickUseStat | null }) => {
 	}
 
 	return (
-		<div
-			key={stat.name}
-			className="grid gap-3 items-center grid-cols-[16px_1fr_3fr]"
-		>
+		<div key={stat.name} className="grid gap-3 items-center grid-cols-[16px_1fr_3fr]">
 			<span className="flex items-center opacity-50">
 				{React.createElement(icon, { className: "inline-block", size: 16 })}
 			</span>
@@ -127,13 +120,7 @@ const Charge = ({ charge }: { charge: QuickUseCharge }) => {
 						.replace(/([A-Z])/g, " $1")
 						.replace(/^./, (match) => match.toUpperCase());
 
-				return (
-					<ChargeItem
-						key={key}
-						name={name}
-						value={displayValue}
-					/>
-				);
+				return <ChargeItem key={key} name={name} value={displayValue} />;
 			})}
 		</div>
 	);
@@ -148,14 +135,7 @@ const ChargeItem = ({ name, value }: ChargeItemProps) => {
 	return (
 		<div className="grid gap-3 items-center grid-cols-[16px_1fr_3fr]">
 			<span className="flex items-center opacity-50">
-				{name === "Usage Type" ? (
-					<Gauge
-						className="inline-block"
-						size={16}
-					/>
-				) : (
-					<></>
-				)}
+				{name === "Usage Type" ? <Gauge className="inline-block" size={16} /> : <></>}
 			</span>
 			<span className="font-normal">{name}</span>
 			<span className="font-mono text-left">{value}</span>

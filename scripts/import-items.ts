@@ -221,20 +221,20 @@ async function upsertItem(rec: ScrapedItem, kind: (typeof FILES)[number]["kind"]
 		weight: typeof rec.weight === "number" ? rec.weight : 0,
 		maxStack: typeof rec.stack_size === "number" ? Math.trunc(rec.stack_size) : 1,
 		category: mapCategory(rec, kind),
-		quickUse: buildQuickUse(kind),
+		quickUse: undefined,
 		// gear: set only for augment dataset with strict stats mapping
 		gear:
 			kind === "augment"
 				? {
 						category: "augment" as const,
 						stats: mapAugmentStatsOrThrow(rec),
-					}
+				  }
 				: kind === "shield"
-					? {
-							category: "shield" as const,
-							stats: mapShieldStatsOrThrow(rec),
-						}
-					: undefined,
+				? {
+						category: "shield" as const,
+						stats: mapShieldStatsOrThrow(rec),
+				  }
+				: undefined,
 		foundIn: normalizeFoundIn(rec.found_in) ?? [],
 	} as const;
 
