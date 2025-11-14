@@ -15,26 +15,7 @@ import { useProfitableRecipes } from "@/hooks/useProfit";
 import { ArrowLeft, ArrowRight, Book, Coins, Package, PencilRuler } from "lucide-react";
 import ItemCard from "../items/ItemCard";
 import { Button } from "../ui/button";
-
-const workbenchColors: Record<
-	string,
-	{ bg: string; shadow: string; border: string; gradient: string; iconColor: string }
-> = {
-	refiner: {
-		bg: "bg-blue-400 dark:bg-blue-500",
-		shadow: "rgba(255, 255, 255, 0.2)",
-		gradient: "bg-gradient-to-r from-blue-500/20 to-transparent",
-		border: "border-blue-400 dark:border-blue-500",
-		iconColor: "text-blue-700 dark:text-blue-300",
-	},
-	default: {
-		bg: "bg-blue-200 dark:bg-blue-800",
-		shadow: "rgba(255, 255, 255, 0.2)",
-		gradient: "bg-gradient-to-r from-blue-200/20 to-transparent",
-		border: "border-blue-200 dark:border-blue-800",
-		iconColor: "text-blue-700 dark:text-blue-300",
-	},
-};
+import { getWbColorObject } from "@/utils/workbench/wbColors";
 
 const collectWorkbenchOutputItems = (workbench: Workbench) => {
 	const items = new Set<string>();
@@ -73,11 +54,6 @@ export function WorkbenchClient({ workbench }: WorkbenchClientProps) {
 		setWorkbenchLevel(workbench.id, curWbTier - 1);
 	};
 
-	let wbIdForColors = "default";
-	if (workbench.id in workbenchColors) {
-		wbIdForColors = workbench.id;
-	}
-
 	const outputItemIds = collectWorkbenchOutputItems(workbench);
 	const outputItems = outputItemIds.map((id) => getItemById(id));
 	const outputCategories = new Set(outputItems.map((item) => item?.category));
@@ -85,26 +61,27 @@ export function WorkbenchClient({ workbench }: WorkbenchClientProps) {
 	return (
 		<div className="space-y-6">
 			<Card
-				className={`p-0 flex flex-wrap flex-row justify-between w-full border-2 ${workbenchColors[wbIdForColors].border}`}
+				className={`p-0 flex flex-wrap flex-row justify-between w-full border-2 ${
+					getWbColorObject(workbench.id).border
+				}`}
 				style={makeGridBgStyle({
 					gap: "3rem",
 					line: "1px",
-					color: "rgba(50, 50, 50, 0.3)",
+					color: "rgba(65, 65, 65, 0.1)",
 				})}
 			>
 				<div className="flex flex-col justify-between	 w-full">
 					<div
 						className={cn(
 							"flex flex-col justify-between p-2 sm:p-6",
-							workbenchColors[wbIdForColors].gradient,
+							getWbColorObject(workbench.id).gradient,
 							"border-b",
-							workbenchColors[wbIdForColors].border
+							getWbColorObject(workbench.id).border
 						)}
 					>
 						<div className="flex flex-col gap-2">
 							<WorkbenchHeader
 								title={workbench.name}
-								id={wbIdForColors}
 								icon={icon}
 								categories={outputCategories}
 								workbench={workbench}
@@ -112,7 +89,6 @@ export function WorkbenchClient({ workbench }: WorkbenchClientProps) {
 						</div>
 					</div>
 					<WorkbenchUpgradeRequirements
-						wbIdForColors={wbIdForColors}
 						workbench={workbench}
 						curWbTier={curWbTier}
 						upgradeWorkbench={upgradeWorkbench}
@@ -133,13 +109,11 @@ export function WorkbenchClient({ workbench }: WorkbenchClientProps) {
 
 function WorkbenchHeader({
 	title,
-	id,
 	icon,
 	categories,
 	workbench,
 }: {
 	title: string;
-	id: string;
 	icon: React.ReactNode;
 	categories: Set<ItemCategory | undefined>;
 	workbench: Workbench;
@@ -150,10 +124,10 @@ function WorkbenchHeader({
 		<div className="flex flex-wrap items-start gap-4">
 			<div
 				className={cn(
-					"flex-shrink-0 text-card rounded-lg p-3 w-16 h-16 -rotate-5 shadow-lg",
-					workbenchColors[id].bg
+					"flex-shrink-0 text-primary rounded-lg p-3 w-16 h-16 -rotate-5 shadow-lg",
+					getWbColorObject(workbench.id).bg
 				)}
-				style={{ boxShadow: `0px 0px 8px ${workbenchColors[id].shadow}` }}
+				style={{ boxShadow: `0px 0px 8px ${getWbColorObject(workbench.id).shadow}` }}
 			>
 				{icon}
 			</div>
@@ -227,13 +201,11 @@ function CategoryTag({ category }: { category: ItemCategory }) {
 }
 
 function WorkbenchUpgradeRequirements({
-	wbIdForColors,
 	workbench,
 	curWbTier,
 	upgradeWorkbench,
 	downgradeWorkbench,
 }: {
-	wbIdForColors: string;
 	workbench: Workbench;
 	curWbTier: number;
 	upgradeWorkbench: () => void;
@@ -252,7 +224,7 @@ function WorkbenchUpgradeRequirements({
 				<div className="flex items-center justify-between gap-6 p-2">
 					<Button
 						onClick={downgradeWorkbench}
-						disabled={curWbTier === 0}
+						disabled={curWbTier === workbench.baseTier}
 						size="lg"
 						variant="ghost"
 						className="cursor-pointer"
@@ -277,7 +249,7 @@ function WorkbenchUpgradeRequirements({
 						<p className="flex items-center gap-2 text-lg font-semibold">
 							<Package
 								size={18}
-								className={workbenchColors[wbIdForColors].iconColor}
+								className={getWbColorObject(workbench.id).iconColor}
 							/>
 							Upgrade Requirements
 						</p>

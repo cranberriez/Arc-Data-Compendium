@@ -8,6 +8,8 @@ import { WorkbenchUpgrades } from "@/components/workbench/workbenchUpgrade";
 import { Button } from "@/components/ui/button";
 import { FileText } from "lucide-react";
 import { useWorkbenchLevels } from "@/hooks/useUser";
+import { cn } from "@/lib/utils";
+import { getWbColorObject } from "@/utils/workbench/wbColors";
 
 export const WorkbenchPreview = ({ workbench }: { workbench: Workbench }) => {
 	if (!workbench) {
@@ -29,12 +31,19 @@ export const WorkbenchPreview = ({ workbench }: { workbench: Workbench }) => {
 	const icon = getItemIcon(workbench.icon);
 	const isMaxed = curWbTier === workbench.tiers.length;
 
+	const wbColorObject = getWbColorObject(workbench.id);
+
 	return (
 		<div className="flex flex-col justify-between gap-2 border-2 rounded-lg p-2 sm:p-4 min-w-0 w-full min-h-60 sm:h-64 bg-card">
 			<div key={workbench.id} className="flex flex-col sm:flex-row gap-4 sm:gap-2 h-full">
 				<div className="flex flex-col flex-1 gap-2">
 					<div className="flex items-center gap-2 h-11">
-						<div className="w-10 h-10 p-2 flex items-center justify-center rounded bg-muted">
+						<div
+							className={cn(
+								"w-10 h-10 p-2 flex items-center justify-center rounded ",
+								wbColorObject.bg
+							)}
+						>
 							{icon}
 						</div>
 						<h2 className="text-xl font-semibold mb-1">{workbench.name}</h2>
