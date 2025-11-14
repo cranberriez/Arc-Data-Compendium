@@ -43,8 +43,6 @@ export function SourcesSection({ item, recyclingSources }: SourcesSectionProps) 
 	const leftColumnSources = displaySources.slice(0, halfLength);
 	const rightColumnSources = displaySources.slice(halfLength);
 
-	console.log(uniqueRecyclingSources);
-
 	return (
 		<div className="w-full m-w-fit">
 			<div className="font-mono font-light w-fit flex items-center gap-2 mb-2">
