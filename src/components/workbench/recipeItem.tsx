@@ -1,17 +1,15 @@
-import { Item, Recipe, RecipeItemBase } from "@/types";
+import { Recipe, RecipeItemBase } from "@/types";
 import { cn } from "@/lib/utils";
 import { useItems } from "@/hooks/useData";
+import { useProfit } from "@/hooks/useProfit";
 import ItemCard from "../items/ItemCard";
 import { Backpack, PencilRuler, Coins } from "lucide-react";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { InputItem, buildInputItemsMap } from "@/utils/recipes/recipeUtils";
 
 type RecipeItemProps = {
 	recipe: Recipe;
 	className?: string;
-};
-
-type InputItem = Item & {
-	qty: number;
 };
 
 export function RecipeItem({ recipe, className }: RecipeItemProps) {
@@ -27,15 +25,9 @@ export function RecipeItem({ recipe, className }: RecipeItemProps) {
 
 	const inputs: RecipeItemBase[] = recipe.io.filter((item) => item.role === "input");
 
-	const inputItems: Record<string, InputItem> = inputs.reduce((acc, item) => {
-		const inputItem = getItemById(item.itemId);
-		if (!inputItem) return acc;
-		acc[inputItem.id] = { ...inputItem, qty: item.qty };
-		return acc;
-	}, {} as Record<string, InputItem>);
+	const inputItems: Record<string, InputItem> = buildInputItemsMap(recipe, getItemById);
 
-	const inputValue = inputValueCalculator(Object.values(inputItems));
-	const outputValue = outputItem.value * outputCount;
+	const profit = useProfit(recipe) as number;
 
 	return (
 		<div
@@ -52,9 +44,9 @@ export function RecipeItem({ recipe, className }: RecipeItemProps) {
 					size="lg"
 					className="border-transparent shadow-none"
 				/>
-				<RecipeButtons recipe={recipe} netValue={outputValue - inputValue} />
+				<RecipeButtons recipe={recipe} netValue={profit} />
 			</div>
-			<div className="flex flex-col gap-2 sm:w-1/2 bg-background rounded-lg p-2 sm:min-h-full">
+			<div className="flex flex-col gap-2 sm:w-1/2 bg-background rounded-lg p-2 sm:min-h-full inset-shadow-sm/20">
 				<p className="text-muted-foreground text-center">Ingredients</p>
 				{inputs.map((input) => {
 					const inputItem = inputItems[input.itemId];
@@ -85,7 +77,7 @@ function RecipeButtons({ recipe, netValue }: { recipe: Recipe; netValue: number 
 			{requiresBlueprint && (
 				<Popover>
 					<PopoverTrigger>
-						<div className="p-2 border rounded-sm bg-blue-300/10 border-blue-300/20 text-blue-300 cursor-pointer">
+						<div className="p-2 border rounded-sm bg-blue-700/10 dark:bg-blue-300/10 border-blue-700/20 dark:border-blue-300/20 text-blue-700 dark:text-blue-300 cursor-pointer">
 							<PencilRuler size={20} />
 						</div>
 					</PopoverTrigger>
@@ -97,7 +89,7 @@ function RecipeButtons({ recipe, netValue }: { recipe: Recipe; netValue: number 
 			{inRaid && (
 				<Popover>
 					<PopoverTrigger>
-						<div className="p-2 border rounded-sm bg-orange-300/10 border-orange-300/20 text-orange-300 cursor-pointer">
+						<div className="p-2 border rounded-sm bg-orange-700/10 dark:bg-orange-300/10 border-orange-700/20 dark:border-orange-300/20 text-orange-700 dark:text-orange-300 cursor-pointer">
 							<Backpack size={20} />
 						</div>
 					</PopoverTrigger>
@@ -109,7 +101,7 @@ function RecipeButtons({ recipe, netValue }: { recipe: Recipe; netValue: number 
 			{netValue > 0 && (
 				<Popover>
 					<PopoverTrigger>
-						<div className="p-2 border rounded-sm bg-green-300/10 border-green-300/20 text-green-300 cursor-pointer">
+						<div className="p-2 border rounded-sm bg-green-700/10 dark:bg-green-300/10 border-green-700/20 dark:border-green-300/20 text-green-700 dark:text-green-300 cursor-pointer">
 							<Coins size={20} />
 						</div>
 					</PopoverTrigger>
@@ -121,10 +113,3 @@ function RecipeButtons({ recipe, netValue }: { recipe: Recipe; netValue: number 
 		</div>
 	);
 }
-
-const inputValueCalculator = (inputs: InputItem[]) => {
-	const totalValue = inputs.reduce((acc, input) => {
-		return acc + input.qty * input.value;
-	}, 0);
-	return totalValue;
-};
