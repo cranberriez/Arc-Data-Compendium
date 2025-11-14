@@ -1,6 +1,5 @@
 "use client";
 
-import getItemIcon from "@/components/items/getItemIcon";
 import {
 	Table,
 	TableBody,
@@ -9,11 +8,12 @@ import {
 	TableHeader,
 	TableRow,
 } from "@/components/ui/table";
-import { getRarityColor, formatName } from "@/utils/items/itemUtils";
+import { formatName } from "@/utils/items/itemUtils";
 import { WorkbenchRequirement } from "@/utils/workbenchUtils";
 import { useDialog } from "@/hooks/useUI";
 import { useItems } from "@/hooks/useData";
 import { Skeleton } from "@/components/ui/skeleton";
+import ItemImage from "@/components/items/ItemImage";
 
 export function WorkbenchItemReqTable({
 	requirements,
@@ -58,12 +58,9 @@ export function WorkbenchItemReqTable({
 							className="cursor-pointer border-0"
 							onClick={() => openDialog("item", item)}
 						>
-							<TableCell className="text-center align-middle">
+							<TableCell className="text-center align-middle p-0">
 								{item && !isLoading ? (
-									getItemIcon(
-										item.icon,
-										`w-6 h-6 mx-auto ${getRarityColor(item.rarity, "text")}`
-									)
+									<ItemImage item={item} expectedSize={24} />
 								) : isLoading ? (
 									<Skeleton className="w-6 h-6 mx-auto" />
 								) : null}
