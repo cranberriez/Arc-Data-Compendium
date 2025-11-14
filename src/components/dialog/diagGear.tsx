@@ -103,7 +103,7 @@ export const ShieldSection = ({ stats }: { stats: GearStat }) => {
 export const AugmentSection = ({ stats }: { stats: GearStat }) => {
 	const baseAugment = {
 		backpackSlots: 10,
-		weightLimit: 45,
+		weightLimit: 30,
 		safePocketSize: 0,
 		quickUseSlots: 4,
 		weaponSlots: 2,
