@@ -1,48 +1,16 @@
 import { create } from "zustand";
-import { persist } from "zustand/middleware";
+import { persist, createJSONStorage } from "zustand/middleware";
 import { UserStore } from "./types";
 
-// Helper functions for cookie persistence (similar to your current implementation)
-const COOKIE_KEYS = {
-	workbenchLevels: "workbenchLevels",
-	activeQuests: "activeQuests",
-	completedQuests: "completedQuests",
-	itemCounts: "itemCounts",
-	selections: "selections",
-	stringValues: "stringValues",
-	numberValues: "numberValues",
-};
-
-const safeParseJSON = (value: string | null, defaultValue: any) => {
-	if (!value) return defaultValue;
-	try {
-		return JSON.parse(value);
-	} catch {
-		return defaultValue;
-	}
-};
-
-const safeSaveToCookie = (key: string, value: any) => {
-	if (typeof document === "undefined") return;
-	try {
-		document.cookie = `${key}=${JSON.stringify(value)}; path=/; max-age=${
-			60 * 60 * 24 * 365
-		}; secure; samesite=strict`;
-	} catch (error) {
-		console.error("Failed to save to cookie:", error);
-	}
-};
-
-const getCookie = (key: string): string | null => {
-	if (typeof document === "undefined") return null;
-	const cookies = document.cookie.split(";");
-	for (const cookie of cookies) {
-		const [name, value] = cookie.trim().split("=");
-		if (name === key) {
-			return decodeURIComponent(value);
-		}
-	}
-	return null;
+const noopStorage: Storage = {
+	get length() {
+		return 0;
+	},
+	clear: () => {},
+	getItem: () => null,
+	key: () => null,
+	removeItem: () => {},
+	setItem: () => {},
 };
 
 export const useUserStore = create<UserStore>()(
@@ -191,21 +159,9 @@ export const useUserStore = create<UserStore>()(
 		}),
 		{
 			name: "arc-user-data", // Storage key
-			// Custom storage to use cookies instead of localStorage
-			storage: {
-				getItem: (name) => {
-					const value = getCookie(name);
-					return value ? JSON.parse(value) : null;
-				},
-				setItem: (name, value) => {
-					safeSaveToCookie(name, JSON.stringify(value));
-				},
-				removeItem: (name) => {
-					if (typeof document !== "undefined") {
-						document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
-					}
-				},
-			},
+			storage: createJSONStorage(() =>
+				typeof window !== "undefined" ? localStorage : noopStorage
+			),
 			onRehydrateStorage: () => (state) => {
 				state?.setHasHydrated?.();
 			},
