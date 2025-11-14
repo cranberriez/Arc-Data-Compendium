@@ -250,16 +250,18 @@ async function ensureCraftRecipe(rec: ScrapedWeapon) {
 	const first = rawList[0] as any;
 	const recipeId = `craft_${rec.id}`;
 	const isBlueprintLocked = Boolean(first?.blueprint);
+	const workbenches = (first?.workbenches ?? {}) as Record<string, number | string>;
+	const inRaid = Object.prototype.hasOwnProperty.call(workbenches, "inventory");
 	// upsert recipe header
 	const existing = await db.select().from(recipes).where(eq(recipes.id, recipeId));
 	if (existing.length === 0) {
 		await db
 			.insert(recipes)
-			.values({ id: recipeId, type: "crafting", isBlueprintLocked, inRaid: false });
+			.values({ id: recipeId, type: "crafting", isBlueprintLocked, inRaid });
 	} else if (existing.length > 0) {
 		await db
 			.update(recipes)
-			.set({ type: "crafting", isBlueprintLocked, inRaid: false })
+			.set({ type: "crafting", isBlueprintLocked, inRaid })
 			.where(eq(recipes.id, recipeId));
 	}
 	// reset IO rows
@@ -276,6 +278,34 @@ async function ensureCraftRecipe(rec: ScrapedWeapon) {
 	await db.insert(recipeItems).values({ recipeId, itemId: rec.id, role: "output", qty: 1 });
 	// set canonical crafting recipe pointer on item
 	await db.update(items).set({ recipeId }).where(eq(items.id, rec.id));
+
+	// Upsert workbench_recipes mapping for this weapon craft recipe
+	await db.delete(workbenchRecipes).where(eq(workbenchRecipes.recipeId, recipeId));
+	for (const [wbIdRaw, tier] of Object.entries(workbenches)) {
+		if (wbIdRaw === "inventory") continue; // handled via inRaid
+
+		let correctedWBID = wbIdRaw;
+		if (wbIdRaw === "workbench_i") correctedWBID = "workbench";
+		else if (wbIdRaw === "gear_bench_i") correctedWBID = "gear_bench";
+		else if (wbIdRaw === "explosive_station") correctedWBID = "explosives_station";
+
+		const tierNum = typeof tier === "number" ? tier : parseInt(String(tier), 10);
+		if (!Number.isFinite(tierNum)) continue;
+
+		const tierRow = await db
+			.select({ t: tiers.tier })
+			.from(tiers)
+			.where(and(eq(tiers.workbenchId, correctedWBID), eq(tiers.tier, tierNum)));
+		if (tierRow.length === 0) {
+			console.warn(
+				`Skip linking recipe ${recipeId} to ${correctedWBID} tier ${tierNum}: tier not found (seed workbench tiers first)`
+			);
+			continue;
+		}
+		await db
+			.insert(workbenchRecipes)
+			.values({ workbenchId: correctedWBID, workbenchTier: tierNum, recipeId });
+	}
 }
 
 (async function main() {
