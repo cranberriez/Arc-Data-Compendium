@@ -112,6 +112,7 @@ export function WorkbenchClient({ workbench }: WorkbenchClientProps) {
 						</div>
 					</div>
 					<WorkbenchUpgradeRequirements
+						wbIdForColors={wbIdForColors}
 						workbench={workbench}
 						curWbTier={curWbTier}
 						upgradeWorkbench={upgradeWorkbench}
@@ -226,11 +227,13 @@ function CategoryTag({ category }: { category: ItemCategory }) {
 }
 
 function WorkbenchUpgradeRequirements({
+	wbIdForColors,
 	workbench,
 	curWbTier,
 	upgradeWorkbench,
 	downgradeWorkbench,
 }: {
+	wbIdForColors: string;
 	workbench: Workbench;
 	curWbTier: number;
 	upgradeWorkbench: () => void;
@@ -274,7 +277,7 @@ function WorkbenchUpgradeRequirements({
 						<p className="flex items-center gap-2 text-lg font-semibold">
 							<Package
 								size={18}
-								className={workbenchColors[workbench.id].iconColor}
+								className={workbenchColors[wbIdForColors].iconColor}
 							/>
 							Upgrade Requirements
 						</p>
