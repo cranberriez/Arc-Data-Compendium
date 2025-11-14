@@ -109,6 +109,18 @@ function RecipeButtons({ recipe, netValue }: { recipe: Recipe; netValue: number 
 					</PopoverContent>
 				</Popover>
 			)}
+			{netValue <= 0 && (
+				<Popover>
+					<PopoverTrigger>
+						<div className="p-2 border rounded-sm bg-red-700/10 dark:bg-red-300/10 border-red-700/20 dark:border-red-300/20 text-red-700 dark:text-red-300 cursor-pointer">
+							<Coins size={20} />
+						</div>
+					</PopoverTrigger>
+					<PopoverContent>
+						<p>Unprofitable Craft, Net Value: {netValue}</p>
+					</PopoverContent>
+				</Popover>
+			)}
 		</div>
 	);
 }

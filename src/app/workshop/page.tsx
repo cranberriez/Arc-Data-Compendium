@@ -1,6 +1,7 @@
 import { WorkbenchList } from "../../components/workbench/workbenchList";
 import ResetUserData from "../../components/workbench/resetUserData";
 import { Metadata } from "next";
+import { WorkshopItemChecklist } from "@/components/checklist/wbItemChecklist";
 
 export const metadata: Metadata = {
 	title: "Workshop | ARC Vault",
@@ -14,7 +15,7 @@ export default async function WorkshopOverview() {
 			<h1 className="text-2xl font-bold text-center mb-6">Workshop Overview</h1>
 			<div className="flex flex-col-reverse xl:grid xl:grid-cols-[1fr_auto] gap-6 items-stretch">
 				<WorkbenchList />
-				{/* <WorkshopItemChecklist /> */}
+				<WorkshopItemChecklist />
 			</div>
 			<div className="flex my-8">
 				<ResetUserData />
