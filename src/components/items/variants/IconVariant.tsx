@@ -78,7 +78,7 @@ export const IconVariant = React.memo(function IconVariant({
 			className={cn(
 				"flex items-center justify-start gap-2 min-w-0",
 				"border-0! hover:bg-primary/10 rounded",
-				"cursor-pointer relative border-2 p-2 pl-0 transition-colors",
+				"cursor-pointer relative border-2 pl-0 transition-colors",
 				iconWideSizeMap[size],
 				className
 			)}
@@ -93,11 +93,15 @@ export const IconVariant = React.memo(function IconVariant({
 				}
 			}}
 		>
-			<ItemImage item={item} showBorder={true} containerClassName="p-0" />
-			{count !== undefined && (
-				<span className="text-base text-right font-mono min-w-6 w-6">{count}</span>
-			)}
-			<span className="text-base text-nowrap truncate">{item.name}</span>
+			<div className="flex items-center justify-center h-full aspect-square">
+				<ItemImage item={item} showBorder={true} containerClassName="p-0" />
+			</div>
+			<div className="flex p-2 pl-0 gap-2">
+				{count !== undefined && (
+					<span className="text-base text-right font-mono min-w-6">{count}</span>
+				)}
+				<span className="text-base text-nowrap truncate">{item.name}</span>
+			</div>
 		</div>
 	);
 });
