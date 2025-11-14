@@ -4,7 +4,6 @@ import * as React from "react";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { ItemHeader, RecyclingSection, SourcesSection, QuickUseSection, GearSection } from ".";
-import DiagDescription from "./diagDescription";
 import { getItemTags } from "@/utils/items";
 import { useDialog } from "@/hooks/useUI";
 import { useRecipes } from "@/hooks/useData";
@@ -56,6 +55,12 @@ export function ItemDialog() {
 				)}
 				{/* Dialog Header */}
 				<ItemHeader item={item} itemTags={itemTags} />
+
+				{item.flavorText && item.flavorText !== "" && (
+					<div className="bg-secondary p-2 rounded w-full max-w-full break-words">
+						{item.flavorText}
+					</div>
+				)}
 
 				{quickUseStats ||
 				quickUseCharge ||
