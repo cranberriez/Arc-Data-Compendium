@@ -5,8 +5,8 @@ import { Item } from "@/types";
 import { cn } from "@/lib/utils";
 import { Card } from "@/components/ui/card";
 import { ItemImage } from "../ItemImage";
-import { ItemContent } from "../ItemContent";
-import { ItemBadges } from "../ItemBadges";
+import { ItemHeader } from "../ItemHeader";
+import { ItemDetails } from "../ItemDetails";
 
 export interface DetailedVariantProps {
 	item: Item;
@@ -30,6 +30,13 @@ export const DetailedVariant = React.memo(function DetailedVariant({
 }: DetailedVariantProps) {
 	if (!item) return null;
 
+	const imageSizes = {
+		sm: "w-12 h-12",
+		md: "w-16 h-16",
+		lg: "w-20 h-20",
+		xl: "w-24 h-24",
+	};
+
 	return (
 		<Card
 			className={cn(
@@ -49,68 +56,14 @@ export const DetailedVariant = React.memo(function DetailedVariant({
 				}
 			}}
 		>
-			<div className="flex flex-col gap-2 w-full">
-				{/* Main content row */}
-				<div
-					className={cn(
-						"flex w-full",
-						orientation === "horizontal"
-							? "flex-row items-start gap-3"
-							: "flex-col items-center gap-2"
-					)}
-				>
-					<div
-						className={cn(
-							"relative",
-							orientation === "vertical" && "flex justify-center w-full"
-						)}
-					>
-						<ItemImage item={item} showBorder={true} />
-						{count !== undefined && (
-							<ItemBadges
-								item={item}
-								count={count}
-								size={size}
-								position="top-right"
-								showRarity={true}
-							/>
-						)}
-					</div>
-
-					<div
-						className={cn(
-							"flex-1 min-w-0 h-full",
-							orientation === "vertical" && "w-full"
-						)}
-					>
-						<ItemContent
-							item={item}
-							size={size}
-							orientation="vertical"
-							showDetails={true}
-							truncate={false}
-							className={orientation === "vertical" ? "items-center text-center" : ""}
-						/>
-					</div>
+			<div className="flex gap-2 w-full min-w-0 flex-wrap">
+				<div className={`flex items-center gap-2 ${imageSizes[size]}`}>
+					<ItemImage item={item} showBorder={true} />
 				</div>
-
-				{/* Description row - now on a separate row to fill horizontal space */}
-				{item.description && (
-					<div className="w-full mt-1">
-						<p
-							className={cn(
-								"text-muted-foreground",
-								size === "sm" && "text-xs",
-								size === "md" && "text-sm",
-								size === "lg" && "text-base",
-								size === "xl" && "text-lg",
-								orientation === "vertical" && "text-center"
-							)}
-						>
-							{item.description}
-						</p>
-					</div>
-				)}
+				<div className="flex flex-col flex-1 gap-2">
+					<ItemHeader item={item} size={size} truncate={true} className="flex-1" />
+					<ItemDetails item={item} size={size} className="flex-1" />
+				</div>
 			</div>
 		</Card>
 	);
