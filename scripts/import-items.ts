@@ -86,12 +86,14 @@ function mapCategory(scraped: ScrapedItem, kind: (typeof FILES)[number]["kind"])
 	if (v.includes("nature") || tags.includes("nature")) return "nature";
 	if (v.includes("ammo") || tags.includes("ammo")) return "ammo";
 	if (v.includes("weapon") || tags.includes("weapon")) return "weapon";
-	if (v.includes("trap") || tags.includes("trap")) return "trap";
+	// Traps are a subtype of quick-use at the item level; use QuickUseData.category to differentiate
+	if (v.includes("trap") || tags.includes("trap")) return "quick_use";
 
 	// dataset-specific defaults
 	if (kind === "augment") return "augment";
 	if (kind === "shield") return "shield";
-	if (kind === "grenade" || kind === "healing" || kind === "quick_use") return "quick_use";
+	if (kind === "grenade" || kind === "healing" || kind === "quick_use" || kind === "trap")
+		return "quick_use";
 
 	// fallback
 	return "misc";
