@@ -99,7 +99,7 @@ export const ItemImage = React.memo(function ItemImage({
 	return (
 		<div
 			className={cn(
-				"relative flex items-center justify-center w-full h-full",
+				"relative flex items-center justify-center w-full h-full dark:bg-transparent bg-primary rounded-xs overflow-hidden",
 				showBorder && "border-2 rounded-sm p-[2px]",
 				borderClass,
 				containerClassName
