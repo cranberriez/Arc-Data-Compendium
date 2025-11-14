@@ -84,13 +84,13 @@ function WorkbenchRecipes({ recipes }: { recipes: WorkbenchRecipe[] }) {
 	return (
 		<div className="flex flex-col gap-6">
 			{Object.entries(groupedRecipes).map(([tier, recipes]) => (
-				<div key={tier} className="flex flex-wrap items-center">
-					<div className="flex items-center gap-2 w-full">
+				<div key={tier} className="flex flex-wrap gap-2 items-center">
+					<div className="flex items-center w-full">
 						<h4 className="ml-2 text-2xl font-semibold dark:text-muted-foreground">
 							Level {tier}
 						</h4>
 					</div>
-					<div className="flex flex-wrap gap-4 w-full">
+					<div className="grid grid-cols-1 xl:grid-cols-2 gap-4 w-full">
 						{recipes.map((recipe) => (
 							<RecipeItem key={recipe.recipeId} recipe={recipe.recipe} />
 						))}
