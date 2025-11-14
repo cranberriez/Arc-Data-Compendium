@@ -18,6 +18,7 @@ import {
 	Box,
 	Cuboid,
 	Hexagon,
+	Target,
 } from "lucide-react";
 
 import { Rarity } from "@/types";
@@ -93,6 +94,8 @@ export const getTypeIcon = (category: string): LucideIconType => {
 			return Settings;
 		case "shield":
 			return Shield;
+		case "trap":
+			return Target;
 		default:
 			return Info;
 	}
