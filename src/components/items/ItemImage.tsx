@@ -106,6 +106,18 @@ export const ItemImage = React.memo(function ItemImage({
 			)}
 			aria-label={`Image of ${item.name}`}
 		>
+			<div
+				className="absolute inset-0"
+				style={{
+					background: `radial-gradient(circle at right top, transparent 75%, var(--color-${item.rarity.toLowerCase()})) 100%`,
+				}}
+			/>
+			<div
+				className="absolute inset-0"
+				style={{
+					background: `radial-gradient(circle at right top, transparent 5%, oklch(from var(--color-${item.rarity.toLowerCase()}) l c h / 0.1)) 100%`,
+				}}
+			/>
 			{imageContent}
 		</div>
 	);
