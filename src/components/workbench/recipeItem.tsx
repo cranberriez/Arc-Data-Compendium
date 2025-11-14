@@ -14,20 +14,19 @@ type RecipeItemProps = {
 
 export function RecipeItem({ recipe, className }: RecipeItemProps) {
 	const { getItemById } = useItems();
+	const profit = useProfit(recipe) as number;
 
 	const output = recipe.io.find((item) => item.role === "output");
 	if (!output) return null;
+	const outputItem = getItemById(output.itemId);
 
 	const outputCount = output.qty;
-	const outputItem = getItemById(output.itemId);
 
 	if (!outputItem) return null;
 
 	const inputs: RecipeItemBase[] = recipe.io.filter((item) => item.role === "input");
 
 	const inputItems: Record<string, InputItem> = buildInputItemsMap(recipe, getItemById);
-
-	const profit = useProfit(recipe) as number;
 
 	return (
 		<div

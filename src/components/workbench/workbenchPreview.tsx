@@ -12,13 +12,13 @@ import { cn } from "@/lib/utils";
 import { getWbColorObject } from "@/utils/workbench/wbColors";
 
 export const WorkbenchPreview = ({ workbench }: { workbench: Workbench }) => {
+	const { getWorkbenchLevel, setWorkbenchLevel } = useWorkbenchLevels();
+
 	if (!workbench) {
 		return <LoadingWorkbenchPreview />;
 	}
 
-	const { getWorkbenchLevel, setWorkbenchLevel } = useWorkbenchLevels();
-
-	let curWbTier = getWorkbenchLevel(workbench.id) || workbench.baseTier;
+	const curWbTier = getWorkbenchLevel(workbench.id) || workbench.baseTier;
 
 	const upgradeWorkbench = () => {
 		setWorkbenchLevel(workbench.id, curWbTier + 1);

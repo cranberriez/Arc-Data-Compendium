@@ -34,10 +34,11 @@ interface WorkbenchClientProps {
 }
 
 export function WorkbenchClient({ workbench }: WorkbenchClientProps) {
-	if (!workbench) return null;
 	const { getItemById } = useItems();
-
 	const { getWorkbenchLevel, setWorkbenchLevel, hasHydrated } = useWorkbenchLevels();
+
+	if (!workbench) return null;
+
 	const storedLevel = hasHydrated ? getWorkbenchLevel(workbench.id) : null;
 
 	// Calculate derived values
