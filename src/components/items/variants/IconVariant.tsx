@@ -96,7 +96,7 @@ export const IconVariant = React.memo(function IconVariant({
 			<div className="flex items-center justify-center h-full aspect-square">
 				<ItemImage item={item} showBorder={true} containerClassName="p-0" />
 			</div>
-			<div className="flex p-2 pl-0 gap-2">
+			<div className="flex p-2 pl-0 gap-2 max-w-full truncate">
 				{count !== undefined && (
 					<span className="text-base text-right font-mono min-w-6">{count}</span>
 				)}
