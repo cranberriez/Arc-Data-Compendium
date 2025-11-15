@@ -20,7 +20,7 @@ export default function DiagDescription({
 }) {
 	return (
 		<>
-			<DialogDescription>
+			<DialogDescription className="max-w-[400px]">
 				<span className="sr-only">
 					Details for {name}, {rarity} {category}
 					{recipeId ? ", Recipe" : ""}

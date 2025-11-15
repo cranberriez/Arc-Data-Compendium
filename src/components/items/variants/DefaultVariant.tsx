@@ -11,7 +11,7 @@ import ItemBadges from "../ItemBadges";
 export interface DefaultVariantProps {
 	item: Item;
 	size?: "sm" | "md" | "lg" | "xl";
-	count?: number;
+	count?: string;
 	onClick?: () => void;
 	className?: string;
 }
@@ -64,9 +64,9 @@ export const DefaultVariant = React.memo(function DefaultVariant({
 			>
 				<ItemImage
 					item={item}
-					size={size === "sm" ? "sm" : size === "md" ? "md" : size === "lg" ? "lg" : "xl"}
 					showBorder={true}
 					containerClassName="h-full"
+					expectedSize={128}
 				/>
 			</div>
 

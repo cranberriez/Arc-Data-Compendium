@@ -1,10 +1,11 @@
 import { readFile } from "fs/promises";
 import path from "path";
-import { eq } from "drizzle-orm";
+import { and, eq } from "drizzle-orm";
 import { db } from "../src/db/drizzle";
 import { items, weapons, recipes, recipeItems } from "../src/db/schema";
 import type { Rarity } from "../src/db/schema/enums";
 import type { WeaponModSlot } from "../src/types/items/weapon";
+import { tiers, workbenchRecipes } from "../src/db/schema/workbenches";
 
 interface ScrapedWeapon {
 	id: string;
@@ -171,14 +172,14 @@ async function upsertItem(rec: ScrapedWeapon) {
 			typeof base.sell_price === "number"
 				? Math.trunc(base.sell_price)
 				: typeof rec.sell_price === "number"
-					? Math.trunc(rec.sell_price)
-					: 0,
+				? Math.trunc(rec.sell_price)
+				: 0,
 		weight:
 			typeof base.weight === "number"
 				? base.weight
 				: typeof rec.weight === "number"
-					? rec.weight
-					: 0,
+				? rec.weight
+				: 0,
 		maxStack: typeof rec.stack_size === "number" ? Math.trunc(rec.stack_size) : 1,
 		category: "weapon" as const,
 		foundIn: normalizeFoundIn(rec.found_in) ?? [],
@@ -239,8 +240,8 @@ async function ensureRecycleRecipe(rec: ScrapedWeapon) {
 			.insert(recipeItems)
 			.values({ recipeId, itemId: materialId, role: "output", qty: n });
 	}
-    // set canonical recycling recipe pointer on item
-    await db.update(items).set({ recyclingId: recipeId }).where(eq(items.id, rec.id));
+	// set canonical recycling recipe pointer on item
+	await db.update(items).set({ recyclingId: recipeId }).where(eq(items.id, rec.id));
 }
 
 async function ensureCraftRecipe(rec: ScrapedWeapon) {
@@ -249,16 +250,18 @@ async function ensureCraftRecipe(rec: ScrapedWeapon) {
 	const first = rawList[0] as any;
 	const recipeId = `craft_${rec.id}`;
 	const isBlueprintLocked = Boolean(first?.blueprint);
+	const workbenches = (first?.workbenches ?? {}) as Record<string, number | string>;
+	const inRaid = Object.prototype.hasOwnProperty.call(workbenches, "inventory");
 	// upsert recipe header
 	const existing = await db.select().from(recipes).where(eq(recipes.id, recipeId));
 	if (existing.length === 0) {
 		await db
 			.insert(recipes)
-			.values({ id: recipeId, type: "crafting", isBlueprintLocked, inRaid: false });
+			.values({ id: recipeId, type: "crafting", isBlueprintLocked, inRaid });
 	} else if (existing.length > 0) {
 		await db
 			.update(recipes)
-			.set({ type: "crafting", isBlueprintLocked, inRaid: false })
+			.set({ type: "crafting", isBlueprintLocked, inRaid })
 			.where(eq(recipes.id, recipeId));
 	}
 	// reset IO rows
@@ -273,8 +276,36 @@ async function ensureCraftRecipe(rec: ScrapedWeapon) {
 	}
 	// output: the weapon item itself (qty 1)
 	await db.insert(recipeItems).values({ recipeId, itemId: rec.id, role: "output", qty: 1 });
-    // set canonical crafting recipe pointer on item
-    await db.update(items).set({ recipeId }).where(eq(items.id, rec.id));
+	// set canonical crafting recipe pointer on item
+	await db.update(items).set({ recipeId }).where(eq(items.id, rec.id));
+
+	// Upsert workbench_recipes mapping for this weapon craft recipe
+	await db.delete(workbenchRecipes).where(eq(workbenchRecipes.recipeId, recipeId));
+	for (const [wbIdRaw, tier] of Object.entries(workbenches)) {
+		if (wbIdRaw === "inventory") continue; // handled via inRaid
+
+		let correctedWBID = wbIdRaw;
+		if (wbIdRaw === "workbench_i") correctedWBID = "workbench";
+		else if (wbIdRaw === "gear_bench_i") correctedWBID = "gear_bench";
+		else if (wbIdRaw === "explosive_station") correctedWBID = "explosives_station";
+
+		const tierNum = typeof tier === "number" ? tier : parseInt(String(tier), 10);
+		if (!Number.isFinite(tierNum)) continue;
+
+		const tierRow = await db
+			.select({ t: tiers.tier })
+			.from(tiers)
+			.where(and(eq(tiers.workbenchId, correctedWBID), eq(tiers.tier, tierNum)));
+		if (tierRow.length === 0) {
+			console.warn(
+				`Skip linking recipe ${recipeId} to ${correctedWBID} tier ${tierNum}: tier not found (seed workbench tiers first)`
+			);
+			continue;
+		}
+		await db
+			.insert(workbenchRecipes)
+			.values({ workbenchId: correctedWBID, workbenchTier: tierNum, recipeId });
+	}
 }
 
 (async function main() {
@@ -305,7 +336,9 @@ async function ensureCraftRecipe(rec: ScrapedWeapon) {
 					scan((rec as any).base?.stats);
 					scan((rec as any).base?.weapon_stats);
 					console.warn(
-						`No base stats parsed for ${rec.id}. Sample numeric keys: ${candidates.join(", ")}`
+						`No base stats parsed for ${rec.id}. Sample numeric keys: ${candidates.join(
+							", "
+						)}`
 					);
 				}
 				const b = await upsertWeapon({ ...rec });

@@ -35,7 +35,7 @@ const compareByRarity = (a: Item, b: Item, sortOrder: SortOrder): number => {
 	const aRarity = rarityOrder[a.rarity];
 	const bRarity = rarityOrder[b.rarity];
 	const result = aRarity - bRarity;
-	return sortOrder === "desc" ? -result : result;
+	return sortOrder === "desc" ? result : -result;
 };
 
 /**
@@ -52,7 +52,7 @@ const compareByCategory = (a: Item, b: Item, sortOrder: SortOrder): number => {
 
 const compareByValue = (a: Item, b: Item, sortOrder: SortOrder): number => {
 	const result = a.value - b.value;
-	return sortOrder === "desc" ? -result : result;
+	return sortOrder === "desc" ? result : -result;
 };
 
 /**

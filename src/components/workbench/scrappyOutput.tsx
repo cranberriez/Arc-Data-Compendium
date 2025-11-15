@@ -37,6 +37,8 @@ export function ScrappyOutput({ currentTier }: { currentTier: number }) {
 		return <div>No data available for this tier.</div>;
 	}
 
+	return <div>Scrappy output is currently unknown.</div>;
+
 	return (
 		<div className="space-y-4 flex flex-wrap gap-8">
 			<div>
@@ -45,10 +47,7 @@ export function ScrappyOutput({ currentTier }: { currentTier: number }) {
 					<span className="font-medium">{rewards.success.common}x each of:</span>
 					<div className="flex flex-wrap gap-2">
 						{commonMaterials.map((mat) => (
-							<span
-								key={mat}
-								className="inline-block px-2 py-1 bg-muted rounded"
-							>
+							<span key={mat} className="inline-block px-2 py-1 bg-muted rounded">
 								{mat}
 							</span>
 						))}
@@ -67,10 +66,7 @@ export function ScrappyOutput({ currentTier }: { currentTier: number }) {
 					<span className="font-medium">{rewards.failure.common}x each of:</span>
 					<div className="flex flex-wrap gap-2">
 						{commonMaterials.map((mat) => (
-							<span
-								key={mat}
-								className="inline-block px-2 py-1 bg-muted rounded"
-							>
+							<span key={mat} className="inline-block px-2 py-1 bg-muted rounded">
 								{mat}
 							</span>
 						))}

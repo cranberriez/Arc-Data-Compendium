@@ -2,7 +2,7 @@
 
 import React from "react";
 import { useState, useEffect, useMemo } from "react";
-import { useItems } from "@/contexts/itemContext";
+import { useItemFilters } from "@/hooks/useUI";
 import { getTypeIcon, getRarityColor, formatName, searchFunc } from "@/utils/items/itemUtils";
 import { Item } from "@/types";
 import { Badge } from "@/components/ui/badge";
@@ -16,9 +16,9 @@ import {
 	CommandSeparator,
 } from "@/components/ui/command";
 import { ItemCategory } from "@/types";
-import { useDialog } from "@/contexts/dialogContext";
+import { useDialog } from "@/hooks/useUI";
 import { usePathname, useRouter } from "next/navigation";
-import getItemIcon from "@/components/items/getItemIcon";
+import Image from "next/image";
 
 export function SearchDialog({
 	open,
@@ -31,7 +31,7 @@ export function SearchDialog({
 	allItems: Item[];
 	showCategories?: boolean;
 }) {
-	const { setSearchQuery, setCategory } = useItems();
+	const { setSearchQuery, setCategories } = useItemFilters();
 	// Local search state that doesn't affect global filtering until selection
 	const [localSearch, setLocalSearch] = useState("");
 	// Local category state that doesn't affect global filtering until selection
@@ -110,7 +110,7 @@ export function SearchDialog({
 
 		// Apply both search term and category filter
 		setSearchQuery(localSearch);
-		setCategory([category]);
+		setCategories([category]);
 		onOpenChange(false);
 	};
 
@@ -124,11 +124,7 @@ export function SearchDialog({
 	};
 
 	return (
-		<CommandDialog
-			open={open}
-			onOpenChange={onOpenChange}
-			className="top-[3rem] translate-y-0"
-		>
+		<CommandDialog open={open} onOpenChange={onOpenChange} className="top-[3rem] translate-y-0">
 			<CommandInput
 				placeholder="Search for items..."
 				value={localSearch}
@@ -158,10 +154,7 @@ export function SearchDialog({
 								<span>{formatName(category)}</span>
 
 								{/* Count badge */}
-								<Badge
-									variant="secondary"
-									className="ml-auto"
-								>
+								<Badge variant="secondary" className="ml-auto">
 									{categoryCounts[category]}
 								</Badge>
 							</div>
@@ -192,21 +185,43 @@ const createCommandItems = (
 			key={`item-${item.id}`}
 			onSelect={() => handleItemSelect(item)}
 			value={`${localSearch} ${item.name}`}
+			className="p-0!"
 		>
-			<div className="flex items-center gap-2">
+			<div className="flex items-center gap-2 w-full">
 				{/* Item icon */}
-				<div className="h-5 w-5 flex items-center justify-center">
-					{getItemIcon(item.icon, "h-4 w-4")}
+				<div className="h-12 w-12 flex items-center ml-2 relative">
+					<Image
+						src={`/images/items/${item.id}.webp`}
+						alt={item.name}
+						width={64}
+						height={64}
+						className="z-10"
+					/>
+					<div
+						className="absolute h-full w-full opacity-45"
+						style={{
+							background: `radial-gradient(circle, var(--color-${item.rarity}) 0%, transparent 75%)`,
+						}}
+					/>
 				</div>
 
 				{/* Item name */}
-				<span className="align-top">{item.name}</span>
+				<span className="align-top p-2">{item.name}</span>
 
 				{/* Rarity dot */}
-				<div
+				{/* <div
 					className={`ml-auto h-2 w-2 rounded-full ${getRarityColor(item.rarity, "bg")}`}
 					title={`${item.rarity.charAt(0).toUpperCase() + item.rarity.slice(1)}`}
-				/>
+				/> */}
+
+				{/* Category Icon */}
+				<div className="ml-auto mr-2">
+					{React.createElement(getTypeIcon(item.category), {
+						size: 16,
+						fill: "var(--color-text)",
+						stroke: `var(--color-${item.rarity})`,
+					})}
+				</div>
 			</div>
 		</CommandItem>
 	));

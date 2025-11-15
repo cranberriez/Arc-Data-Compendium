@@ -86,12 +86,14 @@ function mapCategory(scraped: ScrapedItem, kind: (typeof FILES)[number]["kind"])
 	if (v.includes("nature") || tags.includes("nature")) return "nature";
 	if (v.includes("ammo") || tags.includes("ammo")) return "ammo";
 	if (v.includes("weapon") || tags.includes("weapon")) return "weapon";
-	if (v.includes("trap") || tags.includes("trap")) return "trap";
+	// Traps are a subtype of quick-use at the item level; use QuickUseData.category to differentiate
+	if (v.includes("trap") || tags.includes("trap")) return "quick_use";
 
 	// dataset-specific defaults
 	if (kind === "augment") return "augment";
 	if (kind === "shield") return "shield";
-	if (kind === "grenade" || kind === "healing" || kind === "quick_use") return "quick_use";
+	if (kind === "grenade" || kind === "healing" || kind === "quick_use" || kind === "trap")
+		return "quick_use";
 
 	// fallback
 	return "misc";
@@ -221,20 +223,20 @@ async function upsertItem(rec: ScrapedItem, kind: (typeof FILES)[number]["kind"]
 		weight: typeof rec.weight === "number" ? rec.weight : 0,
 		maxStack: typeof rec.stack_size === "number" ? Math.trunc(rec.stack_size) : 1,
 		category: mapCategory(rec, kind),
-		quickUse: buildQuickUse(kind),
+		quickUse: undefined,
 		// gear: set only for augment dataset with strict stats mapping
 		gear:
 			kind === "augment"
 				? {
 						category: "augment" as const,
 						stats: mapAugmentStatsOrThrow(rec),
-					}
+				  }
 				: kind === "shield"
-					? {
-							category: "shield" as const,
-							stats: mapShieldStatsOrThrow(rec),
-						}
-					: undefined,
+				? {
+						category: "shield" as const,
+						stats: mapShieldStatsOrThrow(rec),
+				  }
+				: undefined,
 		foundIn: normalizeFoundIn(rec.found_in) ?? [],
 	} as const;
 

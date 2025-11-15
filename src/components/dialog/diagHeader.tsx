@@ -6,8 +6,9 @@ import React from "react";
 import { formatName, getTypeIcon } from "@/utils/items/itemUtils";
 import getItemIcon from "@/components/items/getItemIcon";
 import { ItemTagData } from "@/utils/items";
-import ItemImage from "../items/ItemImage";
+import { ItemImage } from "@/components/items/ItemImage";
 import { Item } from "@/types";
+import DiagDescription from "./diagDescription";
 
 // Component that displays item header information
 export const ItemHeader = ({ item, itemTags }: { item: Item; itemTags: ItemTagData[] }) => {
@@ -23,10 +24,10 @@ export const ItemHeader = ({ item, itemTags }: { item: Item; itemTags: ItemTagDa
 		<DialogHeader className="flex flex-col justify-start gap-4">
 			{/* Keep existing header content from DialogHeader */}
 			<div className="flex flex-row items-center gap-4 sm:pr-2">
-				<div className="flex flex-col items-start">
-					<ItemImage item={item} size="xl" />
+				<div className="flex flex-col items-start w-40 h-40">
+					<ItemImage item={item} expectedSize={152} />
 				</div>
-				<div className="flex flex-col items-start">
+				<div className="flex flex-col items-start gap-3">
 					<DialogTitle className="text-left text-2xl font-normal pr-6 sm:pr-0">
 						{item.name}
 					</DialogTitle>
@@ -37,6 +38,16 @@ export const ItemHeader = ({ item, itemTags }: { item: Item; itemTags: ItemTagDa
 						className="hidden sm:block"
 						bgColor={rarityColors.bg}
 						itemTags={filteredTags}
+					/>
+
+					<DiagDescription
+						name={item.name}
+						rarity={item.rarity}
+						category={item.category}
+						recipeId={item.recipeId}
+						itemDescription={item.description}
+						weight={item.weight}
+						sellValue={item.value}
 					/>
 				</div>
 			</div>

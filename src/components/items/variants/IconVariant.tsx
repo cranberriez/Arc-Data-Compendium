@@ -10,7 +10,7 @@ import { ItemBadges } from "../ItemBadges";
 export interface IconVariantProps {
 	item: Item;
 	size?: "sm" | "md" | "lg" | "xl";
-	count?: number;
+	count?: string;
 	onClick?: () => void;
 	className?: string;
 	showBorder?: boolean;
@@ -37,10 +37,10 @@ export const IconVariant = React.memo(function IconVariant({
 	};
 
 	const iconWideSizeMap = {
-		sm: "h-10 w-64",
-		md: "h-14 w-64",
-		lg: "h-18 w-64",
-		xl: "h-22 w-64",
+		sm: "h-10",
+		md: "h-14",
+		lg: "h-18",
+		xl: "h-22",
 	};
 
 	if (!item) return null;
@@ -49,7 +49,7 @@ export const IconVariant = React.memo(function IconVariant({
 		<div
 			className={cn(
 				"flex items-center justify-center",
-				"border hover:border-primary/60 rounded",
+				"hover:border-primary/60 rounded",
 				"cursor-pointer relative border-2",
 				showBorder ? `${getRarityColor(item.rarity, "border")}` : `border-transparent`,
 				iconSizeMap[size],
@@ -66,12 +66,7 @@ export const IconVariant = React.memo(function IconVariant({
 				}
 			}}
 		>
-			<ItemImage
-				item={item}
-				size={size === "sm" ? "sm" : size === "md" ? "md" : size === "lg" ? "lg" : "xl"}
-				showBorder={false}
-				containerClassName="p-0"
-			/>
+			<ItemImage item={item} showBorder={false} containerClassName="p-0" />
 
 			{count !== undefined && (
 				<ItemBadges item={item} count={count} size={size} position="top-right" />
@@ -82,9 +77,8 @@ export const IconVariant = React.memo(function IconVariant({
 		<div
 			className={cn(
 				"flex items-center justify-start gap-2 min-w-0",
-				"border hover:border-primary/40 hover:bg-primary/10 rounded",
-				"cursor-pointer relative border-2 p-2 transition-colors",
-				showBorder ? `${getRarityColor(item.rarity, "border")}` : `border-transparent`,
+				"border-0! hover:bg-primary/10 rounded",
+				"cursor-pointer relative border-2 pl-0 transition-colors",
 				iconWideSizeMap[size],
 				className
 			)}
@@ -99,16 +93,15 @@ export const IconVariant = React.memo(function IconVariant({
 				}
 			}}
 		>
-			<ItemImage
-				item={item}
-				size={size === "sm" ? "sm" : size === "md" ? "md" : size === "lg" ? "lg" : "xl"}
-				showBorder={false}
-				containerClassName="p-0"
-			/>
-			{count !== undefined && (
-				<span className="text-base text-right font-mono min-w-6 w-6">{count}</span>
-			)}
-			<span className="text-base text-nowrap truncate">{item.name}</span>
+			<div className="flex items-center justify-center h-full aspect-square">
+				<ItemImage item={item} showBorder={true} containerClassName="p-0" />
+			</div>
+			<div className="flex p-2 pl-0 gap-2 max-w-full truncate">
+				{count !== undefined && (
+					<span className="text-base text-right font-mono min-w-6">{count}</span>
+				)}
+				<span className="text-base text-nowrap truncate">{item.name}</span>
+			</div>
 		</div>
 	);
 });

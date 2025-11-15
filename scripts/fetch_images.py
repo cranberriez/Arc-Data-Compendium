@@ -35,6 +35,9 @@ for data_file in DATA_FILES:
             continue
 
         file_path = OUT_DIR / f"{item_id}.webp"
+        if file_path.exists():
+            print(f"Skipping existing file: {file_path.name}")
+            continue
 
         try:
             resp = requests.get(url, timeout=30)

@@ -3,8 +3,7 @@
 import * as React from "react";
 import { useCallback } from "react";
 import { Item } from "@/types";
-import { useDialog } from "@/contexts/dialogContext";
-import { useItems } from "@/contexts/itemContext";
+import { useDialog } from "@/hooks/useUI";
 import { IconVariant, CompactVariant, DetailedVariant, DefaultVariant } from "./variants";
 
 export interface ItemCardProps {
@@ -17,7 +16,7 @@ export interface ItemCardProps {
 	/** Orientation of the layout */
 	orientation?: "horizontal" | "vertical";
 	/** Item count to display */
-	count?: number;
+	count?: number | string | undefined;
 	/** Item count to display inside the card */
 	innerCount?: boolean;
 	/** Click handler */
@@ -48,7 +47,6 @@ export const ItemCard = React.memo(
 		showBorder = true,
 	}: ItemCardProps) {
 		const { openDialog } = useDialog();
-		const { getItemById } = useItems();
 
 		// Track render performance if callback provided
 		React.useEffect(() => {
@@ -62,12 +60,14 @@ export const ItemCard = React.memo(
 			if (onClick) {
 				onClick();
 			} else {
-				openDialog("item", getItemById(item.id));
+				openDialog("item", item);
 			}
-		}, [item, onClick, openDialog, getItemById]);
+		}, [item, onClick, openDialog]);
 
 		// Early return if no item
 		if (!item) return null;
+
+		const countString = count !== undefined ? count.toString() : undefined;
 
 		// Render the appropriate variant
 		switch (variant) {
@@ -76,7 +76,7 @@ export const ItemCard = React.memo(
 					<IconVariant
 						item={item}
 						size={size}
-						count={count}
+						count={countString}
 						onClick={handleClick}
 						className={className + " group/itemcard"}
 						showBorder={showBorder}
@@ -88,7 +88,7 @@ export const ItemCard = React.memo(
 					<CompactVariant
 						item={item}
 						size={size}
-						count={count}
+						count={countString}
 						innerCount={innerCount}
 						onClick={handleClick}
 						showBorder={showBorder}
@@ -102,7 +102,7 @@ export const ItemCard = React.memo(
 						item={item}
 						size={size}
 						orientation={orientation}
-						count={count}
+						count={countString}
 						onClick={handleClick}
 						className={className + " group/itemcard"}
 					/>
@@ -112,7 +112,7 @@ export const ItemCard = React.memo(
 					<DefaultVariant
 						item={item}
 						size={size}
-						count={count}
+						count={countString}
 						onClick={handleClick}
 						className={className + " group/itemcard"}
 					/>

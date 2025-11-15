@@ -9,9 +9,16 @@ import {
 	Package,
 	Shield,
 	Sword,
-	Trophy,
+	Gem,
 	Wrench,
 	Zap,
+	Leaf,
+	KeyRound,
+	Settings,
+	Box,
+	Cuboid,
+	Hexagon,
+	Target,
 } from "lucide-react";
 
 import { Rarity } from "@/types";
@@ -60,7 +67,7 @@ export const getTypeIcon = (category: string): LucideIconType => {
 		case "gear":
 			return Shield;
 		case "trinket":
-			return Trophy;
+			return Gem;
 		case "consumable":
 			return Heart;
 		case "recyclable":
@@ -73,6 +80,22 @@ export const getTypeIcon = (category: string): LucideIconType => {
 			return MapPin;
 		case "refined_material":
 			return Anvil;
+		case "basic_material":
+			return Box;
+		case "advanced_material":
+			return Cuboid;
+		case "augment":
+			return Hexagon;
+		case "key":
+			return KeyRound;
+		case "nature":
+			return Leaf;
+		case "modification":
+			return Settings;
+		case "shield":
+			return Shield;
+		case "trap":
+			return Target;
 		default:
 			return Info;
 	}
@@ -90,12 +113,8 @@ export const formatCamelName = (type: string) => {
 };
 
 export const formatValue = (value: number) => {
-	return value.toLocaleString("en-US", {
-		style: "currency",
-		currency: "USD",
-		minimumFractionDigits: 0,
-		maximumFractionDigits: 0,
-	});
+	// comma seperated number
+	return value.toLocaleString();
 };
 
 export const searchFunc = (item: Item, query: string) => {

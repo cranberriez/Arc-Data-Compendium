@@ -2,12 +2,13 @@
 
 A comprehensive web application for browsing and searching through game data for Arc, featuring items, workbenches, recipes, and valuables. This application serves as an interactive database and reference guide for players of the Arc game, providing detailed information about in-game items, crafting recipes, and workbench mechanics. With more coming soon.
 
-## 🚀 Getting Started
+## Getting Started
 
 ### Prerequisites
 
 -   Node.js 18.0.0 or later
 -   npm, yarn, pnpm, or bun package manager
+-   A postgreSQL database (anything works but I use NeonDB with a direct access URL, will have more setup later)
 
 ### Installation
 
@@ -44,30 +45,6 @@ A comprehensive web application for browsing and searching through game data for
 
 4. Open [http://localhost:3000](http://localhost:3000) in your browser to see the application.
 
-## 🏗 Project Structure
-
-```
-src/
-├── app/                  # App router pages and layouts
-│   ├── items/           # Item browser and details
-│   ├── workbenches/     # Workbench interface
-│   └── valuables/       # Valuable items browser
-├── components/          # Reusable UI components
-│   ├── dialog/         # Dialog components
-│   ├── items/          # Item-related components
-│   ├── workbench/      # Workbench UI components
-│   └── ui/             # Base UI components (shadcn)
-├── contexts/           # React context providers
-├── data/               # Game data and types
-│   ├── items/         # Item definitions and utilities
-│   ├── recipes/       # Crafting recipes
-│   ├── valuables/     # Valuable items
-│   └── workbenches/   # Workbench configurations
-├── lib/                # Utility functions and hooks
-├── types/              # TypeScript type definitions
-└── styles/             # Global styles and theme
-```
-
 ## 🛠 Development
 
 ### Available Scripts
@@ -76,6 +53,8 @@ src/
 -   `npm run build` - Build the application for production
 -   `npm start` - Start the production server
 -   `npm run lint` - Run ESLint
+
+I've provided a script to seed the database with game data. There are a bunch of (possibly outdated) JSON data files about the game. You can run `npm run seed` to seed the database with game data.
 
 ### Code Style
 
