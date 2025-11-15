@@ -5,7 +5,6 @@ import { useWorkbenches } from "@/hooks/useData";
 
 export const WorkbenchList = () => {
 	const { workbenches } = useWorkbenches();
-	console.log(workbenches);
 
 	return (
 		<div className="flex-1 grid gap-4 [grid-template-columns:repeat(auto-fit,minmax(min(100%,448px),1fr))]">

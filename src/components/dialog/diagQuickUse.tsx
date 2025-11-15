@@ -25,7 +25,6 @@ export const QuickUseSection = ({
 	quickUse: QuickUseData | null;
 	charge: QuickUseCharge | null;
 }) => {
-	console.log(quickUse);
 	const stats = quickUse?.stats ?? null;
 	if (!stats || stats.length === 0) return null;
 

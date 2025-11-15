@@ -35,8 +35,6 @@ export const WorkshopItemChecklist = () => {
 		return map;
 	}, [workbenches, workbenchLevels, getWorkbenchLevel]);
 
-	console.log(summary);
-
 	return (
 		<div className="flex flex-col gap-4 border-2 rounded p-2 w-full h-fit xl:w-fit xl:h-full">
 			<h2 className="text-lg font-semibold text-center">Workbench Upgrade Items</h2>
@@ -45,7 +43,7 @@ export const WorkshopItemChecklist = () => {
 					{loading
 						? Array.from({ length: 12 }).map((_, idx) => (
 								<ItemChecklistSkeleton key={idx} />
-							))
+						  ))
 						: Object.entries(summary)
 								.sort((a, b) => b[1].count - a[1].count)
 								.map(([itemId, itemSummary]) => {
