@@ -1,6 +1,6 @@
 "use client";
 
-import ToolbarZustand from "./toolbar-zustand";
+import ToolbarZustand from "./toolbar";
 import { useSidebar } from "@/components/ui/sidebar";
 import { cn } from "@/lib/utils";
 
