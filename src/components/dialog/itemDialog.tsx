@@ -31,7 +31,7 @@ export function ItemDialog() {
 	const gearStats = item.gear?.stats;
 	const gearType = item.gear?.category;
 	const recyclingRecipe: Recipe | null = item.recycling ?? null;
-	const craftingRecipes: Recipe[] = item.recipe ?? [];
+	const craftingRecipe: Recipe | null = item.recipe ?? null;
 	const recyclingSources = getRecyclingSourcesById(item.id ?? "");
 	const itemTags = getItemTags(item);
 
@@ -67,7 +67,7 @@ export function ItemDialog() {
 				gearStats ||
 				gearType ||
 				recyclingRecipe ||
-				craftingRecipes.length > 0 ? (
+				craftingRecipe ? (
 					<hr className="my-2 border-t border-t-secondary-foreground/20 dark:border-t-secondary-foreground/10" />
 				) : null}
 

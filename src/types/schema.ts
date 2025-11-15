@@ -71,7 +71,7 @@ export type Item = ItemBase & {
 	weapon?: WeaponBase & {
 		upgrades?: UpgradeBase[];
 	};
-	recipe?: Recipe[];
+	recipe?: Recipe | null;
 	recycling?: RecyclingRecipe | null;
 	recyclingSources?: Recipe[];
 	questEntries?: ItemQuestEntry[];
