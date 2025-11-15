@@ -6,7 +6,7 @@ import React from "react";
 import { formatName, getTypeIcon } from "@/utils/items/itemUtils";
 import getItemIcon from "@/components/items/getItemIcon";
 import { ItemTagData } from "@/utils/items";
-import ItemImage from "../items/ItemImage";
+import { ItemImage } from "@/components/items/ItemImage";
 import { Item } from "@/types";
 import DiagDescription from "./diagDescription";
 

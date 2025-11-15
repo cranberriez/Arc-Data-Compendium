@@ -45,7 +45,7 @@ export const WorkshopItemChecklist = () => {
 					{loading
 						? Array.from({ length: 12 }).map((_, idx) => (
 								<ItemChecklistSkeleton key={idx} />
-						  ))
+							))
 						: Object.entries(summary)
 								.sort((a, b) => b[1].count - a[1].count)
 								.map(([itemId, itemSummary]) => {
