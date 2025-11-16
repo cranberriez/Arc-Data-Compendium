@@ -5,6 +5,7 @@ import { db } from "../src/db/drizzle";
 import { items } from "../src/db/schema";
 import type { ItemCategory, Rarity } from "../src/db/schema/enums";
 import type { QuickUseData } from "../src/types/items/quickuse";
+import { ensureCurrentVersionId } from "./version";
 
 // Input record shape from scraped JSON (partial)
 interface ScrapedItem {
@@ -86,12 +87,14 @@ function mapCategory(scraped: ScrapedItem, kind: (typeof FILES)[number]["kind"])
 	if (v.includes("nature") || tags.includes("nature")) return "nature";
 	if (v.includes("ammo") || tags.includes("ammo")) return "ammo";
 	if (v.includes("weapon") || tags.includes("weapon")) return "weapon";
-	if (v.includes("trap") || tags.includes("trap")) return "trap";
+	// Traps are a subtype of quick-use at the item level; use QuickUseData.category to differentiate
+	if (v.includes("trap") || tags.includes("trap")) return "quick_use";
 
 	// dataset-specific defaults
 	if (kind === "augment") return "augment";
 	if (kind === "shield") return "shield";
-	if (kind === "grenade" || kind === "healing" || kind === "quick_use") return "quick_use";
+	if (kind === "grenade" || kind === "healing" || kind === "quick_use" || kind === "trap")
+		return "quick_use";
 
 	// fallback
 	return "misc";
@@ -209,7 +212,11 @@ async function readJson(filePath: string) {
 	return JSON.parse(raw) as ScrapedItem[];
 }
 
-async function upsertItem(rec: ScrapedItem, kind: (typeof FILES)[number]["kind"]) {
+async function upsertItem(
+	rec: ScrapedItem,
+	kind: (typeof FILES)[number]["kind"],
+	currentVersionId: number
+) {
 	const desc = (rec.description ?? "").trim();
 	const mapped = {
 		id: rec.id,
@@ -221,34 +228,40 @@ async function upsertItem(rec: ScrapedItem, kind: (typeof FILES)[number]["kind"]
 		weight: typeof rec.weight === "number" ? rec.weight : 0,
 		maxStack: typeof rec.stack_size === "number" ? Math.trunc(rec.stack_size) : 1,
 		category: mapCategory(rec, kind),
-		quickUse: buildQuickUse(kind),
+		quickUse: undefined,
 		// gear: set only for augment dataset with strict stats mapping
 		gear:
 			kind === "augment"
 				? {
 						category: "augment" as const,
 						stats: mapAugmentStatsOrThrow(rec),
-					}
+				  }
 				: kind === "shield"
-					? {
-							category: "shield" as const,
-							stats: mapShieldStatsOrThrow(rec),
-						}
-					: undefined,
+				? {
+						category: "shield" as const,
+						stats: mapShieldStatsOrThrow(rec),
+				  }
+				: undefined,
 		foundIn: normalizeFoundIn(rec.found_in) ?? [],
 	} as const;
 
 	const existing = await db.select().from(items).where(eq(items.id, rec.id));
 	if (existing.length > 0) {
-		await db.update(items).set(mapped).where(eq(items.id, rec.id));
+		// Do not overwrite version once set; only set if missing
+		const update: any = { ...mapped };
+		if (existing[0].versionId == null) {
+			update.versionId = currentVersionId;
+		}
+		await db.update(items).set(update).where(eq(items.id, rec.id));
 		return { id: rec.id, action: "updated" as const };
 	} else {
-		await db.insert(items).values(mapped);
+		await db.insert(items).values({ ...mapped, versionId: currentVersionId });
 		return { id: rec.id, action: "inserted" as const };
 	}
 }
 
 async function main() {
+	const currentVersionId = await ensureCurrentVersionId();
 	let updated = 0;
 	let inserted = 0;
 	for (const def of FILES) {
@@ -257,7 +270,7 @@ async function main() {
 			const list = await readJson(p);
 			for (const rec of list) {
 				if (!rec?.id || !rec?.name) continue;
-				const res = await upsertItem(rec, def.kind);
+				const res = await upsertItem(rec, def.kind, currentVersionId);
 				if (res.action === "updated") updated++;
 				else inserted++;
 			}

@@ -1,15 +1,39 @@
 "use client";
 
-import { useWorkshop } from "@/contexts/workshopContext";
-import { useItems } from "@/contexts/itemContext";
+import { useItems, useWorkbenches } from "@/hooks/useData";
+import { useWorkbenchLevels } from "@/hooks/useUser";
+import { useMemo } from "react";
 import { InfoIcon } from "lucide-react";
 import { ItemChecklistSkeleton } from "./checklistItem";
 import { ChecklistItem } from "./checklistItem";
 
 export const WorkshopItemChecklist = () => {
-	const { loading, workbenchUpgradeSummary } = useWorkshop();
+	const { workbenches, isLoading } = useWorkbenches();
 	const { getItemById } = useItems();
-	const summary = workbenchUpgradeSummary;
+	const { workbenchLevels, getWorkbenchLevel, hasHydrated } = useWorkbenchLevels();
+
+	const loading = isLoading || !hasHydrated;
+
+	const summary = useMemo(() => {
+		const map: Record<
+			string,
+			{ count: number; usedIn: { workbenchId: string; targetTier: number }[] }
+		> = {};
+		for (const wb of workbenches) {
+			const current = getWorkbenchLevel(wb.id) ?? 0;
+			const targetTier = current + 1;
+			const tier = wb.tiers?.find((t) => t.tier === targetTier);
+			if (!tier || !tier.requirements) continue;
+			for (const req of tier.requirements) {
+				if (!map[req.itemId]) {
+					map[req.itemId] = { count: 0, usedIn: [] };
+				}
+				map[req.itemId].count += req.count;
+				map[req.itemId].usedIn.push({ workbenchId: wb.id, targetTier });
+			}
+		}
+		return map;
+	}, [workbenches, workbenchLevels, getWorkbenchLevel]);
 
 	return (
 		<div className="flex flex-col gap-4 border-2 rounded p-2 w-full h-fit xl:w-fit xl:h-full">
@@ -19,7 +43,7 @@ export const WorkshopItemChecklist = () => {
 					{loading
 						? Array.from({ length: 12 }).map((_, idx) => (
 								<ItemChecklistSkeleton key={idx} />
-							))
+						  ))
 						: Object.entries(summary)
 								.sort((a, b) => b[1].count - a[1].count)
 								.map(([itemId, itemSummary]) => {

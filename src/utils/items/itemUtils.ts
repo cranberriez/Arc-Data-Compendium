@@ -18,6 +18,7 @@ import {
 	Box,
 	Cuboid,
 	Hexagon,
+	Target,
 } from "lucide-react";
 
 import { Rarity } from "@/types";
@@ -93,6 +94,8 @@ export const getTypeIcon = (category: string): LucideIconType => {
 			return Settings;
 		case "shield":
 			return Shield;
+		case "trap":
+			return Target;
 		default:
 			return Info;
 	}
@@ -110,12 +113,8 @@ export const formatCamelName = (type: string) => {
 };
 
 export const formatValue = (value: number) => {
-	return value.toLocaleString("en-US", {
-		style: "currency",
-		currency: "USD",
-		minimumFractionDigits: 0,
-		maximumFractionDigits: 0,
-	});
+	// comma seperated number
+	return value.toLocaleString();
 };
 
 export const searchFunc = (item: Item, query: string) => {

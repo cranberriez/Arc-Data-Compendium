@@ -3,6 +3,7 @@ import path from "path";
 import { and, eq, inArray } from "drizzle-orm";
 import { db } from "../src/db/drizzle";
 import { items, recipes, recipeItems, ioEnum } from "../src/db/schema";
+import { ensureCurrentVersionId } from "./version";
 
 interface ScrapedItem {
 	id: string;
@@ -31,7 +32,11 @@ async function ensureItemsExist(ids: string[]): Promise<Set<string>> {
 	return new Set(rows.map((r) => r.id));
 }
 
-async function upsertRecyclingRecipe(inputItemId: string, outputs: Record<string, number>) {
+async function upsertRecyclingRecipe(
+	inputItemId: string,
+	outputs: Record<string, number>,
+	currentVersionId: number
+) {
 	const recipeId = `recycle_${inputItemId}`;
 
 	// Ensure input and output items exist
@@ -53,7 +58,13 @@ async function upsertRecyclingRecipe(inputItemId: string, outputs: Record<string
 	if (existingRecipe.length === 0) {
 		await db
 			.insert(recipes)
-			.values({ id: recipeId, type: "recycling", inRaid: false, isBlueprintLocked: false });
+			.values({
+				id: recipeId,
+				type: "recycling",
+				inRaid: false,
+				isBlueprintLocked: false,
+				versionId: currentVersionId,
+			});
 	}
 
 	// Replace recipe IO mapping (safe due to cascade PK)
@@ -85,6 +96,7 @@ async function upsertRecyclingRecipe(inputItemId: string, outputs: Record<string
 }
 
 async function main() {
+	const currentVersionId = await ensureCurrentVersionId();
 	let created = 0;
 	let updated = 0;
 	let skipped = 0;
@@ -102,7 +114,7 @@ async function main() {
 		for (const rec of list) {
 			if (!rec?.id || !rec.recycling || Object.keys(rec.recycling).length === 0) continue;
 			try {
-				const res = await upsertRecyclingRecipe(rec.id, rec.recycling);
+				const res = await upsertRecyclingRecipe(rec.id, rec.recycling, currentVersionId);
 				if (res.skipped) skipped++;
 				else if (res.created) created++;
 				else if (res.updated) updated++;

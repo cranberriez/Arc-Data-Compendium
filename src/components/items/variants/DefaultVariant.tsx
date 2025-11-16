@@ -11,7 +11,7 @@ import ItemBadges from "../ItemBadges";
 export interface DefaultVariantProps {
 	item: Item;
 	size?: "sm" | "md" | "lg" | "xl";
-	count?: number;
+	count?: string;
 	onClick?: () => void;
 	className?: string;
 }
@@ -61,15 +61,12 @@ export const DefaultVariant = React.memo(function DefaultVariant({
 					size === "lg" && "rounded-md",
 					size === "xl" && "rounded-lg"
 				)}
-				style={{
-					background: `radial-gradient(circle at right top, transparent 75%, var(--color-${item.rarity.toLowerCase()})) 100%`,
-				}}
 			>
 				<ItemImage
 					item={item}
-					size={size === "sm" ? "sm" : size === "md" ? "md" : size === "lg" ? "lg" : "xl"}
 					showBorder={true}
 					containerClassName="h-full"
+					expectedSize={128}
 				/>
 			</div>
 

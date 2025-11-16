@@ -14,6 +14,7 @@ import { createdUpdatedColumns } from "./base";
 import { relations, sql } from "drizzle-orm";
 import { items } from "./items";
 import { traders } from "./trader";
+import { versions } from "./versions";
 
 export const quests = pgTable("quests", {
 	id: varchar("id", { length: 255 }).primaryKey(),
@@ -25,6 +26,7 @@ export const quests = pgTable("quests", {
 	location: varchar("location", { length: 255 }), // expand later with locations (aka map)
 	link: text("link"),
 	xpReward: integer("xp_reward"),
+	versionId: integer("version_id").references(() => versions.id),
 	...createdUpdatedColumns,
 });
 
@@ -33,6 +35,7 @@ export const questRelations = relations(quests, ({ one, many }) => ({
 	previous: many(questLinks, { relationName: "previous" }),
 	next: many(questLinks, { relationName: "next" }),
 	trader: one(traders, { fields: [quests.traderId], references: [traders.id] }),
+	version: one(versions, { fields: [quests.versionId], references: [versions.id] }),
 }));
 
 export const questLinks = pgTable(

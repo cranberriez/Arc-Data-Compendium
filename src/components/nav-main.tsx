@@ -13,7 +13,6 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { useSidebar } from "@/components/ui/sidebar";
-import { useEffect } from "react";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import React from "react";
 
@@ -44,10 +43,7 @@ function NavItem({ item, pathname }: { item: NavItem; pathname: string | null })
 
 	if (hasItems && !isCollapsed) {
 		return (
-			<Collapsible
-				defaultOpen={false}
-				className="group/collapsible z-10"
-			>
+			<Collapsible defaultOpen={false} className="group/collapsible z-10">
 				<SidebarMenuItem>
 					<CollapsibleTrigger
 						className={cn(
@@ -74,11 +70,7 @@ function NavItem({ item, pathname }: { item: NavItem; pathname: string | null })
 					<CollapsibleContent>
 						<div className="ml-6 mt-1 space-y-1">
 							{item.items?.map((subItem) => (
-								<NavItem
-									key={subItem.title}
-									item={subItem}
-									pathname={pathname}
-								/>
+								<NavItem key={subItem.title} item={subItem} pathname={pathname} />
 							))}
 						</div>
 					</CollapsibleContent>
@@ -99,11 +91,7 @@ function NavItem({ item, pathname }: { item: NavItem; pathname: string | null })
 						isCollapsed={isCollapsed}
 					/>
 				</PopoverTrigger>
-				<PopoverContent
-					side="right"
-					sideOffset={32}
-					className="w-fit p-1 border-1"
-				>
+				<PopoverContent side="right" sideOffset={32} className="w-fit p-1 border-1">
 					<div className="flex flex-col gap-2">
 						{item.items?.map((subItem) => (
 							<Link
@@ -214,11 +202,7 @@ export function NavMain({
 			)}
 			<SidebarMenu>
 				{items.map((item) => (
-					<NavItem
-						key={item.title}
-						item={item}
-						pathname={pathname}
-					/>
+					<NavItem key={item.title} item={item} pathname={pathname} />
 				))}
 			</SidebarMenu>
 		</SidebarGroup>

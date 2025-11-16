@@ -1,4 +1,3 @@
-import { useItems } from "@/contexts/itemContext";
 import { Rarity, ItemCategory } from "@/types";
 import { SortField, SortOrder } from "@/utils/items";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -10,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { ChevronDownIcon } from "lucide-react";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
+import { useItemFilters, useItemSort } from "@/hooks/useUI";
 
 // Define arrays of available options
 const rarityOptions: Rarity[] = ["common", "uncommon", "rare", "epic", "legendary"];
@@ -59,10 +59,7 @@ const CheckboxFilterItem = memo(
 				onCheckedChange={onToggle}
 				className={`cursor-pointer ${className}`}
 			/>
-			<Label
-				htmlFor={id}
-				className="text-sm cursor-pointer flex items-center"
-			>
+			<Label htmlFor={id} className="text-sm cursor-pointer flex items-center">
 				{label}
 			</Label>
 		</div>
@@ -84,17 +81,10 @@ const ToggleFilterItem = memo(
 		onToggle: () => void;
 	}) => (
 		<div className="flex items-center justify-between">
-			<Label
-				htmlFor={id}
-				className="text-sm cursor-pointer"
-			>
+			<Label htmlFor={id} className="text-sm cursor-pointer">
 				{label}
 			</Label>
-			<Switch
-				id={id}
-				checked={isChecked}
-				onCheckedChange={onToggle}
-			/>
+			<Switch id={id} checked={isChecked} onCheckedChange={onToggle} />
 		</div>
 	)
 );
@@ -102,17 +92,25 @@ ToggleFilterItem.displayName = "ToggleFilterItem";
 
 export default function FilterSort() {
 	const {
-		filterState,
-		sortState,
-		setRarity,
-		setCategory,
+		filters,
+		setSearchQuery,
+		setRarities,
+		setCategories,
 		toggleRarity,
 		toggleCategory,
 		toggleRecyclable,
 		toggleCraftable,
 		toggleHasStats,
-		setSort,
-	} = useItems();
+	} = useItemFilters();
+
+	const { sort, setSortField } = useItemSort();
+
+	const sortState = sort;
+	const rarities = filters.rarities;
+	const categories = filters.categories;
+	const showRecyclable = filters.showRecyclable || false;
+	const showCraftable = filters.showCraftable || false;
+	const showHasStats = filters.showHasStats || false;
 
 	// Helper function to capitalize first letter
 	const capitalize = (str: string) =>
@@ -123,10 +121,7 @@ export default function FilterSort() {
 			{/* Sort Options */}
 			<div className="space-y-3">
 				<div className="space-y-2">
-					<Label
-						htmlFor="sort-field"
-						className="text-sm"
-					>
+					<Label htmlFor="sort-field" className="text-sm">
 						Sort By
 					</Label>
 					<Popover>
@@ -156,7 +151,9 @@ export default function FilterSort() {
 												: "ghost"
 										}
 										className="justify-start"
-										onClick={() => setSort(option.value, sortState.sortOrder)}
+										onClick={() =>
+											setSortField(option.value, sortState.sortOrder)
+										}
 									>
 										{option.label}
 									</Button>
@@ -167,10 +164,7 @@ export default function FilterSort() {
 				</div>
 
 				<div className="space-y-2">
-					<Label
-						htmlFor="sort-order"
-						className="text-sm"
-					>
+					<Label htmlFor="sort-order" className="text-sm">
 						Sort Order
 					</Label>
 					<Popover>
@@ -200,7 +194,9 @@ export default function FilterSort() {
 												: "ghost"
 										}
 										className="justify-start"
-										onClick={() => setSort(sortState.sortField, option.value)}
+										onClick={() =>
+											setSortField(sortState.sortField, option.value)
+										}
 									>
 										{option.label}
 									</Button>
@@ -221,12 +217,12 @@ export default function FilterSort() {
 						variant="link"
 						size="sm"
 						aria-label="Clear filters"
-						onClick={() => setRarity([])}
+						onClick={() => setRarities([])}
 						className={cn(
 							"relative cursor-pointer",
-							filterState.rarities.length > 0 ? "text-red-400" : ""
+							rarities.length > 0 ? "text-red-400" : ""
 						)}
-						disabled={filterState.rarities.length === 0}
+						disabled={rarities.length === 0}
 					>
 						Reset
 					</Button>
@@ -237,7 +233,7 @@ export default function FilterSort() {
 							key={rarity}
 							id={`rarity-${rarity}`}
 							label={capitalize(rarity)}
-							isChecked={filterState.rarities.includes(rarity)}
+							isChecked={rarities.includes(rarity)}
 							onToggle={() => toggleRarity(rarity)}
 						/>
 					))}
@@ -254,12 +250,12 @@ export default function FilterSort() {
 						variant="link"
 						size="sm"
 						aria-label="Clear filters"
-						onClick={() => setCategory([])}
+						onClick={() => setCategories([])}
 						className={cn(
 							"relative cursor-pointer",
-							filterState.categories.length > 0 ? "text-red-400" : ""
+							categories.length > 0 ? "text-red-400" : ""
 						)}
-						disabled={filterState.categories.length === 0}
+						disabled={categories.length === 0}
 					>
 						Reset
 					</Button>
@@ -270,7 +266,7 @@ export default function FilterSort() {
 							key={category}
 							id={`category-${category}`}
 							label={capitalize(category)}
-							isChecked={filterState.categories.includes(category)}
+							isChecked={categories.includes(category)}
 							onToggle={() => toggleCategory(category)}
 						/>
 					))}
@@ -286,21 +282,21 @@ export default function FilterSort() {
 					<ToggleFilterItem
 						id="filter-recyclable"
 						label="Show Recyclable Only"
-						isChecked={filterState.showRecyclable || false}
+						isChecked={showRecyclable}
 						onToggle={toggleRecyclable}
 					/>
 
 					<ToggleFilterItem
 						id="filter-craftable"
 						label="Show Craftable Only"
-						isChecked={filterState.showCraftable || false}
+						isChecked={showCraftable}
 						onToggle={toggleCraftable}
 					/>
 
 					<ToggleFilterItem
 						id="filter-has-stats"
 						label="Show Items with Stats Only"
-						isChecked={filterState.showHasStats || false}
+						isChecked={showHasStats}
 						onToggle={toggleHasStats}
 					/>
 				</div>

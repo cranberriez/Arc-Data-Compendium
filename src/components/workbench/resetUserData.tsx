@@ -1,10 +1,10 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { useWorkshop } from "@/contexts/workshopContext";
+import { useWorkbenchLevels } from "@/hooks/useUser";
 
 export default function ResetUserData() {
-	const { resetWorkbenches } = useWorkshop();
+	const { resetWorkbenches } = useWorkbenchLevels();
 
 	return (
 		<Button

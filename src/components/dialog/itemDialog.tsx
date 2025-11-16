@@ -2,28 +2,19 @@
 
 import * as React from "react";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
-import { Item } from "@/types";
-import { useDialog } from "@/contexts/dialogContext";
 import { Button } from "@/components/ui/button";
 import { ItemHeader, RecyclingSection, SourcesSection, QuickUseSection, GearSection } from ".";
-import DevTools from "./diagDevTools";
-import DiagDescription from "./diagDescription";
-import { useRecipes } from "@/contexts/recipeContext";
 import { getItemTags } from "@/utils/items";
+import { useDialog } from "@/hooks/useUI";
+import { useRecipes } from "@/hooks/useData";
+import { Item, Recipe } from "@/types";
 
-type ItemDialogProps = {
-	data: Item;
-	isOpen: boolean;
-	closeDialog: () => void;
-	backDialog: () => void;
-};
-
-export function ItemDialog({ data, isOpen, closeDialog, backDialog }: ItemDialogProps) {
-	const { dialogQueue } = useDialog();
+export function ItemDialog() {
+	const { dialogQueue, dialogOpen, dialogData, closeDialog, backDialog } = useDialog();
 	const { getRecyclingSourcesById } = useRecipes();
 
-	if (!data) return null;
-	const item = data;
+	if (!dialogData) return null;
+	const item = dialogData as Item;
 
 	// Custom close handler to clear the queue
 	const handleCloseDialog = () => {
@@ -39,12 +30,13 @@ export function ItemDialog({ data, isOpen, closeDialog, backDialog }: ItemDialog
 	const quickUseCharge = item.quickUse?.charge ?? null;
 	const gearStats = item.gear?.stats;
 	const gearType = item.gear?.category;
-	const recyclingRecipe = item.recycling;
-	const recyclingSources = getRecyclingSourcesById(item.id);
+	const recyclingRecipe: Recipe | null = item.recycling ?? null;
+	const craftingRecipe: Recipe | null = item.recipe ?? null;
+	const recyclingSources = getRecyclingSourcesById(item.id ?? "");
 	const itemTags = getItemTags(item);
 
 	return (
-		<Dialog open={isOpen} onOpenChange={(open) => !open && handleCloseDialog()}>
+		<Dialog open={dialogOpen} onOpenChange={(open) => !open && handleCloseDialog()}>
 			<DialogContent className="p-2 sm:p-6">
 				{/* Back buttons */}
 				{dialogQueue.length > 0 && (
@@ -64,17 +56,18 @@ export function ItemDialog({ data, isOpen, closeDialog, backDialog }: ItemDialog
 				{/* Dialog Header */}
 				<ItemHeader item={item} itemTags={itemTags} />
 
-				<DiagDescription
-					name={item.name}
-					rarity={item.rarity}
-					category={item.category}
-					recipeId={item.recipeId}
-					itemDescription={item.description}
-					weight={item.weight}
-					sellValue={item.value}
-				/>
+				{item.flavorText && item.flavorText !== "" && (
+					<div className="bg-secondary p-2 rounded w-full max-w-full break-words">
+						{item.flavorText}
+					</div>
+				)}
 
-				{quickUseStats || quickUseCharge || gearStats || gearType || recyclingRecipe ? (
+				{quickUseStats ||
+				quickUseCharge ||
+				gearStats ||
+				gearType ||
+				recyclingRecipe ||
+				craftingRecipe ? (
 					<hr className="my-2 border-t border-t-secondary-foreground/20 dark:border-t-secondary-foreground/10" />
 				) : null}
 
@@ -105,6 +98,10 @@ export function ItemDialog({ data, isOpen, closeDialog, backDialog }: ItemDialog
 
 				{/* Dev Tools */}
 				{/* <DevTools item={item} /> */}
+
+				{item.version && item.version.id !== 1 && (
+					<p>Added in Update: {item.version.name}</p>
+				)}
 			</DialogContent>
 		</Dialog>
 	);

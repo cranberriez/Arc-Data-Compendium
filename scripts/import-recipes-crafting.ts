@@ -4,6 +4,7 @@ import { and, eq, inArray } from "drizzle-orm";
 import { db } from "../src/db/drizzle";
 import { items, recipes, recipeItems, ioEnum } from "../src/db/schema";
 import { tiers, workbenchRecipes } from "../src/db/schema/workbenches";
+import { ensureCurrentVersionId } from "./version";
 
 interface ScrapedRecipeDef {
 	result?: Record<string, number> | null;
@@ -57,7 +58,11 @@ function extractResultId(
 	return { id: id || fallbackId, qty: (qty as number) ?? 1 };
 }
 
-async function upsertCraftingRecipeForItem(itemId: string, def: ScrapedRecipeDef) {
+async function upsertCraftingRecipeForItem(
+	itemId: string,
+	def: ScrapedRecipeDef,
+	currentVersionId: number
+) {
 	const result = extractResultId(def, itemId);
 	const ingredients = def.ingredients ?? {};
 	const workbenches = def.workbenches ?? {};
@@ -91,12 +96,17 @@ async function upsertCraftingRecipeForItem(itemId: string, def: ScrapedRecipeDef
 	if (existingRecipe.length === 0) {
 		await db
 			.insert(recipes)
-			.values({ id: recipeId, type: "crafting", isBlueprintLocked, inRaid });
+			.values({
+				id: recipeId,
+				type: "crafting",
+				isBlueprintLocked,
+				inRaid,
+				versionId: currentVersionId,
+			});
 	} else {
-		await db
-			.update(recipes)
-			.set({ type: "crafting", isBlueprintLocked, inRaid })
-			.where(eq(recipes.id, recipeId));
+		const update: any = { type: "crafting", isBlueprintLocked, inRaid };
+		if ((existingRecipe as any)[0].versionId == null) update.versionId = currentVersionId;
+		await db.update(recipes).set(update).where(eq(recipes.id, recipeId));
 	}
 
 	// Replace IO mapping
@@ -128,22 +138,28 @@ async function upsertCraftingRecipeForItem(itemId: string, def: ScrapedRecipeDef
 
 	for (const [wbId, tier] of Object.entries(workbenches)) {
 		if (wbId === "inventory") continue; // handled via inRaid
+
+		let correctedWBID = wbId;
+		if (wbId === "workbench_i") correctedWBID = "workbench";
+		else if (wbId === "gear_bench_i") correctedWBID = "gear_bench";
+		else if (wbId === "explosive_station") correctedWBID = "explosives_station";
+
 		const tierNum = typeof tier === "number" ? tier : parseInt(String(tier), 10);
 		if (!Number.isFinite(tierNum)) continue;
 		// Ensure the referenced workbench tier exists to satisfy FK
 		const tierRow = await db
 			.select({ t: tiers.tier })
 			.from(tiers)
-			.where(and(eq(tiers.workbenchId, wbId), eq(tiers.tier, tierNum)));
+			.where(and(eq(tiers.workbenchId, correctedWBID), eq(tiers.tier, tierNum)));
 		if (tierRow.length === 0) {
 			console.warn(
-				`Skip linking recipe ${recipeId} to ${wbId} tier ${tierNum}: tier not found (seed workbench tiers first)`
+				`Skip linking recipe ${recipeId} to ${correctedWBID} tier ${tierNum}: tier not found (seed workbench tiers first)`
 			);
 			continue;
 		}
 		await db
 			.insert(workbenchRecipes)
-			.values({ workbenchId: wbId, workbenchTier: tierNum, recipeId });
+			.values({ workbenchId: correctedWBID, workbenchTier: tierNum, recipeId });
 	}
 
 	return {
@@ -154,6 +170,7 @@ async function upsertCraftingRecipeForItem(itemId: string, def: ScrapedRecipeDef
 }
 
 async function main() {
+	const currentVersionId = await ensureCurrentVersionId();
 	let created = 0;
 	let updated = 0;
 	let skipped = 0;
@@ -174,7 +191,7 @@ async function main() {
 			for (const def of defs) {
 				if (!def || (!def.ingredients && !def.result && !def.workbenches)) continue;
 				try {
-					const res = await upsertCraftingRecipeForItem(rec.id, def);
+					const res = await upsertCraftingRecipeForItem(rec.id, def, currentVersionId);
 					if (res.skipped) skipped++;
 					else if (res.created) created++;
 					else if (res.updated) updated++;

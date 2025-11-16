@@ -1,6 +1,6 @@
 "use client";
 
-import Toolbar from "./toolbar";
+import ToolbarZustand from "./toolbar";
 import { useSidebar } from "@/components/ui/sidebar";
 import { cn } from "@/lib/utils";
 
@@ -14,7 +14,7 @@ export function LayoutHeader() {
 				!isMobile ? " rounded-xl" : ""
 			)}
 		>
-			<Toolbar />
+			<ToolbarZustand />
 		</header>
 	);
 }

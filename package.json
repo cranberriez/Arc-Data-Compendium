@@ -6,6 +6,7 @@
 		"dev": "next dev",
 		"seed": "tsx scripts/seed.ts",
 		"import:items": "tsx scripts/import-items.ts",
+		"import:quick-use": "tsx scripts/import-quick-use.ts",
 		"scan:taxonomy": "tsx scripts/tools/scan-taxonomy.ts",
 		"scan:stat-keys": "tsx scripts/tools/extract_stat_keys.ts",
 		"preview:weapon-upgrades": "tsx scripts/tools/preview_weapon_upgrades.ts",
@@ -16,6 +17,8 @@
 		"import:weapons": "tsx scripts/import-weapons.ts",
 		"import:mods": "tsx scripts/import-mods.ts",
 		"import:upgrades": "tsx scripts/import-upgrades.ts",
+		"import:versions": "tsx scripts/sync-versions.ts",
+		"import:all": "npm run import:items && npm run import:quick-use && npm run import:workbenches && npm run import:weapons && npm run import:mods && npm run import:upgrades && npm run import:recipes:recycling && npm run import:recipes:crafting",
 		"devtb": "next dev --turbopack",
 		"build": "next build",
 		"start": "next start",
@@ -55,7 +58,8 @@
 		"react": "^19.0.0",
 		"react-dom": "^19.0.0",
 		"react-icons": "^5.5.0",
-		"tailwind-merge": "^3.3.0"
+		"tailwind-merge": "^3.3.0",
+		"zustand": "^5.0.8"
 	},
 	"devDependencies": {
 		"@eslint/eslintrc": "^3",

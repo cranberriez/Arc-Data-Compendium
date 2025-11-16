@@ -11,7 +11,7 @@ export interface ItemBadgesProps {
 	/** The item to display */
 	item: Item;
 	/** Count of items to display */
-	count?: number;
+	count?: string;
 	/** Size variant */
 	size?: "sm" | "md" | "lg" | "xl";
 	/** Additional class names */
@@ -54,17 +54,17 @@ export const ItemBadges = React.memo(function ItemBadges({
 		// Adjust translation values for better alignment outside the card
 		switch (position) {
 			case "top-left":
-				return "absolute top-0 left-0 -translate-x-1/2 -translate-y-1/2 z-10";
+				return "absolute top-0 left-0 -translate-x-1/4 -translate-y-1/4 z-10";
 			case "top-right":
-				return "absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 z-10";
+				return "absolute top-0 right-0 translate-x-1/4 -translate-y-1/4 z-10";
 			case "bottom-left":
-				return "absolute bottom-0 left-0 -translate-x-1/2 translate-y-1/2 z-10";
+				return "absolute bottom-0 left-0 -translate-x-1/4 translate-y-1/4 z-10";
 			case "bottom-right":
-				return "absolute bottom-0 right-0 translate-x-1/2 translate-y-1/2 z-10";
+				return "absolute bottom-0 right-0 translate-x-1/4 translate-y-1/4 z-10";
 			case "standalone":
 				return ""; // No positioning, use as a standalone component
 			default:
-				return "absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 z-10";
+				return "absolute top-0 right-0 translate-x-1/4 -translate-y-1/4 z-10";
 		}
 	}, [position]);
 

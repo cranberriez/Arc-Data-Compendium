@@ -3,24 +3,23 @@
 import { Item } from "@/types";
 import ItemCard from "@/components/items/ItemCard";
 import { applyItemFilters, sortItems } from "@/utils/items";
-import { useItems } from "@/contexts/itemContext";
+import { useItems } from "@/hooks/useData";
+import { useItemFilters, useItemSort } from "@/hooks/useUI";
 import { Fragment, useMemo } from "react";
 
-interface ItemListProps {
-	initialItems: Item[];
-}
-
-export function ItemList({ initialItems }: ItemListProps) {
-	const { filterState, sortState } = useItems();
-	const sortedItems = sortItems(initialItems, sortState);
-	const filteredItems = applyItemFilters(sortedItems, filterState);
+export function ItemList() {
+	const { items } = useItems();
+	const { filters } = useItemFilters();
+	const { sort } = useItemSort();
+	const sortedItems = sortItems(items, sort);
+	const filteredItems = applyItemFilters(sortedItems, filters);
 
 	// Calculate value percentiles when sorting by value
 	const valuePercentiles = useMemo(() => {
-		if (sortState.sortField !== "value") return null;
+		if (sort.sortField !== "value") return null;
 
 		// Get all non-zero values and sort them
-		const values = initialItems
+		const values = filteredItems
 			.map((item) => item.value)
 			.filter((v) => v > 0)
 			.sort((a, b) => a - b);
@@ -39,7 +38,7 @@ export function ItemList({ initialItems }: ItemListProps) {
 		});
 
 		return breaks;
-	}, [initialItems, sortState.sortField]);
+	}, [filteredItems, sort.sortField]);
 
 	// Get percentile for a value
 	const getPercentile = (value: number): string => {
@@ -54,7 +53,7 @@ export function ItemList({ initialItems }: ItemListProps) {
 
 	// Don't show headers for these sort fields
 	const noHeaders = ["none", "name"]; // Removed 'value' from noHeaders
-	const showHeaders = !noHeaders.includes(sortState.sortField);
+	const showHeaders = !noHeaders.includes(sort.sortField);
 
 	let lastHeader: string | null = null;
 
@@ -66,12 +65,10 @@ export function ItemList({ initialItems }: ItemListProps) {
 				let shouldShowHeader = false;
 
 				if (showHeaders) {
-					if (sortState.sortField === "value") {
+					if (sort.sortField === "value") {
 						currentValue = getPercentile(item.value);
 					} else {
-						currentValue = item[sortState.sortField as keyof Item] as
-							| string
-							| undefined;
+						currentValue = item[sort.sortField as keyof Item] as string | undefined;
 						if (currentValue) {
 							currentValue = currentValue
 								.split("_")

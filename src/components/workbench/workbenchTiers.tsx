@@ -10,7 +10,6 @@ import { ScrappyOutput } from "./scrappyOutput";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { WorkbenchItemReqTable } from "./workbenchItemReqTable";
 import { RecipeItem } from "./recipeItem";
-import { tiers } from "@/db/schema/workbenches";
 
 interface WorkbenchTiersProps {
 	workbenchId: Workbench["id"];
@@ -33,10 +32,7 @@ export default function WorkbenchTiers({
 
 	return (
 		<Card className="gap-2 p-1 sm:p-6 relative mt-18">
-			<Tabs
-				value={tabValue}
-				className="w-full"
-			>
+			<Tabs value={tabValue} className="w-full">
 				<TabsList className="absolute -top-12 left-1 sm:left-6">
 					<TabsTrigger
 						value={`recipes-all`}
@@ -71,53 +67,32 @@ export default function WorkbenchTiers({
 					{workbenchId === "scrappy" ? (
 						<ScrappyOutput currentTier={curWbTier} />
 					) : (
-						<WorkbenchRecipes
-							recipes={recipes}
-							workbenchId={workbenchId}
-						/>
+						<WorkbenchRecipes recipes={recipes} />
 					)}
 				</TabsContent>
-				<TabsContent
-					value={`requirements-all`}
-					className="w-full"
-				>
-					<WorkbenchRequirements
-						tiers={tiers}
-						curWbTier={curWbTier}
-					/>
+				<TabsContent value={`requirements-all`} className="w-full">
+					<WorkbenchRequirements tiers={tiers} curWbTier={curWbTier} />
 				</TabsContent>
 			</Tabs>
 		</Card>
 	);
 }
 
-function WorkbenchRecipes({
-	recipes,
-	workbenchId,
-}: {
-	recipes: WorkbenchRecipe[];
-	workbenchId: Workbench["id"];
-}) {
+function WorkbenchRecipes({ recipes }: { recipes: WorkbenchRecipe[] }) {
 	const groupedRecipes = groupWorkbenchRecipesByTier(recipes);
 
 	return (
 		<div className="flex flex-col gap-6">
 			{Object.entries(groupedRecipes).map(([tier, recipes]) => (
-				<div
-					key={tier}
-					className="flex flex-wrap items-center"
-				>
-					<div className="flex items-center gap-2 w-full">
+				<div key={tier} className="flex flex-wrap gap-2 items-center">
+					<div className="flex items-center w-full">
 						<h4 className="ml-2 text-2xl font-semibold dark:text-muted-foreground">
 							Level {tier}
 						</h4>
 					</div>
-					<div className="flex flex-wrap gap-4 w-full">
+					<div className="grid grid-cols-1 xl:grid-cols-2 gap-4 w-full">
 						{recipes.map((recipe) => (
-							<RecipeItem
-								key={recipe.recipeId}
-								recipe={recipe.recipe}
-							/>
+							<RecipeItem key={recipe.recipeId} recipe={recipe.recipe} />
 						))}
 					</div>
 				</div>

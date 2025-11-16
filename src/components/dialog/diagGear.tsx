@@ -15,6 +15,8 @@ import {
 	User,
 } from "lucide-react";
 
+const IGNORE_KEYS = ["shieldType", "supportedShieldTypes"];
+
 // Common utility functions and components
 const formatPercent = (value: number, reverse?: boolean) => {
 	return `${reverse && value > 0 ? "-" : ""}${value * 100}%`;
@@ -83,13 +85,16 @@ export const ShieldSection = ({ stats }: { stats: GearStat }) => {
 
 	return (
 		<div className="flex flex-col gap-2 p-4 bg-green-100 text-green-900 dark:text-green-100 dark:bg-green-900/10 rounded-md">
-			{Object.entries(stats).map(([key, value], index) => (
-				<StatRow
-					key={index}
-					keyName={key}
-					value={formatShieldValue(key, value as number)}
-				/>
-			))}
+			{Object.entries(stats).map(([key, value], index) => {
+				if (IGNORE_KEYS.includes(key)) return null;
+				return (
+					<StatRow
+						key={index}
+						keyName={key}
+						value={formatShieldValue(key, value as number)}
+					/>
+				);
+			})}
 		</div>
 	);
 };
@@ -98,8 +103,8 @@ export const ShieldSection = ({ stats }: { stats: GearStat }) => {
 export const AugmentSection = ({ stats }: { stats: GearStat }) => {
 	const baseAugment = {
 		backpackSlots: 10,
-		weightLimit: 45,
-		safePocketSize: 3,
+		weightLimit: 30,
+		safePocketSize: 0,
 		quickUseSlots: 4,
 		weaponSlots: 2,
 		tier: 0,
@@ -202,13 +207,9 @@ export const AugmentSection = ({ stats }: { stats: GearStat }) => {
 
 	return (
 		<div className="flex flex-col gap-2 p-4 bg-green-100 text-green-900 dark:text-green-100 dark:bg-green-900/10 rounded-md">
-			{Object.entries(stats).map(([key, value], index) => (
-				<AugmentStatRow
-					key={index}
-					keyName={key}
-					value={value as number}
-				/>
-			))}
+			{Object.entries(stats).map(([key, value], index) => {
+				return <AugmentStatRow key={index} keyName={key} value={value as number} />;
+			})}
 		</div>
 	);
 };
@@ -224,10 +225,7 @@ export const GearSection = ({ stats, type }: { stats: GearStat; type: string }) 
 	return (
 		<div>
 			<div className="font-mono font-light w-fit flex items-center gap-2 mb-2">
-				<User
-					className="inline-block"
-					size={24}
-				/>
+				<User className="inline-block" size={24} />
 				<p>
 					<span className="inline-block text-lg">Gear Stats</span>
 				</p>

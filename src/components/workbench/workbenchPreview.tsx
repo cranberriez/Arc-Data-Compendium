@@ -4,32 +4,46 @@ import getItemIcon from "@/components/items/getItemIcon";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Workbench } from "@/types";
 import Link from "next/link";
-import { useWorkshop } from "@/contexts/workshopContext";
 import { WorkbenchUpgrades } from "@/components/workbench/workbenchUpgrade";
 import { Button } from "@/components/ui/button";
 import { FileText } from "lucide-react";
+import { useWorkbenchLevels } from "@/hooks/useUser";
+import { cn } from "@/lib/utils";
+import { getWbColorObject } from "@/utils/workbench/wbColors";
 
 export const WorkbenchPreview = ({ workbench }: { workbench: Workbench }) => {
-	const { loading, getLevel, upgradeWorkbench, downgradeWorkbench } = useWorkshop();
+	const { getWorkbenchLevel, setWorkbenchLevel } = useWorkbenchLevels();
 
-	const curWbTier = getLevel(workbench.id);
+	if (!workbench) {
+		return <LoadingWorkbenchPreview />;
+	}
+
+	const curWbTier = getWorkbenchLevel(workbench.id) || workbench.baseTier;
+
+	const upgradeWorkbench = () => {
+		setWorkbenchLevel(workbench.id, curWbTier + 1);
+	};
+
+	const downgradeWorkbench = () => {
+		setWorkbenchLevel(workbench.id, curWbTier - 1);
+	};
 
 	const icon = getItemIcon(workbench.icon);
 	const isMaxed = curWbTier === workbench.tiers.length;
 
-	if (loading) {
-		return <LoadingWorkbenchPreview />;
-	}
+	const wbColorObject = getWbColorObject(workbench.id);
 
 	return (
 		<div className="flex flex-col justify-between gap-2 border-2 rounded-lg p-2 sm:p-4 min-w-0 w-full min-h-60 sm:h-64 bg-card">
-			<div
-				key={workbench.id}
-				className="flex flex-col sm:flex-row gap-4 sm:gap-2 h-full"
-			>
+			<div key={workbench.id} className="flex flex-col sm:flex-row gap-4 sm:gap-2 h-full">
 				<div className="flex flex-col flex-1 gap-2">
 					<div className="flex items-center gap-2 h-11">
-						<div className="w-10 h-10 p-2 flex items-center justify-center rounded bg-muted">
+						<div
+							className={cn(
+								"w-10 h-10 p-2 flex items-center justify-center rounded ",
+								wbColorObject.bg
+							)}
+						>
 							{icon}
 						</div>
 						<h2 className="text-xl font-semibold mb-1">{workbench.name}</h2>
@@ -45,11 +59,7 @@ export const WorkbenchPreview = ({ workbench }: { workbench: Workbench }) => {
 					isMaxed={isMaxed}
 				/>
 			</div>
-			<Button
-				variant="link"
-				className="w-fit self-start"
-				asChild
-			>
+			<Button variant="link" className="w-fit self-start" asChild>
 				<Link href={`/workshop/${workbench.id}`}>
 					<FileText className="h-4 w-4" />
 					Details

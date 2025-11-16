@@ -2,7 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { AppSidebar } from "@/components/app-sidebar";
 import { SidebarInset } from "@/components/ui/sidebar";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { AppProviders } from "@/components/app-providers";
+import { AppProvidersZustand } from "@/components/app-providers-zustand";
 import { LayoutHeader } from "@/components/toolbar/layoutHeader";
 
 import { Analytics } from "@vercel/analytics/react";
@@ -53,12 +53,9 @@ export default function RootLayout({
 	children: React.ReactNode;
 }>) {
 	return (
-		<html
-			lang="en"
-			suppressHydrationWarning
-		>
+		<html lang="en" suppressHydrationWarning>
 			<body className="max-h-screen overflow-hidden">
-				<AppProviders>
+				<AppProvidersZustand>
 					<AppSidebar />
 					<SidebarInset className="max-h-[calc(100vh-theme(spacing.4))]">
 						<LayoutHeader />
@@ -67,7 +64,7 @@ export default function RootLayout({
 							{children}
 						</div>
 					</SidebarInset>
-				</AppProviders>
+				</AppProvidersZustand>
 				<Analytics />
 				<SpeedInsights />
 			</body>
