@@ -7,6 +7,7 @@ import { baseItemColumns } from "./base";
 import { rarityEnum, itemCategoryEnum } from "./enums";
 import { weapons } from "./weapons";
 import { recipes } from "./recipes";
+import { versions } from "./versions";
 
 // ---------------------------
 // Item & Weapon Tables
@@ -23,6 +24,7 @@ export const items = pgTable("items", {
 	flavorText: text("flavor_text"),
 	recipeId: varchar("recipe_id", { length: 255 }).references(() => recipes.id),
 	foundIn: text("found_in").array().default([]),
+	versionId: integer("version_id").references(() => versions.id),
 
 	quickUse: jsonb("quick_use").$type<QuickUseData>(),
 	gear: jsonb("gear").$type<GearData>(),
@@ -43,4 +45,5 @@ export const itemsRelations = relations(items, ({ one, many }) => ({
 
 	recipe: one(recipes, { fields: [items.recipeId], references: [recipes.id] }),
 	recycling: one(recipes, { fields: [items.recyclingId], references: [recipes.id] }),
+	version: one(versions, { fields: [items.versionId], references: [versions.id] }),
 }));

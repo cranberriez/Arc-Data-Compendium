@@ -25,6 +25,7 @@ export const getWeapons = async ({ id }: { id?: string } = {}): Promise<Weapon[]
 					},
 				},
 				workbenchRequirements: true,
+				version: true,
 			},
 		});
 	} catch (error) {

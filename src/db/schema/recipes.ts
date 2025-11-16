@@ -11,6 +11,7 @@ import {
 } from "drizzle-orm/pg-core";
 import { relations } from "drizzle-orm";
 import { items } from "./items";
+import { versions } from "./versions";
 
 export const recipeTypeEnum = pgEnum("recipe_type", [
 	"crafting",
@@ -24,6 +25,7 @@ export const recipes = pgTable("recipes", {
 	type: recipeTypeEnum("type").notNull(),
 	isBlueprintLocked: boolean("is_blueprint_locked").notNull().default(false),
 	inRaid: boolean("in_raid").notNull().default(false),
+	versionId: integer("version_id").references(() => versions.id),
 	createdAt: timestamp("created_at", { withTimezone: true }).defaultNow(),
 	updatedAt: timestamp("updated_at", { withTimezone: true })
 		.defaultNow()
@@ -36,6 +38,7 @@ export const recipesRelations = relations(recipes, ({ one, many }) => ({
 		references: [items.id],
 	}),
 	io: many(recipeItems),
+	version: one(versions, { fields: [recipes.versionId], references: [versions.id] }),
 }));
 
 export const ioEnum = pgEnum("recipe_io_role", ["input", "output"]);

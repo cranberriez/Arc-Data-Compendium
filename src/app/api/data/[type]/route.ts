@@ -23,7 +23,7 @@ const typeToQuery: Record<DataType, () => Promise<any>> = {
 	quests: getQuests,
 };
 
-export const revalidate = 3600; // seconds
+export const revalidate = 43200; // seconds (12 hours)
 
 export async function GET(request: Request, { params }: RouteParams) {
 	const { type } = await params;

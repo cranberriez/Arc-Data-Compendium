@@ -25,6 +25,7 @@ export const getItems = async ({ id }: { id?: string } = {}): Promise<Item[]> =>
 					},
 				},
 				workbenchRequirements: true,
+				version: true,
 			},
 		});
 	} catch (error) {

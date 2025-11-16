@@ -22,7 +22,7 @@ async function fetchData<T>(type: DataType, id?: string): Promise<T[] | T | null
 				"Content-Type": "application/json",
 			},
 			next: {
-				revalidate: process.env.NODE_ENV === "development" ? 0 : 3600,
+				revalidate: process.env.NODE_ENV === "development" ? 0 : 43200, // 12 hours
 			},
 		});
 
