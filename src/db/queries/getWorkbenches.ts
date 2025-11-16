@@ -30,6 +30,7 @@ export const getWorkbenches = async ({
 						recipe: {
 							with: {
 								io: true,
+								version: true,
 							},
 						},
 					},

@@ -8,3 +8,4 @@ export * from "./quest";
 export * from "./trader";
 
 // export * from "./views";
+export * from "./versions";

@@ -98,6 +98,10 @@ export function ItemDialog() {
 
 				{/* Dev Tools */}
 				{/* <DevTools item={item} /> */}
+
+				{item.version && item.version.id !== 1 && (
+					<p>Added in Update: {item.version.name}</p>
+				)}
 			</DialogContent>
 		</Dialog>
 	);

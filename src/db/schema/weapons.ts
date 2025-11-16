@@ -5,6 +5,7 @@ import { ammoTypeEnum, weaponClassEnum } from "./enums";
 import { WeaponModSlot } from "@/types";
 import { upgrade } from "./upgrades";
 import { WeaponBaseStats } from "@/types/items/weapon";
+import { versions } from "./versions";
 
 // Weapon extension table (1-to-1 with items)
 export const weapons = pgTable("weapons", {
@@ -13,6 +14,7 @@ export const weapons = pgTable("weapons", {
 		.notNull()
 		.unique()
 		.references(() => items.id),
+	versionId: integer("version_id").references(() => versions.id),
 	ammoType: ammoTypeEnum("ammo_type"),
 	weaponClass: weaponClassEnum("weapon_class"),
 	modSlots: jsonb("mod_slots").$type<WeaponModSlot[]>().notNull(),
@@ -24,4 +26,5 @@ export const weapons = pgTable("weapons", {
 export const weaponsRelations = relations(weapons, ({ one, many }) => ({
 	item: one(items, { fields: [weapons.itemId], references: [items.id] }),
 	upgrades: many(upgrade),
+	version: one(versions, { fields: [weapons.versionId], references: [versions.id] }),
 }));

@@ -17,6 +17,7 @@
 		"import:weapons": "tsx scripts/import-weapons.ts",
 		"import:mods": "tsx scripts/import-mods.ts",
 		"import:upgrades": "tsx scripts/import-upgrades.ts",
+		"import:versions": "tsx scripts/sync-versions.ts",
 		"import:all": "npm run import:items && npm run import:quick-use && npm run import:workbenches && npm run import:weapons && npm run import:mods && npm run import:upgrades && npm run import:recipes:recycling && npm run import:recipes:crafting",
 		"devtb": "next dev --turbopack",
 		"build": "next build",

@@ -6,6 +6,7 @@ import { items, weapons, recipes, recipeItems } from "../src/db/schema";
 import type { Rarity } from "../src/db/schema/enums";
 import type { WeaponModSlot } from "../src/types/items/weapon";
 import { tiers, workbenchRecipes } from "../src/db/schema/workbenches";
+import { ensureCurrentVersionId } from "./version";
 
 interface ScrapedWeapon {
 	id: string;
@@ -159,7 +160,7 @@ async function readJson(filePath: string) {
 	return JSON.parse(raw) as ScrapedWeapon[];
 }
 
-async function upsertItem(rec: ScrapedWeapon) {
+async function upsertItem(rec: ScrapedWeapon, currentVersionId: number) {
 	const desc = (rec.description ?? "").trim();
 	const base = (rec as any).base || {};
 	const mapped = {
@@ -187,15 +188,17 @@ async function upsertItem(rec: ScrapedWeapon) {
 
 	const existing = await db.select().from(items).where(eq(items.id, rec.id));
 	if (existing.length > 0) {
-		await db.update(items).set(mapped).where(eq(items.id, rec.id));
+		const update: any = { ...mapped };
+		if ((existing as any)[0].versionId == null) update.versionId = currentVersionId;
+		await db.update(items).set(update).where(eq(items.id, rec.id));
 		return { id: rec.id, action: "updated" as const };
 	} else {
-		await db.insert(items).values(mapped);
+		await db.insert(items).values({ ...mapped, versionId: currentVersionId });
 		return { id: rec.id, action: "inserted" as const };
 	}
 }
 
-async function upsertWeapon(rec: ScrapedWeapon) {
+async function upsertWeapon(rec: ScrapedWeapon, currentVersionId: number) {
 	const baseObj = (rec as any).base ?? rec;
 	const baseStats = extractBaseStats(baseObj);
 	const mapped = {
@@ -209,15 +212,17 @@ async function upsertWeapon(rec: ScrapedWeapon) {
 
 	const existing = await db.select().from(weapons).where(eq(weapons.itemId, rec.id));
 	if (existing.length > 0) {
-		await db.update(weapons).set(mapped).where(eq(weapons.itemId, rec.id));
+		const update: any = { ...mapped };
+		if ((existing as any)[0].versionId == null) update.versionId = currentVersionId;
+		await db.update(weapons).set(update).where(eq(weapons.itemId, rec.id));
 		return { id: rec.id, action: "updated" as const };
 	} else {
-		await db.insert(weapons).values(mapped);
+		await db.insert(weapons).values({ ...mapped, versionId: currentVersionId });
 		return { id: rec.id, action: "inserted" as const };
 	}
 }
 
-async function ensureRecycleRecipe(rec: ScrapedWeapon) {
+async function ensureRecycleRecipe(rec: ScrapedWeapon, currentVersionId: number) {
 	const base = (rec as any).base;
 	if (!base || !base.recycled_materials || typeof base.recycled_materials !== "object") return;
 	const recipeId = `recycle_${rec.id}`;
@@ -226,7 +231,13 @@ async function ensureRecycleRecipe(rec: ScrapedWeapon) {
 	if (existing.length === 0) {
 		await db
 			.insert(recipes)
-			.values({ id: recipeId, type: "recycling", isBlueprintLocked: false, inRaid: false });
+			.values({
+				id: recipeId,
+				type: "recycling",
+				isBlueprintLocked: false,
+				inRaid: false,
+				versionId: currentVersionId,
+			});
 	}
 	// clear previous IO rows for idempotence
 	await db.delete(recipeItems).where(eq(recipeItems.recipeId, recipeId));
@@ -244,7 +255,7 @@ async function ensureRecycleRecipe(rec: ScrapedWeapon) {
 	await db.update(items).set({ recyclingId: recipeId }).where(eq(items.id, rec.id));
 }
 
-async function ensureCraftRecipe(rec: ScrapedWeapon) {
+async function ensureCraftRecipe(rec: ScrapedWeapon, currentVersionId: number) {
 	const rawList = (rec as any).recipe;
 	if (!Array.isArray(rawList) || rawList.length === 0) return;
 	const first = rawList[0] as any;
@@ -257,12 +268,17 @@ async function ensureCraftRecipe(rec: ScrapedWeapon) {
 	if (existing.length === 0) {
 		await db
 			.insert(recipes)
-			.values({ id: recipeId, type: "crafting", isBlueprintLocked, inRaid });
+			.values({
+				id: recipeId,
+				type: "crafting",
+				isBlueprintLocked,
+				inRaid,
+				versionId: currentVersionId,
+			});
 	} else if (existing.length > 0) {
-		await db
-			.update(recipes)
-			.set({ type: "crafting", isBlueprintLocked, inRaid })
-			.where(eq(recipes.id, recipeId));
+		const update: any = { type: "crafting", isBlueprintLocked, inRaid };
+		if ((existing as any)[0].versionId == null) update.versionId = currentVersionId;
+		await db.update(recipes).set(update).where(eq(recipes.id, recipeId));
 	}
 	// reset IO rows
 	await db.delete(recipeItems).where(eq(recipeItems.recipeId, recipeId));
@@ -310,13 +326,14 @@ async function ensureCraftRecipe(rec: ScrapedWeapon) {
 
 (async function main() {
 	try {
+		const currentVersionId = await ensureCurrentVersionId();
 		const list = await readJson(WEAPONS_FILE);
 		let ok = 0;
 		let fail = 0;
 
 		for (const rec of list) {
 			try {
-				const a = await upsertItem(rec);
+				const a = await upsertItem(rec, currentVersionId);
 				const stats = extractBaseStats((rec as any).base ?? rec);
 				if (Object.keys(stats).length === 0) {
 					// gather a few numeric-like keys for diagnostics
@@ -341,9 +358,9 @@ async function ensureCraftRecipe(rec: ScrapedWeapon) {
 						)}`
 					);
 				}
-				const b = await upsertWeapon({ ...rec });
-				await ensureCraftRecipe(rec);
-				await ensureRecycleRecipe(rec);
+				const b = await upsertWeapon({ ...rec }, currentVersionId);
+				await ensureCraftRecipe(rec, currentVersionId);
+				await ensureRecycleRecipe(rec, currentVersionId);
 				ok++;
 				console.log(`Weapon ${rec.id}: item ${a.action}, weapon ${b.action}`);
 			} catch (e: any) {

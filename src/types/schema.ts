@@ -10,6 +10,7 @@ import {
 	items,
 	weapons,
 	upgrade,
+	versions,
 	Rarity,
 	ItemCategory,
 	AmmoType,
@@ -37,6 +38,7 @@ export type WeaponBase = InferSelectModel<typeof weapons>;
 export type UpgradeBase = InferSelectModel<typeof upgrade>;
 export type RecipeBase = InferSelectModel<typeof recipes>;
 export type RecipeItemBase = InferSelectModel<typeof recipeItems>;
+export type VersionBase = InferSelectModel<typeof versions>;
 
 // Quest schema-derived types
 export type QuestBase = InferSelectModel<typeof quests>;
@@ -76,6 +78,7 @@ export type Item = ItemBase & {
 	recyclingSources?: Recipe[];
 	questEntries?: ItemQuestEntry[];
 	workbenchRequirements?: TierRequirementBase[];
+	version?: VersionBase;
 };
 
 // Weapon (item that is a weapon)
@@ -97,6 +100,7 @@ export type Quest = QuestBase & {
 	entries: QuestEntry[];
 	previous: QuestBase["id"][]; // Array of previous quest ids
 	next: QuestBase["id"][]; // Array of next quest ids
+	version?: VersionBase;
 };
 
 // Tier with requirements and recipes
