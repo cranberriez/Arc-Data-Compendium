@@ -70,15 +70,17 @@ export type ItemQuestEntry = QuestEntryItemBase & {
 
 // Item with related data
 export type Item = ItemBase & {
-	weapon?: WeaponBase & {
-		upgrades?: UpgradeBase[];
-	};
+	weapon?:
+		| (WeaponBase & {
+				upgrades?: UpgradeBase[];
+		  })
+		| null;
 	recipe?: Recipe | null;
 	recycling?: RecyclingRecipe | null;
 	recyclingSources?: Recipe[];
 	questEntries?: ItemQuestEntry[];
 	workbenchRequirements?: TierRequirementBase[];
-	version?: VersionBase;
+	version?: VersionBase | null;
 };
 
 // Weapon (item that is a weapon)
