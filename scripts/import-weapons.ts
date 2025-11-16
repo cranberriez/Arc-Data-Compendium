@@ -229,15 +229,13 @@ async function ensureRecycleRecipe(rec: ScrapedWeapon, currentVersionId: number)
 	// upsert recipe
 	const existing = await db.select().from(recipes).where(eq(recipes.id, recipeId));
 	if (existing.length === 0) {
-		await db
-			.insert(recipes)
-			.values({
-				id: recipeId,
-				type: "recycling",
-				isBlueprintLocked: false,
-				inRaid: false,
-				versionId: currentVersionId,
-			});
+		await db.insert(recipes).values({
+			id: recipeId,
+			type: "recycling",
+			isBlueprintLocked: false,
+			inRaid: false,
+			versionId: currentVersionId,
+		});
 	}
 	// clear previous IO rows for idempotence
 	await db.delete(recipeItems).where(eq(recipeItems.recipeId, recipeId));
@@ -266,15 +264,13 @@ async function ensureCraftRecipe(rec: ScrapedWeapon, currentVersionId: number) {
 	// upsert recipe header
 	const existing = await db.select().from(recipes).where(eq(recipes.id, recipeId));
 	if (existing.length === 0) {
-		await db
-			.insert(recipes)
-			.values({
-				id: recipeId,
-				type: "crafting",
-				isBlueprintLocked,
-				inRaid,
-				versionId: currentVersionId,
-			});
+		await db.insert(recipes).values({
+			id: recipeId,
+			type: "crafting",
+			isBlueprintLocked,
+			inRaid,
+			versionId: currentVersionId,
+		});
 	} else if (existing.length > 0) {
 		const update: any = { type: "crafting", isBlueprintLocked, inRaid };
 		if ((existing as any)[0].versionId == null) update.versionId = currentVersionId;
