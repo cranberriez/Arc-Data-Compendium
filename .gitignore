@@ -48,3 +48,10 @@ src/data/items/itemData.build.json
 
 # drizzle migrations
 migrations
+
+# private
+_private/
+_private/*
+
+# src data
+scripts/data/*
